@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk">
+<TS version="2.1" language="uk">
 <context>
     <name>AcceptebleLineEdit</name>
     <message>
@@ -16,47 +16,47 @@
     <name>ActivityEdit</name>
     <message>
         <source>Can&apos;t arrange cards</source>
-        <translation>Неможливо організувати картки</translation>
+        <translation type="vanished">Неможливо організувати картки</translation>
     </message>
     <message>
         <source>Schemes with scene groups or with folders cannot be arranged.</source>
-        <translation>Схеми з групами сцен або папками не можуть бути організовані.</translation>
+        <translation type="vanished">Схеми з групами сцен або папками не можуть бути організовані.</translation>
     </message>
     <message>
         <source>Convert to</source>
-        <translation>Перетворити в</translation>
+        <translation type="vanished">Перетворити в</translation>
     </message>
     <message>
         <source>Scene</source>
-        <translation>Сцена</translation>
+        <translation type="vanished">Сцена</translation>
     </message>
     <message>
         <source>Scenes Group</source>
-        <translation>Група сцен</translation>
+        <translation type="vanished">Група сцен</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation>Папка</translation>
+        <translation type="vanished">Папка</translation>
     </message>
     <message>
         <source>Color %1</source>
-        <translation>Колір %1</translation>
+        <translation type="vanished">Колір %1</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Видалити</translation>
+        <translation type="vanished">Видалити</translation>
     </message>
     <message>
         <source>Add color</source>
-        <translation>Додати колір</translation>
+        <translation type="vanished">Додати колір</translation>
     </message>
     <message>
         <source>Create Card After</source>
-        <translation>Створити Картку Після</translation>
+        <translation type="vanished">Створити Картку Після</translation>
     </message>
     <message>
         <source>Remove anchors</source>
-        <translation>Видалити зв&apos;язки</translation>
+        <translation type="vanished">Видалити зв&apos;язки</translation>
     </message>
 </context>
 <context>
@@ -107,6 +107,10 @@
     <message>
         <source>Advanced</source>
         <translation>Розширений</translation>
+    </message>
+    <message>
+        <source>File exists. It will be replaced after creating.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -345,11 +349,11 @@
     </message>
     <message>
         <source>Scene Group</source>
-        <translation>Група сцен</translation>
+        <translation type="vanished">Група сцен</translation>
     </message>
     <message>
         <source>Scene Group Footer</source>
-        <translation>Scene Group Footer</translation>
+        <translation type="vanished">Scene Group Footer</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -432,7 +436,7 @@
         <source>SG</source>
         <extracomment>Reduction of Scene Group</extracomment>
         <translatorcomment>Зкорочення від Група сцен</translatorcomment>
-        <translation>ГС</translation>
+        <translation type="vanished">ГС</translation>
     </message>
     <message>
         <source>F</source>
@@ -627,15 +631,15 @@
     </message>
     <message>
         <source>cards in</source>
-        <translation>карток</translation>
+        <translation type="vanished">карток</translation>
     </message>
     <message>
         <source>Row</source>
-        <translation>Рядком</translation>
+        <translation type="vanished">Рядком</translation>
     </message>
     <message>
         <source>Column</source>
-        <translation>Колонкою</translation>
+        <translation type="vanished">Колонкою</translation>
     </message>
     <message>
         <source>Card size:</source>
@@ -704,23 +708,23 @@
     <name>CharactersDataEdit</name>
     <message>
         <source>Add Image</source>
-        <translation>Додати зображення</translation>
+        <translation type="vanished">Додати зображення</translation>
     </message>
     <message>
         <source>Choose Character</source>
-        <translation>Вибрати героя</translation>
+        <translation type="vanished">Вибрати героя</translation>
     </message>
     <message>
         <source>Real Name:</source>
-        <translation>Справжнє Ім&apos;я:</translation>
+        <translation type="vanished">Справжнє Ім&apos;я:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Опис:</translation>
+        <translation type="vanished">Опис:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Ім&apos;я:</translation>
+        <translation type="vanished">Ім&apos;я:</translation>
     </message>
 </context>
 <context>
@@ -825,7 +829,7 @@
     </message>
     <message>
         <source>File:</source>
-        <translation>Файл:</translation>
+        <translation type="vanished">Файл:</translation>
     </message>
     <message>
         <source>File exists. It will be replaced after exporting.</source>
@@ -1018,7 +1022,7 @@
     </message>
     <message>
         <source>File:</source>
-        <translation>Файл:</translation>
+        <translation type="vanished">Файл:</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1108,46 +1112,46 @@
     <name>LocationsDataEdit</name>
     <message>
         <source>Dialog</source>
-        <translation>Діалог</translation>
+        <translation type="vanished">Діалог</translation>
     </message>
     <message>
         <source>Add Image</source>
-        <translation>Додати зображення</translation>
+        <translation type="vanished">Додати зображення</translation>
     </message>
     <message>
         <source>Choose Location</source>
-        <translation>Вибрати локацію</translation>
+        <translation type="vanished">Вибрати локацію</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Ім&apos;я:</translation>
+        <translation type="vanished">Ім&apos;я:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Опис:</translation>
+        <translation type="vanished">Опис:</translation>
     </message>
 </context>
 <context>
     <name>LoginDialog</name>
     <message>
         <source>Authorization</source>
-        <translation>Авторизація</translation>
+        <translation type="vanished">Авторизація</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Registration&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Реєстрація&lt;/a&gt;</translation>
+        <translation type="vanished">&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Реєстрація&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Error message</source>
-        <translation>Повідомлення про помилку</translation>
+        <translation type="vanished">Повідомлення про помилку</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation>Логін</translation>
+        <translation type="vanished">Логін</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="vanished">Пароль</translation>
     </message>
     <message>
         <source>&amp;Email</source>
@@ -1194,7 +1198,7 @@
     </message>
     <message>
         <source>Choose file for new project</source>
-        <translation>Виберіть файл для нового проекту</translation>
+        <translation type="vanished">Виберіть файл для нового проекту</translation>
     </message>
     <message>
         <source>Scenarist project files (*%1)</source>
@@ -1230,7 +1234,7 @@
     </message>
     <message>
         <source>Can&apos;t write you changes to project. There is some internal database error. Please check that file is exists and you have permissions to write in it. Retry to save?</source>
-        <translation>Неможливо внести зміни до проекту. Існує певна внутрішня помилка бази даних. Будь ласка, перевірте, чи файл існує і чи є у вас права на його зміну. Повторити спробу зберегти?</translation>
+        <translation type="vanished">Неможливо внести зміни до проекту. Існує певна внутрішня помилка бази даних. Будь ласка, перевірте, чи файл існує і чи є у вас права на його зміну. Повторити спробу зберегти?</translation>
     </message>
     <message>
         <source>Can&apos;t write you changes to project located at &lt;b&gt;%1&lt;/b&gt; becourse file isn&apos;t exist. Please move file back and retry to save. Retry to save?</source>
@@ -1250,7 +1254,7 @@
     </message>
     <message>
         <source>Project sinchronized</source>
-        <translation>Проект синхронізований</translation>
+        <translation type="vanished">Проект синхронізований</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -1264,7 +1268,7 @@
         <source>Can&apos;t estabilish network connection.
 
 Continue working in offline mode.</source>
-        <translation>Неможливо встановити з&apos;єднання з мережею.
+        <translation type="vanished">Неможливо встановити з&apos;єднання з мережею.
 
 Продовжувати працювати в автономному режимі.</translation>
     </message>
@@ -1280,7 +1284,7 @@ Continue working in offline mode.</source>
         <source>Buyed subscription period is finished.
 
 Continue working in offline mode.</source>
-        <translation>Період підписки завершений.
+        <translation type="vanished">Період підписки завершений.
 
 Продовжувати працювати в автономному режимі.</translation>
     </message>
@@ -1292,7 +1296,7 @@ Continue working in offline mode.</source>
         <source>Can&apos;t correct load all data from service. Please check your internet connection quality and refresh synchronization.
 
 Continue working in offline mode.</source>
-        <translation>Неможливо коректно завантажити дані зі служби. Будь ласка, перевірте ваше з&apos;єднання з інтернетом і оновіть синхронізацію.
+        <translation type="vanished">Неможливо коректно завантажити дані зі служби. Будь ласка, перевірте ваше з&apos;єднання з інтернетом і оновіть синхронізацію.
 
 Продовжувати працювати в автономному режимі.</translation>
     </message>
@@ -1302,13 +1306,13 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <source>New session for you account started at other device. Restart session?</source>
-        <translation>Нова сесія на вашому акаунті почалась на іншому пристрої. Перезапустити сесію?</translation>
+        <translation type="vanished">Нова сесія на вашому акаунті почалась на іншому пристрої. Перезапустити сесію?</translation>
     </message>
     <message>
         <source>New session for you account started at other device.
 
 Continue working in offline mode.</source>
-        <translation>Нова сесія на вашому акаунті почалась на іншому пристрої.
+        <translation type="vanished">Нова сесія на вашому акаунті почалась на іншому пристрої.
 
 Продовжувати роботу в автономному режимі.</translation>
     </message>
@@ -1320,13 +1324,13 @@ Continue working in offline mode.</source>
         <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
 
 Continue working in offline mode.</source>
-        <translation>Даний проект не доступний зараз для синхронізації, тому що закінчилась підписка. 
+        <translation type="vanished">Даний проект не доступний зараз для синхронізації, тому що закінчилась підписка. 
 
 Продовжувати роботу в автономному режимі.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Помилка</translation>
+        <translation type="vanished">Помилка</translation>
     </message>
     <message>
         <source>Exit from Application</source>
@@ -1378,11 +1382,11 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <source>Characters</source>
-        <translation>Герої</translation>
+        <translation type="vanished">Герої</translation>
     </message>
     <message>
         <source>Locations</source>
-        <translation>Локації</translation>
+        <translation type="vanished">Локації</translation>
     </message>
     <message>
         <source>Statistics</source>
@@ -1557,26 +1561,26 @@ Project didn&apos;t synchronized.</source>
     <name>ManagementLayer::CharactersManager</name>
     <message>
         <source>Are you shure to remove characters: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Ви впевнені, що хочете видалити героїв: &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation type="vanished">Ви впевнені, що хочете видалити героїв: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersNavigatorManager</name>
     <message>
         <source>Add Character</source>
-        <translation>Додати Героя</translation>
+        <translation type="vanished">Додати Героя</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Ім&apos;я</translation>
+        <translation type="vanished">Ім&apos;я</translation>
     </message>
     <message>
         <source>Add Character Error</source>
-        <translation>Помилка додавання героя</translation>
+        <translation type="vanished">Помилка додавання героя</translation>
     </message>
     <message>
         <source>Character with same name already exist in project</source>
-        <translation>Персонаж з таким ім&apos;ям вже існує в проекті</translation>
+        <translation type="vanished">Персонаж з таким ім&apos;ям вже існує в проекті</translation>
     </message>
 </context>
 <context>
@@ -1637,26 +1641,26 @@ Project didn&apos;t synchronized.</source>
     <name>ManagementLayer::LocationsManager</name>
     <message>
         <source>Are you shure to remove locations: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Ви впевнені, що хочете видалити локації: &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation type="vanished">Ви впевнені, що хочете видалити локації: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::LocationsNavigatorManager</name>
     <message>
         <source>Add Location</source>
-        <translation>Додати локацію</translation>
+        <translation type="vanished">Додати локацію</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Ім&apos;я</translation>
+        <translation type="vanished">Ім&apos;я</translation>
     </message>
     <message>
         <source>Add Location Error</source>
-        <translation>Помилка додавання локації</translation>
+        <translation type="vanished">Помилка додавання локації</translation>
     </message>
     <message>
         <source>Location with same name already exist in project</source>
-        <translation>Локація з таким ім&apos;ям вже існує в проекті</translation>
+        <translation type="vanished">Локація з таким ім&apos;ям вже існує в проекті</translation>
     </message>
 </context>
 <context>
@@ -1867,27 +1871,27 @@ Project didn&apos;t synchronized.</source>
     <name>ManagementLayer::SynchronizationManager</name>
     <message>
         <source>Authorizing</source>
-        <translation>Авторизація</translation>
+        <translation type="vanished">Авторизація</translation>
     </message>
     <message>
         <source>Checking correction of user name and password.</source>
-        <translation>Перевірка логіну та пароля.</translation>
+        <translation type="vanished">Перевірка логіну та пароля.</translation>
     </message>
     <message>
         <source>Close working session.</source>
-        <translation>Закрити робочу сесію.</translation>
+        <translation type="vanished">Закрити робочу сесію.</translation>
     </message>
     <message>
         <source>Loading</source>
-        <translation>Завантаження</translation>
+        <translation type="vanished">Завантаження</translation>
     </message>
     <message>
         <source>Loading projects list from remote server.</source>
-        <translation>Завантаження списку проектів з віддаленого серверу.</translation>
+        <translation type="vanished">Завантаження списку проектів з віддаленого серверу.</translation>
     </message>
     <message>
         <source>Can&apos;t estabilish network connection.</source>
-        <translation>Неможливо встановити з&apos;єднання з мережею.</translation>
+        <translation type="vanished">Неможливо встановити з&apos;єднання з мережею.</translation>
     </message>
 </context>
 <context>
@@ -1906,6 +1910,57 @@ Project didn&apos;t synchronized.</source>
     <message>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation>Зображення (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</translation>
+    </message>
+</context>
+<context>
+    <name>PrintCardsDialog</name>
+    <message>
+        <source>Print cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cards on page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished">1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="unfinished">2</translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation type="unfinished">4</translation>
+    </message>
+    <message>
+        <source>6</source>
+        <translation type="unfinished">6</translation>
+    </message>
+    <message>
+        <source>8</source>
+        <translation type="unfinished">8</translation>
+    </message>
+    <message>
+        <source>Page orientation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+    <message>
+        <source>Print Preview</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2113,7 +2168,7 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation type="vanished">Ctrl+F</translation>
     </message>
     <message>
         <source>words:</source>
@@ -2325,7 +2380,7 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>&lt;h2&gt;Images Galerry&lt;/h2&gt;</source>
-        <translation>&lt;h2&gt;Галерея&lt;/h2&gt;</translation>
+        <translation type="vanished">&lt;h2&gt;Галерея&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Url&lt;/h2&gt;</source>
@@ -2338,6 +2393,10 @@ Project didn&apos;t synchronized.</source>
     <message>
         <source>&lt;h2&gt;Images Gallery&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Галерея&lt;/h2&gt;</translation>
+    </message>
+    <message>
+        <source>Ctrl+Tab</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2362,11 +2421,11 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Scenes Group</source>
-        <translation>Група сцен</translation>
+        <translation type="vanished">Група сцен</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation>Папка</translation>
+        <translation type="vanished">Папка</translation>
     </message>
     <message>
         <source>Description</source>
@@ -2524,11 +2583,11 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Characters module</source>
-        <translation>Герої</translation>
+        <translation type="vanished">Герої</translation>
     </message>
     <message>
         <source>Locations module</source>
-        <translation>Локації</translation>
+        <translation type="vanished">Локації</translation>
     </message>
     <message>
         <source>Statistics module</source>
@@ -2884,7 +2943,7 @@ Paragraph</source>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Logout&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Вийти&lt;/a&gt;</translation>
+        <translation type="vanished">&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Вийти&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Projects from local computer</source>
@@ -3385,34 +3444,34 @@ Paragraph</source>
     <name>UserInterface::CharactersDataEdit</name>
     <message>
         <source>Choose Character</source>
-        <translation>Вибрати героя</translation>
+        <translation type="vanished">Вибрати героя</translation>
     </message>
     <message>
         <source>Character name</source>
-        <translation>Ім&apos;я героя</translation>
+        <translation type="vanished">Ім&apos;я героя</translation>
     </message>
 </context>
 <context>
     <name>UserInterface::CharactersNavigator</name>
     <message>
         <source>Characters</source>
-        <translation>Герої</translation>
+        <translation type="vanished">Герої</translation>
     </message>
     <message>
         <source>Create New Character</source>
-        <translation>Створити нового героя</translation>
+        <translation type="vanished">Створити нового героя</translation>
     </message>
     <message>
         <source>Remove Selected Character</source>
-        <translation>Видалити вибраного героя</translation>
+        <translation type="vanished">Видалити вибраного героя</translation>
     </message>
     <message>
         <source>Merge Selected Characters</source>
-        <translation>Об&apos;єднати виділених героїв</translation>
+        <translation type="vanished">Об&apos;єднати виділених героїв</translation>
     </message>
     <message>
         <source>Find All Characters from Scenario</source>
-        <translation>Знайти всіх героїв у сценарії</translation>
+        <translation type="vanished">Знайти всіх героїв у сценарії</translation>
     </message>
 </context>
 <context>
@@ -3441,27 +3500,27 @@ Paragraph</source>
     <name>UserInterface::ImportDialog</name>
     <message>
         <source>All Supported Files</source>
-        <translation>Всі підтримувані файли</translation>
+        <translation type="vanished">Всі підтримувані файли</translation>
     </message>
     <message>
         <source>KIT Scenarist Project</source>
-        <translation>Файл проекту сценарію</translation>
+        <translation type="vanished">Файл проекту сценарію</translation>
     </message>
     <message>
         <source>Final Draft screenplay</source>
-        <translation>Сценарій формату Final Draft</translation>
+        <translation type="vanished">Сценарій формату Final Draft</translation>
     </message>
     <message>
         <source>Trelby screenplay</source>
-        <translation>Сценарій формату Trelby</translation>
+        <translation type="vanished">Сценарій формату Trelby</translation>
     </message>
     <message>
         <source>Office Open XML</source>
-        <translation>Office Open XML</translation>
+        <translation type="vanished">Office Open XML</translation>
     </message>
     <message>
         <source>OpenDocument Text</source>
-        <translation>OpenDocument Text</translation>
+        <translation type="vanished">OpenDocument Text</translation>
     </message>
     <message>
         <source>Choose file to import</source>
@@ -3476,30 +3535,30 @@ Paragraph</source>
     <name>UserInterface::LocationsDataEdit</name>
     <message>
         <source>Choose Location</source>
-        <translation>Вибрати локацію</translation>
+        <translation type="vanished">Вибрати локацію</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Локація</translation>
+        <translation type="vanished">Локація</translation>
     </message>
 </context>
 <context>
     <name>UserInterface::LocationsNavigator</name>
     <message>
         <source>Locations</source>
-        <translation>Локації</translation>
+        <translation type="vanished">Локації</translation>
     </message>
     <message>
         <source>Create New Location</source>
-        <translation>Створити нову локацію</translation>
+        <translation type="vanished">Створити нову локацію</translation>
     </message>
     <message>
         <source>Remove Selected Location</source>
-        <translation>Видалити вибрану локацію</translation>
+        <translation type="vanished">Видалити вибрану локацію</translation>
     </message>
     <message>
         <source>Find All Locations From Scenario</source>
-        <translation>Знайти всі локації у сценарії</translation>
+        <translation type="vanished">Знайти всі локації у сценарії</translation>
     </message>
 </context>
 <context>
@@ -3610,15 +3669,15 @@ Paragraph</source>
     </message>
     <message>
         <source>Add note</source>
-        <translation>Додати помітку</translation>
+        <translation type="vanished">Додати помітку</translation>
     </message>
     <message>
         <source>Add horizontal line</source>
-        <translation>Додати горизонтальну лінію</translation>
+        <translation type="vanished">Додати горизонтальну лінію</translation>
     </message>
     <message>
         <source>Add vertical line</source>
-        <translation>Додати вертикальну лінію</translation>
+        <translation type="vanished">Додати вертикальну лінію</translation>
     </message>
     <message>
         <source>Sort cards</source>
@@ -3639,6 +3698,26 @@ Paragraph</source>
     <message>
         <source>Remove selected card</source>
         <translation>Видалити вибрані картки</translation>
+    </message>
+    <message>
+        <source>Cards.png</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG files (*.png)</source>
+        <translation type="unfinished">PNG файли (*.png)</translation>
+    </message>
+    <message>
+        <source>Save cards to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print cards</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3672,7 +3751,7 @@ Paragraph</source>
     </message>
     <message>
         <source>Scenes group</source>
-        <translation>Група сцен</translation>
+        <translation type="vanished">Група сцен</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -3687,19 +3766,19 @@ Paragraph</source>
     <name>UserInterface::ScenarioNavigator</name>
     <message>
         <source>Convert to</source>
-        <translation>Перетворити в</translation>
+        <translation type="vanished">Перетворити в</translation>
     </message>
     <message>
         <source>Scene</source>
-        <translation>Сцена</translation>
+        <translation type="vanished">Сцена</translation>
     </message>
     <message>
         <source>Scenes Group</source>
-        <translation>Група сцен</translation>
+        <translation type="vanished">Група сцен</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation>Папка</translation>
+        <translation type="vanished">Папка</translation>
     </message>
     <message>
         <source>Color %1</source>
@@ -3955,7 +4034,7 @@ Paragraph</source>
     <name>UserInterface::StartUpView</name>
     <message>
         <source>Logout</source>
-        <translation>Вийти</translation>
+        <translation type="vanished">Вийти</translation>
     </message>
     <message>
         <source>Account is active until:</source>

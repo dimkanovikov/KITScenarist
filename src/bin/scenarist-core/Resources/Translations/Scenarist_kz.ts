@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="kk_KZ" sourcelanguage="en_US">
+<TS version="2.1" language="kk_KZ" sourcelanguage="en_US">
 <context>
     <name>AcceptebleLineEdit</name>
     <message>
@@ -57,19 +57,19 @@
     <name>AddProjectDialog</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Project Name</source>
-        <translation>Жоба атауы</translation>
+        <translation type="vanished">Жоба атауы</translation>
     </message>
     <message>
         <source>CREATE</source>
-        <translation>ҚҰРУ</translation>
+        <translation type="vanished">ҚҰРУ</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>БОЛДЫРМАУ</translation>
+        <translation type="vanished">БОЛДЫРМАУ</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="20"/>
@@ -87,34 +87,39 @@
         <translation>Қашықтан</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="64"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="61"/>
         <source>Enter Name of New Project:</source>
         <translation>Жаңа Жобаның Атауын Еңгізіңіз: </translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="99"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="77"/>
+        <source>File exists. It will be replaced after creating.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="105"/>
         <source>Choose Location for New Project File:</source>
         <translation>Жаңа жоба файлының орналасуын таңдаңыз:</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="116"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="156"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="122"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="162"/>
         <source>Browse...</source>
         <translation>Шолу...</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="119"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="159"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="125"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="165"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="139"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="145"/>
         <source>Choose File with Project to Import:</source>
         <translation>Импортталатын жоба файлын таңдаңыз:</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="202"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="208"/>
         <source>Advanced</source>
         <translation>Кеңейтілген</translation>
     </message>
@@ -123,7 +128,7 @@
     <name>ApplicationView</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
 </context>
 <context>
@@ -217,7 +222,7 @@
     <name>BusinessLogic::CharacterReport</name>
     <message>
         <source>Character Report</source>
-        <translation>Кейіпкер диалогтары</translation>
+        <translation type="vanished">Кейіпкер диалогтары</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="27"/>
@@ -430,12 +435,12 @@
     </message>
     <message>
         <source>Scene Group</source>
-        <translation>Сахналар тобы</translation>
+        <translation type="vanished">Сахналар тобы</translation>
     </message>
     <message>
         <source>Scene Group Footer</source>
         <translatorcomment>сноска - сілтеме; нұсқама; түсіндірме (кітап бетінің төменгі жағында берілетін қосымша мәлімет)</translatorcomment>
-        <translation>Сахналар Топтарының Түсіндірмесі</translation>
+        <translation type="vanished">Сахналар Топтарының Түсіндірмесі</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="77"/>
@@ -533,13 +538,13 @@
         <source>SG</source>
         <extracomment>Reduction of Scene Group</extracomment>
         <translatorcomment>Сахналар тобы</translatorcomment>
-        <translation>СТ</translation>
+        <translation type="vanished">СТ</translation>
     </message>
     <message>
         <source>SGF</source>
         <extracomment>Reduction of Scene Group Footer</extracomment>
         <translatorcomment>Сахналар Топтарының Түсіндірмесі</translatorcomment>
-        <translation>СТТ</translation>
+        <translation type="vanished">СТТ</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="114"/>
@@ -589,11 +594,11 @@
     <message>
         <source>CONT&apos;D</source>
         <extracomment>Continued</extracomment>
-        <translation>ЖАЛҒАСЫ</translation>
+        <translation type="vanished">ЖАЛҒАСЫ</translation>
     </message>
     <message>
         <source>MORE</source>
-        <translation>АРЫ ҚАРАЙ</translation>
+        <translation type="vanished">АРЫ ҚАРАЙ</translation>
     </message>
 </context>
 <context>
@@ -787,11 +792,11 @@
     <name>CabinView</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>User Cabinet</source>
-        <translation>Жеке кабинет</translation>
+        <translation type="vanished">Жеке кабинет</translation>
     </message>
 </context>
 <context>
@@ -830,43 +835,43 @@
 <context>
     <name>CardsScene</name>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="638"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="658"/>
         <source>Convert to scene</source>
         <translation>Сахнаға аудару</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="639"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="659"/>
         <source>Convert to folder</source>
         <translation>Папкаға аудару</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="645"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="665"/>
         <source>Edit</source>
         <translation>Өзгерту</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="661"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="681"/>
         <source>Color %1</source>
         <translation>Түс %1</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="663"/>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="700"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="683"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="720"/>
         <source>Remove</source>
         <translation>Жою</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="681"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="701"/>
         <source>Add color</source>
         <translation>Түс қосу</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="699"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="719"/>
         <source>Create card</source>
         <translation>Карта құру</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="741"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="761"/>
         <source>Stamp:</source>
         <translation>Мөрі:</translation>
     </message>
@@ -893,27 +898,27 @@
     <name>CharactersDataEdit</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Add Image</source>
-        <translation>Сурет қосу</translation>
+        <translation type="vanished">Сурет қосу</translation>
     </message>
     <message>
         <source>Choose Character</source>
-        <translation>Кейіпкерді таңдаңыз</translation>
+        <translation type="vanished">Кейіпкерді таңдаңыз</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Сипаттама:</translation>
+        <translation type="vanished">Сипаттама:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Аты:</translation>
+        <translation type="vanished">Аты:</translation>
     </message>
     <message>
         <source>Real Name:</source>
-        <translation>Шын аты:</translation>
+        <translation type="vanished">Шын аты:</translation>
     </message>
 </context>
 <context>
@@ -943,11 +948,11 @@
     <name>DatabaseLayer::Database</name>
     <message>
         <source>Project was created in desktop version.</source>
-        <translation>Жоба ПК нұсқасында жасалған.</translation>
+        <translation type="vanished">Жоба ПК нұсқасында жасалған.</translation>
     </message>
     <message>
         <source>Project was created in mobile version.</source>
-        <translation>Жоба мобильді нұсқасында жасалған.</translation>
+        <translation type="vanished">Жоба мобильді нұсқасында жасалған.</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="59"/>
@@ -1053,7 +1058,7 @@
     </message>
     <message>
         <source>File:</source>
-        <translation>Файл:</translation>
+        <translation type="vanished">Файл:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="185"/>
@@ -1204,83 +1209,82 @@
     <message>
         <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="355"/>
         <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="398"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="471"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="496"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="509"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="538"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="567"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="597"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="620"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="650"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="685"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="784"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="461"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="486"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="499"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="528"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="557"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="587"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="610"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="640"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="675"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="774"/>
         <source>No active node.</source>
         <translation>Активті түйін жоқ.</translation>
     </message>
     <message>
         <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="375"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="418"/>
         <source>New node would be placed outside of the scene.</source>
         <translation>Жаңа түйін сақынаның сыртынан орналастырылады.</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="439"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="429"/>
         <source>No active node</source>
         <translation>Активті түйін жоқ</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="453"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="443"/>
         <source>Node hasn&apos;t parent for add sibling node</source>
         <translation>Түйіндік байланысты қосу үшін түйіннің негізі жоқ</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="477"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="467"/>
         <source>Base node cannot be deleted.</source>
         <translation>Негізгі түйінді жою мүнкім емес.</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="515"/>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="544"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="505"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="534"/>
         <source>Too much scaling.</source>
         <translation>Өте көп көлемдету.</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="575"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="565"/>
         <source>Select node color</source>
         <translation>Түйін түсін таңдау</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="628"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="618"/>
         <source>Select text color</source>
         <translation>Мәтін түсін таңдау</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="671"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="661"/>
         <source>Add edge: select destination node.</source>
         <translation>Қырды қосу: тағайындалған түйінді таңдаңыз. </translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="677"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="667"/>
         <source>Delete edge: select other end-node.</source>
         <translation>Қырды жою: басқа соңғы түйніді таңдаңыз. </translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="736"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="726"/>
         <source>Edge adding cancelled.</source>
         <translation>Қырды қосуды болдырмау.</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="743"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="733"/>
         <source>Edge deleting cancelled.</source>
         <translation>Қырды жоюды болдырмау.</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="845"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="835"/>
         <source>There is already an edge between these two nodes.</source>
         <translation>Бүл екі түйін арасында қыр бар.</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="876"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="866"/>
         <source>There is no edge between these two nodes.</source>
         <translation>Бүл екі түйін арасында қыр жоқ.</translation>
     </message>
@@ -1304,7 +1308,7 @@
     </message>
     <message>
         <source>File:</source>
-        <translation>Файл:</translation>
+        <translation type="vanished">Файл:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui" line="71"/>
@@ -1411,53 +1415,53 @@
     </message>
     <message>
         <source>System</source>
-        <translation>Жүйелік</translation>
+        <translation type="vanished">Жүйелік</translation>
     </message>
 </context>
 <context>
     <name>LocationsDataEdit</name>
     <message>
         <source>Dialog</source>
-        <translation>Диалог</translation>
+        <translation type="vanished">Диалог</translation>
     </message>
     <message>
         <source>Add Image</source>
-        <translation>Сурет қосу</translation>
+        <translation type="vanished">Сурет қосу</translation>
     </message>
     <message>
         <source>Choose Location</source>
-        <translation>Мекенжайды таңдаңыз</translation>
+        <translation type="vanished">Мекенжайды таңдаңыз</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Аты:</translation>
+        <translation type="vanished">Аты:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Сипаттама:</translation>
+        <translation type="vanished">Сипаттама:</translation>
     </message>
 </context>
 <context>
     <name>LoginDialog</name>
     <message>
         <source>Authorization</source>
-        <translation>Тіркелу</translation>
+        <translation type="vanished">Тіркелу</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Registration&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Тіркелу&lt;/a&gt;</translation>
+        <translation type="vanished">&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Тіркелу&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Error message</source>
-        <translation>Қателік хабарламасы</translation>
+        <translation type="vanished">Қателік хабарламасы</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="vanished">Пайдаланушы аты</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Құпиясөз</translation>
+        <translation type="vanished">Құпиясөз</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/LoginDialog.ui" line="60"/>
@@ -1512,27 +1516,27 @@
     <name>LoginView</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Error message</source>
-        <translation>Қателік хабарламасы</translation>
+        <translation type="vanished">Қателік хабарламасы</translation>
     </message>
     <message>
         <source>User Name</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="vanished">Пайдаланушы аты</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Құпиясөз</translation>
+        <translation type="vanished">Құпиясөз</translation>
     </message>
     <message>
         <source>SIGN UP</source>
-        <translation>ТІРКЕЛУ</translation>
+        <translation type="vanished">ТІРКЕЛУ</translation>
     </message>
     <message>
         <source>LOG IN</source>
-        <translation>КІРУ</translation>
+        <translation type="vanished">КІРУ</translation>
     </message>
 </context>
 <context>
@@ -1555,7 +1559,7 @@
     </message>
     <message>
         <source>Choose file for new project</source>
-        <translation>Жаңа жоба үшін файлды таңдаңыз</translation>
+        <translation type="vanished">Жаңа жоба үшін файлды таңдаңыз</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="419"/>
@@ -1672,7 +1676,7 @@
     </message>
     <message>
         <source>Project sinchronized</source>
-        <translation>Жоба біріктірілді</translation>
+        <translation type="vanished">Жоба біріктірілді</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="915"/>
@@ -1688,7 +1692,7 @@
         <source>Can&apos;t estabilish network connection.
 
 Continue working in offline mode.</source>
-        <translation>Желімен байланыс орнатылмады.
+        <translation type="vanished">Желімен байланыс орнатылмады.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1706,7 +1710,7 @@ Continue working in offline mode.</source>
         <source>Buyed subscription period is finished.
 
 Continue working in offline mode.</source>
-        <translation>Жазылудың төленген кезеңі аяқталды.
+        <translation type="vanished">Жазылудың төленген кезеңі аяқталды.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1719,7 +1723,7 @@ Continue working in offline mode.</source>
         <source>Can&apos;t correct load all data from service. Please check your internet connection quality and refresh synchronization.
 
 Continue working in offline mode.</source>
-        <translation>Серверден барлық деректерді дұрыс жүктеу мүмкін болмады. Өтініш, желі байланысының сапасын тексеріңіз және бағдарламаны қайта қосыңыз.
+        <translation type="vanished">Серверден барлық деректерді дұрыс жүктеу мүмкін болмады. Өтініш, желі байланысының сапасын тексеріңіз және бағдарламаны қайта қосыңыз.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1730,13 +1734,13 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <source>New session for you account started at other device. Restart session?</source>
-        <translation>Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?</translation>
+        <translation type="vanished">Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?</translation>
     </message>
     <message>
         <source>New session for you account started at other device.
 
 Continue working in offline mode.</source>
-        <translation>Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
+        <translation type="vanished">Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1749,13 +1753,13 @@ Continue working in offline mode.</source>
         <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
 
 Continue working in offline mode.</source>
-        <translation>Жобаны біріктіру мүмкін емес, себебі, жоба басқарушысында жазылу уақыты аяқталды.
+        <translation type="vanished">Жобаны біріктіру мүмкін емес, себебі, жоба басқарушысында жазылу уақыты аяқталды.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation type="vanished">Қате</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="858"/>
@@ -1884,167 +1888,167 @@ Project didn&apos;t synchronized.</source>
         <translation>Сабыр етіңіз. Жүктеу бірнеше минутқа созылуы мүмкін.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1415"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1417"/>
         <source>Sync scenario with cloud service.</source>
         <translation>Сценарий бұлтты сервиспен біріктірілуде.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1520"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1522"/>
         <source>Menu</source>
         <translation>Мәзір</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1530"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1532"/>
         <source>New window</source>
         <translation>Жаңа терезе</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1545"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1555"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1547"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1557"/>
         <source>Start</source>
         <translation>Бастау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1546"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1556"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1548"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1558"/>
         <source>Research</source>
         <translation>Жобалау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1547"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1557"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1549"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1559"/>
         <source>Cards</source>
         <translation>Карталар</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1548"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1558"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1550"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1560"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
         <source>Characters</source>
-        <translation>Кейіпкерлер</translation>
+        <translation type="vanished">Кейіпкерлер</translation>
     </message>
     <message>
         <source>Locations</source>
-        <translation>Мекенжайлар</translation>
+        <translation type="vanished">Мекенжайлар</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1549"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1559"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1551"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1561"/>
         <source>Statistics</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1550"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1560"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1552"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1562"/>
         <source>Settings</source>
         <translation>Баптаулар</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1624"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1626"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1628"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1630"/>
         <source>New</source>
         <translation>Жаңа</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1629"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1631"/>
         <source>Open</source>
         <translation>Ашу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1630"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1632"/>
         <source>Save</source>
         <translation>Сақтау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1632"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1634"/>
         <source>Save As...</source>
         <translation>Көрсетілгендей Сақтау...</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1638"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1640"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1641"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1643"/>
         <source>Export to...</source>
         <translation>Экспорттау...</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1644"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1646"/>
         <source>Print Preview</source>
         <translation>Баспа түрінде көру</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1649"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1651"/>
         <source>Two Panel Mode</source>
         <translation>Екі панельді тәртіптеме</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="2017"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="2019"/>
         <source>%1[*] - KIT Scenarist</source>
         <translation>%1 [*] - КИТ Сценарист</translation>
     </message>
     <message>
         <source>Can&apos;t estabilish network connection.
 Continue working in offline mode.</source>
-        <translation>Желімен байланыс орнатылмады.
+        <translation type="vanished">Желімен байланыс орнатылмады.
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
-        <translation>Жазылудың төленген кезеңі аяқталды.
+        <translation type="vanished">Жазылудың төленген кезеңі аяқталды.
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>New session for you account started at other device.
 Continue working in offline mode.</source>
-        <translation>Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
+        <translation type="vanished">Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
-        <translation>Кәзір жобаны біріктіру мүмкін емес.
+        <translation type="vanished">Кәзір жобаны біріктіру мүмкін емес.
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Closing Database Connections and Remove Temporatry Files.</source>
-        <translation>Деректер базасымен байланысты үзу және уақытша файлдарды өшіру.</translation>
+        <translation type="vanished">Деректер базасымен байланысты үзу және уақытша файлдарды өшіру.</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersManager</name>
     <message>
         <source>Are you shure to remove characters: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Келесі кейіпкерлерді жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation type="vanished">Келесі кейіпкерлерді жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersNavigatorManager</name>
     <message>
         <source>Add Character</source>
-        <translation>Кейіпкер қосу</translation>
+        <translation type="vanished">Кейіпкер қосу</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation type="vanished">Аты</translation>
     </message>
     <message>
         <source>Add Character Error</source>
-        <translation>Кейіпкерді қосу қателігі</translation>
+        <translation type="vanished">Кейіпкерді қосу қателігі</translation>
     </message>
     <message>
         <source>Character with same name already exist in project</source>
-        <translation>Жобада бұндай атаумен кейіпкер бар</translation>
+        <translation type="vanished">Жобада бұндай атаумен кейіпкер бар</translation>
     </message>
 </context>
 <context>
@@ -2117,26 +2121,26 @@ Continue working with this project in offline mode.</source>
     <name>ManagementLayer::LocationsManager</name>
     <message>
         <source>Are you shure to remove locations: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Мекенжайды жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation type="vanished">Мекенжайды жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::LocationsNavigatorManager</name>
     <message>
         <source>Add Location</source>
-        <translation>Мекенжай қосу</translation>
+        <translation type="vanished">Мекенжай қосу</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Атауы</translation>
+        <translation type="vanished">Атауы</translation>
     </message>
     <message>
         <source>Add Location Error</source>
-        <translation>Мекенжайды қосу қателігі</translation>
+        <translation type="vanished">Мекенжайды қосу қателігі</translation>
     </message>
     <message>
         <source>Location with same name already exist in project</source>
-        <translation>Осылай аталған мекенжай жобада бар</translation>
+        <translation type="vanished">Осылай аталған мекенжай жобада бар</translation>
     </message>
 </context>
 <context>
@@ -2160,32 +2164,32 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::ResearchManager</name>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="360"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="367"/>
         <source>Are you shure to remove research: &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Жобалау элементтерін алып тастау: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="435"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="442"/>
         <source>Add New</source>
         <translation>Қосу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="437"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="444"/>
         <source>Remove</source>
         <translation>Жою</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="441"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="448"/>
         <source>Find All Characters from Script</source>
         <translation>Сценариядағы барлық кейіпкерлерді іздеу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="442"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="449"/>
         <source>Find All Locations from Script</source>
         <translation>Сценариядағы барлық мекенжайларды іздеу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="625"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="633"/>
         <source>Unnamed image</source>
         <translation>атаусыз</translation>
     </message>
@@ -2193,12 +2197,12 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::ScenarioCardsManager</name>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Scenario/ScenarioCardsManager.cpp" line="224"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Scenario/ScenarioCardsManager.cpp" line="233"/>
         <source>Add card</source>
         <translation>Түс қосу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Scenario/ScenarioCardsManager.cpp" line="264"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Scenario/ScenarioCardsManager.cpp" line="273"/>
         <source>Edit card</source>
         <translation>Картаны редактілеу</translation>
     </message>
@@ -2397,58 +2401,58 @@ Continue working with this project in offline mode.</source>
     <name>ManagementLayer::SynchronizationManager</name>
     <message>
         <source>Authorizing</source>
-        <translation>Авторизация</translation>
+        <translation type="vanished">Авторизация</translation>
     </message>
     <message>
         <source>Checking correction of user name and password.</source>
-        <translation>Қолданушының құпиясөзімен  атыжөнінің дұрыстығын тексеру.</translation>
+        <translation type="vanished">Қолданушының құпиясөзімен  атыжөнінің дұрыстығын тексеру.</translation>
     </message>
     <message>
         <source>Close working session.</source>
-        <translation>Істеп тұрған байланысты үзу.</translation>
+        <translation type="vanished">Істеп тұрған байланысты үзу.</translation>
     </message>
     <message>
         <source>Loading</source>
-        <translation>Жүктелу</translation>
+        <translation type="vanished">Жүктелу</translation>
     </message>
     <message>
         <source>Loading projects list from remote server.</source>
-        <translation>Серверде бар жобалардың тізімін жүктеу.</translation>
+        <translation type="vanished">Серверде бар жобалардың тізімін жүктеу.</translation>
     </message>
     <message>
         <source>Can&apos;t estabilish network connection.</source>
-        <translation>Желімен байланыс жоқ.</translation>
+        <translation type="vanished">Желімен байланыс жоқ.</translation>
     </message>
 </context>
 <context>
     <name>MenuView</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>     Cabin</source>
-        <translation>     Жеке кабинет</translation>
+        <translation type="vanished">     Жеке кабинет</translation>
     </message>
     <message>
         <source>     Projects</source>
-        <translation>     Жобалар</translation>
+        <translation type="vanished">     Жобалар</translation>
     </message>
     <message>
         <source>Project name</source>
-        <translation>Жоба атауы</translation>
+        <translation type="vanished">Жоба атауы</translation>
     </message>
     <message>
         <source>     Save</source>
-        <translation>     Сақтау</translation>
+        <translation type="vanished">     Сақтау</translation>
     </message>
     <message>
         <source>     Text</source>
-        <translation>     Мәтін</translation>
+        <translation type="vanished">     Мәтін</translation>
     </message>
     <message>
         <source>     Settings</source>
-        <translation>     Баптамалар</translation>
+        <translation type="vanished">     Баптамалар</translation>
     </message>
 </context>
 <context>
@@ -2477,6 +2481,69 @@ Continue working with this project in offline mode.</source>
         <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="81"/>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation>Суреттер (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</translation>
+    </message>
+</context>
+<context>
+    <name>PrintCardsDialog</name>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="14"/>
+        <source>Print cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="22"/>
+        <source>Cards on page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="29"/>
+        <source>1</source>
+        <translation type="unfinished">1</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="39"/>
+        <source>2</source>
+        <translation type="unfinished">2</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="46"/>
+        <source>4</source>
+        <translation type="unfinished">4</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="53"/>
+        <source>6</source>
+        <translation type="unfinished">6</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="60"/>
+        <source>8</source>
+        <translation type="unfinished">8</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="382"/>
+        <source>Page orientation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="389"/>
+        <source>Portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="399"/>
+        <source>Landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="450"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Болдырмау</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui" line="457"/>
+        <source>Print Preview</source>
+        <translation type="unfinished">Баспа түрінде көру</translation>
     </message>
 </context>
 <context>
@@ -2526,7 +2593,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
-        <translation>ТОПТЫҢ СОҢЫ</translation>
+        <translation type="vanished">ТОПТЫҢ СОҢЫ</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="604"/>
@@ -2616,7 +2683,7 @@ Continue working with this project in offline mode.</source>
         <translation>Түйін мәтінінің түсін өзгерту: &quot;</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="854"/>
+        <location filename="../../3rd_party/Widgets/QtMindMap/src/graphlogic.cpp" line="844"/>
         <source>The graph is acyclic, edge added as secondary edge.</source>
         <translation>Ациклдік кескіннің қыры, қосымша қыр болып қосылды.</translation>
     </message>
@@ -2739,9 +2806,8 @@ Continue working with this project in offline mode.</source>
         <translation>Жобалау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="114"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation type="vanished">Ctrl+F</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="174"/>
@@ -2774,6 +2840,11 @@ Continue working with this project in offline mode.</source>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="107"/>
         <source>Search</source>
         <translation>Іздеу</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="114"/>
+        <source>Ctrl+Tab</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="154"/>
@@ -2994,7 +3065,7 @@ Continue working with this project in offline mode.</source>
     </message>
     <message>
         <source>&lt;h2&gt;Images Galerry&lt;/h2&gt;</source>
-        <translation>&lt;h2&gt;Суреттер Галереясы&lt;/h2&gt;</translation>
+        <translation type="vanished">&lt;h2&gt;Суреттер Галереясы&lt;/h2&gt;</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="823"/>
@@ -3031,11 +3102,11 @@ Continue working with this project in offline mode.</source>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Атауы:</translation>
+        <translation type="vanished">Атауы:</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Мәтін:</translation>
+        <translation type="vanished">Мәтін:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="962"/>
@@ -3049,7 +3120,7 @@ Continue working with this project in offline mode.</source>
     </message>
     <message>
         <source>Images:</source>
-        <translation>Суреттер:</translation>
+        <translation type="vanished">Суреттер:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="1043"/>
@@ -3083,30 +3154,30 @@ Continue working with this project in offline mode.</source>
     <name>ScenarioDataEdit</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Source</source>
-        <translation>Негізі</translation>
+        <translation type="vanished">Негізі</translation>
     </message>
     <message>
         <source>From scenario</source>
-        <translation>Сахналар  сипаттамаларын бір документке жинау</translation>
+        <translation type="vanished">Сахналар  сипаттамаларын бір документке жинау</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Атауы:</translation>
+        <translation type="vanished">Атауы:</translation>
     </message>
 </context>
 <context>
     <name>ScenarioNavigatorView</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Scenario Name</source>
-        <translation>Сценария атауы</translation>
+        <translation type="vanished">Сценария атауы</translation>
     </message>
 </context>
 <context>
@@ -3141,41 +3212,41 @@ Continue working with this project in offline mode.</source>
     <message>
         <source>Form</source>
         <translatorcomment>Форма</translatorcomment>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Scenario Name</source>
-        <translation>Сценария атауы</translation>
+        <translation type="vanished">Сценария атауы</translation>
     </message>
     <message>
         <source>SH</source>
         <translatorcomment>Менекжай және уақыт</translatorcomment>
-        <translation>МУ</translation>
+        <translation type="vanished">МУ</translation>
     </message>
     <message>
         <source>SC</source>
         <translatorcomment>Сахнаға қатысушылар</translatorcomment>
-        <translation>СҚ</translation>
+        <translation type="vanished">СҚ</translation>
     </message>
     <message>
         <source>A</source>
         <translatorcomment>Әрекет сипаттамасы</translatorcomment>
-        <translation>ӘС</translation>
+        <translation type="vanished">ӘС</translation>
     </message>
     <message>
         <source>C</source>
         <translatorcomment>Кейіпкер</translatorcomment>
-        <translation>Ке</translation>
+        <translation type="vanished">Ке</translation>
     </message>
     <message>
         <source>D</source>
         <translatorcomment>Диалог</translatorcomment>
-        <translation>Ди</translation>
+        <translation type="vanished">Ди</translation>
     </message>
     <message>
         <source>P</source>
         <translatorcomment>Кіріспе</translatorcomment>
-        <translation>Кі</translation>
+        <translation type="vanished">Кі</translation>
     </message>
 </context>
 <context>
@@ -3356,11 +3427,11 @@ Continue working with this project in offline mode.</source>
     </message>
     <message>
         <source>Characters module</source>
-        <translation>Кейіпкерлер бөлімі</translation>
+        <translation type="vanished">Кейіпкерлер бөлімі</translation>
     </message>
     <message>
         <source>Locations module</source>
-        <translation>Мекенжайлар бөлімі</translation>
+        <translation type="vanished">Мекенжайлар бөлімі</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="391"/>
@@ -3454,11 +3525,11 @@ Continue working with this project in offline mode.</source>
     </message>
     <message>
         <source>Automatically continue dialogue</source>
-        <translation>Диалогты автоматты түрде жалғастыру</translation>
+        <translation type="vanished">Диалогты автоматты түрде жалғастыру</translation>
     </message>
     <message>
         <source>Automatically corrections on page breaks</source>
-        <translation>Парақтар соңындағы мәтіндерді түзеу</translation>
+        <translation type="vanished">Парақтар соңындағы мәтіндерді түзеу</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1378"/>
@@ -3700,51 +3771,51 @@ Paragraph</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Баптаулар</translation>
+        <translation type="vanished">Баптаулар</translation>
     </message>
     <message>
         <source>Two Panel Mode</source>
-        <translation>Екі панельді тәртіптемені қолдану</translation>
+        <translation type="vanished">Екі панельді тәртіптемені қолдану</translation>
     </message>
     <message>
         <source>Colors for</source>
-        <translation>Түстер</translation>
+        <translation type="vanished">Түстер</translation>
     </message>
     <message>
         <source>Enable automatically replacing</source>
-        <translation>Автоматты түрде ауыстыруда қосу</translation>
+        <translation type="vanished">Автоматты түрде ауыстыруда қосу</translation>
     </message>
     <message>
         <source>Replace lowercase characters to uppercase on start of sentence.
 Replace three single dots to threedots character.
 Replace quotes to language specific.</source>
-        <translation>Сөйлем басындағы кіші әріптерді үлкен әріпке ауыстыру.
+        <translation type="vanished">Сөйлем басындағы кіші әріптерді үлкен әріпке ауыстыру.
 Үш нүктені көп нүкте таңбасына ауыстыру.
 Тырнақшаларды жазылған тіл ерекшелігіне байланысты ауыстыру.</translation>
     </message>
     <message>
         <source>Automatically jump to next paragraph (in scene headings and characters)</source>
-        <translation>Автоматты түрде жаңа параграфқа көшу (&quot;Мекенжай және уақыт&quot; және &quot;Кейіпкер&quot; бөлімдерінде)</translation>
+        <translation type="vanished">Автоматты түрде жаңа параграфқа көшу (&quot;Мекенжай және уақыт&quot; және &quot;Кейіпкер&quot; бөлімдерінде)</translation>
     </message>
     <message>
         <source>Show suggestions in empty blocks</source>
-        <translation>Бос блогтарда көмек мәліметтерін көрсету</translation>
+        <translation type="vanished">Бос блогтарда көмек мәліметтерін көрсету</translation>
     </message>
     <message>
         <source>Use MS Word like highlighting colors</source>
-        <translation>MS Word тәріздес маркермен белгілеуді қолдану</translation>
+        <translation type="vanished">MS Word тәріздес маркермен белгілеуді қолдану</translation>
     </message>
     <message>
         <source>Simbols Counter</source>
-        <translation>Таңбалар санаушы</translation>
+        <translation type="vanished">Таңбалар санаушы</translation>
     </message>
     <message>
         <source>Pages Counter</source>
-        <translation>Парақтар санаушысы</translation>
+        <translation type="vanished">Парақтар санаушысы</translation>
     </message>
     <message>
         <source>Words Counter</source>
-        <translation>Сөздер санаушысы</translation>
+        <translation type="vanished">Сөздер санаушысы</translation>
     </message>
 </context>
 <context>
@@ -3779,15 +3850,15 @@ Replace quotes to language specific.</source>
     <name>SimpleTextEditor</name>
     <message>
         <source>Bold</source>
-        <translation>Жуан</translation>
+        <translation type="vanished">Жуан</translation>
     </message>
     <message>
         <source>Italic</source>
-        <translation>Көлденең</translation>
+        <translation type="vanished">Көлденең</translation>
     </message>
     <message>
         <source>Underline</source>
-        <translation>Сызылған</translation>
+        <translation type="vanished">Сызылған</translation>
     </message>
 </context>
 <context>
@@ -3920,7 +3991,7 @@ Replace quotes to language specific.</source>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Logout&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Шығу&lt;/a&gt;</translation>
+        <translation type="vanished">&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Шығу&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="546"/>
@@ -3939,7 +4010,7 @@ Replace quotes to language specific.</source>
     </message>
     <message>
         <source>Projects</source>
-        <translation>Жобалар</translation>
+        <translation type="vanished">Жобалар</translation>
     </message>
 </context>
 <context>
@@ -4485,12 +4556,12 @@ Replace quotes to language specific.</source>
         <translation>Құру</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp" line="151"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp" line="158"/>
         <source>Choose file for new project</source>
         <translation>Жаңа жоба үшін файлды таңдаңыз</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp" line="165"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp" line="172"/>
         <source>Choose file to import</source>
         <translation>Импортталатын файлды таңдаңыз</translation>
     </message>
@@ -4515,34 +4586,34 @@ Replace quotes to language specific.</source>
     <name>UserInterface::CharactersDataEdit</name>
     <message>
         <source>Choose Character</source>
-        <translation>Есептемені дайындау</translation>
+        <translation type="vanished">Есептемені дайындау</translation>
     </message>
     <message>
         <source>Character name</source>
-        <translation>Кейіпкер аты</translation>
+        <translation type="vanished">Кейіпкер аты</translation>
     </message>
 </context>
 <context>
     <name>UserInterface::CharactersNavigator</name>
     <message>
         <source>Characters</source>
-        <translation>Кейіпкерлер</translation>
+        <translation type="vanished">Кейіпкерлер</translation>
     </message>
     <message>
         <source>Create New Character</source>
-        <translation>Жаңа кейіпкер қосу</translation>
+        <translation type="vanished">Жаңа кейіпкер қосу</translation>
     </message>
     <message>
         <source>Remove Selected Character</source>
-        <translation>Таңдалған кейіпкерді жою</translation>
+        <translation type="vanished">Таңдалған кейіпкерді жою</translation>
     </message>
     <message>
         <source>Merge Selected Characters</source>
-        <translation>Таңдалған кейіпкерлерді біріктіру</translation>
+        <translation type="vanished">Таңдалған кейіпкерлерді біріктіру</translation>
     </message>
     <message>
         <source>Find All Characters from Scenario</source>
-        <translation>Сценариядағы барлық кейіпкерлерді іздеу</translation>
+        <translation type="vanished">Сценариядағы барлық кейіпкерлерді іздеу</translation>
     </message>
 </context>
 <context>
@@ -4576,11 +4647,11 @@ Replace quotes to language specific.</source>
     <message>
         <source>All Supported Files</source>
         <translatorcomment>нақты емес</translatorcomment>
-        <translation>Бекітілген барлық файлдар</translation>
+        <translation type="vanished">Бекітілген барлық файлдар</translation>
     </message>
     <message>
         <source>KIT Scenarist Project</source>
-        <translation>Сценария жобасының файлы</translation>
+        <translation type="vanished">Сценария жобасының файлы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.cpp" line="82"/>
@@ -4597,30 +4668,30 @@ Replace quotes to language specific.</source>
     <name>UserInterface::LocationsDataEdit</name>
     <message>
         <source>Choose Location</source>
-        <translation>Мекенжайды таңдаңыз</translation>
+        <translation type="vanished">Мекенжайды таңдаңыз</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Мекенжай</translation>
+        <translation type="vanished">Мекенжай</translation>
     </message>
 </context>
 <context>
     <name>UserInterface::LocationsNavigator</name>
     <message>
         <source>Locations</source>
-        <translation>Мекенжайлар</translation>
+        <translation type="vanished">Мекенжайлар</translation>
     </message>
     <message>
         <source>Create New Location</source>
-        <translation>Жаңа мекенжай қосу</translation>
+        <translation type="vanished">Жаңа мекенжай қосу</translation>
     </message>
     <message>
         <source>Remove Selected Location</source>
-        <translation>Таңдалған мекенжайды жою</translation>
+        <translation type="vanished">Таңдалған мекенжайды жою</translation>
     </message>
     <message>
         <source>Find All Locations From Scenario</source>
-        <translation>Сценариядағы барлық мекенжайларды іздеу</translation>
+        <translation type="vanished">Сценариядағы барлық мекенжайларды іздеу</translation>
     </message>
 </context>
 <context>
@@ -4738,12 +4809,12 @@ Replace quotes to language specific.</source>
         <translation>Мекенжай атауы</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="677"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="694"/>
         <source>Choose image</source>
         <translation>Суретті таңдаңыз</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="679"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="696"/>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation>Суреттер (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</translation>
     </message>
@@ -4751,32 +4822,57 @@ Replace quotes to language specific.</source>
 <context>
     <name>UserInterface::ScenarioCardsView</name>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="158"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="215"/>
         <source>Add new card</source>
         <translation>Жаңа карта қосу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="147"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="204"/>
         <source>Draft</source>
         <translation>Өздік жазба</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="152"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="120"/>
+        <source>Cards.png</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="121"/>
+        <source>Save cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="121"/>
+        <source>PNG files (*.png)</source>
+        <translation type="unfinished">PNG файлдары (*.png)</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="209"/>
         <source>Script</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="161"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="218"/>
         <source>Remove selected card</source>
         <translation>Таңдалған картаны жою</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="164"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="221"/>
         <source>Sort cards</source>
         <translation>Карталарды сұрыптау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="179"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="235"/>
+        <source>Save cards to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="238"/>
+        <source>Print cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp" line="242"/>
         <source>On/off fullscreen mode (F5)</source>
         <translation>Толық экранды тәртіптемені қосу/өшіру (F5)</translation>
     </message>
@@ -4818,7 +4914,7 @@ Replace quotes to language specific.</source>
     </message>
     <message>
         <source>Scenes group</source>
-        <translation>Сахналар тобы</translation>
+        <translation type="vanished">Сахналар тобы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp" line="101"/>
@@ -4984,7 +5080,7 @@ Replace quotes to language specific.</source>
     <name>UserInterface::ScenarioSceneDescription</name>
     <message>
         <source>Notes of</source>
-        <translation>Сахна сипаттамасы</translation>
+        <translation type="vanished">Сахна сипаттамасы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp" line="96"/>
@@ -5009,43 +5105,43 @@ Replace quotes to language specific.</source>
 <context>
     <name>UserInterface::ScenarioTextEditWidget</name>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="97"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="98"/>
         <source>DRAFT</source>
         <translation>ӨЗДІК ЖАЗБА</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="606"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="609"/>
         <source>Outline mode</source>
         <translatorcomment>нақты емес</translatorcomment>
         <translation>Бөлімдер түрінде</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="609"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="612"/>
         <source>Current Text Block Style</source>
         <translation>Ағымды мәтін блогының стилі</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="615"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="618"/>
         <source>Undo last action</source>
         <translation>Ақырғы әрекетті болдырмау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="618"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="621"/>
         <source>Redo last action</source>
         <translation>Ақырғы әрекетті қайталау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="622"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="625"/>
         <source>Search and Replace</source>
         <translation>Іздеу және ауыстыру</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="628"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="630"/>
         <source>Text Fast Format</source>
         <translation>Мәтінді жылдам форматтау</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="633"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="635"/>
         <source>Duration from Start to Cursor Position | Full Duration</source>
         <translation>Басынан кәзіргі орынға дейінгі хронометраж| Толық хронометраж</translation>
     </message>
@@ -5054,11 +5150,11 @@ Replace quotes to language specific.</source>
     <name>UserInterface::ScenarioTextView</name>
     <message>
         <source>DRAFT</source>
-        <translation>ӨЗДІК ЖАЗБА</translation>
+        <translation type="vanished">ӨЗДІК ЖАЗБА</translation>
     </message>
     <message>
         <source>Choose block type</source>
-        <translation>Блог форматын таңдаңыз</translation>
+        <translation type="vanished">Блог форматын таңдаңыз</translation>
     </message>
 </context>
 <context>
@@ -5167,11 +5263,11 @@ Replace quotes to language specific.</source>
     <message>
         <source>Shortcuts Settings</source>
         <translatorcomment>нақты емес</translatorcomment>
-        <translation>Жылдам батырмалар баптамалары</translation>
+        <translation type="vanished">Жылдам батырмалар баптамалары</translation>
     </message>
     <message>
         <source>Review</source>
-        <translation>Қысқа шолу</translation>
+        <translation type="vanished">Қысқа шолу</translation>
     </message>
 </context>
 <context>
@@ -5186,7 +5282,7 @@ Replace quotes to language specific.</source>
     <name>UserInterface::StartUpView</name>
     <message>
         <source>Logout</source>
-        <translation>Шығу</translation>
+        <translation type="vanished">Шығу</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.cpp" line="101"/>
@@ -5303,7 +5399,7 @@ Replace quotes to language specific.</source>
     </message>
     <message>
         <source>Character dialogues</source>
-        <translation>Кейіпкерлер диалогы</translation>
+        <translation type="vanished">Кейіпкерлер диалогы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="298"/>
