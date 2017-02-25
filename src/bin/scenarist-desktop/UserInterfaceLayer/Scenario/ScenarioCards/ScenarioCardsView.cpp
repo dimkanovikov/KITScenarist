@@ -199,6 +199,7 @@ void ScenarioCardsView::resortCards()
 
 void ScenarioCardsView::initView(bool _isDraft)
 {
+    m_active->hide();
     if (_isDraft) {
         m_active->setText(tr("Draft"));
     } else {

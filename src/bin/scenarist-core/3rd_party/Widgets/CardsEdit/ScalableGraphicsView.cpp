@@ -15,6 +15,8 @@ ScalableGraphicsView::ScalableGraphicsView(QWidget *parent) :
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
+    setTransformationAnchor(AnchorUnderMouse);
+
     //
     // Отслеживаем жесты
     //

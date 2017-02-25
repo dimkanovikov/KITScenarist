@@ -967,6 +967,10 @@ void CardsScene::dropEvent(QGraphicsSceneDragDropEvent* _event)
 
 void CardsScene::reorderSelectedItem()
 {
+    if (!m_isFixedMode) {
+        return;
+    }
+
     if (!selectedItems().isEmpty()) {
         if (CardItem* movedCard = qgraphicsitem_cast<CardItem*>(selectedItems().first())) {
             //

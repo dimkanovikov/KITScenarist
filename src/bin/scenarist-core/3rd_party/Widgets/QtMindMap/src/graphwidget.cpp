@@ -21,7 +21,6 @@ GraphWidget::GraphWidget(QWidget *parent) :
     //
     m_scene = new QGraphicsScene(this);
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    m_scene->setSceneRect(-5000, -5000, 10000, 10000);
     setScene(m_scene);
 
     //
@@ -33,7 +32,6 @@ GraphWidget::GraphWidget(QWidget *parent) :
     //
     // Остальные настройки
     //
-    setCacheMode(CacheBackground);
     setViewportUpdateMode(BoundingRectViewportUpdate);
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
@@ -274,8 +272,6 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect)
     Q_UNUSED(rect);
 
     painter->fillRect(m_scene->sceneRect(), QApplication::palette().base());
-    painter->setBrush(Qt::NoBrush);
-    painter->drawRect(m_scene->sceneRect());
 }
 
 void GraphWidget::scaleView(qreal factor)
