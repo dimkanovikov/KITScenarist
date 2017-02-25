@@ -77,6 +77,11 @@ void ResearchManager::loadCurrentProject()
     // Загрузим модель разработки
     //
     m_model->load(StorageFacade::researchStorage()->all());
+
+    //
+    // Откроем первый элемент на редактирование
+    //
+    m_view->selectItem(m_model->index(0, 0));
     editResearch(m_model->index(0, 0));
 
     g_isProjectLoading = false;
@@ -138,14 +143,16 @@ void ResearchManager::saveResearch()
     //
     // Сохраняем данные сценария
     //
-    StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(ScenarioData::NAME_KEY));
-    StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(ScenarioData::LOGLINE_KEY));
-    StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY));
-    StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(ScenarioData::GENRE_KEY));
-    StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(ScenarioData::AUTHOR_KEY));
-    StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(ScenarioData::CONTACTS_KEY));
-    StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(ScenarioData::YEAR_KEY));
-    StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
+    if (!m_scenarioData.isEmpty()) {
+        StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(ScenarioData::NAME_KEY));
+        StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(ScenarioData::LOGLINE_KEY));
+        StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY));
+        StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(ScenarioData::GENRE_KEY));
+        StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(ScenarioData::AUTHOR_KEY));
+        StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(ScenarioData::CONTACTS_KEY));
+        StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(ScenarioData::YEAR_KEY));
+        StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
+    }
 
     //
     // Сохраняем элементы разработки
@@ -459,6 +466,7 @@ void ResearchManager::updateScenarioData(const QString& _key, const QString& _va
     // Обновляем данные, если это не загрузка проекта
     //
     if (g_isProjectLoading == false
+        && m_scenarioData.contains(_key)
         && m_scenarioData.value(_key) != _value) {
         m_scenarioData.insert(_key, _value);
         emit researchChanged();
