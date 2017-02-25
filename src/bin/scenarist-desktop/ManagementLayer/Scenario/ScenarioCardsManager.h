@@ -142,6 +142,7 @@ namespace ManagementLayer
          * @brief Переместить сцену в соответствии с перемещённой карточкой
          */
         void moveCard(const QString& _cardId, const QString& _actId, const QString& _previousCardId);
+        void moveCardToGroup(const QString& _cardId, const QString& _groupId);
 
         /**
          * @brief Изменить цвета карточки

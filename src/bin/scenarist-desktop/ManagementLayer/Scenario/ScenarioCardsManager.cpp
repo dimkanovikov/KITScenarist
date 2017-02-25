@@ -324,6 +324,21 @@ void ScenarioCardsManager::moveCard(const QString& _cardId, const QString& _actI
     }
 }
 
+void ScenarioCardsManager::moveCardToGroup(const QString& _cardId, const QString& _groupId)
+{
+    if (!_cardId.isEmpty()) {
+        const QModelIndex parentIndex = m_model->indexForUuid(_groupId);
+        const QModelIndex movedIndex = m_model->indexForUuid(_cardId);
+
+        //
+        // Синхронизируем перемещение с моделью
+        //
+        int previousRow = -1;
+        QMimeData* mime = m_model->mimeData({ movedIndex });
+        m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
+    }
+}
+
 void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
 {
     if (!_uuid.isEmpty()) {
@@ -648,6 +663,7 @@ void ScenarioCardsManager::initConnections()
     connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
     connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
     connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
+    connect(m_view, &ScenarioCardsView::cardMovedToGroup, this, &ScenarioCardsManager::moveCardToGroup);
     connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
     connect(m_view, &ScenarioCardsView::cardTypeChanged, this, &ScenarioCardsManager::changeCardType);
 

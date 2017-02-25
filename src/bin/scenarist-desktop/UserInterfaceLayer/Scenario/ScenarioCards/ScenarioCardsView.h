@@ -139,6 +139,11 @@ namespace UserInterface {
         void cardMoved(const QString& _cardId, const QString& _actId, const QString& _previousCardId);
 
         /**
+         * @brief Карточка была вложена в группирующую карточку
+         */
+        void cardMovedToGroup(const QString& _cardId, const QString& _groupId);
+
+        /**
          * @brief Изменились цвета карточки
          */
         void cardColorsChanged(const QString& _uuid, const QString& _colors);
