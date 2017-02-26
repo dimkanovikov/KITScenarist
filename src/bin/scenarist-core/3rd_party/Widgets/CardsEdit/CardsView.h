@@ -210,7 +210,7 @@ signals:
     void cardMoved(const QString& _cardId, const QString& _actId, const QString& _previousCardId);
 
     /**
-     * @brief Картосчка была вложена в группирующую карточку
+     * @brief Карточка была вложена в группирующую карточку
      */
     void cardMovedToGroup(const QString& _cardId, const QString& _groupId);
 

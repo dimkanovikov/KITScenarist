@@ -294,6 +294,7 @@ void ScenarioCardsView::initConnections()
     connect(m_cards, &CardsView::cardRemoveRequest, this, &ScenarioCardsView::removeCardRequest);
 
     connect(m_cards, &CardsView::cardMoved, this, &ScenarioCardsView::cardMoved);
+    connect(m_cards, &CardsView::cardMovedToGroup, this, &ScenarioCardsView::cardMovedToGroup);
 
     connect(m_cards, &CardsView::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
     connect(m_cards, &CardsView::cardTypeChanged, this, &ScenarioCardsView::cardTypeChanged);
