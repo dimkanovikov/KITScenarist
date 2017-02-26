@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Icon=scenarist.png
+Categories=Office;
+Exec=scenarist %f
+MimeType=application/x-kit-scenarist-project;
+Name=КИТ Сценарист
+GenericName=Программа для написания сценариев
+
