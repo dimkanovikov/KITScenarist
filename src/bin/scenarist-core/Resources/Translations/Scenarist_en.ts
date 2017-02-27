@@ -64,7 +64,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="208"/>
         <source>Advanced</source>
-        <translation>Advansed Properties</translation>
+        <translation>Advanced Properties</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="105"/>
@@ -715,43 +715,43 @@
 <context>
     <name>CardsScene</name>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="658"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="659"/>
         <source>Convert to scene</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="659"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="660"/>
         <source>Convert to folder</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="665"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="666"/>
         <source>Edit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="681"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="682"/>
         <source>Color %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="683"/>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="720"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="684"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="721"/>
         <source>Remove</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="701"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="702"/>
         <source>Add color</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="719"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="720"/>
         <source>Create card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="761"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="762"/>
         <source>Stamp:</source>
         <translation></translation>
     </message>

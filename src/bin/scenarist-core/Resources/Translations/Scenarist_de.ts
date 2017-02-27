@@ -766,43 +766,43 @@
 <context>
     <name>CardsScene</name>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="658"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="659"/>
         <source>Convert to scene</source>
         <translation>In Szene umwandeln</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="659"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="660"/>
         <source>Convert to folder</source>
         <translation>In Ordner umwandeln</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="665"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="666"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="681"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="682"/>
         <source>Color %1</source>
         <translation>Farbe %1</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="683"/>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="720"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="684"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="721"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="701"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="702"/>
         <source>Add color</source>
         <translation>Farbe hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="719"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="720"/>
         <source>Create card</source>
         <translation>Erstelle eine Karte</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="761"/>
+        <location filename="../../3rd_party/Widgets/CardsEdit/CardsScene.cpp" line="762"/>
         <source>Stamp:</source>
         <translation>Stempel:</translation>
     </message>
