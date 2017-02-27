@@ -1386,7 +1386,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="75"/>
         <source>Detect language from system locale</source>
-        <translation>Мекенжайдың жүйелік баптауларын қолдану</translation>
+        <translation>Ағымды жүйеде анықталған тілді қолдану</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="37"/>
@@ -2844,7 +2844,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="114"/>
         <source>Ctrl+Tab</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="154"/>
@@ -3006,7 +3006,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="849"/>
         <source>Add Url</source>
-        <translation>Султеме қосу</translation>
+        <translation>Сілтеме қосу</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="1132"/>
@@ -3333,7 +3333,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="86"/>
         <source>Cards</source>
-        <translation>Кіріспе бойынша</translation>
+        <translation>Карталар</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="95"/>
@@ -5395,7 +5395,7 @@ Replace quotes to language specific.</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="284"/>
         <source>Characters dialogues</source>
-        <translation></translation>
+        <translation>Кейіпкерлер диалогы</translation>
     </message>
     <message>
         <source>Character dialogues</source>
