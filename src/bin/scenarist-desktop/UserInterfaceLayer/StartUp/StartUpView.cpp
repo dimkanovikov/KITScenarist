@@ -135,7 +135,7 @@ void StartUpView::enableProgressLoginLabel(int _dots, bool _firstUpdate)
 
     if (m_isProcessLogin) {
         ui->login->setText(tr("Connect") + QString(".").repeated(_dots));
-        QTimer::singleShot(1000, [this, _dots] {
+        QTimer::singleShot(1000, Qt::VeryCoarseTimer, [this, _dots] {
             enableProgressLoginLabel((_dots + 1) % 4, false);
         });
     }
