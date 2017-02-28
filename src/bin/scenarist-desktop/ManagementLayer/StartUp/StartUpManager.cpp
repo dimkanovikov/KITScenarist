@@ -333,8 +333,8 @@ void StartUpManager::showUpdateDialog()
 #ifdef Q_OS_LINUX
         isSupported = false;
         QString distroName = QSysInfo::prettyProductName().toLower();
-        QStringList supportedDistros({"ubuntu", "mint", "elemntary", "debian"});
-        for(QString& supportedDistro : supportedDistros) {
+        QStringList supportedDistros({"ubuntu", "mint", "elementary", "debian"});
+        for(const QString &supportedDistro : supportedDistros) {
             if (distroName.contains(supportedDistro)) {
                 isSupported = true;
                 break;
@@ -546,6 +546,20 @@ void StartUpManager::checkNewVersion()
     if (!response.isEmpty()) {
         QXmlStreamReader responseReader(response);
 
+        const int currentLang =
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "application/language",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt();
+        QString needLang;
+        if (currentLang == 0
+                || (currentLang == -1
+                    && QLocale().language() == QLocale::Russian)) {
+            needLang = "ru";
+        } else {
+            needLang = "en";
+        }
+
         //
         // Распарсим ответ. Нам нужна версия, ее описание, шаблон на скачивание и является ли бетой
         //
@@ -561,10 +575,7 @@ void StartUpManager::checkNewVersion()
             } else if (responseReader.name().toString() == "description"
                     && responseReader.tokenType() == QXmlStreamReader::StartElement) {
                 QString lang = responseReader.attributes().value("language").toString();
-                if ((lang == "ru"
-                     && QLocale().language() == QLocale::Russian)
-                    || (lang != "ru"
-                        && QLocale().language() != QLocale::Russian)) {
+                if (lang == needLang) {
                     //
                     // Либо русская локаль и русский текст, либо нерусская локаль и нерусский текст
                     //
