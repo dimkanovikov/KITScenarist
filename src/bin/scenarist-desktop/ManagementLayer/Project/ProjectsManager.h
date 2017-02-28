@@ -54,18 +54,18 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить текущий проект по пути к файлу
 		 */
-		bool setCurrentProject(const QString& _path, bool _isLocal = true);
+        bool setCurrentProject(const QString& _path, bool _isLocal = true, bool _forceOpen = false);
 
 		/**
 		 * @brief Установить текущий проект из модели проектов
 		 */
-		bool setCurrentProject(const QModelIndex& _index, bool _isLocal = true);
+        bool setCurrentProject(const QModelIndex& _index, bool _isLocal = true, bool _forceOpen = false);
 
 		/**
 		 * @brief Установить текущий проект по идентификатору
 		 * @note Используется только для проектов из облака
 		 */
-		bool setCurrentProject(int _id, bool _isLocal = true);
+        bool setCurrentProject(int _id, bool _isLocal = true, bool _forceOpen = false);
 
 		/**
 		 * @brief Установить название текущего проекта

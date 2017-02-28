@@ -13,53 +13,6 @@
     </message>
 </context>
 <context>
-    <name>ActivityEdit</name>
-    <message>
-        <source>Can&apos;t arrange cards</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schemes with scene groups or with folders cannot be arranged.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convert to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scene</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scenes Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Card After</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove anchors</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddImageButton</name>
     <message>
         <source>Choose image</source>
@@ -101,11 +54,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import Project</source>
+        <source>Choose File with Project to Import:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose File with Project to Import:</source>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File exists. It will be replaced after creating.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -284,6 +241,14 @@
         <source>Research</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::ScenarioBlockStyle</name>
@@ -333,14 +298,6 @@
     </message>
     <message>
         <source>Noprintable Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scene Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scene Group Footer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -408,16 +365,6 @@
     <message>
         <source>NT</source>
         <extracomment>Reduction of Noprintable Text</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SG</source>
-        <extracomment>Reduction of Scene Group</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SGF</source>
-        <extracomment>Reduction of Scene Group Footer</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -610,23 +557,50 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>cards in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Row</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Column</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Card size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Card ratio:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cards in Row</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CardsScene</name>
+    <message>
+        <source>Convert to scene</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stamp:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -642,33 +616,6 @@
     </message>
     <message>
         <source>New Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CharactersDataEdit</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose Character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Description:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -734,6 +681,14 @@
     <message>
         <source>CONT&apos;D</source>
         <extracomment>Continued</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Photos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unnamed image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1030,27 +985,8 @@
         <source>Русский</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>LocationsDataEdit</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Description:</source>
+        <source>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn&apos;t find preferred language? Read how you can add it yourself.&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1320,14 +1256,6 @@ Project didn&apos;t synchronized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1375,30 +1303,20 @@ Project didn&apos;t synchronized.</source>
         <source>%1[*] - KIT Scenarist</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ManagementLayer::CharactersManager</name>
     <message>
-        <source>Are you shure to remove characters: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ManagementLayer::CharactersNavigatorManager</name>
-    <message>
-        <source>Add Character</source>
+        <source>Ignore and try to open project?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Name</source>
+        <source>Share error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add Character Error</source>
+        <source>You can&apos;t share project with yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Character with same name already exist in project</source>
+        <source>New window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1457,32 +1375,6 @@ Project didn&apos;t synchronized.</source>
     </message>
 </context>
 <context>
-    <name>ManagementLayer::LocationsManager</name>
-    <message>
-        <source>Are you shure to remove locations: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ManagementLayer::LocationsNavigatorManager</name>
-    <message>
-        <source>Add Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Location Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location with same name already exist in project</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ManagementLayer::Project</name>
     <message>
         <source>Owner</source>
@@ -1513,6 +1405,25 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Unnamed image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find All Characters from Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find All Locations from Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ManagementLayer::ScenarioCardsManager</name>
+    <message>
+        <source>Add card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit card</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1686,6 +1597,57 @@ Project didn&apos;t synchronized.</source>
     </message>
 </context>
 <context>
+    <name>PrintCardsDialog</name>
+    <message>
+        <source>Print cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cards on page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page orientation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProjectFileWidget</name>
     <message>
         <source>Form</source>
@@ -1768,11 +1730,6 @@ Project didn&apos;t synchronized.</source>
     <message>
         <source>Title:</source>
         <comment>ScenarioBlockStyle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>END OF GROUP</source>
-        <comment>ScenarioXml</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1862,6 +1819,14 @@ Project didn&apos;t synchronized.</source>
         <source>Insert into &quot;Folder name&quot;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ResearchView</name>
@@ -1883,10 +1848,6 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2025,6 +1986,94 @@ Project didn&apos;t synchronized.</source>
         <source>Delete edge</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add characters to project.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Character Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add locations to project.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Folder&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders let you group research data in hierarchy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text let you store formatted text documents.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mind map let you create schemes with your thoughts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Mind Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images gallery let you store group of images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Images Gallery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Url let you have a link to useful web-based documents.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Url</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Mind Map&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Url&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Text Document&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Images Gallery&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RtfReader</name>
@@ -2047,19 +2096,15 @@ Project didn&apos;t synchronized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scenes Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scene</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Act</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2202,14 +2247,6 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Scenario module</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Characters module</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locations module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3035,10 +3072,6 @@ Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scenarist project files (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose file to import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3054,40 +3087,6 @@ Paragraph</source>
     <name>UserInterface::ChangePasswordDialog</name>
     <message>
         <source>Change</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserInterface::CharactersDataEdit</name>
-    <message>
-        <source>Choose Character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Character name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserInterface::CharactersNavigator</name>
-    <message>
-        <source>Characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create New Character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Selected Character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Merge Selected Characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Find All Characters from Scenario</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3116,65 +3115,11 @@ Paragraph</source>
 <context>
     <name>UserInterface::ImportDialog</name>
     <message>
-        <source>All Supported Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KIT Scenarist Project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Final Draft screenplay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trelby screenplay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Office Open XML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OpenDocument Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose file to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserInterface::LocationsDataEdit</name>
-    <message>
-        <source>Choose Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UserInterface::LocationsNavigator</name>
-    <message>
-        <source>Locations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create New Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Selected Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Find All Locations From Scenario</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3261,6 +3206,22 @@ Paragraph</source>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Find All Characters from Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find All Locations from Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Character name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserInterface::ScenarioCardsView</name>
@@ -3269,23 +3230,43 @@ Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add note</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add horizontal line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add vertical line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sort cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>On/off fullscreen mode (F5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cards.png</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG files (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cards to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print cards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3319,10 +3300,6 @@ Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scenes group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3333,22 +3310,6 @@ Paragraph</source>
 </context>
 <context>
     <name>UserInterface::ScenarioNavigator</name>
-    <message>
-        <source>Convert to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scene</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scenes Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Color %1</source>
         <translation type="unfinished"></translation>
@@ -3391,6 +3352,14 @@ Paragraph</source>
     </message>
     <message>
         <source>Show/hide scene note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to scene</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert to folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3463,6 +3432,10 @@ Paragraph</source>
     <name>UserInterface::ScenarioSchemeItemDialog</name>
     <message>
         <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3595,6 +3568,14 @@ Paragraph</source>
     </message>
     <message>
         <source>Account is inactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Login&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

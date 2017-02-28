@@ -42,11 +42,6 @@ namespace UserInterface
         QString projectFilePath() const;
 
         /**
-         * @brief Нужно ли импортировать проект
-         */
-        bool isNeedImport() const;
-
-        /**
          * @brief Файл из которого нужно экспоритровать проект
          */
         QString importFilePath() const;

@@ -79,6 +79,11 @@ namespace BusinessLogic
 		 */
 		int itemStartPosition(const QModelIndex& _index) const;
 
+        /**
+         * @brief Позиция внутри папки, если вызывается для сцены, то возвращается конец сцены
+         */
+        int itemMiddlePosition(const QModelIndex& _index) const;
+
 		/**
 		 * @brief Позиция конца сцены
 		 */

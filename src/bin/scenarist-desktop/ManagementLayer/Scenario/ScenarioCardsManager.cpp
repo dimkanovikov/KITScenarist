@@ -9,15 +9,25 @@
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.h>
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
 #include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h>
 
+#include <3rd_party/Helpers/TextUtils.h>
+
+#include <QApplication>
+#include <QPainter>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+#include <QScopedPointer>
+
 using ManagementLayer::ScenarioCardsManager;
+using UserInterface::PrintCardsDialog;
 using UserInterface::ScenarioCardsView;
 using UserInterface::ScenarioSchemeItemDialog;
 
 namespace {
-    const bool ISDRAFT = true;
+    const bool IS_DRAFT = true;
     const bool IS_SCRIPT = false;
 }
 
@@ -26,8 +36,7 @@ ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWid
     QObject(_parent),
     m_view(new ScenarioCardsView(IS_SCRIPT, _parentWidget)),
     m_addItemDialog(new ScenarioSchemeItemDialog(_parentWidget)),
-    m_scenario(nullptr),
-    m_model(nullptr)
+    m_printDialog(new PrintCardsDialog(_parentWidget))
 {
     initConnections();
     reloadSettings();
@@ -122,8 +131,9 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                 m_view->insertCard(
                     item->uuid(),
                     item->type() == BusinessLogic::ScenarioModelItem::Folder,
-                    item->title().isEmpty() ? item->header() : item->title(),
-                    item->description(),
+                    item->sceneNumber(),
+                    item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
+                    item->description().isEmpty() ? item->fullText() : item->description(),
                     QString::null,
                     item->colors(),
                     isEmbedded,
@@ -146,22 +156,34 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
             for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
                 const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
                 const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
-                const bool isAct =
-                        item->type() == BusinessLogic::ScenarioModelItem::Folder
-                        && item->hasParent()
-                        && item->parent()->type() == BusinessLogic::ScenarioModelItem::Scenario;
-                const bool isEmbedded =
-                        item->hasParent()
-                        && item->parent()->type() != BusinessLogic::ScenarioModelItem::Scenario;
-                m_view->updateCard(
-                    item->uuid(),
-                    item->type() == BusinessLogic::ScenarioModelItem::Folder,
-                    item->title().isEmpty() ? item->header() : item->title(),
-                    item->description(),
-                    QString::null,
-                    item->colors(),
-                    isEmbedded,
-                    isAct);
+                //
+                // Если тип карточки определить не удалось, удаляем её
+                //
+                if (item->type() == BusinessLogic::ScenarioModelItem::Undefined) {
+                    m_view->removeCard(item->uuid());
+                }
+                //
+                // А если тип нормальный, то обновляем данные о карточке
+                //
+                else {
+                    const bool isAct =
+                            item->type() == BusinessLogic::ScenarioModelItem::Folder
+                            && item->hasParent()
+                            && item->parent()->type() == BusinessLogic::ScenarioModelItem::Scenario;
+                    const bool isEmbedded =
+                            item->hasParent()
+                            && item->parent()->type() != BusinessLogic::ScenarioModelItem::Scenario;
+                    m_view->updateCard(
+                        item->uuid(),
+                        item->type() == BusinessLogic::ScenarioModelItem::Folder,
+                        item->sceneNumber(),
+                        item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
+                        item->description().isEmpty() ? item->fullText() : item->description(),
+                        QString::null,
+                        item->colors(),
+                        isEmbedded,
+                        isAct);
+                }
             }
         });
     }
@@ -208,6 +230,7 @@ void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioCardsManager::addCard()
 {
+    m_addItemDialog->setWindowTitle(tr("Add card"));
     m_addItemDialog->clear();
 
     //
@@ -235,7 +258,8 @@ void ScenarioCardsManager::addCard()
             //
             // Если добавляется акт, то нужно взять корневой индекс
             //
-            if (type == BusinessLogic::ScenarioModelItem::Folder) {
+            if (type == BusinessLogic::ScenarioModelItem::Folder
+                && index.parent().isValid()) {
                 index = index.parent();
             }
 
@@ -246,6 +270,7 @@ void ScenarioCardsManager::addCard()
 
 void ScenarioCardsManager::editCard(const QString& _uuid)
 {
+    m_addItemDialog->setWindowTitle(tr("Edit card"));
     m_addItemDialog->clear();
 
     const QModelIndex indexForUpdate = m_model->indexForUuid(_uuid);
@@ -299,26 +324,327 @@ void ScenarioCardsManager::moveCard(const QString& _cardId, const QString& _actI
     }
 }
 
-void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
+void ScenarioCardsManager::moveCardToGroup(const QString& _cardId, const QString& _groupId)
 {
-//	if (!_uuid.isEmpty()) {
-//		const QModelIndex index = m_model->indexForUuid(_uuid);
-//		emit cardColorsChanged(index, _colors);
-//	}
+    if (!_cardId.isEmpty()) {
+        const QModelIndex parentIndex = m_model->indexForUuid(_groupId);
+        const QModelIndex movedIndex = m_model->indexForUuid(_cardId);
+
+        //
+        // Синхронизируем перемещение с моделью
+        //
+        int previousRow = -1;
+        QMimeData* mime = m_model->mimeData({ movedIndex });
+        m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
+    }
 }
 
-void ScenarioCardsManager::changeCardType(const QString& _uuid, int _cardType)
+void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
 {
-//	if (!_uuid.isEmpty()) {
-//		const QModelIndex index = m_model->indexForUuid(_uuid);
-//		int mappedType = BusinessLogic::ScenarioModelItem::Scene;
-//		if (_cardType == CardShape::TypeScenesGroup) {
-//			mappedType = BusinessLogic::ScenarioModelItem::SceneGroup;
-//		} else if (_cardType == CardShape::TypeFolder) {
-//			mappedType = BusinessLogic::ScenarioModelItem::Folder;
-//		}
-//		emit cardTypeChanged(index, mappedType);
-//	}
+    if (!_uuid.isEmpty()) {
+        const QModelIndex index = m_model->indexForUuid(_uuid);
+        emit cardColorsChanged(index, _colors);
+    }
+}
+
+void ScenarioCardsManager::changeCardType(const QString& _uuid, bool _isFolder)
+{
+    if (!_uuid.isEmpty()) {
+        const QModelIndex index = m_model->indexForUuid(_uuid);
+        int mappedType = BusinessLogic::ScenarioModelItem::Scene;
+        if (_isFolder) {
+            mappedType = BusinessLogic::ScenarioModelItem::Folder;
+        }
+        emit cardTypeChanged(index, mappedType);
+    }
+}
+
+void ScenarioCardsManager::print()
+{
+    //
+    // Настроим принтер
+    //
+    QPrinter* printer = new QPrinter;
+    printer->setPageOrientation(m_printDialog->isPortrait() ? QPageLayout::Portrait : QPageLayout::Landscape);
+
+    //
+    // Настроим диалог предпросмотра
+    //
+    QPrintPreviewDialog printDialog(printer, m_view);
+    printDialog.setWindowState(Qt::WindowMaximized);
+    connect(&printDialog, &QPrintPreviewDialog::paintRequested, this, &ScenarioCardsManager::printCards);
+
+    //
+    // Запускаем предпросмотр
+    //
+    printDialog.exec();
+
+    //
+    // Очищаем память
+    //
+    delete printer;
+}
+
+void ScenarioCardsManager::printCards(QPrinter* _printer)
+{
+    //
+    // Покажем прогресс
+    //
+    m_printDialog->setEnabled(false);
+    m_printDialog->setProgressValue(0);
+    m_printDialog->showProgress(0, 0);
+
+    //
+    // Подготовим список карточек для печати
+    //
+    QMap<int, BusinessLogic::ScenarioModelItem*> items;
+    {
+        QVector<QModelIndex> parents { QModelIndex() };
+        do {
+            const int parentsSize = parents.size();
+            for (int parentIndexRow = parentsSize - 1; parentIndexRow >= 0; --parentIndexRow) {
+                //
+                // Обновляем значение прогресса
+                //
+                QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
+                //
+                // Собираем элементы
+                //
+                const QModelIndex& parentIndex = parents.at(parentIndexRow);
+                for (int row = 0; row < m_model->rowCount(parentIndex); ++row) {
+                    const QModelIndex index = m_model->index(row, 0, parentIndex);
+                    parents.append(index);
+
+                    auto item = m_model->itemForIndex(index);
+                    items.insert(item->position(), item);
+                }
+                parents.remove(parentIndexRow);
+            }
+        } while (!parents.isEmpty());
+    }
+
+    //
+    // Покажем прогресс
+    //
+    int progress = 0;
+    m_printDialog->setProgressValue(progress);
+    m_printDialog->showProgress(0, items.size());
+
+    //
+    // Печатаем карточки
+    //
+    QPainter painter(_printer);
+
+    //
+    // Проходим все карточки по-очереди
+    //
+    bool isFirst = true;
+    const int firstCardIndex = 0;
+    const int cardsCount = m_printDialog->cardsCount();
+    const qreal sideMargin = _printer->pageRect().x();
+    int currentCardIndex = firstCardIndex;
+    qreal lastY = 0;
+    for (const int& key : items.keys()) {
+        //
+        // Обновляем значение прогресса
+        //
+        m_printDialog->setProgressValue(++progress);
+        QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
+        const BusinessLogic::ScenarioModelItem* item = items[key];
+        const QRectF pageRect = _printer->paperRect().adjusted(0, 0, -2 * sideMargin, -2 * sideMargin);
+
+        //
+        // Если надо, переходим на новую страницу и рисуем линии разреза
+        //
+        if (currentCardIndex == firstCardIndex) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                _printer->newPage();
+            }
+
+            painter.setClipRect(pageRect);
+            painter.save();
+            painter.setPen(QPen(Qt::gray, 1, Qt::DashLine));
+            switch (cardsCount) {
+                default:
+                case 1: {
+                    //
+                    // Нет линий разреза
+                    //
+                    break;
+                }
+
+                case 2: {
+                    //
+                    // Горизонтальная линия
+                    //
+                    const qreal height = pageRect.height() / 2.;
+                    QPointF p1 = pageRect.topLeft() + QPointF(0, height);
+                    QPointF p2 = pageRect.topRight() + QPointF(0, height);
+                    painter.drawLine(p1, p2);
+                    break;
+                }
+
+                case 4:
+                case 6:
+                case 8: {
+                    //
+                    // Горизонтальные линии
+                    //
+                    {
+                        const qreal height = pageRect.height() / (cardsCount / 2.);
+                        qreal summaryHeight = 0;
+                        while (summaryHeight + height < pageRect.height()) {
+                            summaryHeight += height;
+                            const QPointF p1 = pageRect.topLeft() + QPointF(0, summaryHeight);
+                            const QPointF p2 = pageRect.topRight() + QPointF(0, summaryHeight);
+                            painter.drawLine(p1, p2);
+                        }
+                    }
+                    //
+                    // Вертикальная линия
+                    //
+                    {
+                        const qreal width = pageRect.width() / 2.;
+                        const QPointF p1 = pageRect.topLeft() + QPointF(width, 0);
+                        const QPointF p2 = pageRect.bottomLeft() + QPointF(width, 0);
+                        painter.drawLine(p1, p2);
+                    }
+                    break;
+                }
+            }
+            painter.restore();
+        }
+
+        //
+        // Определяем область на странице
+        //
+        QRectF cardRect = pageRect;
+        cardRect.moveTop(cardRect.top() + lastY);
+        switch (cardsCount) {
+            default:
+            case 1: {
+                //
+                // Вся страница
+                //
+                break;
+            }
+
+            case 2: {
+                const qreal height = cardRect.height() / 2.;
+                cardRect.setHeight(height);
+                lastY += height;
+                break;
+            }
+
+            case 4:
+            case 6:
+            case 8: {
+                const qreal width = cardRect.width() / 2.;
+                cardRect.setWidth(width);
+                const qreal height = cardRect.height() / (cardsCount / 2.);
+                cardRect.setHeight(height);
+                //
+                // Если крайняя в ряду карточка
+                //
+                if (currentCardIndex % 2 != 0) {
+                    //
+                    // ... смещаем область отрисовки
+                    //
+                    cardRect.moveLeft(cardRect.left() + width);
+                    //
+                    // ... и переходим к следующему ряду
+                    //
+                    lastY += height;
+                }
+                break;
+            }
+        }
+
+        //
+        // Дополнительные отступы
+        //
+        // ... снизу
+        //
+        if (cardRect.bottom() != pageRect.bottom()) {
+            cardRect.setBottom(cardRect.bottom() - sideMargin);
+        }
+        //
+        // ... сверху
+        //
+        if (cardRect.top() != pageRect.top()) {
+            cardRect.setTop(cardRect.top() + sideMargin);
+        }
+        //
+        // ... слева
+        //
+        if (cardRect.left() != pageRect.left()) {
+            cardRect.setLeft(cardRect.left() + sideMargin);
+        }
+        //
+        // ... и справа
+        //
+        if (cardRect.right() != pageRect.right()) {
+            cardRect.setRight(cardRect.right() - sideMargin);
+        }
+
+        //
+        // Рисуем карточку
+        //
+        {
+//            painter.setClipRect(cardRect);
+
+            //
+            // Рисуем заголовок
+            //
+            QTextOption textoption;
+            textoption.setAlignment(Qt::AlignTop | Qt::AlignLeft);
+            textoption.setWrapMode(QTextOption::NoWrap);
+            QFont font = painter.font();
+            font.setBold(true);
+            painter.setFont(font);
+            const int titleHeight = painter.fontMetrics().height();
+            const QRectF titleRect(cardRect.left(), cardRect.top(), cardRect.width(), titleHeight);
+            QString titleText = item->title().isEmpty() ? item->header() : item->title();
+            if (item->type() == BusinessLogic::ScenarioModelItem::Scene) {
+                titleText.prepend(QString("%1. ").arg(item->sceneNumber()));
+            }
+            titleText = TextUtils::elidedText(titleText, painter.font(), titleRect.size(), textoption);
+            painter.drawText(titleRect, titleText, textoption);
+
+            //
+            // Рисуем описание
+            //
+            textoption.setAlignment(Qt::AlignTop | Qt::AlignLeft);
+            textoption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+            font.setBold(false);
+            painter.setFont(font);
+            const qreal spacing = titleRect.height() / 2;
+            const QRectF descriptionRect(titleRect.left(), titleRect.bottom() + spacing, titleRect.width(), cardRect.height() - titleRect.height() - spacing);
+            QString descriptionText = item->description().isEmpty() ? item->fullText() : item->description();
+            descriptionText.replace("\n", "\n\n");
+            descriptionText = TextUtils::elidedText(descriptionText, painter.font(), descriptionRect.size(), textoption);
+            painter.drawText(descriptionRect, descriptionText, textoption);
+        }
+
+        //
+        // Переходим к следующей карточке
+        //
+        ++currentCardIndex;
+        if (currentCardIndex == cardsCount) {
+            currentCardIndex = 0;
+            lastY = 0;
+        }
+    }
+
+    //
+    // Скрываем прогресс
+    //
+    m_printDialog->hideProgress();
+    m_printDialog->setEnabled(true);
 }
 
 void ScenarioCardsManager::initConnections()
@@ -337,10 +663,14 @@ void ScenarioCardsManager::initConnections()
     connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
     connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
     connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
-//	connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
-//	connect(m_view, &ScenarioCardsView::itemTypeChanged, this, &ScenarioCardsManager::changeCardType);
+    connect(m_view, &ScenarioCardsView::cardMovedToGroup, this, &ScenarioCardsManager::moveCardToGroup);
+    connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
+    connect(m_view, &ScenarioCardsView::cardTypeChanged, this, &ScenarioCardsManager::changeCardType);
+
+    connect(m_view, &ScenarioCardsView::printRequest, m_printDialog, &PrintCardsDialog::exec);
+    connect(m_printDialog, &PrintCardsDialog::printPreview, this, &ScenarioCardsManager::print);
 
     connect(m_view, &ScenarioCardsView::fullscreenRequest, this, &ScenarioCardsManager::fullscreenRequest);
 
-//	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
+    connect(m_view, &ScenarioCardsView::cardsChanged, this, &ScenarioCardsManager::cardsChanged);
 }

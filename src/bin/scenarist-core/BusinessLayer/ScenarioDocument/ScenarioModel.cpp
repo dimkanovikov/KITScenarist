@@ -119,12 +119,17 @@ void ScenarioModel::removeItem(ScenarioModelItem* _item)
     // Затем удаляем сам элемент
     //
     ScenarioModelItem* itemParent = _item->parent();
-    QModelIndex itemParentIndex = indexForItem(_item).parent();
-    int itemRowIndex = itemParent->rowOfChild(_item);
-
-    beginRemoveRows(itemParentIndex, itemRowIndex, itemRowIndex);
-    itemParent->removeItem(_item);
-    endRemoveRows();
+    const QModelIndex itemParentIndex = indexForItem(_item).parent();
+    const int itemRowIndex = itemParent->rowOfChild(_item);
+    //
+    // ... если его удалось найти
+    //     иногда это может случатся, когда дети родителя были удалены, но удаляющий не учёл этого
+    //
+    if (itemRowIndex >= 0) {
+        beginRemoveRows(itemParentIndex, itemRowIndex, itemRowIndex);
+        itemParent->removeItem(_item);
+        endRemoveRows();
+    }
 }
 
 void ScenarioModel::updateItem(ScenarioModelItem* _item)
@@ -406,7 +411,7 @@ QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
         // Для того, чтобы запретить разрывать папки проверяем выделены ли элементы одного уровня
         //
         bool itemsHaveSameParent = true;
-        {
+        if (!correctedIndexes.isEmpty()) {
             const QModelIndex& genericParent = correctedIndexes.first().parent();
             foreach (const QModelIndex& index, correctedIndexes) {
                 if (index.parent() != genericParent) {
@@ -414,6 +419,8 @@ QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
                     break;
                 }
             }
+        } else {
+            itemsHaveSameParent = false;
         }
 
         //
@@ -460,21 +467,23 @@ Qt::DropActions ScenarioModel::supportedDropActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-namespace {
-    void updateSceneNumbers(ScenarioModelItem* _item, int& _sceneNumberCounter) {
-        //
-        // Если элемент сцена, то обновим номер
-        //
-        if (_item->type() == ScenarioModelItem::Scene) {
-            _item->setSceneNumber(++_sceneNumberCounter);
+void ScenarioModel::updateSceneNumbers(ScenarioModelItem* _item, int& _sceneNumberCounter)
+{
+    //
+    // Если элемент сцена, то обновим номер
+    //
+    if (_item->type() == ScenarioModelItem::Scene) {
+        if (_item->setSceneNumber(++_sceneNumberCounter)) {
+            const QModelIndex itemIndex = indexForItem(_item);
+            emit dataChanged(itemIndex, itemIndex);
         }
-        //
-        // В противном случае обновим детей элемента
-        //
-        else {
-            for (int itemIndex = 0; itemIndex < _item->childCount(); ++itemIndex) {
-                updateSceneNumbers(_item->childAt(itemIndex), _sceneNumberCounter);
-            }
+    }
+    //
+    // В противном случае обновим детей элемента
+    //
+    else {
+        for (int itemIndex = 0; itemIndex < _item->childCount(); ++itemIndex) {
+            updateSceneNumbers(_item->childAt(itemIndex), _sceneNumberCounter);
         }
     }
 }
@@ -483,16 +492,10 @@ void ScenarioModel::updateSceneNumbers()
 {
     int sceneNumber = 0;
     for (int itemIndex = 0; itemIndex < m_rootItem->childCount(); ++itemIndex) {
-        ::updateSceneNumbers(m_rootItem->childAt(itemIndex), sceneNumber);
+        updateSceneNumbers(m_rootItem->childAt(itemIndex), sceneNumber);
     }
 
     m_scenesCount = sceneNumber;
-
-    //
-    // Сигналим, о том, что модель обновилась
-    //
-    const QModelIndex rootIndex = indexForItem(m_rootItem);
-    emit dataChanged(rootIndex, rootIndex);
 }
 
 int ScenarioModel::scenesCount() const
@@ -613,9 +616,12 @@ namespace {
         actXml.append(QString("id=\"%1\" ").arg(_item->uuid()));
         actXml.append(QString("title=\"%1\" ")
                        .arg(_item->title().isEmpty()
-                            ? TextEditHelper::toHtmlEscaped(_item->header())
-                            : TextEditHelper::toHtmlEscaped(_item->title())));
-        actXml.append(QString("description=\"%1\" ").arg(TextEditHelper::toHtmlEscaped(_item->description())));
+                            ? TextEditHelper::toHtmlEscaped(_item->header().toUpper())
+                            : TextEditHelper::toHtmlEscaped(_item->title().toUpper())));
+        actXml.append(QString("description=\"%1\" ")
+                       .arg(_item->description().isEmpty()
+                            ? TextEditHelper::toHtmlEscaped(_item->fullText())
+                            : TextEditHelper::toHtmlEscaped(_item->description())));
         actXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
         actXml.append(QString("x=\"%1\" ").arg(_x));
         actXml.append(QString("y=\"%1\" ").arg(_y));
@@ -627,17 +633,22 @@ namespace {
     /**
      * @brief Сформировать строку xml-карточки для элемента
      */
-    static QString cardXmlFor(const ScenarioModelItem* _item, int _x, int _y) {
+    static QString cardXmlFor(const ScenarioModelItem* _item, int _x, int _y, bool _isEmbedded) {
         QString cardXml = "<card ";
         cardXml.append(QString("id=\"%1\" ").arg(_item->uuid()));
         cardXml.append(QString("is_folder=\"%1\"").arg(_item->type() == ScenarioModelItem::Folder ? "true" : "false"));
+        cardXml.append(QString("number=\"%1\" ").arg(_item->sceneNumber()));
         cardXml.append(QString("title=\"%1\" ")
                        .arg(_item->title().isEmpty()
-                            ? TextEditHelper::toHtmlEscaped(_item->header())
-                            : TextEditHelper::toHtmlEscaped(_item->title())));
-        cardXml.append(QString("description=\"%1\" ").arg(TextEditHelper::toHtmlEscaped(_item->description())));
+                            ? TextEditHelper::toHtmlEscaped(_item->header().toUpper())
+                            : TextEditHelper::toHtmlEscaped(_item->title().toUpper())));
+        cardXml.append(QString("description=\"%1\" ")
+                       .arg(_item->description().isEmpty()
+                            ? TextEditHelper::toHtmlEscaped(_item->fullText())
+                            : TextEditHelper::toHtmlEscaped(_item->description())));
         cardXml.append(QString("stamp=\"\" "));
         cardXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
+        cardXml.append(QString("is_embedded=\"%1\" ").arg(_isEmbedded ? "true" : "false"));
         cardXml.append(QString("x=\"%1\" ").arg(_x));
         cardXml.append(QString("y=\"%1\" ").arg(_y));
         cardXml.append("/>\n");
@@ -652,7 +663,7 @@ namespace {
         QString xml;
         for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
             const ScenarioModelItem* child = _parent->childAt(childIndex);
-            xml.append(cardXmlFor(child, _x, _y));
+            xml.append(cardXmlFor(child, _x, _y, true));
 
             _x += CARD_WIDTH + CARDS_SPACE;
         }
@@ -694,7 +705,7 @@ QString ScenarioModel::simpleScheme() const
         // ... карточка
         //
         else {
-            xml.append(cardXmlFor(child, x, y));
+            xml.append(cardXmlFor(child, x, y, false));
 
             x += CARD_WIDTH + CARDS_SPACE;
         }

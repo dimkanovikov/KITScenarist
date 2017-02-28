@@ -17,6 +17,7 @@ class CardsScene : public QGraphicsScene
 
 public:
     explicit CardsScene(QObject *parent = 0);
+    ~CardsScene();
 
     /**
      * @brief Задать размер карточек
@@ -56,30 +57,35 @@ public:
     /**
      * @brief Добавить акт
      */
-    void addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors);
+    void addAct(const QString& _uuid, const QString& _title, const QString& _description,
+        const QString& _colors);
 
     /**
      * @brief Вставить акт после заданного элемента
      */
-    void insertAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors, const QString& _previousItemUuid);
+    void insertAct(const QString& _uuid, const QString& _title, const QString& _description,
+        const QString& _colors, const QString& _previousItemUuid);
 
     /**
      * @brief Добавить карточку
      */
-    void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position);
+    void addCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, const QPointF& _position);
 
     /**
      * @brief Вставить карточку после заданного элемента
      */
-    void insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
+    void insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
 
     /**
      * @brief Обновить заданную карточку
      */
-    void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct);
+    void updateItem(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, bool _isAct);
 
     /**
      * @brief Удалить элемент по идентификатору
@@ -97,9 +103,19 @@ public:
     void removeCard(const QString& _uuid);
 
     /**
+     * @brief Удалить выделенный элемент
+     */
+    void removeSelectedItem();
+
+    /**
      * @brief Обновить сцену
      */
     void refresh();
+
+    /**
+     * @brief Перерисовать акты
+     */
+    void updateActs();
 
     /**
      * @brief Сформировать xml на основе сцены
@@ -185,6 +201,16 @@ signals:
      */
     void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
+    /**
+     * @brief Запрос на изменение типа карточки
+     */
+    void cardTypeChanged(const QString& _uuid, bool _isFolder);
+
+    /**
+     * @brief Карточки были изменены
+     */
+    void cardsChanged();
+
 protected:
     /**
      * @brief Отображаем собственное контекстное меню
@@ -206,19 +232,19 @@ protected:
      * @brief Переопределяем для инициилизации события перетаскивания карточек между сценами
      */
     /** @{ */
-    void keyPressEvent(QKeyEvent* _event);
-    void keyReleaseEvent(QKeyEvent* _event);
-    void focusOutEvent(QFocusEvent* _event);
+    void keyPressEvent(QKeyEvent* _event) override;
+    void keyReleaseEvent(QKeyEvent* _event) override;
+    void focusOutEvent(QFocusEvent* _event) override;
     /** @} */
 
     /**
      * @brief Переопределяем для реализации возможности перетаскивания карточек между сценами
      */
     /** @{ */
-    virtual void dragEnterEvent(QGraphicsSceneDragDropEvent*) {}
-    virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent*) {}
-    virtual void dragMoveEvent(QGraphicsSceneDragDropEvent*) {}
-    virtual void dropEvent(QGraphicsSceneDragDropEvent* _event);
+    virtual void dragEnterEvent(QGraphicsSceneDragDropEvent*) override {}
+    virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent*) override {}
+    virtual void dragMoveEvent(QGraphicsSceneDragDropEvent*) override {}
+    virtual void dropEvent(QGraphicsSceneDragDropEvent* _event) override;
     /** @} */
 
 private:
@@ -243,6 +269,12 @@ private:
     void setInDragOutMode(bool _inDragOutMode);
 
 private:
+    /**
+     * @brief Область сцены
+     * @note Храним её в отдельном параметре, чтобы не перессчитывать каждый раз, когда она необходима
+     */
+    QRectF m_sceneRect;
+
     /**
      * @brief Размер карточек
      */
@@ -271,7 +303,7 @@ private:
     /**
      * @brief Список элементов сцены
      */
-    QVector<QGraphicsItem*> m_items;
+    QList<QGraphicsItem*> m_items;
 
     /**
      * @brief Навигационная карта по элементам <uuid, item>

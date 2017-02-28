@@ -127,13 +127,15 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 
 void StartUpView::enableProgressLoginLabel(int _dots, bool _firstUpdate)
 {
+    QApplication::processEvents();
+
     if (_firstUpdate) {
         m_isProcessLogin = true;
     }
 
     if (m_isProcessLogin) {
         ui->login->setText(tr("Connect") + QString(".").repeated(_dots));
-        QTimer::singleShot(1000, [this, _dots] {
+        QTimer::singleShot(1000, Qt::VeryCoarseTimer, [this, _dots] {
             enableProgressLoginLabel((_dots + 1) % 4, false);
         });
     }

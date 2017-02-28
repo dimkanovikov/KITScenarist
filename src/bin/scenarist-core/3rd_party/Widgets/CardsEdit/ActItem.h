@@ -63,7 +63,10 @@ public:
     /**
      * @brief Область занимаемая актом
      */
+    /** @{ */
+    void setBoundingRect(const QRectF& _boundingRect);
     QRectF boundingRect() const override;
+    /** @} */
 
     /**
      * @brief Отрисовка акта
@@ -95,6 +98,11 @@ private:
      * @brief Цвета акта
      */
     QString m_colors;
+
+    /**
+     * @brief Область отрисовки
+     */
+    mutable QRectF m_boundingRect = QRectF(0, 0, 100, 30);
 
     /**
      * @brief Эффект отбрасывания тени

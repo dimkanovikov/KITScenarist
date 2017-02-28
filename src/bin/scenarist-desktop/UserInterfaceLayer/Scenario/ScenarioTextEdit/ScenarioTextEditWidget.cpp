@@ -23,16 +23,17 @@
 #include <QApplication>
 #include <QComboBox>
 #include <QCryptographicHash>
-#include <QLabel>
+#include <QHeaderView>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QLabel>
 #include <QScrollBar>
+#include <QShortcut>
 #include <QSplitter>
+#include <QStandardItemModel>
 #include <QTextBlock>
 #include <QTimer>
 #include <QTreeView>
-#include <QHeaderView>
-#include <QStandardItemModel>
+#include <QVBoxLayout>
 
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioReviewPanel;
@@ -42,6 +43,18 @@ using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScenarioTextBlockInfo;
+
+namespace {
+    /**
+     * @brief Нерабочая позиция курсора
+     */
+    const int INVALID_CURSOR_POSITION = -1;
+
+    /**
+     * @brief Исходная позиция курсора после загрузки программы
+     */
+    int initCursorPosition = INVALID_CURSOR_POSITION;
+}
 
 
 ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
@@ -177,10 +190,18 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
     // масштабирования, что приводит в свою очередь к тому, что полосы прокрутки остаются в начале.
     //
     if (!isVisible()) {
-        QTimer::singleShot(300, Qt::PreciseTimer, [=] {
-            setCursorPosition(_position);
-        });
-        return;
+        //
+        // ... но делаем это только в случае, когда курсор устанавливается в виджет в первый раз,
+        //     если позиция курсора потом меняется ещё раз, то устанавливаем её
+        //
+        if (initCursorPosition == INVALID_CURSOR_POSITION) {
+            initCursorPosition = _position;
+        } else if (initCursorPosition == _position) {
+            QTimer::singleShot(300, Qt::PreciseTimer, [=] {
+                setCursorPosition(_position);
+            });
+            return;
+        }
     }
 
     //
@@ -289,7 +310,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
             cursor.movePosition(QTextCursor::NextBlock);
             cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
         }
-        cursor.insertText(Helpers::footerText(_header));
+        cursor.insertText(Helpers::footerText(!_header.isEmpty() ? _header : _title));
     }
 
     //
@@ -337,6 +358,13 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     }
 
     //
+    // Если не задан заголовок, установим его таким же, как и название
+    //
+    if (cursor.block().text().isEmpty()) {
+        cursor.insertText(_title);
+    }
+
+    //
     // Устанавливаем название блока и описание
     //
     if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
@@ -351,14 +379,20 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     //
     cursor.setPosition(_startPosition);
     //
-    // ... сперва выделив старое описание
+    // ... сперва выделив старое описание, если после текущего блока есть другие блоки
     //
-    cursor.movePosition(QTextCursor::NextBlock);
-    while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
-           && cursor.position() <= _endPosition
-           && !cursor.atEnd()) {
-        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+    if (cursor.movePosition(QTextCursor::NextBlock)) {
+        if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+            cursor.movePosition(QTextCursor::NextBlock);
+        }
+        while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
+               && cursor.position() <= _endPosition
+               && !cursor.atEnd()) {
+            cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+            cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+        }
+    } else {
+        cursor.movePosition(QTextCursor::EndOfBlock);
     }
     //
     // ... шаг назад, если до этого мы перескочили в следующий блок
@@ -484,6 +518,8 @@ void ScenarioTextEditWidget::aboutShowSearch()
     if (visible) {
         m_searchLine->selectText();
         m_searchLine->setFocus();
+    } else {
+        m_editorWrapper->setFocus();
     }
 }
 
@@ -588,7 +624,6 @@ void ScenarioTextEditWidget::initView()
     m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
     m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search and Replace"), "Ctrl+F"));
     m_search->setCheckable(true);
-    m_search->setShortcut(QKeySequence("Ctrl+F"));
 
     m_fastFormat->setObjectName("scenarioFastFormat");
     m_fastFormat->setIcons(QIcon(":/Graphics/Icons/Editing/format.png"));
@@ -696,21 +731,31 @@ void ScenarioTextEditWidget::updateStylesCombo()
 
 void ScenarioTextEditWidget::initConnections()
 {
-    connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
-    connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
-    connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
-    connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
+    QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+F"), this);
+    shortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(shortcut, &QShortcut::activated, [=] {
         //
         // Если поиск виден, но в нём нет фокуса - установим фокус в него
         // В остальных случаях просто покажем, или скроем поиск
         //
-        if (!_toggle
+        if (m_search->isChecked()
             && m_searchLine->isVisible()
             && !m_searchLine->hasFocus()) {
-            m_search->setChecked(true);
+            m_searchLine->selectText();
+            m_searchLine->setFocus();
         }
-        aboutShowSearch();
+        //
+        // В противном случае сменим видимость
+        //
+        else {
+            m_search->toggle();
+        }
     });
+
+    connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
+    connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
+    connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
+    connect(m_search, &FlatButton::toggled, this, &ScenarioTextEditWidget::aboutShowSearch);
     connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
     connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
             [=] { m_editorWrapper->setFocus(); });

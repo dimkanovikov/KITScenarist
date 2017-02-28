@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>322</height>
+    <height>388</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -47,7 +47,7 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="2">
-    <widget class="QFrame" name="filePanel">
+    <widget class="QFrame" name="namePanel">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -55,8 +55,59 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Enter Name of New Project:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="projectName"/>
+      </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="file">
+       <widget class="ToolTipLabel" name="existsLabel">
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>File exists. It will be replaced after creating.</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/alert.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QFrame" name="advancedPanel">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="1">
+       <widget class="QLabel" name="saveDirLabel">
+        <property name="text">
+         <string>Choose Location for New Project File:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="importFile">
         <property name="text">
          <string/>
         </property>
@@ -65,94 +116,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="FlatButton" name="browseFile">
-        <property name="toolTip">
-         <string>Browse...</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>22</width>
-          <height>22</height>
-         </size>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Choose Location for New Project File:</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QFrame" name="namePanel">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="projectName"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Enter Name of New Project:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>29</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QCheckBox" name="needImport">
-     <property name="text">
-      <string>Import Project</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QFrame" name="importPanel">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="1" column="2">
+      <item row="3" column="2">
        <widget class="FlatButton" name="browseImportFile">
         <property name="toolTip">
          <string>Browse...</string>
@@ -175,8 +139,15 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Choose File with Project to Import:</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="importFile">
+       <widget class="QLineEdit" name="saveDir">
         <property name="text">
          <string/>
         </property>
@@ -185,17 +156,40 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label_4">
+      <item row="1" column="2">
+       <widget class="FlatButton" name="browseSaveDir">
+        <property name="toolTip">
+         <string>Browse...</string>
+        </property>
         <property name="text">
-         <string>Choose File with Project to Import:</string>
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+          <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="5" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttons">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -208,10 +202,10 @@
      </property>
     </spacer>
    </item>
-   <item row="6" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttons">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel</set>
+   <item row="2" column="0" colspan="2">
+    <widget class="QCheckBox" name="advanced">
+     <property name="text">
+      <string>Advanced</string>
      </property>
     </widget>
    </item>
@@ -223,14 +217,19 @@
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
   </customwidget>
+  <customwidget>
+   <class>ToolTipLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>isLocal</tabstop>
   <tabstop>isRemote</tabstop>
-  <tabstop>file</tabstop>
-  <tabstop>browseFile</tabstop>
   <tabstop>projectName</tabstop>
-  <tabstop>needImport</tabstop>
+  <tabstop>advanced</tabstop>
+  <tabstop>saveDir</tabstop>
+  <tabstop>browseSaveDir</tabstop>
   <tabstop>importFile</tabstop>
   <tabstop>browseImportFile</tabstop>
  </tabstops>

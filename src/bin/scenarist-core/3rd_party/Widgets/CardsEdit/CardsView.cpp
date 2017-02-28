@@ -4,6 +4,8 @@
 #include "CardsUndoStack.h"
 #include "ScalableGraphicsView.h"
 
+#include <QEvent>
+#include <QScrollBar>
 #include <QVBoxLayout>
 
 
@@ -79,21 +81,28 @@ void CardsView::insertAct(const QString& _uuid, const QString& _title, const QSt
     m_scene->insertAct(_uuid, _title, _description, _colors, _previousItemUuid);
 }
 
-void CardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid)
+void CardsView::insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    const QPointF& _position, const QString& _previousItemUuid)
 {
-    m_scene->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _position, _previousItemUuid);
+    m_scene->insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _position, _previousItemUuid);
 }
 
-void CardsView::updateItem(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct)
+void CardsView::updateItem(const QString& _uuid, bool _isFolder, int _number,  const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    bool _isAct)
 {
-    m_scene->updateItem(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
+    m_scene->updateItem(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
 }
 
 void CardsView::removeItem(const QString& _uuid)
 {
     m_scene->removeSceneItem(_uuid);
+}
+
+void CardsView::removeSelectedItem()
+{
+    m_scene->removeSelectedItem();
 }
 
 void CardsView::refresh()
@@ -106,22 +115,43 @@ QString CardsView::save() const
     return m_scene->save();
 }
 
+void CardsView::saveToImage(const QString& _filePath)
+{
+    m_scene->clearSelection();
+    QImage image(m_scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+
+    QPainter painter(&image);
+    painter.fillRect(image.rect(), m_view->backgroundBrush());
+    m_scene->render(&painter);
+    image.save(_filePath);
+}
+
 bool CardsView::load(const QString& _xml)
 {
     return m_scene->load(_xml);
 }
 
+bool CardsView::needSyncUndo() const
+{
+    return m_undoStack->needSyncUndo();
+}
+
 void CardsView::undo()
 {
     if (m_undoStack->canUndo()) {
-        m_scene->load(m_undoStack->undo());
+//        m_scene->load(m_undoStack->undo());
     }
+}
+
+bool CardsView::needSyncRedo() const
+{
+    return m_undoStack->needSyncRedo();
 }
 
 void CardsView::redo()
 {
     if (m_undoStack->canRedo()) {
-        m_scene->load(m_undoStack->redo());
+//        m_scene->load(m_undoStack->redo());
     }
 }
 
@@ -154,9 +184,28 @@ void CardsView::saveChanges(bool _hasChangesInText)
     }
 }
 
+bool CardsView::event(QEvent* _event)
+{
+    //
+    // Самый простой способ перерисовать всю сцену
+    //
+    if (_event->type() == QEvent::PaletteChange) {
+        m_view->rotate(0.0000000001);
+    }
+
+    return QWidget::event(_event);
+}
+
+void CardsView::resizeEvent(QResizeEvent* _event)
+{
+    m_scene->refresh();
+
+    QWidget::resizeEvent(_event);
+}
+
 void CardsView::initView()
 {
-    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    m_view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     m_view->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     m_view->setScene(m_scene);
 
@@ -184,8 +233,11 @@ void CardsView::initConnections()
     connect(m_scene, &CardsScene::cardMoved, this, &CardsView::cardMoved);
     connect(m_scene, &CardsScene::cardMovedToGroup, this, &CardsView::cardMovedToGroup);
     connect(m_scene, &CardsScene::cardColorsChanged, this, &CardsView::cardColorsChanged);
+    connect(m_scene, &CardsScene::cardTypeChanged, this, &CardsView::cardTypeChanged);
+    connect(m_scene, &CardsScene::cardsChanged, this, &CardsView::cardsChanged);
 
     connect(m_view, &ScalableGraphicsView::scaleChanged, m_scene, &CardsScene::refresh);
+    connect(m_view->horizontalScrollBar(), &QScrollBar::valueChanged, m_scene, &CardsScene::updateActs);
 }
 
 void CardsView::updateBackgroundBrush()

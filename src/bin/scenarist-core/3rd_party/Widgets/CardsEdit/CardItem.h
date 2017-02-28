@@ -4,6 +4,7 @@
 #include <QGraphicsItem>
 
 #include <QGraphicsDropShadowEffect>
+#include <QParallelAnimationGroup>
 
 
 /**
@@ -14,6 +15,7 @@ class CardItem : public QObject, public QGraphicsItem
     Q_OBJECT
     Q_PROPERTY(QPointF pos READ pos WRITE setPos)
     Q_PROPERTY(qreal scale READ scale WRITE setScale)
+    Q_PROPERTY(qreal zValue READ zValue WRITE setZValue)
 
 public:
     /**
@@ -44,6 +46,14 @@ public:
     /** @{ */
     void setIsFolder(bool _isFolder);
     bool isFolder() const;
+    /** @} */
+
+    /**
+     * @brief Номер сцены
+     */
+    /** @{ */
+    void setNumber(int _number);
+    int number() const;
     /** @} */
 
     /**
@@ -95,6 +105,11 @@ public:
     /** @} */
 
     /**
+     * @brief Установить флаг, что папка готова принять карточку
+     */
+    void setIsReadyForEmbed(bool _isReady);
+
+    /**
      * @brief Установить режим перемещения между сценами (true) или по сцене (false)
      */
     void setInDragOutMode(bool _inDragOutMode);
@@ -129,7 +144,17 @@ public:
      */
     void putOnBoard();
 
+    /**
+     * @brief Определить идентификатор папки, в которую будет вкладываться карточка
+     */
+    QString cardForEmbedUuid() const;
+
 protected:
+    /**
+     * @brief Переопределяем для проверки возможности вложить карточку в папку
+     */
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* _event) override;
+
     /**
      * @brief Переопределяем для реализации возможности перетаскивания сцен между двумя сценами, а так же для анимации выделения
      */
@@ -154,6 +179,11 @@ private:
      * @brief Является ли карточка папкой (true) или сценой (false)
      */
     bool m_isFolder = false;
+
+    /**
+     * @brief Номер сцены
+     */
+    int m_number = 0;
 
     /**
      * @brief Заголовок карточки
@@ -186,6 +216,11 @@ private:
     QSizeF m_size = QSizeF(200, 150);
 
     /**
+     * @brief Находится ли папка в состоянии готовности вставки карточки
+     */
+    bool m_isReadyForEmbed = false;
+
+    /**
      * @brief Находится ли карточка в состояния переноса между сценами
      */
     bool m_isInDragOutMode = false;
@@ -194,6 +229,11 @@ private:
      * @brief Эффект отбрасывания тени
      */
     QScopedPointer<QGraphicsDropShadowEffect> m_shadowEffect;
+
+    /**
+     * @brief Анимация карточки
+     */
+    QScopedPointer<QParallelAnimationGroup> m_animation;
 };
 
 #endif // CARDITEM_H

@@ -117,6 +117,16 @@ int ScenarioDocument::itemStartPosition(const QModelIndex& _index) const
     return item->position();
 }
 
+int ScenarioDocument::itemMiddlePosition(const QModelIndex& _index) const
+{
+    ScenarioModelItem* item = m_model->itemForIndex(_index);
+    if (item->type() != ScenarioModelItem::Folder) {
+        return item->endPosition();
+    }
+
+    return item->endPosition() - item->footer().length() - 1;
+}
+
 int ScenarioDocument::itemEndPosition(const QModelIndex& _index) const
 {
     ScenarioModelItem* item = m_model->itemForIndex(_index);
@@ -271,7 +281,7 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             QTextDocument descriptionDoc;
             descriptionDoc.setHtml(_description);
             const QString descriptionPlainText = descriptionDoc.toPlainText();
-            item->setDescription(descriptionPlainText);
+            item->setDescription(!descriptionPlainText.isEmpty() ? descriptionPlainText : QString::null);
             m_model->updateItem(item);
 
             //
@@ -293,31 +303,64 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             //
             cursor.beginEditBlock();
             ScenarioBlockStyle descriptionBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneDescription);
-            cursor.movePosition(QTextCursor::NextBlock);
-            if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
-                cursor.movePosition(QTextCursor::NextBlock);
-            }
             //
-            // ... затираем старый текст
+            // ... если это не последний блок в документе проверяем следующие блоки
             //
-            ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
-            if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
-                while (currentBlockType == ScenarioBlockStyle::SceneDescription
-                       && !cursor.atEnd()) {
-                    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-                    cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+            if (cursor.movePosition(QTextCursor::NextBlock)) {
+                int descriptionStartPosition = cursor.position() - 1;
+                ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+
+                //
+                // ... если после заголовка идёт блок со списком персонажей, переносим курсор за этот блок
+                //
+                if (currentBlockType == ScenarioBlockStyle::SceneCharacters) {
+                    cursor.movePosition(QTextCursor::EndOfBlock);
+                    descriptionStartPosition = cursor.position();
+
+                    if (cursor.movePosition(QTextCursor::NextBlock)) {
+                        currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+                    }
+                }
+
+                //
+                // ... затираем старое описание до тех пор пока не дойдём до новой сцены или конца документа
+                //
+                while (!cursor.atEnd()
+                       && currentBlockType != ScenarioBlockStyle::SceneHeading
+                       && currentBlockType != ScenarioBlockStyle::FolderHeader
+                       && currentBlockType != ScenarioBlockStyle::FolderFooter) {
+                    //
+                    // ... обнаружили описание сцены - удалим его
+                    //
+                    if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
+                        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+                        cursor.removeSelectedText();
+                        cursor.deleteChar();
+                    }
+                    //
+                    // ... нет - идём к следующему блоку
+                    //
+                    else {
+                        cursor.movePosition(QTextCursor::EndOfBlock);
+                        cursor.movePosition(QTextCursor::NextBlock);
+                    }
+
                     currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
                 }
-                if (!cursor.atEnd()) {
-                    cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
-                }
-                cursor.removeSelectedText();
-            } else {
-                if (!cursor.atEnd()) {
-                    cursor.movePosition(QTextCursor::PreviousCharacter);
-                }
-                cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
+
+                //
+                // ... после того, как стёрли все описания действия, возвращаем курсор в позицию,
+                //     куда будем вставлять описание действия
+                //
+                cursor.setPosition(descriptionStartPosition);
             }
+            //
+            // ... если это последний блок в документе, просто переходим в конец
+            //
+            else {
+                cursor.movePosition(QTextCursor::EndOfBlock);
+            }
+            cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
             //
             // ... вставляем новый
             //
@@ -595,7 +638,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
         // которого он нажат, а если не энтер, то все, после нажатого символа
         //
         if (_charsAdded > 0 && _charsRemoved == 0) {
-            if (m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
+            if (_position > 0
+                && m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
                 --position;
             } else {
                 ++position;
@@ -735,6 +779,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
             if (itemType == ScenarioBlockStyle::FolderHeader) {
                 int openedFolders = 1;
                 QTextCursor endCursor = cursor;
+                endCursor.movePosition(QTextCursor::NextBlock);
                 while (!endCursor.atEnd()
                        && openedFolders != 0) {
                     endCursor.movePosition(QTextCursor::EndOfBlock);
@@ -988,7 +1033,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
             default: {
                 if (isNeedIncludeBlock) {
                     if (!isFirstTextBlock) {
-                        itemText.append(" ");
+                        itemText.append("\n");
                     } else {
                         itemText = "";
                         isFirstTextBlock = false;

@@ -113,7 +113,8 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
         // Если дошли не до конца документа, а до начала новой сцены,
         // возвращаем курсор в конец предыдущего блока
         //
-        if (!textCursor().atEnd()) {
+        if (!textCursor().atEnd()
+            || currentBlockType == ScenarioBlockStyle::FolderFooter) {
             moveCursor(QTextCursor::PreviousBlock);
             moveCursor(QTextCursor::EndOfBlock);
         }
@@ -139,18 +140,36 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
 
 void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockType, bool _forced)
 {
+    //
+    // Если работаем в режиме поэпизодника, то запрещаем менять стиль блока на персонажей, реплики и пр.
+    //
+    if (outlineMode()
+        && (_blockType == ScenarioBlockStyle::Action
+            || _blockType == ScenarioBlockStyle::Character
+            || _blockType == ScenarioBlockStyle::Parenthetical
+            || _blockType == ScenarioBlockStyle::Dialogue
+            || _blockType == ScenarioBlockStyle::Transition
+            || _blockType == ScenarioBlockStyle::Note
+            || _blockType == ScenarioBlockStyle::TitleHeader
+            || _blockType == ScenarioBlockStyle::Title
+            || _blockType == ScenarioBlockStyle::NoprintableText)) {
+        return;
+    }
 
     QTextCursor cursor = textCursor();
     cursor.beginEditBlock();
 
     //
     // Если работаем в режиме поэпизодника и описание сцены меняется на заголовок сцены,
-    // группы сцен, или папки, то текущий блок нужно перенести в конец текущей сцены
+    // или папки, и после текущего блока не идёт блок с описанием сцены (т.е. мы внутри сцены с текстом),
+    // то текущий блок нужно перенести в конец текущей сцены
     //
+    const ScenarioBlockStyle::Type nextBlockType = ScenarioBlockStyle::forBlock(cursor.block().next());
     if (outlineMode()
         && scenarioBlockType() == ScenarioBlockStyle::SceneDescription
         && (_blockType == ScenarioBlockStyle::SceneHeading
-            || _blockType == ScenarioBlockStyle::FolderHeader)) {
+            || _blockType == ScenarioBlockStyle::FolderHeader)
+        && nextBlockType != ScenarioBlockStyle::SceneDescription) {
         //
         // Сохраним текст блока, а сам блок удалим
         //
@@ -1171,14 +1190,6 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 
 void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockType)
 {
-    //
-    // Если находимся в режиме поэпизодника, то заменить все описания действия на описания сцены
-    //
-    if (outlineMode() && _blockType == ScenarioBlockStyle::Action) {
-        _blockType = ScenarioBlockStyle::SceneDescription;
-    }
-
-
     QTextCursor cursor = textCursor();
     cursor.beginEditBlock();
 
@@ -1272,7 +1283,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
     }
 
     //
-    // Для заголовка группы нужно создать завершение, захватив всё содержимое сцены
+    // Для заголовка папки нужно создать завершение, захватив всё содержимое сцены
     //
     if (newBlockStyle.isEmbeddableHeader()) {
         ScenarioBlockStyle footerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockStyle.embeddableFooter());
@@ -1336,6 +1347,8 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
     QString currentBlockText = currentBlock.text();
     // ... текст до курсора
     QString cursorBackwardText = currentBlockText.left(cursor.positionInBlock());
+    // ... текст после курсора
+    QString cursorForwardText = currentBlockText.mid(cursor.positionInBlock());
     // ... стиль шрифта блока
     QTextCharFormat currentCharFormat = currentBlock.charFormat();
     // ... текст события
@@ -1379,12 +1392,13 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
         //
         else {
             //
-            // Если перед нами конец предложения и не сокращение
+            // Если перед нами конец предложения и не сокращение и после курсора нет текста
             //
             QString endOfSentancePattern = QString("([.]|[?]|[!]|[…]) %1$").arg(eventText);
             if (m_capitalizeFirstWord
                 && cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
-                && !stringEndsWithAbbrev(cursorBackwardText)) {
+                && !stringEndsWithAbbrev(cursorBackwardText)
+                && cursorForwardText.isEmpty()) {
                 //
                 // Сделаем первую букву заглавной
                 //
@@ -1415,6 +1429,7 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
                 //
                 if (!right3Characters.contains(" ")
                     && right3Characters.length() == 3
+                    && right3Characters != right3Characters.toUpper()
                     && right3Characters.left(2) == right3Characters.left(2).toUpper()
                     && right3Characters.left(2).at(0).isLetter()
                     && right3Characters.left(2).at(1).isLetter()

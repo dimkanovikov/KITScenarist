@@ -40,6 +40,11 @@ namespace DataMappingLayer
          */
         void applyHistoryRecord(const QString& _query, const QString& _queryValues);
 
+        /**
+         * @brief Вывести историю изменений БД
+         */
+        void printHistory();
+
     private:
         DatabaseHistoryMapper();
 

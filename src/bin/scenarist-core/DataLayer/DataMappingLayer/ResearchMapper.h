@@ -22,7 +22,7 @@ namespace DataMappingLayer
         ResearchTable* findCharacters();
         ResearchTable* findLocations();
 		void insert(Research* _place);
-		void update(Research* _place);
+		bool update(Research* _place);
 		void remove(Research* _place);
 
 	protected:

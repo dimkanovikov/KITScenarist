@@ -123,6 +123,16 @@
         <file>Icons/Indicator/synced.png</file>
         <file>Icons/character.png</file>
         <file>Icons/location.png</file>
+        <file>Images/cards-print-landscape-1.png</file>
+        <file>Images/cards-print-landscape-2.png</file>
+        <file>Images/cards-print-landscape-4.png</file>
+        <file>Images/cards-print-landscape-6.png</file>
+        <file>Images/cards-print-landscape-8.png</file>
+        <file>Images/cards-print-portrait-8.png</file>
+        <file>Images/cards-print-portrait-6.png</file>
+        <file>Images/cards-print-portrait-4.png</file>
+        <file>Images/cards-print-portrait-2.png</file>
+        <file>Images/cards-print-portrait-1.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

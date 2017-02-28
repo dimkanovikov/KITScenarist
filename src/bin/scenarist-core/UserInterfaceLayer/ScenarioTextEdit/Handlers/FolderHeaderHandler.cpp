@@ -3,6 +3,8 @@
 #include "../ScenarioTextEdit.h"
 #include "../ScenarioTextEditHelpers.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
+
 #include <QKeyEvent>
 #include <QTextBlock>
 
@@ -74,7 +76,19 @@ void FolderHeaderHandler::handleEnter(QKeyEvent*)
 					cursor.setBlockFormat(QTextBlockFormat());
 					editor()->setTextCursor(cursor);
 					editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneHeading);
-					editor()->moveCursor(QTextCursor::NextCharacter);
+                    editor()->moveCursor(QTextCursor::NextCharacter);
+
+                    //
+                    // Перенесём параметры из блока в котором они остались к текущему блоку
+                    //
+                    QTextCursor cursor = editor()->textCursor();
+                    cursor.movePosition(QTextCursor::PreviousBlock);
+                    if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*> (cursor.block().userData())) {
+                        ScenarioTextBlockInfo* movedInfo = info->clone();
+                        cursor.block().setUserData(nullptr);
+                        cursor.movePosition(QTextCursor::NextBlock);
+                        cursor.block().setUserData(movedInfo);
+                    }
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 

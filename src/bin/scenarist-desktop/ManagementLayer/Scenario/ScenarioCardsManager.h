@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class QPrinter;
+
 namespace Domain {
     class Scenario;
 }
@@ -12,6 +14,7 @@ namespace BusinessLogic {
 }
 
 namespace UserInterface {
+    class PrintCardsDialog;
     class ScenarioCardsView;
     class ScenarioSchemeItemDialog;
 }
@@ -85,7 +88,7 @@ namespace ManagementLayer
         /**
          * @brief Схема карточек изменена
          */
-        void schemeChanged();
+        void cardsChanged();
 
         /**
          * @brief Запрос на добавление элемента
@@ -139,6 +142,7 @@ namespace ManagementLayer
          * @brief Переместить сцену в соответствии с перемещённой карточкой
          */
         void moveCard(const QString& _cardId, const QString& _actId, const QString& _previousCardId);
+        void moveCardToGroup(const QString& _cardId, const QString& _groupId);
 
         /**
          * @brief Изменить цвета карточки
@@ -148,7 +152,15 @@ namespace ManagementLayer
         /**
          * @brief Изменить тип карточки
          */
-        void changeCardType(const QString& _uuid, int _cardType);
+        void changeCardType(const QString& _uuid, bool _isFolder);
+
+        /**
+         * @brief Напечатать карточки
+         */
+        /** @{ */
+        void print();
+        void printCards(QPrinter* _printer);
+        /** @} */
 
     private:
         /**
@@ -160,22 +172,27 @@ namespace ManagementLayer
         /**
          * @brief Представление редактора карт
          */
-        UserInterface::ScenarioCardsView* m_view;
+        UserInterface::ScenarioCardsView* m_view = nullptr;
 
         /**
          * @brief Диалог добавления элемента
          */
-        UserInterface::ScenarioSchemeItemDialog* m_addItemDialog;
+        UserInterface::ScenarioSchemeItemDialog* m_addItemDialog = nullptr;
+
+        /**
+         * @brief Диалог печати
+         */
+        UserInterface::PrintCardsDialog* m_printDialog = nullptr;
 
         /**
          * @brief Сценарий
          */
-        Domain::Scenario* m_scenario;
+        Domain::Scenario* m_scenario = nullptr;
 
         /**
          * @brief Модель сценария
          */
-        BusinessLogic::ScenarioModel* m_model;
+        BusinessLogic::ScenarioModel* m_model = nullptr;
     };
 }
 

@@ -175,7 +175,7 @@ void StartUpManager::showPasswordError(const QString& _error)
         //
         m_changePasswordDialog->stopAndHide();
         QLightBoxMessage::critical(m_view, tr("Can not change password"),
-                                      _error);
+                                   _error);
         m_changePasswordDialog->showUnprepared();
     }
 }
@@ -249,7 +249,7 @@ void StartUpManager::retryLastAction(const QString &_error)
     } else if(m_changePasswordDialog->isVisible()) {
         m_changePasswordDialog->stopAndHide();
         QLightBoxMessage::critical(m_view, tr("Can not change password"),
-                                      _error);
+                                   _error);
         m_changePasswordDialog->showUnprepared();
     }
 }
@@ -462,9 +462,9 @@ void StartUpManager::checkCrashReports()
         // Возьмем email из хранилища (тот же, что и для авторизации)
         //
         const QString email =
-            StorageFacade::settingsStorage()->value(
-                "application/email",
-                SettingsStorage::ApplicationSettings);
+                StorageFacade::settingsStorage()->value(
+                    "application/email",
+                    SettingsStorage::ApplicationSettings);
         if (!email.isEmpty()) {
             dialog.setEmail(email);
         }
@@ -476,6 +476,7 @@ void StartUpManager::checkCrashReports()
             // Отправляем
             //
             NetworkRequest loader;
+            loader.setRequestMethod(NetworkRequest::Post);
             loader.addRequestAttribute("version", QApplication::applicationVersion());
             loader.addRequestAttribute("email", dialog.email());
             loader.addRequestAttribute("message", dialog.message());
@@ -492,9 +493,9 @@ void StartUpManager::checkCrashReports()
             //
             if (email.isEmpty()) {
                 StorageFacade::settingsStorage()->setValue(
-                "application/email",
-                dialog.email(),
-                SettingsStorage::ApplicationSettings);
+                            "application/email",
+                            dialog.email(),
+                            SettingsStorage::ApplicationSettings);
             }
         }
         //
@@ -519,7 +520,7 @@ void StartUpManager::checkNewVersion()
             = DataStorageLayer::StorageFacade::settingsStorage()->value(
                   "application/uuid", DataStorageLayer::SettingsStorage::ApplicationSettings);
     DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-        "application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
+                "application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
 
     //
     // Построим ссылку, чтобы учитывать запрос на проверку обновлений

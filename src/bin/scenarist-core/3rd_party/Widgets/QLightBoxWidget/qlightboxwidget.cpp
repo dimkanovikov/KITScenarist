@@ -48,11 +48,12 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 	// Виджету необходимо всегда быть последним ребёнком,
 	// чтобы перекрывать остальные виджеты при отображении
 	//
-	if (_event->type() == QEvent::ChildAdded) {
+    if (_event->type() == QEvent::ChildAdded
+        || _event->type() == QEvent::ChildRemoved) {
 		QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
 		if (childEvent->child() != this
 			&& isVisible()) {
-			resetParent();
+            updateSelf();
 		}
 	}
 
@@ -60,8 +61,8 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 	// Если изменился размер родительского виджета, необходимо
 	// перерисовать себя
 	//
-	if (isVisible()
-		&& _event->type() == QEvent::Resize) {
+    else if (_event->type() == QEvent::Resize
+             && isVisible()) {
 		updateSelf();
 	}
 
@@ -105,7 +106,7 @@ void QLightBoxWidget::resetParent()
 {
 	QWidget* parent = parentWidget();
 	setParent(0);
-	setParent(parent);
+    setParent(parent);
 }
 
 void QLightBoxWidget::updateSelf()

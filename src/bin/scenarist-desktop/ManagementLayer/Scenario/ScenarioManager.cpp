@@ -10,6 +10,7 @@
 #include <Domain/ScenarioChange.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
@@ -704,8 +705,8 @@ void ScenarioManager::aboutUpdateCurrentSceneTitleAndDescription(int _cursorPosi
     }
     m_sceneDescriptionManager->setTitle(itemTitle);
 
-    QString synopsis = workingScenario()->itemDescriptionAtPosition(_cursorPosition);
-    m_sceneDescriptionManager->setDescription(synopsis);
+    const QString description = workingScenario()->itemDescriptionAtPosition(_cursorPosition);
+    m_sceneDescriptionManager->setDescription(description);
 }
 
 void ScenarioManager::aboutUpdateCurrentSceneTitle(const QString& _title)
@@ -752,7 +753,12 @@ void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, 
     //
     setWorkingMode(m_navigatorManager);
 
-    const int position = workingScenario()->itemEndPosition(_afterItemIndex);
+    int position = 0;
+    if (_itemType == BusinessLogic::ScenarioModelItem::Folder) {
+        position = workingScenario()->itemEndPosition(_afterItemIndex);
+    } else {
+        position = workingScenario()->itemMiddlePosition(_afterItemIndex);
+    }
     m_textEditManager->addScenarioItemFromCards(position, _itemType, _title, _color, _description);
 }
 
@@ -986,11 +992,11 @@ void ScenarioManager::initConnections()
     connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);
-//    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
-//    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
-//    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
-//    connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
-//    connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
+    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
+    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
+    connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
+    connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
     connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
     connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
@@ -1028,7 +1034,7 @@ void ScenarioManager::initConnections()
     //
     // Настраиваем отслеживание изменений документа
     //
-//    connect(m_cardsManager, &ScenarioCardsManager::schemeChanged, this, &ScenarioManager::scenarioChanged);
+    connect(m_cardsManager, &ScenarioCardsManager::cardsChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_textEditManager, &ScenarioTextEditManager::textChanged, this, &ScenarioManager::scenarioChanged);

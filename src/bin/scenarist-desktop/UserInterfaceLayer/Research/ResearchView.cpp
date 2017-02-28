@@ -136,22 +136,27 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
                 emit researchItemAdded();
             }
         });
-        connect(_model, &QAbstractItemModel::dataChanged, [=] {
-            //
-            // Сохраняем последнюю позицию редактирования
-            //
-            int lastCursorPos = m_ui->textDescription->editor()->textCursor().position();
-            //
-            // Обновляем элемент
-            //
-            currentResearchChanged();
-            //
-            // Восстанавливаем позицию редактирования
-            //
-            QTextCursor cursor = m_ui->textDescription->editor()->textCursor();
-            cursor.setPosition(lastCursorPos);
-            m_ui->textDescription->editor()->setTextCursor(cursor);
-        });
+        //
+        // TODO: тут должен быть НОРМАЛЬНЫЙ код, который обновляет текущий редактор, если данные сменились
+        //
+//        connect(_model, &QAbstractItemModel::dataChanged, [=] (const QModelIndex& _index) {
+//            if (_index == currentResearchIndex()) {
+//                //
+//                // Сохраняем последнюю позицию редактирования
+//                //
+//                int lastCursorPos = m_ui->textDescription->editor()->textCursor().position();
+//                //
+//                // Обновляем элемент
+//                //
+//                currentResearchChanged();
+//                //
+//                // Восстанавливаем позицию редактирования
+//                //
+//                QTextCursor cursor = m_ui->textDescription->editor()->textCursor();
+//                cursor.setPosition(lastCursorPos);
+//                m_ui->textDescription->editor()->setTextCursor(cursor);
+//            }
+//        });
     }
 }
 
@@ -589,22 +594,39 @@ void ResearchView::initConnections()
         emit refeshResearchSubtreeRequested(currentResearchIndex());
     });
     //
-    connect(m_ui->search, &FlatButton::toggled, [=] (bool _toggle) {
-        if (!_toggle
+    QShortcut* searchShortcut = new QShortcut(QKeySequence("Ctrl+F"), this);
+    searchShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(searchShortcut, &QShortcut::activated, [=] {
+        //
+        // Если поиск виден, но в нём нет фокуса - установим фокус в него
+        // В остальных случаях просто покажем, или скроем поиск
+        //
+        if (m_ui->search->isChecked()
             && m_ui->searchWidget->isVisible()
             && !m_ui->searchWidget->hasFocus()) {
-            m_ui->search->setChecked(true);
+            m_ui->searchWidget->selectText();
+            m_ui->searchWidget->setFocus();
         }
-
-        const bool visible = m_ui->search->isChecked();
+        //
+        // В противном случае сменим видимость
+        //
+        else {
+            m_ui->search->toggle();
+        }
+    });
+    connect(m_ui->search, &FlatButton::toggled, [=] (bool _toggled) {
+        const bool visible = _toggled;
         if (m_ui->searchWidget->isVisible() != visible) {
             const bool FIX = true;
             WAF::Animation::slide(m_ui->searchWidget, WAF::FromBottomToTop, FIX, !FIX, visible);
             QTimer::singleShot(300, [=] { m_ui->searchWidget->setVisible(visible); });
         }
+
         if (visible) {
             m_ui->searchWidget->selectText();
             m_ui->searchWidget->setFocus();
+        } else {
+            m_ui->textDescription->setFocus();
         }
     });
     connect(m_ui->addFolder, &QPushButton::clicked, [=] {

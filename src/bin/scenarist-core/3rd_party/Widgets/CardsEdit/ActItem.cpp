@@ -1,25 +1,13 @@
 #include "ActItem.h"
 
-#include "TextUtils.h"
+#include <3rd_party/Helpers/TextUtils.h>
 
+#include <QApplication>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPainter>
 #include <QScrollBar>
 #include <QStyleOptionGraphicsItem>
-
-namespace {
-    /**
-     * @brief Минимальная ширина акта
-     * @brief Используется, если ещё не задана сцена
-     */
-    const int ACT_MIN_WIDTH = 100;
-
-    /**
-     * @brief Высота акта
-     */
-    const int ACT_HEIGHT = 30;
-}
 
 
 ActItem::ActItem(QGraphicsItem* _parent) :
@@ -95,31 +83,42 @@ int ActItem::type() const
     return Type;
 }
 
+void ActItem::setBoundingRect(const QRectF& _boundingRect)
+{
+    if (m_boundingRect != _boundingRect) {
+        prepareGeometryChange();
+        m_boundingRect = _boundingRect;
+    }
+}
+
 QRectF ActItem::boundingRect() const
 {
-    QRectF result(0, 0, ACT_MIN_WIDTH, ACT_HEIGHT);
-    if (scene() != nullptr
-        && !scene()->views().isEmpty()) {
-        const QGraphicsView* view = scene()->views().first();
-        const QPointF viewTopLeftPoint = view->mapToScene(QPoint(0, 0));
-        const int scrollDelta = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
-        const QPointF viewTopRightPoint = view->mapToScene(QPoint(view->width() - scrollDelta, 0));
-        result.setLeft(viewTopLeftPoint.x());
-        result.setWidth(viewTopRightPoint.x() - viewTopLeftPoint.x());
-    }
-
-    return result;
+    return m_boundingRect;
 }
 
 void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)
 {
+    Q_UNUSED(_option);
     Q_UNUSED(_widget);
 
     _painter->save();
 
     {
-        const QPalette palette = _option->palette;
-        const QRectF actRect = boundingRect();
+        QRectF actRect = m_boundingRect;
+        if (scene() != nullptr
+            && !scene()->views().isEmpty()) {
+            const QGraphicsView* view = scene()->views().first();
+            const QPointF viewTopLeftPoint = view->mapToScene(QPoint(0, 0));
+            const int scrollDelta = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
+            const QPointF viewTopRightPoint = view->mapToScene(QPoint(view->width() - scrollDelta, 0));
+
+            const qreal actWidth = viewTopRightPoint.x() - viewTopLeftPoint.x();
+            if (actWidth < actRect.width()) {
+                actRect.setLeft(viewTopLeftPoint.x());
+                actRect.setWidth(actWidth);
+            }
+        }
+        const QPalette palette = QApplication::palette();
         const QStringList colors = m_colors.split(";", QString::SkipEmptyParts);
 
         //

@@ -1,20 +1,60 @@
 #include "ScenarioCardsView.h"
 #include "CardsResizer.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Helpers/ShortcutHelper.h>
 
 #include <3rd_party/Widgets/CardsEdit/CardsView.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 
+#include <QFileInfo>
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QShortcut>
+#include <QStandardPaths>
 #include <QVariant>
 #include <QWidgetAction>
 
 using UserInterface::ScenarioCardsView;
 using UserInterface::CardsResizer;
+
+namespace {
+    /**
+     * @brief Получить путь к последней используемой папке
+     */
+    static QString cardsFolderPath() {
+        QString cardsFolderPath =
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "cards/save-folder",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings);
+        if (cardsFolderPath.isEmpty()) {
+            cardsFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+        }
+        return cardsFolderPath;
+    }
+
+    /**
+     * @brief Получить путь к сохраняемому файлу
+     */
+    static QString cardsFilePath(const QString& _fileName) {
+        QString filePath = cardsFolderPath() + QDir::separator() + _fileName;
+        return QDir::toNativeSeparators(filePath);
+    }
+
+    /**
+     * @brief Сохранить путь к последней используемой папке
+     */
+    static void saveCardsFolderPath(const QString& _path) {
+        DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+                    "cards/save-folder",
+                    QFileInfo(_path).absoluteDir().absolutePath(),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings);
+    }
+}
 
 
 ScenarioCardsView::ScenarioCardsView(bool _isDraft, QWidget* _parent) :
@@ -25,6 +65,8 @@ ScenarioCardsView::ScenarioCardsView(bool _isDraft, QWidget* _parent) :
     m_removeCard(new FlatButton(_parent)),
     m_sort(new FlatButton(_parent)),
     m_resizer(new CardsResizer(m_sort)),
+    m_save(new FlatButton(_parent)),
+    m_print(new FlatButton(_parent)),
     m_fullscreen(new FlatButton(_parent)),
     m_toolbarSpacer(new QLabel(_parent))
 {
@@ -73,23 +115,37 @@ QString ScenarioCardsView::save() const
     return m_cards->save();
 }
 
+void ScenarioCardsView::saveToImage()
+{
+    const QString saveFileName = ::cardsFilePath(tr("Cards.png"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save cards"), saveFileName, tr("PNG files (*.png)"));
+    if (!fileName.isEmpty()) {
+        if (!fileName.endsWith(".png")) {
+            fileName.append(".png");
+        }
+        m_cards->saveToImage(fileName);
+
+        ::saveCardsFolderPath(fileName);
+    }
+}
+
 void ScenarioCardsView::saveChanges(bool _hasChangesInText)
 {
     m_cards->saveChanges(_hasChangesInText);
 }
 
-void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
-    const QString& _previousCardUuid)
+void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, int _number,
+    const QString& _title, const QString& _description, const QString& _stamp,
+    const QString& _colors, bool _isEmbedded, const QString& _previousCardUuid)
 {
-    m_cards->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
+    m_cards->insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
 }
 
-void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
-    bool _isAct)
+void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, int _number,
+    const QString& _title, const QString& _description, const QString& _stamp,
+    const QString& _colors, bool _isEmbedded, bool _isAct)
 {
-    m_cards->updateItem(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
+    m_cards->updateItem(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
 }
 
 void ScenarioCardsView::removeCard(const QString& _uuid)
@@ -143,6 +199,7 @@ void ScenarioCardsView::resortCards()
 
 void ScenarioCardsView::initView(bool _isDraft)
 {
+    m_active->hide();
     if (_isDraft) {
         m_active->setText(tr("Draft"));
     } else {
@@ -174,6 +231,12 @@ void ScenarioCardsView::initView(bool _isDraft)
         m_sort->setMenu(menu);
     }
 
+    m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
+    m_save->setToolTip(tr("Save cards to file"));
+
+    m_print->setIcons(QIcon(":/Graphics/Icons/printer.png"));
+    m_print->setToolTip(tr("Print cards"));
+
     m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
         QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
     m_fullscreen->setToolTip(tr("On/off fullscreen mode (F5)"));
@@ -189,6 +252,8 @@ void ScenarioCardsView::initView(bool _isDraft)
     toolbarLayout->addWidget(m_addCard);
     toolbarLayout->addWidget(m_removeCard);
     toolbarLayout->addWidget(m_sort);
+    toolbarLayout->addWidget(m_save);
+    toolbarLayout->addWidget(m_print);
     toolbarLayout->addWidget(m_toolbarSpacer);
     toolbarLayout->addWidget(m_fullscreen);
 
@@ -203,68 +268,7 @@ void ScenarioCardsView::initView(bool _isDraft)
 
 void ScenarioCardsView::initConnections()
 {
-    /*
-
-    connect(ui->saveChanges, &QPushButton::clicked, [=] { ui->draft->saveChanges(); });
-    connect(ui->undo, &QPushButton::clicked, ui->draft, &CardsView::undo);
-    connect(ui->redo, &QPushButton::clicked, ui->draft, &CardsView::redo);
-
-
-    // ****
-    // Act
-
-    connect(ui->addAct, &QPushButton::clicked, [=] {
-        ui->script->addAct(QUuid::createUuid().toString(), "Act", "With some description", "#af51cc");
-    });
-
-    connect(ui->script, &CardsView::actAddRequest, [=] {
-        ui->script->addAct(QUuid::createUuid().toString(), "Act", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                                                               "Sed pretium, risus eget porta sollicitudin, justo tortor "
-                                                               "fermentum massa, ut dictum lacus risus ut dolor. Praesent "
-                                                               "sodales ultrices leo. Maecenas pharetra ipsum eu est aliquet,"
-                                                               " ac bibendum nisi sollicitudin. In congue rutrum maximus. Nam "
-                                                               "pharetra pellentesque quam, vel pulvinar sem ornare eu. Donec "
-                                                               "lorem nibh, blandit sit amet vulputate eleifend, dictum a urna. "
-                                                               "Aenean ut lorem posuere, auctor ante ac, tincidunt nibh. Sed "
-                                                               "dignissim odio sed lectus blandit, eget volutpat purus maximus. "
-                                                               "Sed eget odio mollis, rutrum leo a, ornare diam. Maecenas "
-                                                               "condimentum tellus eget turpis dictum, vel mattis erat facilisis. "
-                                                               "Pellentesque habitant morbi tristique senectus et netus et "
-                                                               "malesuada fames ac turpis egestas.", "#cd01a0;#ffac32;#93fac3");
-    });
-
-
-
-    connect(ui->script, &CardsView::actRemoveRequest, ui->script, &CardsView::removeAct);
-
-    // ****
-
-    connect(ui->save, &QPushButton::clicked, [=] {
-        QFile draft("c:\\draft.xml");
-        draft.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        draft.write(ui->draft->save().toUtf8().data());
-        draft.close();
-        //
-        QFile script("c:\\script.xml");
-        script.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        script.write(ui->script->save().toUtf8().data());
-        script.close();
-    });
-
-    connect(ui->load, &QPushButton::clicked, [=] {
-        QFile draft("c:\\draft.xml");
-        draft.open(QIODevice::ReadOnly);
-        ui->draft->load(draft.readAll());
-        draft.close();
-        //
-        QFile script("c:\\script.xml");
-        script.open(QIODevice::ReadOnly);
-        ui->script->load(script.readAll());
-        script.close();
-    });
-     */
-
-//	connect(m_cards, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
+    connect(m_cards, &CardsView::cardsChanged, this, &ScenarioCardsView::cardsChanged);
 
     connect(m_addCard, &FlatButton::clicked, [=] {
         m_newCardPosition = QPointF();
@@ -281,6 +285,8 @@ void ScenarioCardsView::initConnections()
         emit addCopyCardRequest(_isFolder, _title, _description, _stamp, _colors);
     });
 
+    connect(m_removeCard, &FlatButton::clicked, m_cards, &CardsView::removeSelectedItem);
+
     connect(m_cards, &CardsView::actChangeRequest, this, &ScenarioCardsView::editCardRequest);
     connect(m_cards, &CardsView::cardChangeRequest, this, &ScenarioCardsView::editCardRequest);
 
@@ -288,56 +294,78 @@ void ScenarioCardsView::initConnections()
     connect(m_cards, &CardsView::cardRemoveRequest, this, &ScenarioCardsView::removeCardRequest);
 
     connect(m_cards, &CardsView::cardMoved, this, &ScenarioCardsView::cardMoved);
+    connect(m_cards, &CardsView::cardMovedToGroup, this, &ScenarioCardsView::cardMovedToGroup);
 
-//	connect(m_cards, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
-//	connect(m_cards, &ActivityEdit::itemTypeChanged, this, &ScenarioCardsView::itemTypeChanged);
+    connect(m_cards, &CardsView::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
+    connect(m_cards, &CardsView::cardTypeChanged, this, &ScenarioCardsView::cardTypeChanged);
 
-    connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
+    connect(m_sort, &FlatButton::clicked, m_sort, &FlatButton::showMenu);
     connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
+
+    connect(m_save, &FlatButton::clicked, this, &ScenarioCardsView::saveToImage);
+
+    connect(m_print, &FlatButton::clicked, this, &ScenarioCardsView::printRequest);
 
     connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
 }
 
 void ScenarioCardsView::initShortcuts()
 {
-//	QShortcut* undo = new QShortcut(QKeySequence::Undo, this);
-//	undo->setContext(Qt::WidgetWithChildrenShortcut);
-//	connect(undo, &QShortcut::activated, [=] {
-//		//
-//		// Если отмену необходимо синхронизировать с текстом, уведомляем об этом
-//		//
-//		if (m_cards->needSyncUndo()) {
-//			emit undoRequest();
-//		}
-//		//
-//		// А если синхронизировать не нужно, просто отменяем последнее изменение
-//		//
-//		else {
-//			m_cards->saveChanges(false);
-//			m_cards->undo();
-//		}
-//	});
+    QShortcut* undo = new QShortcut(QKeySequence::Undo, this);
+    undo->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(undo, &QShortcut::activated, [=] {
+        emit undoRequest();
+        return;
 
-//	QShortcut* redo = new QShortcut(QKeySequence::Redo, this);
-//	redo->setContext(Qt::WidgetWithChildrenShortcut);
-//	connect(redo, &QShortcut::activated, [=] {
-//		//
-//		// Если повтор необходимо синхронизировать с текстом, уведомляем об этом
-//		//
-//		if (m_cards->needSyncRedo()) {
-//			emit redoRequest();
-//		}
-//		//
-//		// А если синхронизировать не нужно, просто повторяем последнее изменение
-//		//
-//		else {
-//			m_cards->redo();
-//		}
-//	});
+        //
+        // Если отмену необходимо синхронизировать с текстом, уведомляем об этом
+        //
+        if (m_cards->needSyncUndo()) {
+            emit undoRequest();
+        }
+        //
+        // А если синхронизировать не нужно, просто отменяем последнее изменение
+        //
+        else {
+            m_cards->saveChanges(false);
+            m_cards->undo();
+        }
+    });
 
-//	QShortcut* fullscreen = new QShortcut(Qt::Key_F5, this);
-//	fullscreen->setContext(Qt::WidgetWithChildrenShortcut);
-//	connect(fullscreen, &QShortcut::activated, m_fullscreen, &FlatButton::click);
+    QShortcut* redo = new QShortcut(QKeySequence::Redo, this);
+    redo->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(redo, &QShortcut::activated, [=] {
+        emit redoRequest();
+        return;
+
+        //
+        // Если повтор необходимо синхронизировать с текстом, уведомляем об этом
+        //
+        if (m_cards->needSyncRedo()) {
+            emit redoRequest();
+        }
+        //
+        // А если синхронизировать не нужно, просто повторяем последнее изменение
+        //
+        else {
+            m_cards->redo();
+        }
+    });
+
+    QShortcut* add = new QShortcut(Qt::Key_New, this);
+    add->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(add, &QShortcut::activated, this, &ScenarioCardsView::addCardClicked);
+
+    QShortcut* remove = new QShortcut(Qt::Key_Delete, this);
+    remove->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(remove, &QShortcut::activated, m_cards, &CardsView::removeSelectedItem);
+    QShortcut* backspace = new QShortcut(Qt::Key_Backspace, this);
+    backspace->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(backspace, &QShortcut::activated, m_cards, &CardsView::removeSelectedItem);
+
+    QShortcut* fullscreen = new QShortcut(Qt::Key_F5, this);
+    fullscreen->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(fullscreen, &QShortcut::activated, m_fullscreen, &FlatButton::click);
 }
 
 void ScenarioCardsView::initStyleSheet()
@@ -347,6 +375,8 @@ void ScenarioCardsView::initStyleSheet()
     m_removeCard->setProperty("inTopPanel", true);
     m_sort->setProperty("inTopPanel", true);
     m_sort->setProperty("hasMenu", true);
+    m_save->setProperty("inTopPanel", true);
+    m_print->setProperty("inTopPanel", true);
     m_fullscreen->setProperty("inTopPanel", true);
 
     m_toolbarSpacer->setProperty("inTopPanel", true);

@@ -76,19 +76,26 @@ public:
     /**
      * @brief Вставить карточку после заданного элемента
      */
-    void insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
+    void insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
 
     /**
      * @brief Обновить заданную карточку
      */
-    void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct);
+    void updateItem(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, bool _isAct);
 
     /**
      * @brief Удалить заданную карточку
      */
     void removeItem(const QString& _uuid);
+
+    /**
+     * @brief Удалить выделенный элемент
+     */
+    void removeSelectedItem();
 
     /**
      * @brief Обновить сцену
@@ -101,6 +108,11 @@ public:
     QString save() const;
 
     /**
+     * @brief Сохранить в картинку
+     */
+    void saveToImage(const QString& _filePath);
+
+    /**
      * @brief Загрузить сцены из xml
      */
     bool load(const QString& _xml);
@@ -109,9 +121,19 @@ public:
     // Методы для работы непосредственно с доской
 
     /**
+     * @brief Необходимо ли синхронизировать отмену последенго действия с текстом
+     */
+    bool needSyncUndo() const;
+
+    /**
      * @brief Отменить последнее действие
      */
     void undo();
+
+    /**
+     * @brief Необходимо ли синхронизировать повтор последенго действия с текстом
+     */
+    bool needSyncRedo() const;
 
     /**
      * @brief Повторить последнее действие
@@ -188,7 +210,7 @@ signals:
     void cardMoved(const QString& _cardId, const QString& _actId, const QString& _previousCardId);
 
     /**
-     * @brief Картосчка была вложена в группирующую карточку
+     * @brief Карточка была вложена в группирующую карточку
      */
     void cardMovedToGroup(const QString& _cardId, const QString& _groupId);
 
@@ -196,6 +218,27 @@ signals:
      * @brief Изменились цвета карточки
      */
     void cardColorsChanged(const QString& _uuid, const QString& _colors);
+
+    /**
+     * @brief Запрос на изменение типа карточки
+     */
+    void cardTypeChanged(const QString& _uuid, bool _isFolder);
+
+    /**
+     * @brief Карточки были изменены
+     */
+    void cardsChanged();
+
+protected:
+    /**
+     * @brief Переопределяем для обработки события смены палитры
+     */
+    bool event(QEvent* _event) override;
+
+    /**
+     * @brief Переопределяем для переупорядочивания карточек
+     */
+    void resizeEvent(QResizeEvent* _event) override;
 
 private:
     /**

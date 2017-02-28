@@ -99,9 +99,7 @@
         <number>0</number>
        </property>
        <item row="2" column="0" colspan="2">
-        <widget class="SearchWidget" name="searchWidget">
-         <zorder>researchDataEditsContainer</zorder>
-        </widget>
+        <widget class="SearchWidget" name="searchWidget"/>
        </item>
        <item row="0" column="0">
         <widget class="FlatButton" name="search">
@@ -113,7 +111,7 @@
            <normaloff>:/Graphics/Icons/Editing/search.png</normaloff>:/Graphics/Icons/Editing/search.png</iconset>
          </property>
          <property name="shortcut">
-          <string>Ctrl+F</string>
+          <string>Ctrl+Tab</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -139,7 +137,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>11</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -633,7 +631,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:x-large; font-weight:600;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;h2&gt;Text Document&lt;/h2&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -696,7 +694,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:x-large; font-weight:600;&quot;&gt;Mind Map&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;h2&gt;Mind Map&lt;/h2&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -759,7 +757,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:x-large; font-weight:600;&quot;&gt;Images Galerry&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;h2&gt;Images Gallery&lt;/h2&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -822,7 +820,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:x-large; font-weight:600;&quot;&gt;Url&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;h2&gt;Url&lt;/h2&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

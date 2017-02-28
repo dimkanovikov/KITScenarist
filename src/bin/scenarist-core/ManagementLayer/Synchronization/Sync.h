@@ -53,6 +53,10 @@ namespace ManagementLayer
             // Проект недоступен (у хостера закончилась подписка)
             //
             ProjectUnavailableError = 201,
+            //
+            // Доступ к проекту закрыт
+            //
+            AccessToProjectClosed = 202,
 
             // ****
             //

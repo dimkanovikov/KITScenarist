@@ -1890,7 +1890,8 @@ QPoint PageTextEditPrivate::correctMousePosition(const QPoint& _eventPos)
     //
     // Если получили блок над указателем
     //
-    if (q->cursorRect(cursor).bottom() < localPos.y()) {
+    if (!cursor.isNull()
+        && q->cursorRect(cursor).bottom() < localPos.y()) {
         //
         // Ищем ближайший к указателю блок
         //

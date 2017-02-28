@@ -3,16 +3,15 @@
 #include "ActItem.h"
 #include "CardsScene.h"
 
-#include "TextUtils.h"
-
 #include <3rd_party/Helpers/ImageHelper.h>
+#include <3rd_party/Helpers/TextUtils.h>
 
+#include <QApplication>
 #include <QDrag>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QMimeData>
 #include <QPainter>
-#include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QStyleOptionGraphicsItem>
 
@@ -22,7 +21,8 @@ const QString CardItem::MimeType = "application/kit-card";
 CardItem::CardItem(QGraphicsItem* _parent) :
     QObject(),
     QGraphicsItem(_parent),
-    m_shadowEffect(new QGraphicsDropShadowEffect)
+    m_shadowEffect(new QGraphicsDropShadowEffect),
+    m_animation(new QParallelAnimationGroup)
 {
     setCursor(Qt::OpenHandCursor);
 
@@ -73,7 +73,7 @@ void CardItem::setIsFolder(bool _isFolder)
 {
     if (m_isFolder != _isFolder) {
         m_isFolder = _isFolder;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -82,11 +82,24 @@ bool CardItem::isFolder() const
     return m_isFolder;
 }
 
+void CardItem::setNumber(int _number)
+{
+    if (m_number != _number) {
+        m_number = _number;
+        prepareGeometryChange();
+    }
+}
+
+int CardItem::number() const
+{
+    return m_number;
+}
+
 void CardItem::setTitle(const QString& _title)
 {
     if (m_title != _title) {
         m_title = _title;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -99,7 +112,7 @@ void CardItem::setDescription(const QString& _description)
 {
     if (m_description != _description) {
         m_description = _description;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -112,7 +125,7 @@ void CardItem::setStamp(const QString& _stamp)
 {
     if (m_stamp != _stamp) {
         m_stamp = _stamp;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -125,7 +138,7 @@ void CardItem::setColors(const QString& _colors)
 {
     if (m_colors != _colors) {
         m_colors = _colors;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -138,7 +151,7 @@ void CardItem::setIsEmbedded(bool _embedded)
 {
     if (m_isEmbedded != _embedded) {
         m_isEmbedded = _embedded;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -151,13 +164,21 @@ void CardItem::setSize(const QSizeF& _size)
 {
     if (m_size != _size) {
         m_size = _size;
-        update();
+        prepareGeometryChange();
     }
 }
 
 QSizeF CardItem::size() const
 {
     return m_size;
+}
+
+void CardItem::setIsReadyForEmbed(bool _isReady)
+{
+    if (m_isReadyForEmbed != _isReady) {
+        m_isReadyForEmbed = _isReady;
+        prepareGeometryChange();
+    }
 }
 
 void CardItem::setInDragOutMode(bool _inDragOutMode)
@@ -187,12 +208,13 @@ QRectF CardItem::boundingRectCorrected() const
 
 void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)
 {
+    Q_UNUSED(_option);
     Q_UNUSED(_widget);
 
     _painter->save();
 
     {
-        const QPalette palette = _option->palette;
+        const QPalette palette = QApplication::palette();
         const QRectF cardRect = boundingRect().adjusted(0, 9, 0, 0);
         const QStringList colors = m_colors.split(";", QString::SkipEmptyParts);
         const int additionalColorsHeight = (colors.size() > 1) ? 10 : 0;
@@ -200,9 +222,16 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         //
         // Рисуем фон
         //
+        // ... выделенным, если идёт вложение
+        //
+        if (m_isReadyForEmbed) {
+            _painter->setBrush(palette.highlight());
+            _painter->setPen(palette.highlight().color());
+        }
+        //
         // ... заданным цветом, если он задан
         //
-        if (!colors.isEmpty()) {
+        else if (!colors.isEmpty()) {
             _painter->setBrush(QColor(colors.first()));
             _painter->setPen(QColor(colors.first()));
         }
@@ -238,7 +267,7 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         //
         // Рисуем дополнительные цвета
         //
-        if (!m_colors.isEmpty()) {
+        if (!m_isReadyForEmbed && !m_colors.isEmpty()) {
             QStringList colorsNamesList = m_colors.split(";", QString::SkipEmptyParts);
             colorsNamesList.removeFirst();
             //
@@ -270,7 +299,11 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         _painter->setPen(palette.text().color());
         const int titleHeight = _painter->fontMetrics().height();
         const QRectF titleRect(7, 18, cardRect.size().width() - 7*2, titleHeight);
-        const QString titleText = TextUtils::elidedText(title(), _painter->font(), titleRect.size(), textoption);
+        QString titleText = title();
+        if (!isFolder()) {
+            titleText.prepend(QString("%1. ").arg(number()));
+        }
+        titleText = TextUtils::elidedText(titleText, _painter->font(), titleRect.size(), textoption);
         _painter->drawText(titleRect, titleText, textoption);
 
         //
@@ -278,12 +311,12 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         //
         _painter->setOpacity(0.33);
         QFont stateFont = font;
-        stateFont.setPointSize(stateFont.pointSize()*6);
+        stateFont.setPointSize(stateFont.pointSize()*8);
         stateFont.setBold(true);
         stateFont.setCapitalization(QFont::AllUppercase);
         //
         // Нужно, чтобы состояние влезало в пределы карточки, если не влезает уменьшаем его шрифт
-        // до тех пор, пока не будет найден подходящий размер, или пока он не будет рабен двум
+        // до тех пор, пока не будет найден подходящий размер, или пока он не будет равен двум
         // размерам базового шрифта
         //
         QFontMetricsF stateFontMetrics(stateFont);
@@ -310,7 +343,8 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         _painter->setFont(font);
         const int spacing = titleRect.height() / 2;
         const QRectF descriptionRect(9, titleRect.bottom() + spacing, cardRect.size().width() - 18, cardRect.size().height() - titleRect.bottom() - spacing - 9);
-        const QString descriptionText = TextUtils::elidedText(m_description, _painter->font(), descriptionRect.size(), textoption);
+        QString descriptionText = TextUtils::elidedText(m_description, _painter->font(), descriptionRect.size(), textoption);
+        descriptionText.replace("\n", "\n\n");
         _painter->drawText(descriptionRect, descriptionText, textoption);
 
         //
@@ -330,36 +364,36 @@ void CardItem::takeFromBoard()
 {
     setCursor(Qt::ClosedHandCursor);
 
+    if (m_animation->state() == QAbstractAnimation::Running) {
+        m_animation->stop();
+    }
+    m_animation.reset(new QParallelAnimationGroup);
+
     setZValue(10000);
 
+    const int duration = 80;
     QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-    radiusAnimation->setDuration(100);
+    radiusAnimation->setDuration(duration);
     radiusAnimation->setStartValue(7);
     radiusAnimation->setEndValue(34);
     QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-    colorAnimation->setDuration(100);
+    colorAnimation->setDuration(duration);
     colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-    colorAnimation->setEndValue(QColor(63, 63, 63, 240));
+    colorAnimation->setEndValue(QColor(23, 23, 23, 240));
     QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-    yOffsetAnimation->setDuration(100);
+    yOffsetAnimation->setDuration(duration);
     yOffsetAnimation->setStartValue(1);
     yOffsetAnimation->setEndValue(6);
-    QPropertyAnimation* sizeAnimation = new QPropertyAnimation(this, "scale");
-    sizeAnimation->setDuration(100);
-    sizeAnimation->setStartValue(scale());
-    sizeAnimation->setEndValue(scale() + 0.1);
-    QPropertyAnimation* posAnimation = new QPropertyAnimation(this, "pos");
-    posAnimation->setDuration(100);
-    posAnimation->setStartValue(pos());
-    posAnimation->setEndValue(pos() - QPointF(12, 12));
+    QPropertyAnimation* scaleAnimation = new QPropertyAnimation(this, "scale");
+    scaleAnimation->setDuration(duration);
+    scaleAnimation->setStartValue(scale());
+    scaleAnimation->setEndValue(scale() + 0.005);
 
-    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
-    group->addAnimation(radiusAnimation);
-    group->addAnimation(colorAnimation);
-    group->addAnimation(yOffsetAnimation);
-    group->addAnimation(sizeAnimation);
-    group->addAnimation(posAnimation);
-    group->start(QAbstractAnimation::DeleteWhenStopped);
+    m_animation->addAnimation(radiusAnimation);
+    m_animation->addAnimation(colorAnimation);
+    m_animation->addAnimation(yOffsetAnimation);
+    m_animation->addAnimation(scaleAnimation);
+    m_animation->start();
 }
 
 void CardItem::putOnBoard()
@@ -367,6 +401,10 @@ void CardItem::putOnBoard()
     setCursor(Qt::OpenHandCursor);
 
     if (zValue() == 10000) {
+        if (m_animation->state() == QAbstractAnimation::Running) {
+            m_animation->stop();
+        }
+
         qreal newZValue = 1;
         for (QGraphicsItem* item : collidingItems()) {
             if (item->zValue() >= newZValue) {
@@ -375,50 +413,36 @@ void CardItem::putOnBoard()
         }
         setZValue(newZValue);
 
-        QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-        radiusAnimation->setDuration(100);
-        radiusAnimation->setStartValue(7);
-        radiusAnimation->setEndValue(34);
-        QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-        colorAnimation->setDuration(100);
-        colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-        colorAnimation->setEndValue(QColor(63, 63, 63, 240));
-        QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-        yOffsetAnimation->setDuration(100);
-        yOffsetAnimation->setStartValue(1);
-        yOffsetAnimation->setEndValue(6);
-        QPropertyAnimation* sizeAnimation = new QPropertyAnimation(this, "scale");
-        sizeAnimation->setDuration(100);
-        sizeAnimation->setStartValue(scale() - 0.1);
-        sizeAnimation->setEndValue(scale());
+        m_animation->setDirection(QAbstractAnimation::Backward);
+        m_animation->start();
+    }
+}
 
-
-        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
-        group->duration();
-        group->addAnimation(radiusAnimation);
-        group->addAnimation(colorAnimation);
-        group->addAnimation(yOffsetAnimation);
-        group->addAnimation(sizeAnimation);
-
-        //
-        // Небольшой хак ради красоты
-        // Возвращать позицию надо только в случае, если карточки не привязаны к сетке в сцене,
-        // в противном случае анимация не завершается корректно, т.к. при растановке по сетке
-        // перехватывается владение параметром карточки pos
-        //
-        if (CardsScene* scene = qobject_cast<CardsScene*>(this->scene())) {
-            if (scene->isFixedMode() == false) {
-                QPropertyAnimation* posAnimation = new QPropertyAnimation(this, "pos");
-                posAnimation->setDuration(100);
-                posAnimation->setStartValue(pos() + QPointF(12, 12));
-                posAnimation->setEndValue(pos());
-                group->addAnimation(posAnimation);
+QString CardItem::cardForEmbedUuid() const
+{
+    QString cardForEmbedUuid;
+    for (QGraphicsItem* item : collidingItems()) {
+        if (CardItem* card = qgraphicsitem_cast<CardItem*>(item)) {
+            if (card->isFolder()) {
+                QRectF cardRect = card->boundingRect();
+                cardRect.moveTopLeft(card->pos());
+                if (cardRect.contains(boundingRect().center() + pos())) {
+                    card->setIsReadyForEmbed(true);
+                    cardForEmbedUuid = card->uuid();
+                } else {
+                    card->setIsReadyForEmbed(false);
+                }
             }
         }
-
-        group->setDirection(QAbstractAnimation::Backward);
-        group->start(QAbstractAnimation::DeleteWhenStopped);
     }
+    return cardForEmbedUuid;
+}
+
+void CardItem::mouseMoveEvent(QGraphicsSceneMouseEvent* _event)
+{
+    cardForEmbedUuid();
+
+    QGraphicsItem::mouseMoveEvent(_event);
 }
 
 void CardItem::mousePressEvent(QGraphicsSceneMouseEvent* _event)
@@ -453,7 +477,9 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent* _event)
     else {
         QGraphicsItem::mousePressEvent(_event);
 
-        takeFromBoard();
+        if (_event->button() == Qt::LeftButton) {
+            takeFromBoard();
+        }
     }
 }
 
@@ -461,7 +487,12 @@ void CardItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 {
     QGraphicsItem::mouseReleaseEvent(_event);
 
-    putOnBoard();
+    //
+    // Положим карточку обратно, если это не вложение
+    //
+//    if (cardForEmbedUuid().isEmpty()) {
+        putOnBoard();
+//    }
 }
 
 void CardItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event)
@@ -475,5 +506,12 @@ void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* _event)
 {
     QGraphicsItem::hoverLeaveEvent(_event);
 
-    putOnBoard();
+    //
+    // Положим карточку обратно, если это не вложение
+    //
+//    if (cardForEmbedUuid().isEmpty()) {
+        putOnBoard();
+//    } else {
+
+//    }
 }

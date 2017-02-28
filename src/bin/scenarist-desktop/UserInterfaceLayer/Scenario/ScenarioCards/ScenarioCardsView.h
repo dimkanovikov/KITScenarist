@@ -57,6 +57,11 @@ namespace UserInterface {
         QString save() const;
 
         /**
+         * @brief Сохранить в изображение
+         */
+        void saveToImage();
+
+        /**
          * @brief Сохранить изменения схемы
          */
         void saveChanges(bool _hasChangesInText);
@@ -64,14 +69,14 @@ namespace UserInterface {
         /**
          * @brief Вставить карточку после заданной
          */
-        void insertCard(const QString& _uuid, bool _isFolder, const QString& _title,
+        void insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
             const QString& _description, const QString& _stamp, const QString& _colors,
             bool _isEmbedded, const QString& _previousCardUuid);
 
         /**
          * @brief Обновить карточку с заданным uuid
          */
-        void updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
+        void updateCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
             const QString& _description, const QString& _stamp, const QString& _colors,
             bool _isEmbedded, bool _isAct);
 
@@ -134,9 +139,24 @@ namespace UserInterface {
         void cardMoved(const QString& _cardId, const QString& _actId, const QString& _previousCardId);
 
         /**
+         * @brief Карточка была вложена в группирующую карточку
+         */
+        void cardMovedToGroup(const QString& _cardId, const QString& _groupId);
+
+        /**
          * @brief Изменились цвета карточки
          */
         void cardColorsChanged(const QString& _uuid, const QString& _colors);
+
+        /**
+         * @brief Запрос на изменение типа карточки
+         */
+        void cardTypeChanged(const QString& _uuid, bool _isFolder);
+
+        /**
+         * @brief Запрос на печать карточек
+         */
+        void printRequest();
 
         /**
          * @brief Запрос на переход в полноэкранный режим, или выход из него
@@ -146,7 +166,7 @@ namespace UserInterface {
         /**
          * @brief Схема карточек изменена
          */
-        void schemeChanged();
+        void cardsChanged();
 
     private:
         /**
@@ -205,6 +225,16 @@ namespace UserInterface {
          * @brief Виджет настройки размера и упорядочивания карточек
          */
         CardsResizer* m_resizer = nullptr;
+
+        /**
+         * @brief Кнопка сохранения изображения
+         */
+        FlatButton* m_save = nullptr;
+
+        /**
+         * @brief Кнопка печати
+         */
+        FlatButton* m_print = nullptr;
 
         /**
          * @brief Перейти в полноэкранный режим
