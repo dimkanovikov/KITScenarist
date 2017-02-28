@@ -1020,6 +1020,17 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         }
 
         //
+        // Доступ к проекту закрыт
+        //
+        case Sync::AccessToProjectClosed: {
+            title = tr("Project not available");
+            error = tr("Current project is not available for syncronization now, because project's owner closed access to project for you.\n\n"
+                       "Project didn't synchronized.");
+            disableSyncForCurrentProject = true;
+            break;
+        }
+
+        //
         // Такой email уже зарегистрирован
         //
         case Sync::EmailAlreadyRegisteredError: {
