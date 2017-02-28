@@ -1556,6 +1556,12 @@ Project didn&apos;t synchronized.</source>
         <source>New window</source>
         <translation>Нове вікно</translation>
     </message>
+    <message>
+        <source>Current project is not available for syncronization now, because project&apos;s owner closed access to project for you.
+
+Project didn&apos;t synchronized.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersManager</name>
@@ -1825,19 +1831,19 @@ Project didn&apos;t synchronized.</source>
     <name>ManagementLayer::StartUpManager</name>
     <message>
         <source>Released version %1 </source>
-        <translation>Реліз версія %1 </translation>
+        <translation type="vanished">Реліз версія %1 </translation>
     </message>
     <message>
         <source>download</source>
-        <translation>завантажити</translation>
+        <translation type="vanished">завантажити</translation>
     </message>
     <message>
         <source>or</source>
-        <translation>або</translation>
+        <translation type="vanished">або</translation>
     </message>
     <message>
         <source>read more</source>
-        <translation>читати далі</translation>
+        <translation type="vanished">читати далі</translation>
     </message>
     <message>
         <source>Password successfully changed</source>
@@ -1846,6 +1852,16 @@ Project didn&apos;t synchronized.</source>
     <message>
         <source>Can not change password</source>
         <translation>Неможливо змінити пароль</translation>
+    </message>
+    <message>
+        <source>Can&apos;t install update. There are some problems with downloaded file.
+
+You can try to reload update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Released version %1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Install&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3408,6 +3424,40 @@ Paragraph</source>
     </message>
 </context>
 <context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>New version is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KIT Scenarist doesn&apos;t support auto update on your OS now. &lt;br&gt;
+Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;link&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I&apos;m sure want to download beta version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;Beta version is an early version of a program or application that contains most of the major features, but is not yet complete. These versions are released to the general public, for testing and feedback.
+&lt;br&gt;&lt;br&gt;If you use beta version and send feedback to developer you helps him to make application better.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+</context>
+<context>
     <name>UserInterface::AddProjectDialog</name>
     <message>
         <source>Create</source>
@@ -4149,6 +4199,27 @@ Paragraph</source>
     <message>
         <source>Unnamed Template</source>
         <translation>Шаблон без назви</translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface::UpdateDialog</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error during download update.
+
+You can try to reload update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New version %1 is available</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

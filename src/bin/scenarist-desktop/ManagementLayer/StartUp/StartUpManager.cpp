@@ -315,7 +315,7 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
         emit downloadFinishedForUpdate();
     }
 }
-
+#include <QDesktopServices>
 void StartUpManager::showUpdateDialog()
 {
         UpdateDialog dialog(m_view);
@@ -360,7 +360,11 @@ void StartUpManager::showUpdateDialog()
                 //
                 // Нажали "Установить"
                 //
+#ifdef Q_OS_LINUX
+                if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
+#else
                 if (QProcess::startDetached(QDir::toNativeSeparators(m_updateFile))) {
+#endif
                     exit(0);
                 } else {
                     updateDialogText = tr("Can't install update. There are some problems with downloaded file.\n\nYou can try to reload update.");
