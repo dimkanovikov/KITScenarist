@@ -91,12 +91,12 @@ namespace UserInterface {
         /**
          * @brief Файл уже загрузился
          */
-        bool m_downloaded;
+        bool m_downloaded = false;
 
         /**
          * @brief Пришло бета обновление или нет
          */
-        bool m_isBeta;
+        bool m_isBeta = false;
     };
 }
 

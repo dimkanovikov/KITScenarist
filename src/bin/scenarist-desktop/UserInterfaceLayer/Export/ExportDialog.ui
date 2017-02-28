@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>554</width>
-    <height>393</height>
+    <height>409</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -326,9 +326,15 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel">
+      <widget class="QPushButton" name="exportTo">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
-        <string>Cancel</string>
+        <string>Export</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -340,15 +346,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="exportTo">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
+      <widget class="QPushButton" name="cancel">
        <property name="text">
-        <string>Export</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>
@@ -384,14 +384,14 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ToolTipLabel</class>
+   <extends>QLabel</extends>
+   <header>3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ToolTipLabel</class>
-   <extends>QLabel</extends>
-   <header location="global">3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -408,9 +408,7 @@
   <tabstop>scenesPrefix</tabstop>
   <tabstop>saveReviewMarks</tabstop>
   <tabstop>checkPageBreaks</tabstop>
-  <tabstop>cancel</tabstop>
   <tabstop>printPreview</tabstop>
-  <tabstop>exportTo</tabstop>
  </tabstops>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>

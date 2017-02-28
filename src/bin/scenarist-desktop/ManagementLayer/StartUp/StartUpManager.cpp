@@ -40,14 +40,13 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDateTime>
-#include <QDesktopServices>
 #include <QMutableMapIterator>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QProcess>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QStandardPaths>
-#include <QTemporaryDir>
 #include <QTimer>
 #include <QXmlStreamReader>
 
@@ -293,21 +292,28 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
     QString updateUrl = QString("mac/%1%2.dmg").arg(_fileTemplate, localeSuffix);
 #endif
 
+    //
+    // Загружаем установщик
+    //
     const QString prefixUrl = "https://kitscenarist.ru/downloads/";
     QUrl updateInfoUrl(prefixUrl + updateUrl);
-    QString tempDirPath(QStandardPaths::displayName(QStandardPaths::TempLocation));
-    QDir().mkpath(tempDirPath);
-    m_updateFile = QDir(tempDirPath).filePath(updateInfoUrl.fileName());
     QByteArray response = loader.loadSync(updateInfoUrl);
     if (response.isEmpty()) {
         emit errorDownloadForUpdate();
         return;
     }
+
+    //
+    // Сохраняем установщик в файл
+    //
+    const QString tempDirPath = QDir::toNativeSeparators(QDir::tempPath());
+    m_updateFile = tempDirPath + QDir::separator() + updateInfoUrl.fileName();
     QFile tempFile(m_updateFile);
-    tempFile.open(QIODevice::WriteOnly);
-    tempFile.write(response);
-    tempFile.close();
-    emit downloadFinishedForUpdate();
+    if (tempFile.open(QIODevice::WriteOnly)) {
+        tempFile.write(response);
+        tempFile.close();
+        emit downloadFinishedForUpdate();
+    }
 }
 
 void StartUpManager::showUpdateDialog()
@@ -345,14 +351,24 @@ void StartUpManager::showUpdateDialog()
         //
         // Покажем окно с обновлением
         //
-        if (dialog.showUpdate(m_updateVersion, m_updateDescription,
-                              m_updateIsBeta, isSupported) == UpdateDialog::Accepted) {
-            //
-            // Нажали "Установить"
-            //
-            QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile));
-            exit(0);
-        };
+        bool needToShowUpdate = true;
+        QString updateDialogText = m_updateDescription;
+        do {
+            const int showResult =
+                    dialog.showUpdate(m_updateVersion, updateDialogText, m_updateIsBeta, isSupported);
+            if (showResult == UpdateDialog::Accepted) {
+                //
+                // Нажали "Установить"
+                //
+                if (QProcess::startDetached(QDir::toNativeSeparators(m_updateFile))) {
+                    exit(0);
+                } else {
+                    updateDialogText = tr("Can't install update. There are some problems with downloaded file.\n\nYou can try to reload update.");
+                }
+            } else {
+                needToShowUpdate = false;
+            }
+        } while (needToShowUpdate);
 
         //
         // Отменили или пропустили. Остановим загрузку

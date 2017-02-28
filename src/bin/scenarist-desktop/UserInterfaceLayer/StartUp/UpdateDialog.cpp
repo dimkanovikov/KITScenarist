@@ -43,7 +43,9 @@ int UpdateDialog::showUpdate(const QString &_version, const QString &_text,
     m_ui->betaAgree->setVisible(_isBeta && _isSupported);
     m_ui->whatIsBeta->setVisible(_isBeta && _isSupported);
     m_ui->notSupportedLabel->setVisible(!_isSupported);
-    m_ui->download->setEnabled(!_isBeta && _isSupported);
+    m_ui->download->setText(tr("Download"));
+    m_ui->download->setEnabled((!_isBeta && _isSupported) || m_ui->betaAgree->isChecked());
+    m_downloaded = false;
 
     return exec();
 }
@@ -58,7 +60,7 @@ void UpdateDialog::downloadFinished()
 
 void UpdateDialog::showDownloadError()
 {
-    m_ui->text->setText(tr("Error during download update"));
+    m_ui->text->setText(tr("Error during download update.\n\nYou can try to reload update."));
     hideProgress();
     m_ui->download->setEnabled(true);
 }

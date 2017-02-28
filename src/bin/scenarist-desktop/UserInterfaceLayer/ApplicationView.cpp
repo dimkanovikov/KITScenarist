@@ -18,9 +18,9 @@ ApplicationView::ApplicationView(QWidget *_parent) :
 	setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
 	setWindowTitle(tr("KIT Scenarist"));
 
-#ifndef Q_OS_WIN
+#ifdef Q_OS_WIN
 	static UIConfigurator* s_uiConfigurator = new UIConfigurator(this);
-	QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+Shift+Esc"), this);
+    QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+Shift+1"), this);
 	connect(shortcut, &QShortcut::activated, s_uiConfigurator, &UIConfigurator::show);
 #endif
 }

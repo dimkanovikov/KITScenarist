@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>343</height>
+    <width>531</width>
+    <height>279</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>530</width>
+    <width>400</width>
     <height>0</height>
    </size>
   </property>
@@ -31,20 +31,13 @@
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <widget class="QLabel" name="notSupportedLabel">
@@ -61,29 +54,31 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="betaAgree">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>I'm sure want to download beta version</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
+      <widget class="ToolTipLabel" name="whatIsBeta">
+       <property name="maximumSize">
         <size>
-         <width>40</width>
-         <height>20</height>
+         <width>16</width>
+         <height>16</height>
         </size>
        </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="ToolTipLabel" name="whatIsBeta">
        <property name="toolTip">
         <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;Beta version is an early version of a program or application that contains most of the major features, but is not yet complete. These versions are released to the general public, for testing and feedback.
 &lt;br&gt;&lt;br&gt;If you use beta version and send feedback to developer you helps him to make application better.&lt;/p&gt;
@@ -93,17 +88,19 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>What is beta?</string>
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -111,16 +108,16 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel">
+      <widget class="QPushButton" name="download">
        <property name="text">
-        <string>Cancel</string>
+        <string>Download</string>
        </property>
       </widget>
      </item>
@@ -132,9 +129,9 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="download">
+      <widget class="QPushButton" name="cancel">
        <property name="text">
-        <string>Download</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>
@@ -149,6 +146,8 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
    <header>3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
