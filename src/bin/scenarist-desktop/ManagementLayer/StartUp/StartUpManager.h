@@ -237,12 +237,37 @@ namespace ManagementLayer
          */
         void unshareRemoteProjectRequested(const QModelIndex& _remoteProjectIndex, const QString& _userEmail);
 
+        /**
+         * @brief Прогресс загрузки установочного файла новой версии
+         */
+        void downloadProgressForUpdate(int);
+
+        /**
+         * @brief Завершилась загрузка установочного файла новой версии
+         */
+        void downloadFinishedForUpdate();
+
+        /**
+         * @brief Не удалось загрузить файл с обновлением
+         */
+        void errorDownloadForUpdate();
+
+        /**
+         * @brief Прерываем загрузку установочного файла новой версии
+         */
+        void stopDownloadForUpdate();
+
     private slots:
 
         /**
-         * @brief Загрузилась страница с информацией об обновлениях
+         * @brief Покажем окно с информацией об обновлении
          */
-        void aboutLoadUpdatesInfo(QNetworkReply* _reply);
+        void showUpdateDialog();
+
+        /**
+         * @brief Загрузить файл с обновлением
+         */
+        void downloadUpdate(const QString& _fileTemplate);
 
     private:
         /**
@@ -301,6 +326,30 @@ namespace ManagementLayer
          */
         UserInterface::RenewSubscriptionDialog* m_renewSubscriptionDialog;
 
+        /**
+         * @brief Путь до файла с обновлениями
+         */
+        QString m_updateFile;
+
+        /**
+         * @brief Версия обновления
+         */
+        QString m_updateVersion;
+
+        /**
+         * @brief Описание обновления
+         */
+        QString m_updateDescription;
+
+        /**
+         * @brief Шаблон файла обновления для скачивания
+         */
+        QString m_updateFileTemplate;
+
+        /**
+         * @brief Является ли обновление бета
+         */
+        bool m_updateIsBeta;
 
     };
 }

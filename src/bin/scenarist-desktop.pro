@@ -321,6 +321,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp \
     scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/ActItem.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardItem.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsScene.cpp \
@@ -570,6 +571,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
     scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h \
     scenarist-core/3rd_party/Helpers/ColorHelper.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/ActItem.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardItem.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsScene.h \
@@ -600,6 +602,7 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui
 
 

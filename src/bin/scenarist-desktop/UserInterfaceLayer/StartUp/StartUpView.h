@@ -150,6 +150,11 @@ namespace UserInterface
 		 */
 		void refreshProjects();
 
+        /**
+         * @brief Пользователь хочет обновиться, нажав на кнопку обновления
+         */
+        void updateRequested();
+
 	protected:
 		/**
 		 * @brief Переопределяем для обновления цвета иконок, при смене палитры
