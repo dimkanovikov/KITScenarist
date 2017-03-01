@@ -57,6 +57,10 @@ namespace ManagementLayer
             // Доступ к проекту закрыт
             //
             AccessToProjectClosed = 202,
+            //
+            // Закончилось место на сервере
+            //
+            StorageSizeFinished = 203,
 
             // ****
             //

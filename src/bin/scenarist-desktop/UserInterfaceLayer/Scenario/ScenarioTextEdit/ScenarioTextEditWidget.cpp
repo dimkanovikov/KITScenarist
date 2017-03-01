@@ -196,7 +196,8 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
         //
         if (initCursorPosition == INVALID_CURSOR_POSITION) {
             initCursorPosition = _position;
-        } else if (initCursorPosition == _position) {
+        }
+        if (initCursorPosition == _position) {
             QTimer::singleShot(300, Qt::PreciseTimer, [=] {
                 setCursorPosition(_position);
             });
