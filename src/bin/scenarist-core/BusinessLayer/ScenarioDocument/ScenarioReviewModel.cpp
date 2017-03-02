@@ -522,7 +522,7 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 				// Скорректировать позицию заметки следующей за удалённым текстом
 				//
 				else {
-					mark.startPosition -= _removed;
+                    mark.startPosition = _position;
 				}
 			}
 		}
