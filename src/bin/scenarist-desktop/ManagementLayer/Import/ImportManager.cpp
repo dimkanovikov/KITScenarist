@@ -9,6 +9,7 @@
 #include <BusinessLayer/Import/DocumentImporter.h>
 #include <BusinessLayer/Import/FdxImporter.h>
 #include <BusinessLayer/Import/TrelbyImporter.h>
+#include <BusinessLayer/Import/FountainImporter.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -46,6 +47,11 @@ namespace {
 	 * @brief Формат файлов Trelby
 	 */
 	const QString TRELBY_EXTENSION = ".trelby";
+
+    /**
+     * @brief Формат файлов Fountain
+     */
+    const QString FOUNTAIN_EXTENSION = ".fountain";
 }
 
 
@@ -70,7 +76,9 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		importScenarioXml = BusinessLogic::FdxImporter().importScenario(_importParameters);
 	} else if (_importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
 		importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(_importParameters);
-	} else {
+    } else if (_importParameters.filePath.toLower().endsWith(FOUNTAIN_EXTENSION)){
+        importScenarioXml = BusinessLogic::FountainImporter().importScenario(_importParameters);
+    } else{
 		importScenarioXml = BusinessLogic::DocumentImporter().importScenario(_importParameters);
 	}
 

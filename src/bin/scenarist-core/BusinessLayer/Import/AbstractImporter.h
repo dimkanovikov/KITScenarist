@@ -79,7 +79,7 @@ namespace BusinessLogic
 		 */
 		static QString filters() {
 			QString filters;
-			filters.append(QApplication::translate("BusinessLogic::AbstractImporter", "All Supported Files") + QLatin1String(" (*.kitsp *.fdx *.trelby *.docx *.doc *.odt)"));
+            filters.append(QApplication::translate("BusinessLogic::AbstractImporter", "All Supported Files") + QLatin1String(" (*.kitsp *.fdx *.trelby *.docx *.doc *.odt *.fountain)"));
 			filters.append(";;");
 			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","KIT Scenarist Project") + QLatin1String(" (*.kitsp)"));
 			filters.append(";;");
@@ -90,6 +90,8 @@ namespace BusinessLogic
 			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Office Open XML") + QLatin1String(" (*.docx *.doc)"));
 			filters.append(";;");
 			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","OpenDocument Text") + QLatin1String(" (*.odt)"));
+            filters.append(";;");
+            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Fountain Text") + QLatin1String(" (*.fountain)"));
 
 			return filters;
 		}
