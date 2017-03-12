@@ -24,6 +24,16 @@ namespace BusinessLogic
     private:
         void writeBlock(QXmlStreamWriter &writer, QString paragraphText,
                         ScenarioBlockStyle::Type blockStyle) const;
+        void reallyWriteBlock(QXmlStreamWriter &writer, const QString& paragraphText,
+                              ScenarioBlockStyle::Type blockStyle) const;
+        void writeComment(QXmlStreamWriter &writer, const QString& comment,
+                          int startPos, int len) const;
+
+        mutable unsigned prevBlockStart;
+        mutable unsigned prevBlockLen;
+        mutable bool noting = false;
+        mutable bool commenting = false;
+        mutable bool firstBlock = true;
     };
 }
 

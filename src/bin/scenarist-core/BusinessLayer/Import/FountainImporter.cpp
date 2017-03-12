@@ -56,12 +56,18 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
         const QStringList sceneHeadings = {"INT", "EXT", "EST", "INT./EXT", "INT/EXT", "I/E"
                                           "ИНТ", "ЭКСТ"};
         ScenarioBlockStyle::Type prevBlockType = ScenarioBlockStyle::Undefined;
-        bool isComment = false;
-        bool isNote = false;
         unsigned dirNesting = 0;
         ScenarioBlockStyle::Type blockType;
-        QString noteParagraph;
         for (int i = 0; i != paragraphs.size(); ++i) {
+            if (noting
+                    || commenting) {
+                //
+                // Если мы комментируем или делаем заметку, то продолжим это
+                //
+                writeBlock(writer, paragraphs[i], ScenarioBlockStyle::Undefined);
+                continue;
+            }
+
             if (paragraphs[i].isEmpty()) {
                 continue;
             }
@@ -72,39 +78,78 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
             switch(paragraphs[i].toStdString()[0]) {
             case '.':
                 blockType = ScenarioBlockStyle::SceneHeading;
-                paragraphText = paragraphs[i].right(paragraphs[i].size());
+                paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
                 break;
             case '!':
                 blockType = ScenarioBlockStyle::Action;
-                paragraphText = paragraphs[i].right(paragraphs[i].size());
+                paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
                 break;
             case '@':
                 blockType = ScenarioBlockStyle::Character;
-                paragraphText = paragraphs[i].right(paragraphs[i].size());
+                paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
                 break;
+            case '>':
+                if (paragraphs[i][paragraphs[i].size() - 1] == '<') {
+                    blockType = ScenarioBlockStyle::Action;
+                    paragraphText = paragraphs[i].mid(1, paragraphs[i].size() - 2);
+                } else {
+                    blockType = ScenarioBlockStyle::Transition;
+                    paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
+                }
+                break;
+            case '=':
+            {
+                bool isPageBreak = false;
+                if (paragraphs[i].size() >= 3
+                           && paragraphs[i][0] == paragraphs[i][1]
+                           && paragraphs[i][1] == paragraphs[i][2]
+                           && paragraphs[i][2] == '=') {
+                    isPageBreak = true;
+                    for (int j = 3; j != paragraphs[i].size(); ++j) {
+                        if (paragraphs[i][j] != '=') {
+                            isPageBreak = false;
+                            break;
+                        }
+                    }
+
+                    //
+                    // Если состоит из трех или более '=', то это PageBreak
+                    // У нас такого сейчас нет
+                    //
+                    continue;
+                }
+                if (!isPageBreak) {
+                    blockType = ScenarioBlockStyle::SceneDescription;
+                    paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
+                }
+                break;
+            }
             case '~':
                 //
                 // TODO: Вообще, это Lyrics блок. Но у нас такого нет
                 //
                 blockType = ScenarioBlockStyle::Action;
-                paragraphText = paragraphs[i].right(paragraphs[i].size());
+                paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
                 break;
             case '#':
+            {
                 int sharpCount = 0;
-                while(paragraphText[i][sharpCount] == '#') {
+                while(paragraphs[i].toStdString()[sharpCount] == '#') {
                     ++sharpCount;
                 }
 
-                if (sharpCount < dirNesting) {
-                    for (int i = 0; i != dirNesting - sharpCount; ++i) {
+                if (sharpCount <= dirNesting) {
+                    for (int i = 0; i != dirNesting - sharpCount + 1; ++i) {
                         writeBlock(writer, "", ScenarioBlockStyle::FolderFooter);
                     }
                     prevBlockType = ScenarioBlockStyle::FolderFooter;
-                } else {
-                    writeBlock(writer, paragraphText[i].right(sharpCount), ScenarioBlockStyle::FolderHeader);
-                    prevBlockType = ScenarioBlockStyle::FolderHeader;
                 }
+                writeBlock(writer, paragraphs[i].right(paragraphs[i].size() - sharpCount), ScenarioBlockStyle::FolderHeader);
+                prevBlockType = ScenarioBlockStyle::FolderHeader;
+                dirNesting = sharpCount;
                 continue;
+                break;
+            }
             default:
             {
                 bool startsWithHeading = false;
@@ -124,6 +169,13 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     //
                     blockType = ScenarioBlockStyle::SceneHeading;
                     paragraphText = paragraphs[i];
+                } else if (paragraphs[i].startsWith("[[")
+                           && paragraphs[i].endsWith("]]")) {
+                    //
+                    // Комментарий
+                    //
+                    writeComment(writer, paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen);
+                    continue;
                 } else if (paragraphs[i] == paragraphs[i].toUpper()
                            && i != 0
                            && paragraphs[i-1].isEmpty()
@@ -134,14 +186,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     // Значит это имя персонажа (для реплики)
                     //
                     blockType = ScenarioBlockStyle::Character;
-                    paragraphText = paragraphs[i];
-                } else if (prevBlockType == ScenarioBlockStyle::Character
-                           || prevBlockType == ScenarioBlockStyle::Parenthetical) {
-                    //
-                    // Если предыдущий блок - имя персонажа или ремарка, то сейчас диалог
-                    //
-                    blockType = ScenarioBlockStyle::Dialogue;
-                    if (paragraph[i][paragraphs[i].size() - 1] == '^') {
+                    if (paragraphs[i][paragraphs[i].size() - 1] == '^') {
                         //
                         // Двойной диалог, который мы пока что не умеем обрабатывать
                         //
@@ -149,6 +194,13 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     } else {
                         paragraphText = paragraphs[i];
                     }
+                } else if (prevBlockType == ScenarioBlockStyle::Character
+                           || prevBlockType == ScenarioBlockStyle::Parenthetical) {
+                    //
+                    // Если предыдущий блок - имя персонажа или ремарка, то сейчас диалог
+                    //
+                    blockType = ScenarioBlockStyle::Dialogue;
+                    paragraphText = paragraphs[i];
                 } else if (paragraphs[i][0] == '('
                            && paragraphs[i][paragraphs[i].size()-1] == ')'
                            && (prevBlockType == ScenarioBlockStyle::Character
@@ -170,23 +222,6 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     //
                     blockType = ScenarioBlockStyle::Transition;
                     paragraphText = paragraphs[i].left(paragraphs[i].size()-4);
-                } else if (paragraphs[i].size() >= 3
-                           && paragraphs[i][0] == paragraphs[i][1]
-                           && paragraphs[i][1] == paragraphs[i][2]
-                           && paragraphs[i][2] == '=') {
-                    bool isPageBreak = true;
-                    for (int j = 3; j != paragraphs[i].size(); ++j) {
-                        if (paragraphs[i][j] != '=') {
-                            isPageBreak = false;
-                            break;
-                        }
-                    }
-
-                    //
-                    // Если состоит из трех или более '=', то это PageBreak
-                    // У нас такого сейчас нет
-                    //
-                    continue;
                 } else if (paragraphs[i].startsWith("[[")
                            && paragraphs[i].endsWith("]]")) {
                     //
@@ -203,62 +238,29 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 }
             }
             }
-            int notePos = 0;
-            int unnotePos = -1;
-            if (isNote) {
-                unnotePos = paragraphText.indexOf("]]", notePos);
-                if (unnotePos == -1) {
-                    noteParagraph += paragraphText;
-                    continue;
-                }
-                else {
-                    noteParagraph += paragraphText.left(unnotePos);
-                    writeBlock(writer, noteParagraph, ScenarioBlockStyle::Note);
-                }
-            }
-            int commentPos = 0;
-            int uncommentPos = -1;
-
-            if (isComment) {
-                uncommentPos = paragraphText.indexOf("*/", commentPos);
-
-                writeBlock(writer, paragraphText.mid(commentPos, uncommentPos - commentPos - 2),
-                           ScenarioBlockStyle::NoprintableText);
-            }
-
-            while ((commentPos = paragraphText.indexOf("/*", uncommentPos)) != -1) {
-                //
-                // Тут есть комментариий
-                //
-                isComment = true;
-
-                uncommentPos = paragraphText.indexOf("*/", commentPos);
-
-                writeBlock(writer, paragraphText.mid(commentPos + 2, uncommentPos == -1 ? -1 : uncommentPos - commentPos - 4),
-                           blockType);
-
-                if (uncommentPos == -1) {
-                    writeBlock(writer, paragraphText.mid(commentPos + 2), ScenarioBlockStyle::NoprintableText);
-                    break;
-                } else {
-                    writeBlock(writer, paragraphText.mid(commentPos + 2, uncommentPos - commentPos - 4), ScenarioBlockStyle::NoprintableText);
-                    isComment = false;
-                }
-
-            }
-
-            if (!isComment) {
-                writeBlock(writer, paragraphText.mid(commentPos), blockType);
-            }
+            writeBlock(writer, paragraphText, blockType);
+            prevBlockLen = paragraphText.size();
+            prevBlockStart = 0;
             prevBlockType = blockType;
         }
+        for (int i = 0; i != dirNesting; ++i) {
+            writeBlock(writer, "", ScenarioBlockStyle::FolderFooter);
+        }
     }
+
     return scenarioXml;
 }
 
 void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphText,
                                   ScenarioBlockStyle::Type type) const
 {
+    if (!firstBlock) {
+        writer.writeEndElement();
+        //reallyWriteBlock(writer, paragraphText, type);
+    } else {
+        firstBlock = false;
+    }
+
     if (paragraphText[0] == '>'
             && paragraphText[paragraphText.size() - 1] == '<') {
         paragraphText = paragraphText.mid(1, paragraphText.size() - 2);
@@ -266,32 +268,114 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
 
     QString text;
     text.reserve(paragraphText.size());
+    const QString& blockTypeName = ScenarioBlockStyle::typeName(type);
 
-    bool escaping = false;
+    char prevSymbol = '\0';
+    writer.writeStartElement(blockTypeName);
+
+    prevBlockLen = 0;
+    prevBlockStart = 0;
 
     for (int i = 0; i != paragraphText.size(); ++i) {
-        if (escaping) {
-            escaping = false;
-            text.append(paragraphText[i]);
-            continue;
-        } if (paragraphText[i] == '\\') {
-            escaping = true;
+        if (prevSymbol == '\\') {
             text.append(paragraphText[i]);
             continue;
         }
-        if (paragraphText[i] == '*'
-                || paragraphText[i] == '_') {
-            continue;
-        } else {
+        switch (paragraphText.toStdString()[i]) {
+        case '\\':
             text.append(paragraphText[i]);
+            break;
+        case '/':
+            if (prevSymbol == '*'
+                    && commenting) {
+                commenting = false;
+                prevBlockStart += prevBlockLen;
+                prevBlockLen = text.size() - 1;
+                reallyWriteBlock(writer, text.left(text.size() - 1), ScenarioBlockStyle::NoprintableText);
+                text.clear();
+            } else {
+                text.append('/');
+            }
+            break;
+        case '*':
+            if (prevSymbol == '/'
+                    && !commenting
+                    && !noting) {
+                commenting = true;
+                prevBlockStart += prevBlockLen;
+                prevBlockLen = text.size() - 1;
+                reallyWriteBlock(writer, text.left(text.size() - 1), type);
+                text.clear();
+            }
+            break;
+        case '[':
+            if (prevSymbol == '['
+                    && !commenting
+                    && !noting) {
+                noting = true;
+                prevBlockStart += prevBlockLen;
+                prevBlockLen = text.size() - 1;
+                reallyWriteBlock(writer, text.left(text.size() - 1), type);
+                text.clear();
+            } else {
+                text.append('[');
+            }
+            break;
+        case ']':
+            if (prevSymbol == ']'
+                    && noting) {
+                noting = false;
+                prevBlockStart += prevBlockLen;
+                prevBlockLen = text.size() - 1;
+                writeComment(writer, text.left(text.size() - 1), prevBlockStart, prevBlockLen);
+                text.clear();
+            } else {
+                text.append(']');
+            }
+            break;
+        case '_':
+            break;
+        default:
+            text.append(paragraphText[i]);
+            break;
         }
+        prevSymbol = paragraphText.toStdString()[i];
     }
 
 
+    if (!noting
+            && !commenting) {
+        writer.writeStartElement(NODE_VALUE);
+        writer.writeCDATA(text.trimmed());
+        writer.writeEndElement();
+    }
+}
+
+void FountainImporter::reallyWriteBlock(QXmlStreamWriter &writer, const QString &paragraphText,
+                                        ScenarioBlockStyle::Type type) const
+{
     const QString& blockTypeName = ScenarioBlockStyle::typeName(type);
     writer.writeStartElement(blockTypeName);
     writer.writeStartElement(NODE_VALUE);
-    writer.writeCDATA(text.trimmed());
+    writer.writeCDATA(paragraphText.trimmed());
     writer.writeEndElement();
+    writer.writeEndElement();
+}
+
+void FountainImporter::writeComment(QXmlStreamWriter &writer, const QString &comment, int startPos, int len) const
+{
+    writer.writeStartElement("reviews");
+
+    writer.writeStartElement("review");
+    writer.writeAttribute("from", QString::number(startPos));
+    writer.writeAttribute("length", QString::number(len));
+    writer.writeAttribute("color", "#ffff00");
+    writer.writeAttribute("is_highlight", "true");
+
+    writer.writeEmptyElement("review_comment");
+    writer.writeAttribute("comment", comment);
+
+    writer.writeEndElement();
+
     writer.writeEndElement();
 }
