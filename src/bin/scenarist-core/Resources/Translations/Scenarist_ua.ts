@@ -1562,6 +1562,16 @@ Project didn&apos;t synchronized.</source>
 Project didn&apos;t synchronized.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sync not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have exhausted all available for the use of space on a server.
+
+Project didn&apos;t synchronized.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersManager</name>
