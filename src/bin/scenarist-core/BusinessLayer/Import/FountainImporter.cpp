@@ -41,6 +41,8 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
         // ... и пишем в сценарий
         //
         QXmlStreamWriter writer(&scenarioXml);
+        writer.setAutoFormatting(true);
+        writer.setAutoFormattingIndent(true);
         writer.writeStartDocument();
         writer.writeStartElement(NODE_SCENARIO);
         writer.writeAttribute(ATTRIBUTE_VERSION, "1.0");
@@ -64,7 +66,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 //
                 // Если мы комментируем или делаем заметку, то продолжим это
                 //
-                writeBlock(writer, paragraphs[i], ScenarioBlockStyle::Undefined);
+                writeBlock(writer, paragraphs[i], prevBlockType);
                 continue;
             }
 
@@ -174,7 +176,10 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     //
                     // Комментарий
                     //
-                    writeComment(writer, paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen);
+                    comments.append(std::make_tuple(paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen));
+                    prevBlockStart += prevBlockLen;
+                    prevBlockLen = 0;
+                    //writeComment(writer, paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen);
                     continue;
                 } else if (paragraphs[i] == paragraphs[i].toUpper()
                            && i != 0
@@ -239,15 +244,22 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
             }
             }
             writeBlock(writer, paragraphText, blockType);
-            prevBlockLen = paragraphText.size();
-            prevBlockStart = 0;
+            //prevBlockLen = paragraphText.size();
+            //prevBlockStart = 0;
             prevBlockType = blockType;
         }
+        writeComments(writer);
+        writer.writeEndElement();
         for (int i = 0; i != dirNesting; ++i) {
             writeBlock(writer, "", ScenarioBlockStyle::FolderFooter);
         }
+        writer.writeEndElement();
+        writer.writeEndDocument();
     }
 
+    QFile file("/home/voltage/file.xml");
+    file.open(QIODevice::WriteOnly);
+    file.write(scenarioXml.toStdString().c_str());
     return scenarioXml;
 }
 
@@ -255,35 +267,41 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
                                   ScenarioBlockStyle::Type type) const
 {
     if (!firstBlock) {
-        writer.writeEndElement();
-        //reallyWriteBlock(writer, paragraphText, type);
-    } else {
-        firstBlock = false;
+        if (!noting
+                && !commenting) {
+            text.clear();
+            text.reserve(paragraphText.size());
+            comment.clear();
+
+            writeComments(writer);
+
+            prevBlockLen = 0;
+            prevBlockStart = 0;
+        }
     }
 
-    if (paragraphText[0] == '>'
-            && paragraphText[paragraphText.size() - 1] == '<') {
-        paragraphText = paragraphText.mid(1, paragraphText.size() - 2);
-    }
-
-    QString text;
-    text.reserve(paragraphText.size());
     const QString& blockTypeName = ScenarioBlockStyle::typeName(type);
 
     char prevSymbol = '\0';
-    writer.writeStartElement(blockTypeName);
-
-    prevBlockLen = 0;
-    prevBlockStart = 0;
+    //writer.writeStartElement(blockTypeName);
 
     for (int i = 0; i != paragraphText.size(); ++i) {
         if (prevSymbol == '\\') {
-            text.append(paragraphText[i]);
+            if (noting) {
+                comment.append(paragraphText[i]);
+            }
+            else {
+                text.append(paragraphText[i]);
+            }
             continue;
         }
         switch (paragraphText.toStdString()[i]) {
         case '\\':
-            text.append(paragraphText[i]);
+            if (noting) {
+                comment.append(paragraphText[i]);
+            } else {
+                text.append(paragraphText[i]);
+            }
             break;
         case '/':
             if (prevSymbol == '*'
@@ -291,21 +309,36 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
                 commenting = false;
                 prevBlockStart += prevBlockLen;
                 prevBlockLen = text.size() - 1;
+                writer.writeEndElement();
                 reallyWriteBlock(writer, text.left(text.size() - 1), ScenarioBlockStyle::NoprintableText);
                 text.clear();
             } else {
-                text.append('/');
+                if (noting) {
+                    comment.append('/');
+                } else {
+                    text.append('/');
+                }
             }
             break;
         case '*':
             if (prevSymbol == '/'
                     && !commenting
                     && !noting) {
+                writeComments(writer);
+                comments.clear();
+
                 commenting = true;
                 prevBlockStart += prevBlockLen;
                 prevBlockLen = text.size() - 1;
+                writer.writeEndElement();
                 reallyWriteBlock(writer, text.left(text.size() - 1), type);
                 text.clear();
+            } else {
+                if (noting) {
+                    comment.append('*');
+                } else {
+                    text.append('*');
+                }
             }
             break;
         case '[':
@@ -313,30 +346,40 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
                     && !commenting
                     && !noting) {
                 noting = true;
-                prevBlockStart += prevBlockLen;
-                prevBlockLen = text.size() - 1;
-                reallyWriteBlock(writer, text.left(text.size() - 1), type);
-                text.clear();
+                prevBlockLen = text.size() - 1 - prevBlockStart;
+                text = text.left(text.size() - 1);
             } else {
-                text.append('[');
+                if (noting) {
+                    comment.append('[');
+                } else {
+                    text.append('[');
+                }
             }
             break;
         case ']':
             if (prevSymbol == ']'
                     && noting) {
                 noting = false;
+                comments.append(std::make_tuple(comment.left(comment.size() - 1), prevBlockStart, prevBlockLen));
                 prevBlockStart += prevBlockLen;
-                prevBlockLen = text.size() - 1;
-                writeComment(writer, text.left(text.size() - 1), prevBlockStart, prevBlockLen);
-                text.clear();
+                prevBlockLen = 0;
+                comment.clear();
             } else {
-                text.append(']');
+                if (noting) {
+                    comment.append(']');
+                } else {
+                    text.append(']');
+                }
             }
             break;
         case '_':
             break;
         default:
-            text.append(paragraphText[i]);
+            if (noting) {
+                comment.append(paragraphText[i]);
+            } else {
+                text.append(paragraphText[i]);
+            }
             break;
         }
         prevSymbol = paragraphText.toStdString()[i];
@@ -345,9 +388,20 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
 
     if (!noting
             && !commenting) {
+        prevBlockLen += text.size() - prevBlockStart;
+        if (!firstBlock) {
+            writer.writeEndElement();
+        }
+        reallyWriteBlock(writer, text, type);
+        /*
         writer.writeStartElement(NODE_VALUE);
         writer.writeCDATA(text.trimmed());
         writer.writeEndElement();
+        */
+        text.clear();
+    }
+    if (!firstBlock) {
+        firstBlock = false;
     }
 }
 
@@ -359,23 +413,35 @@ void FountainImporter::reallyWriteBlock(QXmlStreamWriter &writer, const QString 
     writer.writeStartElement(NODE_VALUE);
     writer.writeCDATA(paragraphText.trimmed());
     writer.writeEndElement();
-    writer.writeEndElement();
+    //writer.writeEndElement();
 }
 
-void FountainImporter::writeComment(QXmlStreamWriter &writer, const QString &comment, int startPos, int len) const
+void FountainImporter::writeComments(QXmlStreamWriter &writer) const
 {
+    if (comments.isEmpty()) {
+        return;
+    }
+
     writer.writeStartElement("reviews");
 
-    writer.writeStartElement("review");
-    writer.writeAttribute("from", QString::number(startPos));
-    writer.writeAttribute("length", QString::number(len));
-    writer.writeAttribute("color", "#ffff00");
-    writer.writeAttribute("is_highlight", "true");
-
-    writer.writeEmptyElement("review_comment");
-    writer.writeAttribute("comment", comment);
+    for (unsigned int i = 0; i != comments.size(); ++i) {
+        if (std::get<2>(comments[i]) != 0) {
+            if (i != 0) {
+                writer.writeEndElement();
+            }
+            writer.writeStartElement("review");
+            writer.writeAttribute("from", QString::number(std::get<1>(comments[i])));
+            writer.writeAttribute("length", QString::number(std::get<2>(comments[i])));
+            writer.writeAttribute("bgcolor", "#ffff00");
+            writer.writeAttribute("is_highlight", "true");
+        }
+        writer.writeEmptyElement("review_comment");
+        writer.writeAttribute("comment", std::get<0>(comments[i]));
+    }
 
     writer.writeEndElement();
 
     writer.writeEndElement();
+
+    comments.clear();
 }

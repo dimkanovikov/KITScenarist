@@ -26,14 +26,16 @@ namespace BusinessLogic
                         ScenarioBlockStyle::Type blockStyle) const;
         void reallyWriteBlock(QXmlStreamWriter &writer, const QString& paragraphText,
                               ScenarioBlockStyle::Type blockStyle) const;
-        void writeComment(QXmlStreamWriter &writer, const QString& comment,
-                          int startPos, int len) const;
+        void writeComments(QXmlStreamWriter &writer) const;
 
         mutable unsigned prevBlockStart;
         mutable unsigned prevBlockLen;
         mutable bool noting = false;
         mutable bool commenting = false;
         mutable bool firstBlock = true;
+        mutable QString text;
+        mutable QString comment;
+        mutable QVector<std::tuple<QString, unsigned, unsigned> > comments;
     };
 }
 
