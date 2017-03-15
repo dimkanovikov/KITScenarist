@@ -15,4 +15,7 @@ and provide a simple way to work with it.
 
 %files
 %defattr(-,root,root,-)
-/usr/
+%attr(0755,root,root) /usr/bin/scenarist
+/usr/share/applications
+/usr/share/KIT
+/usr/share/pixmaps
