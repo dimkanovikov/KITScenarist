@@ -135,13 +135,13 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 break;
             case '#':
             {
-                int sharpCount = 0;
+                unsigned sharpCount = 0;
                 while(paragraphs[i].toStdString()[sharpCount] == '#') {
                     ++sharpCount;
                 }
 
                 if (sharpCount <= dirNesting) {
-                    for (int i = 0; i != dirNesting - sharpCount + 1; ++i) {
+                    for (unsigned i = 0; i != dirNesting - sharpCount + 1; ++i) {
                         writeBlock(writer, "", ScenarioBlockStyle::FolderFooter);
                     }
                     prevBlockType = ScenarioBlockStyle::FolderFooter;
@@ -181,6 +181,8 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     prevBlockLen = 0;
                     //writeComment(writer, paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen);
                     continue;
+                } else if (paragraphs[i].startsWith("/*")) {
+                    paragraphText = paragraphs[i];
                 } else if (paragraphs[i] == paragraphs[i].toUpper()
                            && i != 0
                            && paragraphs[i-1].isEmpty()
@@ -331,7 +333,9 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
                 prevBlockStart += prevBlockLen;
                 prevBlockLen = text.size() - 1;
                 writer.writeEndElement();
-                reallyWriteBlock(writer, text.left(text.size() - 1), type);
+                if (text.size() != 1) {
+                    reallyWriteBlock(writer, text.left(text.size() - 1), type);
+                }
                 text.clear();
             } else {
                 if (noting) {
@@ -392,7 +396,9 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
         if (!firstBlock) {
             writer.writeEndElement();
         }
-        reallyWriteBlock(writer, text, type);
+        if (!text.isEmpty()) {
+            reallyWriteBlock(writer, text, type);
+        }
         /*
         writer.writeStartElement(NODE_VALUE);
         writer.writeCDATA(text.trimmed());
