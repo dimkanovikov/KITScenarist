@@ -56,7 +56,7 @@ public:
     /*!
      * \brief Получение cookie загрузчика
      */
-    QNetworkCookieJar* getCookieJar();
+    QNetworkCookieJar* cookieJar();
 
     /*!
      * \brief Установка метода запроса
@@ -66,7 +66,7 @@ public:
     /*!
      * \brief Получение метода запроса
      */
-    RequestMethod getRequestMethod() const;
+    RequestMethod requestMethod() const;
 
     /*!
      * \brief Установка таймаута загрузки
@@ -76,7 +76,7 @@ public:
     /*!
      * \brief Получение таймаута загрузки
      */
-    int getLoadingTimeout() const;
+    int loadingTimeout() const;
 
     /*!
      * \brief Очистить все старые атрибуты запроса

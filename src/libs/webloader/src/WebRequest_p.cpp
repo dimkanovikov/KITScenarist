@@ -49,7 +49,19 @@ WebRequest::~WebRequest()
 
 QUrl WebRequest::urlToLoad() const
 {
-	return m_urlToLoad;
+    return m_urlToLoad;
+}
+
+QString WebRequest::urlQuery() const
+{
+    QString query;
+    for (auto attribute : m_attributes) {
+        if (!query.isEmpty()) {
+            query.append("&");
+        }
+        query.append(QString("%1=%2").arg(attribute.first, attribute.second.toString()));
+    }
+    return query;
 }
 
 void WebRequest::setUrlToLoad(const QUrl& _url)
@@ -60,7 +72,7 @@ void WebRequest::setUrlToLoad(const QUrl& _url)
 
 QUrl WebRequest::urlReferer() const
 {
-	return m_urlReferer;
+    return m_urlReferer;
 }
 
 void WebRequest::setUrlReferer(const QUrl& _url)
@@ -71,8 +83,8 @@ void WebRequest::setUrlReferer(const QUrl& _url)
 
 void WebRequest::clearAttributes()
 {
-	m_attributes.clear();
-	m_attributeFiles.clear();
+    m_attributes.clear();
+    m_attributeFiles.clear();
     m_rawData.clear();
 }
 
@@ -84,7 +96,7 @@ void WebRequest::addAttribute(const QString& _name, const QVariant& _value)
     }
     m_usedRaw = false;
 
-	QPair< QString, QVariant > attribute;
+    QPair< QString, QVariant > attribute;
     attribute.first = _name;
     attribute.second = _value;
     addAttribute(attribute);
@@ -98,7 +110,7 @@ void WebRequest::addAttributeFile(const QString& _name, const QString& _filePath
     }
     m_usedRaw = false;
 
-	QPair< QString, QString > attributeFile;
+    QPair< QString, QString > attributeFile;
     attributeFile.first = _name;
     attributeFile.second = _filePath;
     addAttributeFile(attributeFile);
@@ -124,13 +136,13 @@ void WebRequest::setRawRequest(const QByteArray &_data, const QString &_mime)
 QNetworkRequest WebRequest::networkRequest(bool _addContentHeaders)
 {
     QNetworkRequest request(urlToLoad());
-	// Установка заголовков запроса
-	// User-Agent
+    // Установка заголовков запроса
+    // User-Agent
     request.setRawHeader(USER_AGENT_HEADER, USER_AGENT);
-	// Referer
+    // Referer
     if (!urlReferer().isEmpty())
         request.setRawHeader(REFERER_HEADER, urlReferer().toString().toUtf8().data());
-	// ContentType по-умолчанию
+    // ContentType по-умолчанию
     request.setHeader(QNetworkRequest::ContentTypeHeader, CONTENT_TYPE_DEFAULT);
 
     if (_addContentHeaders) {
@@ -141,11 +153,11 @@ QNetworkRequest WebRequest::networkRequest(bool _addContentHeaders)
         else {
             request.setHeader(QNetworkRequest::ContentTypeHeader, CONTENT_TYPE);
         }
-		// ContentLength
+        // ContentLength
         request.setHeader(QNetworkRequest::ContentLengthHeader, multiPartData().size());
-	}
+    }
 
-	return request;
+    return request;
 }
 
 QByteArray WebRequest::multiPartData()
@@ -154,34 +166,34 @@ QByteArray WebRequest::multiPartData()
         return m_rawData;
     }
 
-	HttpMultiPart multiPart;
+    HttpMultiPart multiPart;
     multiPart.setBoundary(BOUNDARY);
 
-	// Добавление текстовых атрибутов
-	QPair< QString, QVariant > attribute;
+    // Добавление текстовых атрибутов
+    QPair< QString, QVariant > attribute;
     foreach (attribute, attributes()) {
-		QString attributeName  = attribute.first;
-		QString attributeValue = attribute.second.toString();
+        QString attributeName  = attribute.first;
+        QString attributeValue = attribute.second.toString();
 
         HttpPart textPart(HttpPart::Text);
         textPart.setText(attributeName, attributeValue);
 
         multiPart.addPart(textPart);
-	}
+    }
 
-	// Добавление атрибутов-файлов
-	QPair< QString, QString > attributeFile;
+    // Добавление атрибутов-файлов
+    QPair< QString, QString > attributeFile;
     foreach (attributeFile, attributeFiles()) {
-		QString attributeName     = attributeFile.first;
-		QString attributeFilePath = attributeFile.second;
+        QString attributeName     = attributeFile.first;
+        QString attributeFilePath = attributeFile.second;
 
         HttpPart filePart(HttpPart::File);
         filePart.setFile(attributeName, attributeFilePath);
 
         multiPart.addPart(filePart);
-	}
+    }
 
-	return multiPart.data();
+    return multiPart.data();
 }
 
 
@@ -191,7 +203,7 @@ QByteArray WebRequest::multiPartData()
 
 QList<QPair<QString, QVariant> > WebRequest::attributes() const
 {
-	return m_attributes;
+    return m_attributes;
 }
 
 void WebRequest::addAttribute(const QPair<QString, QVariant>& _attribute)
@@ -202,7 +214,7 @@ void WebRequest::addAttribute(const QPair<QString, QVariant>& _attribute)
 
 QList<QPair<QString, QString> > WebRequest::attributeFiles() const
 {
-	return m_attributeFiles;
+    return m_attributeFiles;
 }
 
 void WebRequest::addAttributeFile(const QPair<QString, QString>& _attributeFile)

@@ -31,89 +31,94 @@
 class WebRequest
 {
 public:
-	WebRequest();
-	~WebRequest();
+    WebRequest();
+    ~WebRequest();
 
-	/*!
+    /*!
       \brief Ссылка запроса
-	  */
-	QUrl urlToLoad() const;
+      */
+    QUrl urlToLoad() const;
+
+    /**
+     * @brief Параметры запроса
+     */
+    QString urlQuery() const;
 
     /*!
       \brief Установка ссылки для запроса
-	  */
+      */
     void setUrlToLoad(const QUrl& _url);
 
-	/*!
+    /*!
       \brief Ссылка referer
-	  */
-	QUrl urlReferer() const;
+      */
+    QUrl urlReferer() const;
 
     /*!
       \brief Установка ссылки referer'а
-	  */
+      */
     void setUrlReferer(const QUrl& _url);
 
     /*!
      * \brief Очистить список атрибутов
-	 */
-	void clearAttributes();
+     */
+    void clearAttributes();
 
     /*!
       \brief Добавление текстового атрибута в запрос
       * name - название атрибута, value - значение атрибута
-	  */
+      */
     void addAttribute(const QString& _name, const QVariant& _value);
 
     /*!
       \brief Добавление атрибута-файла в запрос
       * name - название атрибута, filePath - путь к файлу
-	  */
+      */
     void addAttributeFile(const QString& _name, const QString& _filePath);
 
     void setRawRequest(const QByteArray& _data);
     void setRawRequest(const QByteArray& _data, const QString& _mime);
-	/*!
+    /*!
       \brief Сформированный объект класса QNetworkRequest
-	  */
+      */
     QNetworkRequest networkRequest(bool _addContentHeaders = false);
 
-	/*!
+    /*!
       \breif Атрибуты запроса
-	  */
-	QByteArray  multiPartData();
+      */
+    QByteArray  multiPartData();
 
 //*****************************************************************************
 // Внутренняя реализация класса
 
 private:
-	/*!
+    /*!
       \brief Текстовые атрибуты запроса
-	  */
-	QList< QPair< QString, QVariant > > attributes() const;
+      */
+    QList< QPair< QString, QVariant > > attributes() const;
 
     /*!
       \brief Добавление текстового атрибута в запрос
       * attribute - имя + значения атрибута
-	  */
+      */
     void addAttribute(const QPair< QString, QVariant >& _attribute);
 
     /*!
       \brief Атрибуты-файлы запроса
-	  */
-	QList<QPair<QString, QString> > attributeFiles() const;
+      */
+    QList<QPair<QString, QString> > attributeFiles() const;
 
     /*!
       \brief Добавление атрибута-файла в запрос
       * attributeFile - имя атрибута + путь к файлу
-	  */
+      */
     void addAttributeFile(const QPair<QString, QString>& _attributeFile);
 
 private:
-	QUrl m_urlToLoad,
-		 m_urlReferer;
-	QList< QPair< QString, QVariant > > m_attributes;
-	QList< QPair< QString, QString > >  m_attributeFiles;
+    QUrl m_urlToLoad,
+         m_urlReferer;
+    QList< QPair< QString, QVariant > > m_attributes;
+    QList< QPair< QString, QString > >  m_attributeFiles;
 
     QByteArray m_rawData;
     QString m_mimeRawData;

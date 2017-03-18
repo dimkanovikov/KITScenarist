@@ -32,6 +32,15 @@ NetworkRequestPrivate::~NetworkRequestPrivate()
     delete m_request;
 }
 
+QUrl NetworkRequestPrivate::url() const
+{
+    QUrl url = m_request->urlToLoad();
+    if (m_method == NetworkRequest::Get) {
+        url.setQuery(m_request->urlQuery());
+    }
+    return url;
+}
+
 void NetworkRequestPrivate::done()
 {
     emit finished();
@@ -68,7 +77,7 @@ void NetworkRequest::setCookieJar(QNetworkCookieJar* _cookieJar)
     m_internal->m_cookieJar = _cookieJar;
 }
 
-QNetworkCookieJar* NetworkRequest::getCookieJar()
+QNetworkCookieJar* NetworkRequest::cookieJar()
 {
     return m_internal->m_cookieJar;
 }
@@ -79,7 +88,7 @@ void NetworkRequest::setRequestMethod(NetworkRequest::RequestMethod _method)
     m_internal->m_method = _method;
 }
 
-NetworkRequest::RequestMethod NetworkRequest::getRequestMethod() const
+NetworkRequest::RequestMethod NetworkRequest::requestMethod() const
 {
     return m_internal->m_method;
 }
@@ -90,7 +99,7 @@ void NetworkRequest::setLoadingTimeout(int _loadingTimeout)
     m_internal->m_loadingTimeout = _loadingTimeout;
 }
 
-int NetworkRequest::getLoadingTimeout() const
+int NetworkRequest::loadingTimeout() const
 {
     return m_internal->m_loadingTimeout;
 }
@@ -171,7 +180,7 @@ QByteArray NetworkRequest::loadSync(const QUrl& _urlToLoad, const QUrl& _referer
 
 QUrl NetworkRequest::url() const
 {
-    return m_internal->m_request->urlToLoad();
+    return m_internal->url();
 }
 
 void NetworkRequest::downloadCompleteData(const QByteArray& _data)

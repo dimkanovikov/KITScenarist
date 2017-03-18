@@ -88,7 +88,7 @@ void NetworkQueue::pop() {
     //
     // Загружаем!
     //
-    loader->loadAsync(request->m_request->urlToLoad(), request->m_request->urlReferer());
+    loader->loadAsync(request->url(), request->m_request->urlReferer());
 }
 
 void NetworkQueue::stop(NetworkRequestPrivate* _internal) {

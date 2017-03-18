@@ -39,4 +39,4 @@ SOURCES += src/HttpMultiPart_p.cpp \
 	   src/WebRequest_p.cpp \
 	   src/NetworkQueue_p.cpp \
 	   src/NetworkRequest.cpp \
-    src/networkrequestloader.cpp
+    src/NetworkRequestLoader.cpp
