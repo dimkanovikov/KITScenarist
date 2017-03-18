@@ -36,7 +36,7 @@ void ResearchItemDialog::setInsertParent(const QString& _parentName)
         m_ui->isInsert->setText(QString::null);
     }
 }
-
+#include <QDebug>
 void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocationAllow)
 {
     disconnect(m_ui->character, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
@@ -72,14 +72,17 @@ void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocation
     //
     // Если выбран видимый в данный момент элемент
     //
-    if ((m_ui->character->isVisible() && m_ui->character->isChecked())
-        || (m_ui->location->isVisible() && m_ui->location->isChecked())
-        || (m_ui->folder->isVisible() && m_ui->folder->isChecked())
-        || (m_ui->text->isVisible() && m_ui->text->isChecked())
-        || (m_ui->other->isVisible() && m_ui->other->isChecked())) {
+    if (isDataItemsVisible
+        && (m_ui->folder->isChecked()
+            || m_ui->text->isChecked()
+            || m_ui->other->isChecked())) {
         //
         // ... то всё ок, так и оставляем
         //
+
+        if (_isCharacterAllow || _isLocationAllow) {
+            m_ui->isInsert->setChecked(true);
+        }
     }
     //
     // А если невидимый
