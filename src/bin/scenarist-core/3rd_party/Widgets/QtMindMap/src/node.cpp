@@ -39,6 +39,13 @@ Node::Node(GraphLogic *graphLogic, bool isRoot)
     setGraphicsEffect(m_effect);
     m_effect->setEnabled(false);
     m_effect->setOffset(qreal(4.0));
+
+    connect(document(), &QTextDocument::contentsChanged, [=] {
+        for (EdgeElement element : m_edgeList) {
+            element.edge->adjust();
+        }
+        emit nodeChanged();
+    });
 }
 
 Node::~Node()
@@ -195,6 +202,9 @@ void Node::setBorder(const bool &hasBorder)
 
 void Node::setEditable(const bool &editable)
 {
+    if (m_inContextMenuEvent)
+        return;
+
     if (!editable) {
         QTextCursor cursor = textCursor();
         cursor.clearSelection();
@@ -491,11 +501,6 @@ void Node::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsTextItem::mouseDoubleClickEvent(event);
 }
 
-void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsTextItem::mouseReleaseEvent(event);
-}
-
 // notify parent so subtree can be moved too if necessary
 void Node::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -517,6 +522,13 @@ void Node::focusOutEvent(QFocusEvent *event)
     setEditable(false);
 
     emit nodeLostFocus();
+}
+
+void Node::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
+{
+    m_inContextMenuEvent = true;
+    QGraphicsTextItem::contextMenuEvent(_event);
+    m_inContextMenuEvent = false;
 }
 
 // there is no such thing as modulo operator for double :P
