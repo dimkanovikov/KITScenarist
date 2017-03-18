@@ -10,16 +10,16 @@
 class FileHelper
 {
 public:
-	/**
-	 * @brief Получить имя файла, которое можно сохранить в системе
-	 */
-	static QString systemSavebleFileName(const QString& _fileName) {
-		QString result = _fileName;
+    /**
+     * @brief Получить имя файла, которое можно сохранить в системе
+     */
+    static QString systemSavebleFileName(const QString& _fileName) {
+        QString result = _fileName;
 #ifdef Q_OS_WIN
-		result = result.replace("\"", "_").replace(":", "_");
+        result = result.replace("\"", "_").replace(":", "_");
 #endif
-		return result;
-	}
+        return result;
+    }
 };
 
 #endif // FILEHELPER_H
