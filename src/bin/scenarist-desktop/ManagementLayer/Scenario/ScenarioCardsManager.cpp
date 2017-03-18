@@ -595,8 +595,6 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
         // Рисуем карточку
         //
         {
-//            painter.setClipRect(cardRect);
-
             //
             // Рисуем заголовок
             //
@@ -612,7 +610,7 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
             if (item->type() == BusinessLogic::ScenarioModelItem::Scene) {
                 titleText.prepend(QString("%1. ").arg(item->sceneNumber()));
             }
-            titleText = TextUtils::elidedText(titleText, painter.font(), titleRect.size(), textoption);
+            titleText = TextUtils::elidedText(titleText.toUpper(), painter.font(), titleRect.size(), textoption);
             painter.drawText(titleRect, titleText, textoption);
 
             //
