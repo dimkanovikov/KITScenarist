@@ -152,9 +152,11 @@ void ExportDialog::aboutFormatChanged()
 		format = "docx";
 	} else if (ui->pdf->isChecked()) {
 		format = "pdf";
-	} else {
+    } else if (ui->fdx->isChecked()) {
 		format = "fdx";
-	}
+    } else {
+        format = "fountain";
+    }
 	QString filePath = ui->file->text();
 
 	//
@@ -183,9 +185,11 @@ void ExportDialog::aboutChooseFile()
 		format = "docx";
 	} else if (ui->pdf->isChecked()) {
 		format = "pdf";
-	} else {
+    } else if (ui->fdx->isChecked()) {
 		format = "fdx";
-	}
+    } else {
+        format = "fountain";
+    }
 	QString filePath =
 			QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
 				(!ui->file->text().isEmpty() ? ui->file->text() : ::exportFolderPath()),
