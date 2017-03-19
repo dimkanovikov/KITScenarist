@@ -617,17 +617,11 @@ void StartUpManager::checkNewVersion()
                     DataStorageLayer::StorageFacade::settingsStorage()->value(
                         "application/latest_version",
                         DataStorageLayer::SettingsStorage::ApplicationSettings);
-        if (prevVersion.isEmpty()) {
-            //
-            // Нет сохраненной информации о версии. Будем пользоваться текущей
-            //
-            prevVersion = QApplication::applicationVersion();
-        }
 
-        if (!m_updateVersion.isEmpty()
+        if (m_updateVersion != QApplication::applicationVersion()
                 && m_updateVersion != prevVersion) {
             //
-            // Есть новая версия. Покажем диалог
+            // Есть новая версия, которая не совпадает с нашей. Покажем диалог
             //
             showUpdateDialog();
         }
