@@ -43,19 +43,19 @@ namespace BusinessLogic
         /**
          * @brief Обработка конкретного блока перед его добавлением
          */
-        void writeBlock(QXmlStreamWriter &writer, QString paragraphText,
+        void processBlock(QXmlStreamWriter &writer, QString paragraphText,
                         ScenarioBlockStyle::Type blockStyle) const;
 
         /**
          * @brief Добавление блока
          */
-        void reallyWriteBlock(QXmlStreamWriter &writer, const QString& paragraphText,
+        void appendBlock(QXmlStreamWriter &writer, const QString& paragraphText,
                               ScenarioBlockStyle::Type blockStyle) const;
 
         /**
          * @brief Добавление комментариев к блоку
          */
-        void writeComments(QXmlStreamWriter &writer) const;
+        void appendComments(QXmlStreamWriter &writer) const;
 
         //
         // Чтобы не передавать большое число параметров в функции, используются члены класса
@@ -64,12 +64,12 @@ namespace BusinessLogic
         /**
          * @brief Начало позиции в блоке для потенциальной будущей редакторской заметки
          */
-        mutable unsigned prevBlockStart;
+        mutable unsigned noteStartPos;
 
         /**
          * @brief Длина потенциальной будущей редакторской заметки
          */
-        mutable unsigned prevBlockLen;
+        mutable unsigned noteLen;
 
         /**
          * @brief Идет ли сейчас редакторская заметка
@@ -94,13 +94,13 @@ namespace BusinessLogic
         /**
          * @brief Текст редакторской заметки (на случай multiline)
          */
-        mutable QString comment;
+        mutable QString note;
 
         /**
          * @brief Редакторская заметка к текущему блоку
          * 		  tuple содержит комментарий, позиция и длина области редакторской заметки
          */
-        mutable QVector<std::tuple<QString, unsigned, unsigned> > comments;
+        mutable QVector<std::tuple<QString, unsigned, unsigned> > notes;
     };
 }
 

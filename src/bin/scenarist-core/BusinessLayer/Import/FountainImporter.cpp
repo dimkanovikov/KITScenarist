@@ -66,7 +66,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 //
                 // Если мы комментируем или делаем заметку, то продолжим это
                 //
-                writeBlock(writer, paragraphs[i], prevBlockType);
+                processBlock(writer, paragraphs[i], prevBlockType);
                 continue;
             }
 
@@ -135,20 +135,33 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 break;
             case '#':
             {
+                //
+                // Директории
+                //
                 unsigned sharpCount = 0;
                 while(paragraphs[i].toStdString()[sharpCount] == '#') {
                     ++sharpCount;
                 }
 
                 if (sharpCount <= dirNesting) {
+                    //
+                    // Закроем нужное число раз уже открытые
+                    //
                     for (unsigned i = 0; i != dirNesting - sharpCount + 1; ++i) {
-                        writeBlock(writer, "", ScenarioBlockStyle::FolderFooter);
+                        processBlock(writer, "", ScenarioBlockStyle::FolderFooter);
                     }
                     prevBlockType = ScenarioBlockStyle::FolderFooter;
                 }
-                writeBlock(writer, paragraphs[i].right(paragraphs[i].size() - sharpCount), ScenarioBlockStyle::FolderHeader);
+                //
+                // И откроем новую
+                //
+                processBlock(writer, paragraphs[i].right(paragraphs[i].size() - sharpCount), ScenarioBlockStyle::FolderHeader);
                 prevBlockType = ScenarioBlockStyle::FolderHeader;
                 dirNesting = sharpCount;
+
+                //
+                // Поскольку директории добавляются прямо здесь без обработки, то в конец цикла идти не надо
+                //
                 continue;
                 break;
             }
@@ -174,14 +187,15 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 } else if (paragraphs[i].startsWith("[[")
                            && paragraphs[i].endsWith("]]")) {
                     //
-                    // Комментарий
+                    // Редакторская заметка
                     //
-                    comments.append(std::make_tuple(paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen));
-                    prevBlockStart += prevBlockLen;
-                    prevBlockLen = 0;
-                    //writeComment(writer, paragraphs[i].mid(2, paragraphs[i].size() - 4), prevBlockStart, prevBlockLen);
+                    notes.append(std::make_tuple(paragraphs[i].mid(2, paragraphs[i].size() - 4), noteStartPos, noteLen));
+                    noteStartPos += noteLen;
+                    noteLen = 0;
                     continue;
                 } else if (paragraphs[i].startsWith("/*")) {
+                    //
+                    // Начинается комментарий
                     paragraphText = paragraphs[i];
                 } else if (paragraphs[i] == paragraphs[i].toUpper()
                            && i != 0
@@ -229,13 +243,6 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     //
                     blockType = ScenarioBlockStyle::Transition;
                     paragraphText = paragraphs[i].left(paragraphs[i].size()-4);
-                } else if (paragraphs[i].startsWith("[[")
-                           && paragraphs[i].endsWith("]]")) {
-                    //
-                    // Строка обернута в [[ ]], значит это заметка
-                    //
-                    blockType = ScenarioBlockStyle::Note;
-                    paragraphText = paragraphs[i].left(paragraphs[i].size()-2).right(paragraphs[i].size()-4);
                 } else {
                     //
                     // Во всех остальных случаях - Action
@@ -245,52 +252,67 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 }
             }
             }
-            writeBlock(writer, paragraphText, blockType);
-            //prevBlockLen = paragraphText.size();
-            //prevBlockStart = 0;
+            //
+            // Отправим блок на обработку
+            //
+            processBlock(writer, paragraphText, blockType);
             prevBlockType = blockType;
         }
-        writeComments(writer);
+        //
+        // Добавим комментарии к последнему блоку
+        //
+        appendComments(writer);
+
+        //
+        // Закроем последний блок
+        //
         writer.writeEndElement();
-        for (int i = 0; i != dirNesting; ++i) {
-            writeBlock(writer, "", ScenarioBlockStyle::FolderFooter);
+
+        //
+        // Закроем директории нужное число раз
+        //
+        for (unsigned i = 0; i != dirNesting; ++i) {
+            processBlock(writer, "", ScenarioBlockStyle::FolderFooter);
         }
+
+        //
+        // Закроем документ
+        //
         writer.writeEndElement();
         writer.writeEndDocument();
     }
 
-    QFile file("/home/voltage/file.xml");
-    file.open(QIODevice::WriteOnly);
-    file.write(scenarioXml.toStdString().c_str());
     return scenarioXml;
 }
 
-void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphText,
+void FountainImporter::processBlock(QXmlStreamWriter& writer, QString paragraphText,
                                   ScenarioBlockStyle::Type type) const
 {
-    if (!firstBlock) {
-        if (!noting
-                && !commenting) {
-            text.clear();
-            text.reserve(paragraphText.size());
-            comment.clear();
+    if (!noting
+            && !commenting) {
+        //
+        // Начинается новая сущность
+        //
+        text.reserve(paragraphText.size());
 
-            writeComments(writer);
+        //
+        // Добавим комментарии к предыдущему блоку
+        //
+        appendComments(writer);
 
-            prevBlockLen = 0;
-            prevBlockStart = 0;
-        }
+        noteLen = 0;
+        noteStartPos = 0;
     }
 
-    const QString& blockTypeName = ScenarioBlockStyle::typeName(type);
-
     char prevSymbol = '\0';
-    //writer.writeStartElement(blockTypeName);
 
     for (int i = 0; i != paragraphText.size(); ++i) {
         if (prevSymbol == '\\') {
+            //
+            // Если предыдущий символ - \, то просто добавим текущий
+            //
             if (noting) {
-                comment.append(paragraphText[i]);
+                note.append(paragraphText[i]);
             }
             else {
                 text.append(paragraphText[i]);
@@ -300,7 +322,7 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
         switch (paragraphText.toStdString()[i]) {
         case '\\':
             if (noting) {
-                comment.append(paragraphText[i]);
+                note.append(paragraphText[i]);
             } else {
                 text.append(paragraphText[i]);
             }
@@ -308,15 +330,22 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
         case '/':
             if (prevSymbol == '*'
                     && commenting) {
+                //
+                // Заканчивается комментирование
+                //
                 commenting = false;
-                prevBlockStart += prevBlockLen;
-                prevBlockLen = text.size() - 1;
+                noteStartPos += noteLen;
+                noteLen = text.size() - 1;
+
+                //
+                // Закроем предыдущий блок, добавим текущий
+                //
                 writer.writeEndElement();
-                reallyWriteBlock(writer, text.left(text.size() - 1), ScenarioBlockStyle::NoprintableText);
+                appendBlock(writer, text.left(text.size() - 1), ScenarioBlockStyle::NoprintableText);
                 text.clear();
             } else {
                 if (noting) {
-                    comment.append('/');
+                    note.append('/');
                 } else {
                     text.append('/');
                 }
@@ -326,22 +355,33 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
             if (prevSymbol == '/'
                     && !commenting
                     && !noting) {
-                writeComments(writer);
-                comments.clear();
+                //
+                // Начинается комментирование
+                //
+                appendComments(writer);
+                notes.clear();
 
                 commenting = true;
-                prevBlockStart += prevBlockLen;
-                prevBlockLen = text.size() - 1;
+                noteStartPos += noteLen;
+                noteLen = text.size() - 1;
+
+                //
+                // Закроем предыдущий блок и, если комментирование начинается в середние текущего блока
+                // то добавим этот текущий блок
+                //
                 writer.writeEndElement();
                 if (text.size() != 1) {
-                    reallyWriteBlock(writer, text.left(text.size() - 1), type);
+                    appendBlock(writer, text.left(text.size() - 1), type);
                 }
                 text.clear();
             } else {
                 if (noting) {
-                    comment.append('*');
+                    note.append('*');
                 } else {
-                    text.append('*');
+                    //
+                    // Игнорируем *, поскольку они являются символом форматирования, которое мы еще не умеем
+                    //
+                    //text.append('*');
                 }
             }
             break;
@@ -349,12 +389,15 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
             if (prevSymbol == '['
                     && !commenting
                     && !noting) {
+                //
+                // Начинается редакторская заметка
+                //
                 noting = true;
-                prevBlockLen = text.size() - 1 - prevBlockStart;
+                noteLen = text.size() - 1 - noteStartPos;
                 text = text.left(text.size() - 1);
             } else {
                 if (noting) {
-                    comment.append('[');
+                    note.append('[');
                 } else {
                     text.append('[');
                 }
@@ -363,24 +406,33 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
         case ']':
             if (prevSymbol == ']'
                     && noting) {
+                //
+                // Закончилась редакторская заметка. Добавим ее в список редакторских заметок к текущему блоку
+                //
                 noting = false;
-                comments.append(std::make_tuple(comment.left(comment.size() - 1), prevBlockStart, prevBlockLen));
-                prevBlockStart += prevBlockLen;
-                prevBlockLen = 0;
-                comment.clear();
+                notes.append(std::make_tuple(note.left(note.size() - 1), noteStartPos, noteLen));
+                noteStartPos += noteLen;
+                noteLen = 0;
+                note.clear();
             } else {
                 if (noting) {
-                    comment.append(']');
+                    note.append(']');
                 } else {
                     text.append(']');
                 }
             }
             break;
         case '_':
+            //
+            // Игнорируем подчеркивания, которые являются символом форматирования
+            //
             break;
         default:
+            //
+            // Самый обычный символ
+            //
             if (noting) {
-                comment.append(paragraphText[i]);
+                note.append(paragraphText[i]);
             } else {
                 text.append(paragraphText[i]);
             }
@@ -392,26 +444,36 @@ void FountainImporter::writeBlock(QXmlStreamWriter& writer, QString paragraphTex
 
     if (!noting
             && !commenting) {
-        prevBlockLen += text.size() - prevBlockStart;
+        //
+        // Если блок действительно закончился
+        //
+        noteLen += text.size() - noteStartPos;
+
+        //
+        // Закроем предыдущий блок
+        //
         if (!firstBlock) {
             writer.writeEndElement();
         }
+
+        //
+        // Добавим текущий блок
+        //
         if (!text.isEmpty()) {
-            reallyWriteBlock(writer, text, type);
+            appendBlock(writer, text, type);
         }
-        /*
-        writer.writeStartElement(NODE_VALUE);
-        writer.writeCDATA(text.trimmed());
-        writer.writeEndElement();
-        */
         text.clear();
     }
+
+    //
+    // Первый блок в тексте может встретиться лишь однажды
+    //
     if (!firstBlock) {
         firstBlock = false;
     }
 }
 
-void FountainImporter::reallyWriteBlock(QXmlStreamWriter &writer, const QString &paragraphText,
+void FountainImporter::appendBlock(QXmlStreamWriter &writer, const QString &paragraphText,
                                         ScenarioBlockStyle::Type type) const
 {
     const QString& blockTypeName = ScenarioBlockStyle::typeName(type);
@@ -419,35 +481,39 @@ void FountainImporter::reallyWriteBlock(QXmlStreamWriter &writer, const QString 
     writer.writeStartElement(NODE_VALUE);
     writer.writeCDATA(paragraphText.trimmed());
     writer.writeEndElement();
+
+    //
+    // Не закрываем блок, чтобы можно было добавить редакторских заметок
+    //
     //writer.writeEndElement();
 }
 
-void FountainImporter::writeComments(QXmlStreamWriter &writer) const
+void FountainImporter::appendComments(QXmlStreamWriter &writer) const
 {
-    if (comments.isEmpty()) {
+    if (notes.isEmpty()) {
         return;
     }
 
     writer.writeStartElement("reviews");
 
-    for (unsigned int i = 0; i != comments.size(); ++i) {
-        if (std::get<2>(comments[i]) != 0) {
+    for (int i = 0; i != notes.size(); ++i) {
+        if (std::get<2>(notes[i]) != 0) {
             if (i != 0) {
                 writer.writeEndElement();
             }
             writer.writeStartElement("review");
-            writer.writeAttribute("from", QString::number(std::get<1>(comments[i])));
-            writer.writeAttribute("length", QString::number(std::get<2>(comments[i])));
+            writer.writeAttribute("from", QString::number(std::get<1>(notes[i])));
+            writer.writeAttribute("length", QString::number(std::get<2>(notes[i])));
             writer.writeAttribute("bgcolor", "#ffff00");
             writer.writeAttribute("is_highlight", "true");
         }
         writer.writeEmptyElement("review_comment");
-        writer.writeAttribute("comment", std::get<0>(comments[i]));
+        writer.writeAttribute("comment", std::get<0>(notes[i]));
     }
 
     writer.writeEndElement();
 
     writer.writeEndElement();
 
-    comments.clear();
+    notes.clear();
 }
