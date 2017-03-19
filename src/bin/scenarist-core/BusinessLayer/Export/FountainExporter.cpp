@@ -2,6 +2,7 @@
 
 //#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 
 #include <QFile>
 #include <QTextBlock>
@@ -27,6 +28,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
     if (fountainFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
        ExportParameters fakeParameters;
        fakeParameters.saveReviewMarks = true;
+       fakeParameters.saveNoprintable = true;
        QTextDocument* preparedDocument = prepareDocument(_scenario, fakeParameters);
        QTextCursor documentCursor(preparedDocument);
        bool isFirst = true;
@@ -74,6 +76,14 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                    if (!startsWithHeading) {
                        paragraphText = "." + paragraphText;
                    }
+                   if (_exportParameters.printScenesNumbers) {
+                    QTextBlockUserData* textBlockData = documentCursor.block().userData();
+                    ScenarioTextBlockInfo* sceneInfo = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+                    if (sceneInfo != 0 && sceneInfo->sceneNumber()) {
+                        paragraphText += " #" + QString::number(sceneInfo->sceneNumber()) + "#";
+                    }
+                   }
+
                    if (!isFirst) {
                        paragraphText = '\n' + paragraphText;
                    }

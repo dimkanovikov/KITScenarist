@@ -91,7 +91,8 @@ namespace {
 	/**
 	 * @brief Определить, нужно ли записать блок с заданным типом в результирующий файл
 	 */
-	static bool needPrintBlock(ScenarioBlockStyle::Type _blockType, bool _outline) {
+    static bool needPrintBlock(ScenarioBlockStyle::Type _blockType, bool _outline,
+                               bool _saveNoprintable) {
 		static QList<ScenarioBlockStyle::Type> s_outlinePrintableBlocksTypes =
 			QList<ScenarioBlockStyle::Type>()
 			<< ScenarioBlockStyle::SceneHeading
@@ -112,9 +113,11 @@ namespace {
             << ScenarioBlockStyle::Transition;
 
 		return
-				_outline
-				? s_outlinePrintableBlocksTypes.contains(_blockType)
-				: s_scenarioPrintableBlocksTypes.contains(_blockType);
+                (_outline
+                 ? s_outlinePrintableBlocksTypes.contains(_blockType)
+                 : s_scenarioPrintableBlocksTypes.contains(_blockType))
+                || (_saveNoprintable
+                    && _blockType == ScenarioBlockStyle::NoprintableText);
 	}
 
 	/**
@@ -1040,7 +1043,8 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		//
 		// Если блок содержит текст, который необходимо вывести на печать
 		//
-		if (::needPrintBlock(currentBlockType, _exportParameters.outline)) {
+        if (::needPrintBlock(currentBlockType, _exportParameters.outline,
+                             _exportParameters.saveNoprintable)) {
 
 			//
 			// Определим стили и настроим курсор
