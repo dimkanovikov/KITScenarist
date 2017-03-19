@@ -358,9 +358,6 @@ void FountainImporter::processBlock(QXmlStreamWriter& writer, QString paragraphT
                 //
                 // Начинается комментирование
                 //
-                appendComments(writer);
-                notes.clear();
-
                 commenting = true;
                 noteStartPos += noteLen;
                 noteLen = text.size() - 1;
@@ -372,6 +369,8 @@ void FountainImporter::processBlock(QXmlStreamWriter& writer, QString paragraphT
                 writer.writeEndElement();
                 if (text.size() != 1) {
                     appendBlock(writer, text.left(text.size() - 1), type);
+                    appendComments(writer);
+                    notes.clear();
                 }
                 text.clear();
             } else {
