@@ -55,8 +55,8 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                     for (int i = notes.size() - 1; i >= 0; --i) {
                         QStringList comments = notes[i].format.property(ScenarioBlockStyle::PropertyComments)
                                 .toStringList();
-                        for (int i = comments.size() - 1; i >= 0; --i) {
-                            paragraphText.insert(notes[i].start + notes[i].length, "[[" + comments[i] + "]]");
+                        for (int j = comments.size() - 1; j >= 0; --j) {
+                            paragraphText.insert(notes[i].start + notes[i].length, "[[" + comments[j] + "]]");
                         }
                     }
                 }
