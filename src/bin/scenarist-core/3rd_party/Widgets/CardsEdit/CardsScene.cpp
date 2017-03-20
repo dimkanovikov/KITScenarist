@@ -130,6 +130,86 @@ QString CardsScene::lastItemUuid() const
     return lastItemUuid;
 }
 
+QString CardsScene::beforeNewItemUuid(const QPointF& _newCardPosition) const
+{
+    QString previousItemUuid;
+
+    //
+    // Если карточка будет вставляться после выделенной
+    //
+    if (_newCardPosition.isNull()) {
+        if (!selectedItems().isEmpty()) {
+            previousItemUuid = m_itemsMap.key(selectedItems().first());
+        } else {
+            previousItemUuid = lastItemUuid();
+        }
+    }
+    //
+    // Если карточка будет вставляться в указанном месте
+    //
+    else {
+        //
+        // Определим место, куда перемещена карточка
+        //
+        const QPointF movedCardPosition = _newCardPosition;
+        const QRectF movedCardRect = CardItem().boundingRect();
+        const qreal movedCardLeft = movedCardPosition.x();
+        const qreal movedCardTop = movedCardPosition.y();
+        const qreal movedCardBottom = movedCardTop + movedCardRect.height();
+
+        //
+        // Ищем элемент, который будет последним перед карточкой в её новом месте
+        //
+        QGraphicsItem* previousItem = nullptr;
+        for (QGraphicsItem* item : m_items) {
+            const QPointF itemPosition = item->pos();
+            const QRectF itemRect = item->boundingRect();
+            const qreal itemLeft = itemPosition.x();
+            const qreal itemTop = itemPosition.y();
+            const qreal itemBottom = itemTop + itemRect.height();
+
+            //
+            // Если после акта
+            //
+            if (qgraphicsitem_cast<ActItem*>(item)
+                && movedCardTop > itemTop) { // ниже акта
+                previousItem = item;
+            }
+            //
+            // Если после карточки
+            //
+            else if (qgraphicsitem_cast<CardItem*>(item)
+                         // на разных линиях
+                     && ((movedCardTop > itemTop
+                          && fabs(movedCardTop - itemTop) >= movedCardRect.height()/2.)
+                         // на одной линии, но левее
+                         || (movedCardTop < itemBottom
+                             && movedCardBottom > itemTop
+                             && fabs(movedCardTop - itemTop) < movedCardRect.height()/2.
+                             && movedCardLeft > itemLeft))) {
+                previousItem = item;
+            }
+            //
+            // Если не после данного элемента, то прерываем поиск
+            //
+            else {
+                break;
+            }
+        }
+
+        //
+        // Определим идентификатор предыдущего элемента
+        //
+        if (previousItem != nullptr) {
+            previousItemUuid = m_itemsMap.key(previousItem);
+        } else {
+            previousItemUuid = lastItemUuid();
+        }
+    }
+
+    return previousItemUuid;
+}
+
 void CardsScene::addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors)
 {
     if (m_isChangesBlocked) {

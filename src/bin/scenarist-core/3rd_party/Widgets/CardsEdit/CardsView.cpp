@@ -75,6 +75,11 @@ QString CardsView::lastItemUuid() const
     return m_scene->lastItemUuid();
 }
 
+QString CardsView::beforeNewItemUuid(const QPointF& _newCardPosition) const
+{
+    return m_scene->beforeNewItemUuid(_newCardPosition);
+}
+
 void CardsView::insertAct(const QString& _uuid, const QString& _title, const QString& _description,
     const QString& _colors, const QString& _previousItemUuid)
 {
