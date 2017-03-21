@@ -261,15 +261,17 @@ void WebLoader::downloadComplete(QNetworkReply* _reply)
         m_isNeedRedirect = true;
     } else {
         //! Загружены данные [reply->bytesAvailable()]
-        qint64 downloadedDataSize = _reply->bytesAvailable();
-        QByteArray downloadedData = _reply->read(downloadedDataSize);
-        m_downloadedData = downloadedData;
+        if (_reply->isOpen()) {
+            qint64 downloadedDataSize = _reply->bytesAvailable();
+            QByteArray downloadedData = _reply->read(downloadedDataSize);
+            m_downloadedData = downloadedData;
+        }
         _reply->deleteLater();
         m_isNeedRedirect = false;
     }
 
     if (!isRunning()) {
-        wait(1000);
+        wait(300);
     }
     quit(); // прерываем цикл обработки событий потока (возвращаемся в run())
 }
