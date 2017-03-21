@@ -215,13 +215,6 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     } else {
                         paragraphText = paragraphs[i];
                     }
-                } else if (prevBlockType == ScenarioBlockStyle::Character
-                           || prevBlockType == ScenarioBlockStyle::Parenthetical) {
-                    //
-                    // Если предыдущий блок - имя персонажа или ремарка, то сейчас диалог
-                    //
-                    blockType = ScenarioBlockStyle::Dialogue;
-                    paragraphText = paragraphs[i];
                 } else if (paragraphs[i][0] == '('
                            && paragraphs[i][paragraphs[i].size()-1] == ')'
                            && (prevBlockType == ScenarioBlockStyle::Character
@@ -230,6 +223,13 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     // Если текущий блок обернут в (), то это ремарка
                     //
                     blockType = ScenarioBlockStyle::Parenthetical;
+                    paragraphText = paragraphs[i];
+                } else if (prevBlockType == ScenarioBlockStyle::Character
+                           || prevBlockType == ScenarioBlockStyle::Parenthetical) {
+                    //
+                    // Если предыдущий блок - имя персонажа или ремарка, то сейчас диалог
+                    //
+                    blockType = ScenarioBlockStyle::Dialogue;
                     paragraphText = paragraphs[i];
                 } else if (paragraphs[i] == paragraphs[i].toUpper()
                            && i != 0

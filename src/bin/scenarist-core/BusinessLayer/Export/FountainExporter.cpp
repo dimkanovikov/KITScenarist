@@ -33,6 +33,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
        QTextCursor documentCursor(preparedDocument);
        bool isFirst = true;
        unsigned dirNesting = 0;
+       ScenarioBlockStyle::Type prevType = ScenarioBlockStyle::Undefined;
        while (!documentCursor.atEnd()) {
            QString paragraphText;
            if (!documentCursor.block().text().isEmpty()) {
@@ -92,7 +93,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                case ScenarioBlockStyle::Character:
                {
                    if (paragraphText == paragraphText.toUpper()) {
-                       paragraphText = '\n' + paragraphText;
+                        paragraphText = '\n' + paragraphText;
                    } else {
                        paragraphText = '@' + paragraphText;
                    }
@@ -104,7 +105,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                    break;
                case ScenarioBlockStyle::Parenthetical:
                {
-                   paragraphText = '(' + paragraphText + ")";
+                    //paragraphText = '(' + paragraphText + ")";
                }
                    break;
                case ScenarioBlockStyle::Transition:
@@ -114,15 +115,19 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                    } else {
                        paragraphText = "> " + paragraphText;
                    }
+                   paragraphText = "\n" + paragraphText;
                }
                    break;
                case ScenarioBlockStyle::NoprintableText:
                {
-                   paragraphText = "/*\n" + paragraphText + "\n*/";
+                   paragraphText = "\n/*\n" + paragraphText + "\n*/";
                }
                    break;
                case ScenarioBlockStyle::Action:
                {
+                   if (prevType != ScenarioBlockStyle::Action) {
+                       paragraphText = "\n" + paragraphText;
+                   }
                }
                    break;
                case ScenarioBlockStyle::FolderHeader:
@@ -132,6 +137,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                    for (unsigned i = 0; i != dirNesting; ++i) {
                        paragraphText = paragraphText + "#";
                    }
+                   paragraphText = "\n" + paragraphText;
                }
                case ScenarioBlockStyle::FolderFooter:
                {
@@ -151,8 +157,9 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                    for (const QString& comment: comments) {
                        paragraphText += "[[" + comment + "]]\n";
                    }
-                   paragraphText += '\n';
+                   //paragraphText += '\n';
                }
+               prevType = ScenarioBlockStyle::forBlock(documentCursor.block());
                fountainFile.write(paragraphText.toLocal8Bit());
            }
            documentCursor.movePosition(QTextCursor::EndOfBlock);
