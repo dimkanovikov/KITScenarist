@@ -234,11 +234,29 @@ void CardsScene::insertAct(const QString& _uuid, const QString& _title, const QS
         Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
     }
 
-    ActItem* act = new ActItem;
-    act->setUuid(_uuid);
-    act->setTitle(_title);
-    act->setDescription(_description);
-    act->setColors(_colors);
+    ActItem* act = nullptr;
+    //
+    // Сперва пробуем восстановить из корзины
+    //
+    for (QGraphicsItem* item : m_itemsAboutToBeDeleted) {
+        if (ActItem* actFromTrash = dynamic_cast<ActItem*>(item)) {
+            if (actFromTrash->uuid() == _uuid) {
+                act = actFromTrash;
+                m_itemsAboutToBeDeleted.removeAll(actFromTrash);
+                break;
+            }
+        }
+    }
+    //
+    // Если в корзине ничего не нашлось, создаём новый акт
+    //
+    if (act == nullptr) {
+        act = new ActItem;
+        act->setUuid(_uuid);
+        act->setTitle(_title);
+        act->setDescription(_description);
+        act->setColors(_colors);
+    }
     updateActBoundingRect(m_sceneRect, act);
 
     //
@@ -311,19 +329,37 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, int _number, c
     }
 
     if (m_itemsMap.contains(_uuid)) {
-        return;//Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
+        Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
     }
 
-    CardItem* card = new CardItem;
-    card->setUuid(_uuid);
-    card->setIsFolder(_isFolder);
-    card->setNumber(_number);
-    card->setTitle(_title);
-    card->setDescription(_description);
-    card->setStamp(_stamp);
-    card->setColors(_colors);
-    card->setIsEmbedded(_isEmbedded);
-    card->setPos(_position);
+    CardItem* card = nullptr;
+    //
+    // Сперва пробуем восстановить из корзины
+    //
+    for (QGraphicsItem* item : m_itemsAboutToBeDeleted) {
+        if (CardItem* cardFromTrash = dynamic_cast<CardItem*>(item)) {
+            if (cardFromTrash->uuid() == _uuid) {
+                card = cardFromTrash;
+                m_itemsAboutToBeDeleted.removeAll(cardFromTrash);
+                break;
+            }
+        }
+    }
+    //
+    // Если в корзине ничего не нашлось, создаём новую сцену
+    //
+    if (card == nullptr) {
+        card = new CardItem;
+        card->setUuid(_uuid);
+        card->setIsFolder(_isFolder);
+        card->setNumber(_number);
+        card->setTitle(_title);
+        card->setDescription(_description);
+        card->setStamp(_stamp);
+        card->setColors(_colors);
+        card->setIsEmbedded(_isEmbedded);
+        card->setPos(_position);
+    }
     card->setSize(m_cardsSize);
     addItem(card);
     //
@@ -498,11 +534,15 @@ void CardsScene::removeAct(const QString& _uuid)
             }
 
             //
-            // Удаляем сам акт
+            // Удаляем сам акт из сцены
             //
             removeItem(act);
             m_items.removeAll(act);
-            act->deleteLater();
+
+            //
+            // И помещаем его в корзину
+            //
+            m_itemsAboutToBeDeleted.append(act);
 
             //
             // Упорядочим, если надо
@@ -526,11 +566,15 @@ void CardsScene::removeCard(const QString& _uuid)
     if (m_itemsMap.contains(_uuid)) {
         if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_itemsMap.take(_uuid))) {
             //
-            // Удаляем саму карточку
+            // Удаляем саму карточку из сцены
             //
             removeItem(card);
             m_items.removeAll(card);
-            card->deleteLater();
+
+            //
+            // И помещаем её в корзину
+            //
+            m_itemsAboutToBeDeleted.append(card);
 
             //
             // Упорядочим, если надо
@@ -540,7 +584,7 @@ void CardsScene::removeCard(const QString& _uuid)
             //
             // Уведомляем подписчиков
             //
-            emit actRemoved(_uuid);
+            emit cardRemoved(_uuid);
         }
     }
 }
@@ -635,6 +679,11 @@ bool CardsScene::load(const QString& _xml)
     }
     m_items.clear();
     m_itemsMap.clear();
+    //
+    // Очищаем корзину
+    //
+    qDeleteAll(m_itemsAboutToBeDeleted);
+    m_itemsAboutToBeDeleted.clear();
 
 
     QDomDocument doc;

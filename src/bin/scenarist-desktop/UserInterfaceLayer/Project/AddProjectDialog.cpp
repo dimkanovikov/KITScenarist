@@ -135,6 +135,8 @@ void AddProjectDialog::initView()
     m_ui->advancedPanel->hide();
     m_ui->saveDir->setText(QDir::toNativeSeparators(::projectsFolderPath()));
 
+    m_ui->existsLabel->hide();
+
     m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
 
     QLightBoxDialog::initView();

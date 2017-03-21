@@ -316,6 +316,11 @@ private:
     QMap<QString, QGraphicsItem*> m_itemsMap;
 
     /**
+     * @brief Корзина с удалёнными элементами
+     */
+    QList<QGraphicsItem*> m_itemsAboutToBeDeleted;
+
+    /**
      * @brief Находятся ли карточки сцены в режиме перемещения между сценами
      */
     bool m_isInDragOutMode = false;
