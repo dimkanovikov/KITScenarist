@@ -145,6 +145,16 @@ void AddProjectDialog::initView()
 void AddProjectDialog::initConnections()
 {
     //
+    // Настроим видимость возможности выбора папки сохранения файла
+    //
+    connect(m_ui->isLocal, &QRadioButton::toggled, [=] {
+        const bool  visible = m_ui->isLocal->isChecked();
+        m_ui->saveDirLabel->setVisible(visible);
+        m_ui->saveDir->setVisible(visible);
+        m_ui->browseSaveDir->setVisible(visible);
+    });
+
+    //
     // Проверим не существует ли уже такого файла
     //
     connect(m_ui->projectName, &QLineEdit::textChanged, [=] {
