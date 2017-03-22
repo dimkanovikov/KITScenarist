@@ -329,7 +329,11 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, int _number, c
     }
 
     if (m_itemsMap.contains(_uuid)) {
-        Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
+        return;
+        //
+        // FIXME: разобраться откуда могут вылезать дубликаты
+        //
+//        Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
     }
 
     CardItem* card = nullptr;
