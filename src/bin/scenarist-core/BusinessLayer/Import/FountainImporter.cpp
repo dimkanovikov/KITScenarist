@@ -80,9 +80,21 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
 
             switch(paragraphs[i].toStdString()[0]) {
             case '.':
+            {
                 blockType = ScenarioBlockStyle::SceneHeading;
-                paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
+                //
+                // TODO: номера сцен игнорируем, поскольку в фонтане они являются строками
+                //
+                int sharpPos = paragraphs[i].size();
+                if (paragraphs[i][paragraphs[i].size() - 1] == '#') {
+                    sharpPos = paragraphs[i].lastIndexOf('#', paragraphs[i].size() - 2);
+                }
+                if (sharpPos == -1) {
+                    sharpPos = paragraphs[i].size();
+                }
+                paragraphText = paragraphs[i].mid(1, sharpPos - 1);
                 break;
+            }
             case '!':
                 blockType = ScenarioBlockStyle::Action;
                 paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
@@ -187,7 +199,18 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     // Значит это заголовок сцены
                     //
                     blockType = ScenarioBlockStyle::SceneHeading;
-                    paragraphText = paragraphs[i];
+
+                    //
+                    // TODO: номера сцен игнорируем, поскольку в фонтане они являются строками
+                    //
+                    int sharpPos = paragraphs[i].size();
+                    if (paragraphs[i][paragraphs[i].size() - 1] == '#') {
+                        sharpPos = paragraphs[i].lastIndexOf('#', paragraphs[i].size() - 2);
+                    }
+                    if (sharpPos == -1) {
+                        sharpPos = paragraphs[i].size();
+                    }
+                    paragraphText = paragraphs[i].left(sharpPos);
                 } else if (paragraphs[i].startsWith("[[")
                            && paragraphs[i].endsWith("]]")) {
                     //
