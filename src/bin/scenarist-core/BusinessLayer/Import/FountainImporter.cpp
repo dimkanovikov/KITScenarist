@@ -458,7 +458,7 @@ void FountainImporter::processBlock(QXmlStreamWriter& writer, QString paragraphT
         //
         // Добавим текущий блок
         //
-        if (!text.isEmpty()) {
+        if (!text.isEmpty() || type == ScenarioBlockStyle::FolderFooter) {
             appendBlock(writer, text, type);
         }
         text.clear();
