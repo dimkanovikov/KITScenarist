@@ -4,6 +4,7 @@
 
 #include <QDomDocument>
 #include <QFile>
+#include <QStack>
 #include <QXmlStreamWriter>
 
 using namespace BusinessLogic;
@@ -58,7 +59,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
         const QStringList sceneHeadings = {"INT", "EXT", "EST", "INT./EXT", "INT/EXT", "I/E"
                                           "ИНТ", "ЭКСТ"};
         ScenarioBlockStyle::Type prevBlockType = ScenarioBlockStyle::Undefined;
-        unsigned dirNesting = 0;
+        QStack<QString> dirs;
         ScenarioBlockStyle::Type blockType;
         for (int i = 0; i != paragraphs.size(); ++i) {
             if (noting
@@ -138,26 +139,29 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 //
                 // Директории
                 //
-                unsigned sharpCount = 0;
+                int sharpCount = 0;
                 while(paragraphs[i].toStdString()[sharpCount] == '#') {
                     ++sharpCount;
                 }
 
-                if (sharpCount <= dirNesting) {
+                if (sharpCount <= dirs.size()) {
                     //
                     // Закроем нужное число раз уже открытые
                     //
-                    for (unsigned i = 0; i != dirNesting - sharpCount + 1; ++i) {
-                        processBlock(writer, "", ScenarioBlockStyle::FolderFooter);
+                    unsigned toClose = dirs.size() - sharpCount + 1;
+                    for (unsigned i = 0; i != toClose; ++i) {
+                        processBlock(writer, "КОНЕЦ " + dirs.top(), ScenarioBlockStyle::FolderFooter);
+                        dirs.pop();
                     }
                     prevBlockType = ScenarioBlockStyle::FolderFooter;
                 }
                 //
                 // И откроем новую
                 //
-                processBlock(writer, paragraphs[i].right(paragraphs[i].size() - sharpCount), ScenarioBlockStyle::FolderHeader);
+                QString text = paragraphs[i].right(paragraphs[i].size() - sharpCount);
+                processBlock(writer, text, ScenarioBlockStyle::FolderHeader);
+                dirs.push(text);
                 prevBlockType = ScenarioBlockStyle::FolderHeader;
-                dirNesting = sharpCount;
 
                 //
                 // Поскольку директории добавляются прямо здесь без обработки, то в конец цикла идти не надо
@@ -271,8 +275,9 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
         //
         // Закроем директории нужное число раз
         //
-        for (unsigned i = 0; i != dirNesting; ++i) {
-            processBlock(writer, "", ScenarioBlockStyle::FolderFooter);
+        while (!dirs.empty()) {
+            processBlock(writer, "КОНЕЦ " + dirs.top(), ScenarioBlockStyle::FolderFooter);
+            dirs.pop();
         }
 
         //
