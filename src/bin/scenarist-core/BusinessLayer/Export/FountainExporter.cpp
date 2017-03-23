@@ -51,9 +51,15 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
         // Тип предыдущего блока
         //
         ScenarioBlockStyle::Type prevType = ScenarioBlockStyle::Undefined;
+
         while (!documentCursor.atEnd()) {
             QString paragraphText;
             if (!documentCursor.block().text().isEmpty()) {
+                //
+                // Пропустить запись текущего блока
+                //
+                bool skipBLock = false;
+
                 paragraphText = documentCursor.block().text();
                 QVector<QTextLayout::FormatRange> notes;
 
@@ -181,7 +187,8 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                     // Чтобы действия шли друг за другом более аккуратно,
                     // не будем разделять подряд идущие действия пустой строкой
                     //
-                    if (prevType != ScenarioBlockStyle::Action) {
+                    if (prevType != ScenarioBlockStyle::Action
+                            && !isFirst) {
                         paragraphText = "\n" + paragraphText;
                     }
                 }
@@ -202,6 +209,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                 case ScenarioBlockStyle::FolderFooter:
                 {
                     --dirNesting;
+                    skipBLock = true;
                 }
                     break;
                 case ScenarioBlockStyle::Dialogue:
@@ -212,7 +220,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                     //
                     // Игнорируем неизвестные блоки
                     //
-                    continue;
+                    skipBLock = true;
                 }
                 }
                 paragraphText += '\n';
@@ -234,7 +242,10 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                 //
                 // Запишем получившуюся строку
                 //
-                fountainFile.write(paragraphText.toLocal8Bit());
+                if (!skipBLock) {
+                    isFirst = false;
+                    fountainFile.write(paragraphText.toLocal8Bit());
+                }
             }
             documentCursor.movePosition(QTextCursor::EndOfBlock);
             documentCursor.movePosition(QTextCursor::NextBlock);
