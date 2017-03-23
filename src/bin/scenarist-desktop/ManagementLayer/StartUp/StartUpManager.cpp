@@ -261,7 +261,6 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
     connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
     //connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop); // Пока NR не умеет
 
-    loader.setLoadingTimeout(2 * 60 * 1000);
     loader.setRequestMethod(NetworkRequest::Get);
     loader.clearRequestAttributes();
 

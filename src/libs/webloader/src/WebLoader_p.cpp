@@ -184,6 +184,8 @@ void WebLoader::run()
         // Таймер для прерывания работы
         //
         QTimer timeoutTimer;
+        connect(reply.data(), &QNetworkReply::uploadProgress, &timeoutTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
+        connect(reply.data(), &QNetworkReply::downloadProgress, &timeoutTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
         connect(&timeoutTimer, &QTimer::timeout, this, &WebLoader::quit);
         connect(&timeoutTimer, &QTimer::timeout, reply.data(), &QNetworkReply::abort);
         timeoutTimer.setSingleShot(true);
