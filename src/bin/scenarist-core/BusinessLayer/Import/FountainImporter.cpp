@@ -10,15 +10,15 @@
 using namespace BusinessLogic;
 
 namespace {
-    /**
+/**
      * @brief Ключ для формирования xml из импортируемого документа
      */
-    /** @{ */
-    const QString NODE_SCENARIO = "scenario";
-    const QString NODE_VALUE = "v";
+/** @{ */
+const QString NODE_SCENARIO = "scenario";
+const QString NODE_VALUE = "v";
 
-    const QString ATTRIBUTE_VERSION = "version";
-    /** @} */
+const QString ATTRIBUTE_VERSION = "version";
+/** @} */
 }
 
 FountainImporter::FountainImporter() :
@@ -57,7 +57,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
         }
 
         const QStringList sceneHeadings = {"INT", "EXT", "EST", "INT./EXT", "INT/EXT", "I/E"
-                                          "ИНТ", "ЭКСТ"};
+                                           "ИНТ", "ЭКСТ"};
         ScenarioBlockStyle::Type prevBlockType = ScenarioBlockStyle::Undefined;
         QStack<QString> dirs;
         ScenarioBlockStyle::Type blockType;
@@ -104,7 +104,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                 paragraphText = paragraphs[i].right(paragraphs[i].size() - 1);
                 break;
             case '>':
-                if (paragraphs[i][paragraphs[i].size() - 1] == '<') {
+                if (paragraphs[i][paragraphs[i].size() - 2] == '<') {
                     blockType = ScenarioBlockStyle::Action;
                     paragraphText = paragraphs[i].mid(1, paragraphs[i].size() - 2);
                 } else {
@@ -116,9 +116,9 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
             {
                 bool isPageBreak = false;
                 if (paragraphs[i].size() >= 3
-                           && paragraphs[i][0] == paragraphs[i][1]
-                           && paragraphs[i][1] == paragraphs[i][2]
-                           && paragraphs[i][2] == '=') {
+                        && paragraphs[i][0] == paragraphs[i][1]
+                        && paragraphs[i][1] == paragraphs[i][2]
+                        && paragraphs[i][2] == '=') {
                     isPageBreak = true;
                     for (int j = 3; j != paragraphs[i].size(); ++j) {
                         if (paragraphs[i][j] != '=') {
@@ -314,7 +314,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
 }
 
 void FountainImporter::processBlock(QXmlStreamWriter& writer, QString paragraphText,
-                                  ScenarioBlockStyle::Type type) const
+                                    ScenarioBlockStyle::Type type) const
 {
     if (!noting
             && !commenting) {
@@ -501,7 +501,7 @@ void FountainImporter::processBlock(QXmlStreamWriter& writer, QString paragraphT
 }
 
 void FountainImporter::appendBlock(QXmlStreamWriter &writer, const QString &paragraphText,
-                                        ScenarioBlockStyle::Type type) const
+                                   ScenarioBlockStyle::Type type) const
 {
     const QString& blockTypeName = ScenarioBlockStyle::typeName(type);
     writer.writeStartElement(blockTypeName);
