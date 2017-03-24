@@ -157,6 +157,12 @@ QString ScenarioCardsView::lastItemUuid() const
 {
     return m_cards->lastItemUuid();
 }
+
+QString ScenarioCardsView::beforeNewItemUuid() const
+{
+    return m_cards->beforeNewItemUuid(m_newCardPosition);
+}
+
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 {
     m_addCard->setEnabled(!_isCommentOnly);
@@ -275,7 +281,7 @@ void ScenarioCardsView::initConnections()
         emit addCardClicked();
     });
     connect(m_cards, &CardsView::cardAddRequest, [=] (const QPointF& _position) {
-        m_newCardPosition =_position;
+        m_newCardPosition = _position;
         emit addCardClicked();
     });
     connect(m_cards, &CardsView::cardAddCopyRequest,

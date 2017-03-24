@@ -36,6 +36,11 @@ public:
     explicit NetworkRequestPrivate(QObject* _parent = 0, QNetworkCookieJar* _jar = 0);
     ~NetworkRequestPrivate();
 
+    /*!
+     * \brief Ссылка для загрузки
+     */
+    QUrl url() const;
+
     QUrl m_urlToLoad;
     QUrl m_referer;
     QNetworkCookieJar* m_cookieJar;

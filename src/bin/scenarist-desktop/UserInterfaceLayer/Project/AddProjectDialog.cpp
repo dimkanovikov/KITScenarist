@@ -135,6 +135,8 @@ void AddProjectDialog::initView()
     m_ui->advancedPanel->hide();
     m_ui->saveDir->setText(QDir::toNativeSeparators(::projectsFolderPath()));
 
+    m_ui->existsLabel->hide();
+
     m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
 
     QLightBoxDialog::initView();
@@ -142,6 +144,16 @@ void AddProjectDialog::initView()
 
 void AddProjectDialog::initConnections()
 {
+    //
+    // Настроим видимость возможности выбора папки сохранения файла
+    //
+    connect(m_ui->isLocal, &QRadioButton::toggled, [=] {
+        const bool  visible = m_ui->isLocal->isChecked();
+        m_ui->saveDirLabel->setVisible(visible);
+        m_ui->saveDir->setVisible(visible);
+        m_ui->browseSaveDir->setVisible(visible);
+    });
+
     //
     // Проверим не существует ли уже такого файла
     //

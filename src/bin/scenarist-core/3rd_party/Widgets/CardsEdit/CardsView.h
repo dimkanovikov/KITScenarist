@@ -68,6 +68,11 @@ public:
     QString lastItemUuid() const;
 
     /**
+     * @brief Получить идентификатор карточки следующей перед заданной позицией
+     */
+    QString beforeNewItemUuid(const QPointF& _newCardPosition) const;
+
+    /**
      * @brief Вставить акт после заданного элемента
      */
     void insertAct(const QString& _uuid, const QString& _title, const QString& _description,

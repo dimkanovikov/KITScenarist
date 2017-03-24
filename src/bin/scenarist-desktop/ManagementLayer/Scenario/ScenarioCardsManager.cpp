@@ -250,7 +250,8 @@ void ScenarioCardsManager::addCard()
             // Определим карточку, после которой нужно добавить элемент
             //
             QModelIndex index;
-            const QString lastItemUuid = m_view->lastItemUuid();
+//            const QString lastItemUuid = m_view->lastItemUuid();
+            const QString lastItemUuid = m_view->beforeNewItemUuid();
             if (!lastItemUuid.isEmpty()) {
                 index = m_model->indexForUuid(lastItemUuid);
             }
@@ -595,8 +596,6 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
         // Рисуем карточку
         //
         {
-//            painter.setClipRect(cardRect);
-
             //
             // Рисуем заголовок
             //
@@ -612,7 +611,7 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
             if (item->type() == BusinessLogic::ScenarioModelItem::Scene) {
                 titleText.prepend(QString("%1. ").arg(item->sceneNumber()));
             }
-            titleText = TextUtils::elidedText(titleText, painter.font(), titleRect.size(), textoption);
+            titleText = TextUtils::elidedText(titleText.toUpper(), painter.font(), titleRect.size(), textoption);
             painter.drawText(titleRect, titleText, textoption);
 
             //

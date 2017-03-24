@@ -55,6 +55,11 @@ public:
     QString lastItemUuid() const;
 
     /**
+     * @brief Получить идентификатор карточки следующей перед заданной позицией
+     */
+    QString beforeNewItemUuid(const QPointF& _newCardPosition) const;
+
+    /**
      * @brief Добавить акт
      */
     void addAct(const QString& _uuid, const QString& _title, const QString& _description,
@@ -309,6 +314,11 @@ private:
      * @brief Навигационная карта по элементам <uuid, item>
      */
     QMap<QString, QGraphicsItem*> m_itemsMap;
+
+    /**
+     * @brief Корзина с удалёнными элементами
+     */
+    QList<QGraphicsItem*> m_itemsAboutToBeDeleted;
 
     /**
      * @brief Находятся ли карточки сцены в режиме перемещения между сценами

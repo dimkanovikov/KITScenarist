@@ -261,7 +261,6 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
     connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
     //connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop); // Пока NR не умеет
 
-    loader.setLoadingTimeout(2 * 60 * 1000);
     loader.setRequestMethod(NetworkRequest::Get);
     loader.clearRequestAttributes();
 
@@ -617,17 +616,11 @@ void StartUpManager::checkNewVersion()
                     DataStorageLayer::StorageFacade::settingsStorage()->value(
                         "application/latest_version",
                         DataStorageLayer::SettingsStorage::ApplicationSettings);
-        if (prevVersion.isEmpty()) {
-            //
-            // Нет сохраненной информации о версии. Будем пользоваться текущей
-            //
-            prevVersion = QApplication::applicationVersion();
-        }
 
-        if (!m_updateVersion.isEmpty()
+        if (m_updateVersion != QApplication::applicationVersion()
                 && m_updateVersion != prevVersion) {
             //
-            // Есть новая версия. Покажем диалог
+            // Есть новая версия, которая не совпадает с нашей. Покажем диалог
             //
             showUpdateDialog();
         }

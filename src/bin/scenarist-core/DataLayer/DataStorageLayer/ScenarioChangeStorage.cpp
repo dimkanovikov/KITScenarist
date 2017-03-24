@@ -142,7 +142,7 @@ QList<QString> ScenarioChangeStorage::newUuids(const QString& _fromDatetime)
     foreach (DomainObject* domainObject, all()->toList()) {
         ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
         if (change->user() == username
-            && change->datetime().toString("yyyy-MM-dd hh:mm:ss") >= _fromDatetime) {
+            && change->datetime().toString("yyyy-MM-dd hh:mm:ss") > _fromDatetime) {
             allNew.append(change->uuid().toString());
         }
     }

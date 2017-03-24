@@ -1030,6 +1030,13 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             break;
         }
 
+        case Sync::StorageSizeFinished: {
+            title = tr("Sync not available");
+            error = tr("You have exhausted all available for the use of space on a server.\n\n"
+                       "Project didn't synchronized.");
+            break;
+        }
+
         //
         // Такой email уже зарегистрирован
         //

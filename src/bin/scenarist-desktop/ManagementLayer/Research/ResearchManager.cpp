@@ -251,7 +251,21 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _ty
             insertPosition,
             m_dialog->researchName());
 
+        //
+        // Уведомляем подписчиков
+        //
         emit researchChanged();
+
+        //
+        // И выделяем добавленный элемент в дереве
+        //
+        QModelIndex indexForSelect;
+        if (m_dialog->insertResearchInParent()) {
+            indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex);
+        } else {
+            indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex.parent());
+        }
+        m_view->selectItem(indexForSelect);
     }
 }
 
