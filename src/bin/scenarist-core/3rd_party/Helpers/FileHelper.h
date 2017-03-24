@@ -16,7 +16,10 @@ public:
     static QString systemSavebleFileName(const QString& _fileName) {
         QString result = _fileName;
 #ifdef Q_OS_WIN
-        result = result.replace("\"", "_").replace(":", "_");
+        // Не надо заменять двоеточие после названия диска
+        if (result.size() > 4) {
+            result = result.left(4) + result.mid(4).replace("\"", "_").replace(":", "_");
+        }
 #endif
         return result;
     }
