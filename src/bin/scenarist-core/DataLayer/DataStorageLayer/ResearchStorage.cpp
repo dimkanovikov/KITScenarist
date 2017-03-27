@@ -105,8 +105,11 @@ void ResearchStorage::removeResearch(Research* _research)
             // ... удалим из локального списка и базы данных
             //
             all()->remove(research);
-            characters()->remove(research);
-            locations()->remove(research);
+            if (characters()->contains(research)) {
+                characters()->remove(research);
+            } else if (locations()->contains(research)) {
+                locations()->remove(research);
+            }
             MapperFacade::researchMapper()->remove(research);
         }
     }
@@ -199,6 +202,7 @@ Research* ResearchStorage::storeCharacter(const QString& _name)
 
 void ResearchStorage::updateCharacter(Research* _character)
 {
+    _character->setName(_character->name().toUpper());
     updateResearch(_character);
 
     //
@@ -228,7 +232,7 @@ bool ResearchStorage::hasCharacter(const QString& _name)
     bool contains = false;
     foreach (DomainObject* domainObject, characters()->toList()) {
         Research* character = dynamic_cast<Research*>(domainObject);
-        if (character->name() == _name) {
+        if (character->name() == _name.toUpper()) {
             contains = true;
             break;
         }
@@ -291,6 +295,7 @@ Research* ResearchStorage::storeLocation(const QString& _name)
 
 void ResearchStorage::updateLocation(Research* _location)
 {
+    _location->setName(_location->name().toUpper());
     updateResearch(_location);
 
     //
@@ -320,7 +325,7 @@ bool ResearchStorage::hasLocation(const QString& _name)
     bool contains = false;
     foreach (DomainObject* domainObject, locations()->toList()) {
         Research* location = dynamic_cast<Research*>(domainObject);
-        if (location->name() == _name) {
+        if (location->name() == _name.toUpper()) {
             contains = true;
             break;
         }

@@ -243,13 +243,37 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _ty
         Research* parentResearch = parentResearchItem->research();
 
         //
-        // Сохраняем новый элемент
+        // Сохраняем новый элемент, если надо
         //
-        StorageFacade::researchStorage()->storeResearch(
-            parentResearch,
-            (Research::Type)m_dialog->researchType(),
-            insertPosition,
-            m_dialog->researchName());
+        bool selectAdded = true;
+        switch (m_dialog->researchType()) {
+            case Research::Character: {
+                if (!StorageFacade::researchStorage()->hasCharacter(m_dialog->researchName())) {
+                    StorageFacade::researchStorage()->storeCharacter(m_dialog->researchName());
+                } else {
+                    selectAdded = false;
+                }
+                break;
+            }
+
+            case Research::Location: {
+                if (!StorageFacade::researchStorage()->hasLocation(m_dialog->researchName())) {
+                    StorageFacade::researchStorage()->storeLocation(m_dialog->researchName());
+                } else {
+                    selectAdded = false;
+                }
+                break;
+            }
+
+            default: {
+                StorageFacade::researchStorage()->storeResearch(
+                            parentResearch,
+                            (Research::Type)m_dialog->researchType(),
+                            insertPosition,
+                            m_dialog->researchName());
+                break;
+            }
+        }
 
         //
         // Уведомляем подписчиков
@@ -259,13 +283,19 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _ty
         //
         // И выделяем добавленный элемент в дереве
         //
-        QModelIndex indexForSelect;
-        if (m_dialog->insertResearchInParent()) {
-            indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex);
-        } else {
-            indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex.parent());
+        if (selectAdded) {
+            QModelIndex indexForSelect;
+            if (m_dialog->insertResearchInParent()) {
+                indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex);
+            } else {
+                if (_selectedItemIndex.parent().isValid()) {
+                    indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex.parent());
+                } else {
+                    indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex);
+                }
+            }
+            m_view->selectItem(indexForSelect);
         }
-        m_view->selectItem(indexForSelect);
     }
 }
 
