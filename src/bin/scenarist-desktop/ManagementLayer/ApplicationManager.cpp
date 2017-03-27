@@ -188,6 +188,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 {
     initView();
     initConnections();
+    initStyleSheet();
 
     aboutUpdateProjectsList();
 
@@ -199,7 +200,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
             m_startUpManager->setProgressLoginLabel(false);
         }
     });
-    initStyleSheet();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -216,7 +216,7 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 
     if (!_fileToOpen.isEmpty()) {
         aboutLoad(_fileToOpen);
-       }
+    }
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
