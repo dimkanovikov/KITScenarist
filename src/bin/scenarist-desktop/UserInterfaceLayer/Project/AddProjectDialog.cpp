@@ -135,8 +135,6 @@ void AddProjectDialog::initView()
     m_ui->existsLabel->hide();
 
     m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
-
-    QLightBoxDialog::initView();
 }
 
 void AddProjectDialog::initConnections()
@@ -192,6 +190,4 @@ void AddProjectDialog::initConnections()
 
     connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &AddProjectDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &AddProjectDialog::reject);
-
-    QLightBoxDialog::initConnections();
 }

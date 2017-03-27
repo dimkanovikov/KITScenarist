@@ -32,6 +32,7 @@ RenewSubscriptionDialog::RenewSubscriptionDialog(QWidget *_parent) :
     m_ui(new Ui::RenewSubscriptionDialog)
 {
     m_ui->setupUi(this);
+    m_acceptButton = m_ui->buttonBox->addButton(tr("Renew"), QDialogButtonBox::AcceptRole);
 }
 
 RenewSubscriptionDialog::~RenewSubscriptionDialog()
@@ -113,6 +114,16 @@ unsigned RenewSubscriptionDialog::durationToAmount(unsigned _duration) const
     return amount;
 }
 
+void RenewSubscriptionDialog::initView()
+{
+    m_ui->duration->addItem(tr("1 month"), 1);
+    m_ui->duration->addItem(tr("2 month"), 2);
+    m_ui->duration->addItem(tr("3 month"), 3);
+    m_ui->duration->addItem(tr("6 month (6% discount)"), 6);
+    m_ui->duration->addItem(tr("12 month (12% discount)"), 12);
+    m_ui->duration->setCurrentIndex(0);
+}
+
 void RenewSubscriptionDialog::initConnections()
 {
     connect(m_ui->duration, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
@@ -125,19 +136,4 @@ void RenewSubscriptionDialog::initConnections()
 
     connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &RenewSubscriptionDialog::reject);
     connect(this, &RenewSubscriptionDialog::rejected, this, &RenewSubscriptionDialog::hide);
-
-    QLightBoxDialog::initConnections();
-}
-
-void RenewSubscriptionDialog::initView()
-{
-    m_acceptButton = m_ui->buttonBox->addButton(tr("Renew"), QDialogButtonBox::AcceptRole);
-
-    m_ui->duration->addItem(tr("1 month"), 1);
-    m_ui->duration->addItem(tr("2 month"), 2);
-    m_ui->duration->addItem(tr("3 month"), 3);
-    m_ui->duration->addItem(tr("6 month (6% discount)"), 6);
-    m_ui->duration->addItem(tr("12 month (12% discount)"), 12);
-    m_ui->duration->setCurrentIndex(0);
-    QLightBoxDialog::initView();
 }

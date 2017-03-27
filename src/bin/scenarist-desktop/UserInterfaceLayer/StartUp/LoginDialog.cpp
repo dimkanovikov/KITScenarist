@@ -36,6 +36,8 @@ LoginDialog::LoginDialog(QWidget* _parent) :
     m_isVerify(false)
 {
     m_ui->setupUi(this);
+    m_loginButton = m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
+    m_signUpButton = m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
 }
 
 LoginDialog::~LoginDialog()
@@ -224,14 +226,11 @@ void LoginDialog::emitAccept()
 
 void LoginDialog::initView()
 {
-
     m_ui->loginError->clear();
     m_ui->loginErrorIcon->clear();
-    m_loginButton = m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
 
     m_ui->signUpError->clear();
     m_ui->signUpErrorIcon->clear();
-    m_signUpButton = m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
 
     m_ui->verificationError->clear();
     m_ui->verificationErrorIcon->clear();
@@ -245,8 +244,6 @@ void LoginDialog::initView()
 
     QWidget::setTabOrder(m_ui->loginEmail, m_ui->loginPasswordEdit);
     QWidget::setTabOrder(m_ui->signUpEmail, m_ui->signUpPasswordEdit);
-
-    QLightBoxDialog::initView();
 }
 
 void LoginDialog::initConnections()
@@ -284,9 +281,7 @@ void LoginDialog::initConnections()
             this, &LoginDialog::checkVerificationCode);
 
     connect(m_ui->tabs, &TabBarExpanded::currentChanged,
-            this, &LoginDialog::switchWidget);;
-
-    QLightBoxDialog::initConnections();
+            this, &LoginDialog::switchWidget);
 }
 
 void LoginDialog::clear()

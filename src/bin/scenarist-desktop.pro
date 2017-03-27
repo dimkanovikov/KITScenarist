@@ -36,11 +36,6 @@ UI_DIR = $$DESTDIR/.ui
 #
 
 #
-# Отключаем анимации
-#
-DEFINES += NO_ANIMATIONS
-
-#
 # Включить профилирование
 #
 #QMAKE_CXXFLAGS_DEBUG += -pg

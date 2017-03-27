@@ -221,8 +221,6 @@ void ExportDialog::initView()
     ui->additionalSettings->hide();
 
     resize(width(), sizeHint().height());
-
-    QLightBoxDialog::initView();
 }
 
 void ExportDialog::initConnections()
@@ -239,6 +237,4 @@ void ExportDialog::initConnections()
     connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
     connect(ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
-
-    QLightBoxDialog::initConnections();
 }

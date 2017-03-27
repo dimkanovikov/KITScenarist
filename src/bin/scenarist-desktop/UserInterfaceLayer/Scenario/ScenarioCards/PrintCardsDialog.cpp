@@ -43,8 +43,6 @@ bool PrintCardsDialog::isPortrait() const
 void PrintCardsDialog::initView()
 {
     m_ui->layoutsStack->setCurrentWidget(m_ui->pageP1);
-
-    QLightBoxDialog::initView();
 }
 
 void PrintCardsDialog::initConnections()
@@ -89,6 +87,4 @@ void PrintCardsDialog::initConnections()
 
     connect(m_ui->cancel, &QPushButton::clicked, this, &PrintCardsDialog::reject);
     connect(m_ui->printPreview, &QPushButton::clicked, this, &PrintCardsDialog::printPreview);
-
-    QLightBoxDialog::initConnections();
 }

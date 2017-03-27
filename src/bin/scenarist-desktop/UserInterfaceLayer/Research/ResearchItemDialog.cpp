@@ -201,8 +201,6 @@ QWidget* ResearchItemDialog::focusedOnExec() const
 
 void ResearchItemDialog::initView()
 {
-    QLightBoxDialog::initView();
-
 #ifdef Q_OS_WIN
     //
     // В виндовс XP webengine не работает, поэтому скрываем пункт с добавлением ссылки
@@ -223,6 +221,4 @@ void ResearchItemDialog::initConnections()
         }
     });
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &QLightBoxDialog::reject);
-
-    QLightBoxDialog::initConnections();
 }

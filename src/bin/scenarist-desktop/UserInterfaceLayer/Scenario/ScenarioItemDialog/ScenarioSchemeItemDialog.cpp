@@ -11,6 +11,7 @@ ScenarioSchemeItemDialog::ScenarioSchemeItemDialog(QWidget* _parent) :
     m_ui(new Ui::ScenarioSchemeItemDialog)
 {
     m_ui->setupUi(this);
+    m_saveButton = m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
 
     initStyleSheet();
 }
@@ -102,18 +103,12 @@ void ScenarioSchemeItemDialog::initView()
     m_ui->cardColor->setColorsPane(ColoredToolButton::Google);
 
     m_ui->cardDescription->setToolbarVisible(false);
-
-    m_saveButton = m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
-
-    QLightBoxDialog::initView();
 }
 
 void ScenarioSchemeItemDialog::initConnections()
 {
     connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &ScenarioSchemeItemDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &ScenarioSchemeItemDialog::reject);
-
-    QLightBoxDialog::initConnections();
 }
 
 void ScenarioSchemeItemDialog::initStyleSheet()

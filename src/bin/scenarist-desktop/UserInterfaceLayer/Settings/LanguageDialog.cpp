@@ -60,12 +60,9 @@ int LanguageDialog::language() const
 
 void LanguageDialog::initView()
 {
-    QLightBoxDialog::initView();
 }
 
 void LanguageDialog::initConnections()
 {
     connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
-
-    QLightBoxDialog::initConnections();
 }

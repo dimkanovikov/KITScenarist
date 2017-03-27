@@ -79,6 +79,10 @@ void ChangePasswordDialog::block()
     showProgress();
 }
 
+void ChangePasswordDialog::initView()
+{
+}
+
 void ChangePasswordDialog::initConnections()
 {
     connect(this, &ChangePasswordDialog::accepted, [this] {
@@ -105,12 +109,6 @@ void ChangePasswordDialog::initConnections()
             this, &ChangePasswordDialog::stopAndHide);
 
     QWidget::setTabOrder(m_ui->oldPassword, m_ui->newPassword);
-    QLightBoxDialog::initConnections();
-}
-
-void ChangePasswordDialog::initView()
-{
-    QLightBoxDialog::initView();
 }
 
 void ChangePasswordDialog::setAcceptButtonAvailability()

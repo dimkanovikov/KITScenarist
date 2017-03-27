@@ -36,8 +36,6 @@ QWidget*ShareDialog::focusedOnExec() const
 void ShareDialog::initView()
 {
     m_ui->buttons->addButton(tr("Share"), QDialogButtonBox::AcceptRole);
-
-    QLightBoxDialog::initView();
 }
 
 void ShareDialog::initConnections()
@@ -52,6 +50,4 @@ void ShareDialog::initConnections()
         }
     });
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &ShareDialog::reject);
-
-    QLightBoxDialog::initConnections();
 }

@@ -153,64 +153,6 @@ bool QLightBoxDialog::event(QEvent* _event)
     return result;
 }
 
-void QLightBoxDialog::initView()
-{
-    //
-    // Настраиваем заголовок
-    //
-    m_title->setProperty("lightBoxDialogTitle", true);
-    m_title->setWordWrap(true);
-#ifdef Q_OS_MAC
-    m_title->setAlignment(Qt::AlignHCenter);
-#endif
-    updateTitle();
-
-    //
-    // Настраиваем прогресс
-    //
-    m_progress->setFixedHeight(5);
-    m_progress->setValue(0);
-    m_progress->setRange(0, 0);
-    m_progress->setFormat(QString::null);
-    hideProgress();
-
-    //
-    // Настраиваем компоновщик
-    //
-    if (layout() != 0) {
-        m_centralWidget = new QFrame(this);
-        m_centralWidget->setProperty("lightBoxDialogCentralWidget", true);
-        m_centralWidget->setMinimumSize(minimumSize());
-        m_centralWidget->setMaximumSize(maximumSize());
-        m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        QLayout* centralWidgetLayout = layout();
-        m_centralWidget->setLayout(centralWidgetLayout);
-
-        setMinimumSize(QSize(0, 0));
-        setMaximumSize(QSize(16777215, 16777215));
-
-        QGridLayout* newLayout = new QGridLayout;
-        newLayout->setContentsMargins(QMargins());
-        newLayout->setSpacing(0);
-        newLayout->addWidget(titleWidget(), 1, 1);
-        newLayout->addWidget(m_centralWidget, 2, 1);
-        newLayout->setRowStretch(0, 1);
-        if (m_isContentStretchable) {
-            newLayout->setRowStretch(2, 8);
-        }
-        newLayout->addWidget(m_progress, 3, 1);
-        newLayout->setRowStretch(4, 1);
-        newLayout->setColumnStretch(0, 1);
-        newLayout->setColumnStretch(2, 1);
-        setLayout(newLayout);
-    }
-}
-
-void QLightBoxDialog::initConnections()
-{
-}
-
 QWidget* QLightBoxDialog::titleWidget() const
 {
     return m_title;
@@ -225,8 +167,60 @@ void QLightBoxDialog::init()
 {
     if (m_initialized == false) {
         m_initialized = true;
+
         initView();
         initConnections();
+
+        //
+        // Настраиваем заголовок
+        //
+        m_title->setProperty("lightBoxDialogTitle", true);
+        m_title->setWordWrap(true);
+    #ifdef Q_OS_MAC
+        m_title->setAlignment(Qt::AlignHCenter);
+    #endif
+        updateTitle();
+
+        //
+        // Настраиваем прогресс
+        //
+        m_progress->setFixedHeight(5);
+        m_progress->setValue(0);
+        m_progress->setRange(0, 0);
+        m_progress->setFormat(QString::null);
+        hideProgress();
+
+        //
+        // Настраиваем компоновщик
+        //
+        if (layout() != 0) {
+            m_centralWidget = new QFrame(this);
+            m_centralWidget->setProperty("lightBoxDialogCentralWidget", true);
+            m_centralWidget->setMinimumSize(minimumSize());
+            m_centralWidget->setMaximumSize(maximumSize());
+            m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+            QLayout* centralWidgetLayout = layout();
+            m_centralWidget->setLayout(centralWidgetLayout);
+
+            setMinimumSize(QSize(0, 0));
+            setMaximumSize(QSize(16777215, 16777215));
+
+            QGridLayout* newLayout = new QGridLayout;
+            newLayout->setContentsMargins(QMargins());
+            newLayout->setSpacing(0);
+            newLayout->addWidget(titleWidget(), 1, 1);
+            newLayout->addWidget(m_centralWidget, 2, 1);
+            newLayout->setRowStretch(0, 1);
+            if (m_isContentStretchable) {
+                newLayout->setRowStretch(2, 8);
+            }
+            newLayout->addWidget(m_progress, 3, 1);
+            newLayout->setRowStretch(4, 1);
+            newLayout->setColumnStretch(0, 1);
+            newLayout->setColumnStretch(2, 1);
+            setLayout(newLayout);
+        }
     }
 }
 
