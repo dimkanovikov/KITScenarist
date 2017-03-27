@@ -20,7 +20,7 @@ namespace {
 
         QPropertyAnimation* opacityAnimation = new QPropertyAnimation(opacityEffect, "opacity");
         opacityAnimation->setDuration(120);
-        opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
+        opacityAnimation->setEasingCurve(QEasingCurve::InCirc);
         opacityAnimation->setStartValue(0);
         opacityAnimation->setEndValue(1);
 
@@ -34,29 +34,21 @@ namespace {
 
 QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool _isContentStretchable) :
     QLightBoxWidget(parent, _followToHeadWidget),
+    m_initialized(false),
     m_title(new QLabel(this)),
     m_centralWidget(nullptr),
     m_progress(new QProgressBar(this)),
     m_isContentStretchable(_isContentStretchable),
-    m_execResult(Rejected)
+    m_execResult(Rejected),
+    m_animation(nullptr)
 {
-    initView();
-    initConnections();
 }
 
 int QLightBoxDialog::exec()
 {
     m_execResult = Rejected;
 
-    updateTitle();
-
-#ifndef NO_ANIMATIONS
-    animateShow();
-#else
     show();
-#endif
-
-    focusedOnExec()->setFocus();
 
     QEventLoop dialogEventLoop;
     connect(this, SIGNAL(accepted()), &dialogEventLoop, SLOT(quit()));
@@ -64,13 +56,26 @@ int QLightBoxDialog::exec()
     connect(this, SIGNAL(finished(int)), &dialogEventLoop, SLOT(quit()));
     dialogEventLoop.exec();
 
-#ifndef NO_ANIMATIONS
-    animateHide();
-#else
     hide();
-#endif
 
     return m_execResult;
+}
+
+void QLightBoxDialog::setVisible(bool _visible)
+{
+    init();
+
+    if (_visible) {
+        updateTitle();
+        focusedOnExec()->setFocus();
+        QLightBoxWidget::setVisible(_visible);
+    }
+
+    animate(_visible);
+
+    if (!_visible) {
+        QLightBoxWidget::setVisible(_visible);
+    }
 }
 
 void QLightBoxDialog::accept()
@@ -216,6 +221,15 @@ QWidget* QLightBoxDialog::focusedOnExec() const
     return m_centralWidget;
 }
 
+void QLightBoxDialog::init()
+{
+    if (m_initialized == false) {
+        m_initialized = true;
+        initView();
+        initConnections();
+    }
+}
+
 void QLightBoxDialog::updateTitle()
 {
     if (titleWidget() == m_title) {
@@ -238,45 +252,39 @@ void QLightBoxDialog::animateHide()
 
 void QLightBoxDialog::animate(bool _forward)
 {
-    //
-    // Показываем виджет, если нужно
-    //
-    if (_forward) {
-        show();
+    const QAbstractAnimation::Direction direction = _forward ? QAbstractAnimation::Forward : QAbstractAnimation::Backward;
+    if (m_animation != nullptr
+        && (m_animation->state() == QAbstractAnimation::Running
+            || m_animation->direction() == direction)) {
+        return;
     }
 
     //
     // Приходится создавать несколько дополнительных анимаций помимо самого диалога
     // так же для всех viewport'ов областей прокрутки, т.к. к ним не применяется эффект прозрачности
     //
-    QParallelAnimationGroup opacityAnimationGroup;
-    opacityAnimationGroup.addAnimation(::createOpacityAnimation(this));
+    m_animation = new QParallelAnimationGroup;
+    m_animation->addAnimation(::createOpacityAnimation(this));
     foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
-        opacityAnimationGroup.addAnimation(::createOpacityAnimation(scrollArea->viewport()));
+        m_animation->addAnimation(::createOpacityAnimation(scrollArea->viewport()));
     }
-    opacityAnimationGroup.setDirection(_forward ? QPropertyAnimation::Forward : QPropertyAnimation::Backward);
-    opacityAnimationGroup.start(QAbstractAnimation::DeleteWhenStopped);
+    m_animation->setDirection(direction);
+    m_animation->start();
 
     //
     // Ожидаем завершения анимации
     //
     QEventLoop animationEventLoop;
-    connect(&opacityAnimationGroup, SIGNAL(finished()), &animationEventLoop, SLOT(quit()));
+    connect(m_animation, SIGNAL(finished()), &animationEventLoop, SLOT(quit()));
     animationEventLoop.exec();
-
-    //
-    // Скрываем виджет, если нужно
-    //
-    if (!_forward) {
-        hide();
-    }
 
     //
     // Удаляем эффект анимации, т.к. иногда из-за него коряво отрисовываются некоторые виджеты
     //
-    setGraphicsEffect(0);
+    delete m_animation;
+    m_animation = nullptr;
+    setGraphicsEffect(nullptr);
     foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
-        scrollArea->viewport()->setGraphicsEffect(0);
-        scrollArea->viewport()->repaint();
+        scrollArea->setGraphicsEffect(nullptr);
     }
 }

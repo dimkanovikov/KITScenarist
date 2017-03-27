@@ -74,8 +74,6 @@ QLightBoxMessage::QLightBoxMessage(QWidget* _parent) :
 	m_text(new QLabel(this)),
 	m_buttons(new QDialogButtonBox(this))
 {
-	initView();
-	initConnections();
 }
 
 void QLightBoxMessage::initView()

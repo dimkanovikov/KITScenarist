@@ -36,9 +36,6 @@ LoginDialog::LoginDialog(QWidget* _parent) :
     m_isVerify(false)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 LoginDialog::~LoginDialog()

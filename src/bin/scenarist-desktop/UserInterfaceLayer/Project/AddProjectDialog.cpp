@@ -77,9 +77,6 @@ AddProjectDialog::AddProjectDialog(QWidget* _parent) :
     m_ui(new Ui::AddProjectDialog)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 AddProjectDialog::~AddProjectDialog()

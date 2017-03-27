@@ -11,9 +11,6 @@ ShareDialog::ShareDialog(QWidget *parent) :
     m_ui(new Ui::ShareDialog)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 ShareDialog::~ShareDialog()

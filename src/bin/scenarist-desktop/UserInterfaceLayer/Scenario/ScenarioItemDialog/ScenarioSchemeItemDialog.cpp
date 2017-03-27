@@ -12,8 +12,6 @@ ScenarioSchemeItemDialog::ScenarioSchemeItemDialog(QWidget* _parent) :
 {
     m_ui->setupUi(this);
 
-    initView();
-    initConnections();
     initStyleSheet();
 }
 

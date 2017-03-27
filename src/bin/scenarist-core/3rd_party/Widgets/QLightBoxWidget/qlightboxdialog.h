@@ -5,6 +5,7 @@
 
 class QFrame;
 class QLabel;
+class QParallelAnimationGroup;
 class QProgressBar;
 
 
@@ -30,9 +31,14 @@ public:
 
 public slots:
 	/**
-	 * @brief Выполнить диалог
+     * @brief Открыть диалог заблокировав выполнение цикла событий приложения
 	 */
-	int exec();
+    int exec();
+
+    /**
+     * @brief Переопределяем, чтобы инициилизировать диалог, перед отображением
+     */
+    void setVisible(bool _visible);
 
 	/**
 	 * @brief Позитивное и негативное закрытие диалога
@@ -85,7 +91,7 @@ protected:
 	/**
 	 * @brief Переопределяется для перехвата нажатия Enter и Escape
 	 */
-	bool event(QEvent* _event);
+    bool event(QEvent* _event);
 
 	/**
 	 * @brief Настроить представление
@@ -108,6 +114,11 @@ protected:
 	virtual QWidget* focusedOnExec() const;
 
 private:
+    /**
+     * @brief Инициилизировать диалог
+     */
+    void init();
+
 	/**
 	 * @brief Обновить заголовок
 	 */
@@ -120,9 +131,14 @@ private:
 	void animateShow();
 	void animateHide();
 	void animate(bool _forward);
-	/** @} */
+    /** @} */
 
 private:
+    /**
+     * @brief Инициилизирован ли диалог
+     */
+    bool m_initialized;
+
 	/**
 	 * @brief Заголовок диалога
 	 */
@@ -147,6 +163,11 @@ private:
 	 * @brief Актуальный код возврата
 	 */
 	int m_execResult;
+
+    /**
+     * @brief Анимация отображаения/скрытия
+     */
+    QParallelAnimationGroup* m_animation;
 };
 
 #endif // QLIGHTBOXDIALOG_H

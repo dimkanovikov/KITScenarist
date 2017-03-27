@@ -26,8 +26,6 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 	m_description(new SimpleTextEditorWidget(this)),
 	m_buttons(new QDialogButtonBox(this))
 {
-	initView();
-	initConnections();
 	initStyleSheet();
 }
 

@@ -30,9 +30,6 @@ ChangePasswordDialog::ChangePasswordDialog(QWidget *_parent) :
     m_ui->buttonBox->addButton(m_accept, QDialogButtonBox::AcceptRole);
 
     setAcceptButtonAvailability();
-
-    initView();
-    initConnections();
 }
 
 ChangePasswordDialog::~ChangePasswordDialog()

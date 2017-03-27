@@ -10,9 +10,6 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
 {
     ui->setupUi(this);
 
-    initView();
-    initConnections();
-
     if (_language == -1) {
         ui->system->setChecked(true);
     } else if (_language == 0) {

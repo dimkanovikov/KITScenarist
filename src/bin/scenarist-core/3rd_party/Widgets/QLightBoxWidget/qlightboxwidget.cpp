@@ -39,7 +39,16 @@ QLightBoxWidget::QLightBoxWidget(QWidget* _parent, bool _folowToHeadWidget) :
 
 QLightBoxWidget::~QLightBoxWidget()
 {
-	parent()->removeEventFilter(this);
+    parent()->removeEventFilter(this);
+}
+
+void QLightBoxWidget::setVisible(bool visible)
+{
+    if (visible) {
+        updateSelf();
+    }
+
+    QWidget::setVisible(visible);
 }
 
 bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
@@ -89,26 +98,6 @@ void QLightBoxWidget::paintEvent(QPaintEvent* _event)
 	QWidget::paintEvent(_event);
 }
 
-void QLightBoxWidget::showEvent(QShowEvent* _event)
-{
-	//
-	// Обновим себя
-	//
-	updateSelf();
-
-	//
-	// Показываемся
-	//
-	QWidget::showEvent(_event);
-}
-
-void QLightBoxWidget::resetParent()
-{
-	QWidget* parent = parentWidget();
-	setParent(0);
-    setParent(parent);
-}
-
 void QLightBoxWidget::updateSelf()
 {
 	if (!m_isInUpdateSelf) {
@@ -118,15 +107,14 @@ void QLightBoxWidget::updateSelf()
 			//
 			// Переустановим родителя
 			//
-			resetParent();
+            raise();
 
 			//
 			// Обновляем отображение
-			//
-			hide();
+            //
 			resize(parentWidget()->size());
-			m_parentWidgetPixmap = grabParentWidgetPixmap();
-			show();
+            m_parentWidgetPixmap = grabParentWidgetPixmap();
+            update();
 		}
 
 		m_isInUpdateSelf = false;
@@ -135,13 +123,10 @@ void QLightBoxWidget::updateSelf()
 
 QPixmap QLightBoxWidget::grabParentWidgetPixmap() const
 {
-	QPixmap parentWidgetPixmap;
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-	parentWidgetPixmap = parentWidget()->grab();
-#else
-	parentWidgetPixmap = QPixmap::grabWidget(parentWidget());
-#endif
-
+    QPixmap parentWidgetPixmap;
+    if (isVisible()
+        && parentWidget()->isVisible()) {
+        parentWidget()->render(&parentWidgetPixmap);
+    }
 	return parentWidgetPixmap;
 }

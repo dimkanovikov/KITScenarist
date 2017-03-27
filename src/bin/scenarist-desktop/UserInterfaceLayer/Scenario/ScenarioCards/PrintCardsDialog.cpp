@@ -11,9 +11,6 @@ PrintCardsDialog::PrintCardsDialog(QWidget *parent) :
     m_ui(new Ui::PrintCardsDialog)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 PrintCardsDialog::~PrintCardsDialog()

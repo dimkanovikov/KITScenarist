@@ -92,8 +92,6 @@ QLightBoxInputDialog::QLightBoxInputDialog(QWidget* _parent, bool _isContentStre
 	m_listWidget(new QListWidget(this)),
 	m_buttons(new QDialogButtonBox(this))
 {
-	initView();
-	initConnections();
 }
 
 void QLightBoxInputDialog::initView()

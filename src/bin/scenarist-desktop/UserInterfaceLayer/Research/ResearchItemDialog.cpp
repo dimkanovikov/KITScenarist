@@ -11,9 +11,6 @@ ResearchItemDialog::ResearchItemDialog(QWidget* _parent) :
     m_ui(new Ui::ResearchItemDialog)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 ResearchItemDialog::~ResearchItemDialog()

@@ -13,7 +13,12 @@ class QLightBoxWidget : public QWidget
 
 public:
 	explicit QLightBoxWidget(QWidget* _parent, bool _folowToHeadWidget = false);
-	~QLightBoxWidget();
+    ~QLightBoxWidget();
+
+    /**
+     * @brief Переопределяется для того, чтобы перед отображением настроить внешний вид
+     */
+    void setVisible(bool visible);
 
 protected:
 	/**
@@ -24,19 +29,9 @@ protected:
 	/**
 	 * @brief Переопределяется для того, чтобы эмитировать эффект перекрытия
 	 */
-	void paintEvent(QPaintEvent* _event);
-
-	/**
-	 * @brief Переопределяется для того, чтобы перед отображением настроить внешний вид
-	 */
-	void showEvent(QShowEvent* _event);
+    void paintEvent(QPaintEvent* _event);
 
 private:
-	/**
-	 * @brief Переустановить родителя, чтобы быть последним виджетом среди детей родителя
-	 */
-	void resetParent();
-
 	/**
 	 * @brief Обновить размер и картинку фона
 	 */

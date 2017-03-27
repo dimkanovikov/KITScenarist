@@ -8,10 +8,7 @@ CrashReportDialog::CrashReportDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
 	m_ui(new Ui::CrashReportDialog)
 {
-	m_ui->setupUi(this);
-
-	initView();
-	initConnections();
+    m_ui->setupUi(this);
 }
 
 CrashReportDialog::~CrashReportDialog()

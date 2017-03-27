@@ -25,8 +25,6 @@ UpdateDialog::UpdateDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
-    initView();
-    initConnections();
     initStylesheet();
 }
 

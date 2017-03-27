@@ -32,9 +32,6 @@ RenewSubscriptionDialog::RenewSubscriptionDialog(QWidget *_parent) :
     m_ui(new Ui::RenewSubscriptionDialog)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 RenewSubscriptionDialog::~RenewSubscriptionDialog()

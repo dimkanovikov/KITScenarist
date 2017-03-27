@@ -46,10 +46,7 @@ ImportDialog::ImportDialog(QWidget *parent) :
 	QLightBoxDialog(parent),
 	ui(new Ui::ImportDialog)
 {
-	ui->setupUi(this);
-
-	initView();
-	initConnections();
+    ui->setupUi(this);
 }
 
 ImportDialog::~ImportDialog()

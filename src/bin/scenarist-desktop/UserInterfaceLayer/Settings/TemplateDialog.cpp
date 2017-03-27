@@ -23,10 +23,7 @@ TemplateDialog::TemplateDialog(QWidget *parent) :
 	QLightBoxDialog(parent),
 	ui(new Ui::TemplateDialog)
 {
-	ui->setupUi(this);
-
-	initView();
-	initConnections();
+    ui->setupUi(this);
 }
 
 TemplateDialog::~TemplateDialog()

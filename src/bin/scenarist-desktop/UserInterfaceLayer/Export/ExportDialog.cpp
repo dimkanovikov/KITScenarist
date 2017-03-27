@@ -54,9 +54,6 @@ ExportDialog::ExportDialog(QWidget* _parent) :
     ui(new Ui::ExportDialog)
 {
     ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 ExportDialog::~ExportDialog()
