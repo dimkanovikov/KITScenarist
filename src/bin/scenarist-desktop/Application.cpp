@@ -2,6 +2,8 @@
 
 #include <ManagementLayer/ApplicationManager.h>
 
+#include <NetworkRequest.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -71,6 +73,14 @@ Application::Application(int& _argc, char** _argv) :
         }
     });
     m_idleTimer.start();
+}
+
+Application::~Application()
+{
+    //
+    // Остановим все текущие соединения
+    //
+    NetworkRequest::stopAllConnections();
 }
 
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)

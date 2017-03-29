@@ -49,6 +49,12 @@ public:
      */
     void stop(NetworkRequestPrivate*);
 
+    /**
+     * @brief Метод, останавливающий все текущие запросы
+     * и очищающий очередь
+     */
+    void stopAll();
+
 signals:
     /*!
      * \brief Прогресс отправки запроса на сервер

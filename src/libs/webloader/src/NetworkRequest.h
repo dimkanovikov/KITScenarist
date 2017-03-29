@@ -118,6 +118,11 @@ public:
     QString lastError() const;
     QString lastErrorDetails() const;
 
+    /**
+     * @brief Остановить все текущие соединения
+     */
+    static void stopAllConnections();
+
 signals:
     /*!
      * \brief Прогресс отправки запроса на сервер

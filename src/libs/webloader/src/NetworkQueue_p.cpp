@@ -134,6 +134,22 @@ void NetworkQueue::stop(NetworkRequestPrivate* _internal) {
     }
 }
 
+void NetworkQueue::stopAll()
+{
+    //
+    // Очистим очередь ожидающих запросов
+    //
+    m_queue.clear();
+    m_inQueue.clear();
+
+    //
+    // Остановим уже обрабатывающиеся запросы
+    //
+    for (NetworkRequestPrivate* request : m_busyLoaders.values()) {
+        stop(request);
+    }
+}
+
 void NetworkQueue::setLoaderParams(WebLoader* _loader, NetworkRequestPrivate* request)
 {
     _loader->setCookieJar(request->m_cookieJar);
