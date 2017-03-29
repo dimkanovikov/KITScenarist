@@ -193,13 +193,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     aboutUpdateProjectsList();
 
     reloadApplicationSettings();
-
-    QTimer::singleShot(0, [this] {
-        m_startUpManager->setProgressLoginLabel(true);
-        if (!m_synchronizationManager->autoLogin()) {
-            m_startUpManager->setProgressLoginLabel(false);
-        }
-    });
 }
 
 ApplicationManager::~ApplicationManager()
@@ -1712,6 +1705,12 @@ void ApplicationManager::initConnections()
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 
+    connect(m_startUpManager, &StartUpManager::initialized, [=] {
+        m_startUpManager->setProgressLoginLabel(true);
+        if (!m_synchronizationManager->autoLogin()) {
+            m_startUpManager->setProgressLoginLabel(false);
+        }
+    });
     connect(m_startUpManager, &StartUpManager::loginRequested,
             m_synchronizationManager, &SynchronizationManager::login);
     connect(m_startUpManager, &StartUpManager::signUpRequested,

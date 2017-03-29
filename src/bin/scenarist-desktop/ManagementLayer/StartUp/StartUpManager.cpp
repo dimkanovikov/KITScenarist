@@ -79,14 +79,19 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
     initData();
     initConnections();
 
-    //
-    // Проверим наличие отчётов об ошибках в работе программы
-    //
-    QTimer::singleShot(0, this, &StartUpManager::checkCrashReports);
-    //
-    // Проверяем наличие новой версии уже после старта программы
-    //
-    QTimer::singleShot(0, this, &StartUpManager::checkNewVersion);
+    QTimer::singleShot(0, [=] {
+        //
+        // Проверим наличие отчётов об ошибках в работе программы
+        //
+        checkCrashReports();
+
+        //
+        // Проверяем наличие новой версии уже после старта программы
+        //
+        checkNewVersion();
+
+        emit initialized();
+    });
 }
 
 QWidget* StartUpManager::view() const
@@ -319,66 +324,66 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
 
 void StartUpManager::showUpdateDialog()
 {
-        UpdateDialog dialog(m_view);
+    UpdateDialog dialog(m_view);
 
-        bool isSupported = true;
+    bool isSupported = true;
 
-        connect(&dialog, &UpdateDialog::skipUpdate, [this] {
-            StorageFacade::settingsStorage()->setValue(
-                        "application/latest_version",
-                        m_updateVersion,
-                        SettingsStorage::ApplicationSettings);
-        });
-        connect(&dialog, &UpdateDialog::downloadUpdate, [this] {
-            downloadUpdate(m_updateFileTemplate);
-        });
+    connect(&dialog, &UpdateDialog::skipUpdate, [this] {
+        StorageFacade::settingsStorage()->setValue(
+                    "application/latest_version",
+                    m_updateVersion,
+                    SettingsStorage::ApplicationSettings);
+    });
+    connect(&dialog, &UpdateDialog::downloadUpdate, [this] {
+        downloadUpdate(m_updateFileTemplate);
+    });
 
-        connect(this, &StartUpManager::downloadProgressForUpdate, &dialog, &UpdateDialog::setProgressValue);
-        connect(this, &StartUpManager::downloadFinishedForUpdate, &dialog, &UpdateDialog::downloadFinished);
-        connect(this, &StartUpManager::errorDownloadForUpdate, &dialog, &UpdateDialog::showDownloadError);
+    connect(this, &StartUpManager::downloadProgressForUpdate, &dialog, &UpdateDialog::setProgressValue);
+    connect(this, &StartUpManager::downloadFinishedForUpdate, &dialog, &UpdateDialog::downloadFinished);
+    connect(this, &StartUpManager::errorDownloadForUpdate, &dialog, &UpdateDialog::showDownloadError);
 
 #ifdef Q_OS_LINUX
-        isSupported = false;
-        QString distroName = QSysInfo::prettyProductName().toLower();
-        QStringList supportedDistros({"ubuntu", "mint", "elementary", "debian"});
-        for(const QString &supportedDistro : supportedDistros) {
-            if (distroName.contains(supportedDistro)) {
-                isSupported = true;
-                break;
-            }
+    isSupported = false;
+    QString distroName = QSysInfo::prettyProductName().toLower();
+    QStringList supportedDistros({"ubuntu", "mint", "elementary", "debian"});
+    for(const QString &supportedDistro : supportedDistros) {
+        if (distroName.contains(supportedDistro)) {
+            isSupported = true;
+            break;
         }
+    }
 #endif
 
-        //
-        // Покажем окно с обновлением
-        //
-        bool needToShowUpdate = true;
-        QString updateDialogText = m_updateDescription;
-        do {
-            const int showResult =
-                    dialog.showUpdate(m_updateVersion, updateDialogText, m_updateIsBeta, isSupported);
-            if (showResult == UpdateDialog::Accepted) {
-                //
-                // Нажали "Установить"
-                //
+    //
+    // Покажем окно с обновлением
+    //
+    bool needToShowUpdate = true;
+    QString updateDialogText = m_updateDescription;
+    do {
+        const int showResult =
+                dialog.showUpdate(m_updateVersion, updateDialogText, m_updateIsBeta, isSupported);
+        if (showResult == UpdateDialog::Accepted) {
+            //
+            // Нажали "Установить"
+            //
 #ifdef Q_OS_WIN
-                if (QProcess::startDetached(QDir::toNativeSeparators(m_updateFile))) {
+            if (QProcess::startDetached(QDir::toNativeSeparators(m_updateFile))) {
 #else
-                if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
+            if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
 #endif
-                    exit(0);
-                } else {
-                    updateDialogText = tr("Can't install update. There are some problems with downloaded file.\n\nYou can try to reload update.");
-                }
+                exit(0);
             } else {
-                needToShowUpdate = false;
+                updateDialogText = tr("Can't install update. There are some problems with downloaded file.\n\nYou can try to reload update.");
             }
-        } while (needToShowUpdate);
+        } else {
+            needToShowUpdate = false;
+        }
+    } while (needToShowUpdate);
 
-        //
-        // Отменили или пропустили. Остановим загрузку
-        //
-        emit stopDownloadForUpdate();
+    //
+    // Отменили или пропустили. Остановим загрузку
+    //
+    emit stopDownloadForUpdate();
 }
 
 void StartUpManager::initData()
@@ -387,7 +392,6 @@ void StartUpManager::initData()
 
 void StartUpManager::initView()
 {
-    m_loginDialog->hide();
 }
 
 void StartUpManager::initConnections()

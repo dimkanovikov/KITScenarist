@@ -137,6 +137,11 @@ namespace ManagementLayer
 
     signals:
         /**
+         * @brief Менеджер инициилизирован
+         */
+        void initialized();
+
+        /**
          * @brief Пользователь хочет авторизоваться
          */
         void loginRequested(const QString& _email, const QString& _password);
