@@ -121,7 +121,6 @@ void NetworkQueue::stop(NetworkRequestPrivate* _internal) {
                 //
                 iter.key()->stop();
 
-                iter.value()->done();
                 //
                 // Удалим из списка используемых
                 // К списку свободных WebLoader'ов припишет слот downloadComplete
