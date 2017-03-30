@@ -214,3 +214,13 @@ QString NetworkRequest::lastErrorDetails() const
 {
     return m_lastErrorDetails;
 }
+
+void NetworkRequest::stopAllConnections()
+{
+    //
+    // Получаем инстанс очереди
+    //
+    NetworkQueue* nq = NetworkQueue::getInstance();
+
+    nq->stopAll();
+}

@@ -19,6 +19,8 @@ class Application : public QApplication
 public:
 	explicit Application(int& _argc, char** _argv);
 
+    ~Application();
+
 	/**
 	 * @brief Запуск приложения
 	 */
