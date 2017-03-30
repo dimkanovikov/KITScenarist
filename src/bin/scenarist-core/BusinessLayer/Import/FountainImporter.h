@@ -37,7 +37,7 @@ namespace BusinessLogic
         /**
          * @brief Импорт сценария из документа
          */
-        QString importScenario(const ImportParameters &_importParameters) const;
+        QString importScenario(const ImportParameters &_importParameters) const override;
 
     private:
         /**
@@ -74,7 +74,7 @@ namespace BusinessLogic
         /**
          * @brief Идет ли сейчас редакторская заметка
          */
-        mutable bool noting = false;
+        mutable bool notation = false;
 
         /**
          * @brief Идет ли сейчас комментарий

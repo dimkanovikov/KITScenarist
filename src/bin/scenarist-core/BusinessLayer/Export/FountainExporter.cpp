@@ -1,17 +1,20 @@
 #include "FountainExporter.h"
 
-//#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 
+#include <QApplication>
 #include <QFile>
 #include <QTextBlock>
 
 using namespace BusinessLogic;
 
 namespace {
-QStringList sceneHeadingStart = {"INT", "EXT", "EST", "INT./EXT", "INT/EXT",
-                                 "ИНТ", "ЭКСТ"};
+const QStringList sceneHeadingStart = {QApplication::translate("BusinessLayer::FountainExporter", "INT"),
+                                       QApplication::translate("BusinessLayer::FountainExporter", "EXT"),
+                                       QApplication::translate("BusinessLayer::FountainExporter", "EST"),
+                                       QApplication::translate("BusinessLayer::FountainExporter", "INT./EXT"),
+                                       QApplication::translate("BusinessLayer::FountainExporter", "INT/EXT")};
 }
 
 FountainExporter::FountainExporter() :
@@ -55,11 +58,6 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
         while (!documentCursor.atEnd()) {
             QString paragraphText;
             if (!documentCursor.block().text().isEmpty()) {
-                //
-                // Пропустить запись текущего блока
-                //
-                bool skipBLock = false;
-
                 paragraphText = documentCursor.block().text();
                 QVector<QTextLayout::FormatRange> notes;
 
@@ -83,8 +81,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                 //
                 bool fullBlockComment = true;
                 if (notes.size() != 1
-                        || (!notes.isEmpty()
-                            && notes[0].length != paragraphText.size())) {
+                        || notes.front().length != paragraphText.size()) {
                     fullBlockComment = false;
 
                     //
@@ -94,7 +91,7 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                         //
                         // Извлечем список редакторских заметок для данной области блока
                         //
-                        QStringList comments = notes[i].format.property(ScenarioBlockStyle::PropertyComments)
+                        const QStringList comments = notes[i].format.property(ScenarioBlockStyle::PropertyComments)
                                 .toStringList();
                         //
                         // Вставлять редакторские заметки нужно с конца, чтобы не сбилась их позиция вставки
@@ -104,124 +101,136 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                         }
                     }
                 }
+
+                //
+                // Пропустить запись текущего блока
+                //
+                bool skipBlock = false;
+
                 switch (ScenarioBlockStyle::forBlock(documentCursor.block())) {
-                case ScenarioBlockStyle::SceneHeading:
-                {
-                    //
-                    // Если заголовок сцены начинается с одного из ключевых слов, то все хорошо
-                    //
-                    bool startsWithHeading = false;
-                    for (const QString& heading : sceneHeadingStart) {
-                        if (paragraphText.startsWith(heading)) {
-                            startsWithHeading = true;
-                            break;
+                    case ScenarioBlockStyle::SceneHeading:
+                    {
+                        //
+                        // Если заголовок сцены начинается с одного из ключевых слов, то все хорошо
+                        //
+                        bool startsWithHeading = false;
+                        for (const QString& heading : sceneHeadingStart) {
+                            if (paragraphText.startsWith(heading)) {
+                                startsWithHeading = true;
+                                break;
+                            }
                         }
-                    }
 
-                    //
-                    // Иначе, нужно сказать, что это заголовок сцены добавлением точки в начало
-                    //
-                    if (!startsWithHeading) {
-                        paragraphText = "." + paragraphText;
-                    }
-
-                    //
-                    // А если печатаем номера сцен, то добавим в конец этот номер, окруженный #
-                    //
-                    if (_exportParameters.printScenesNumbers) {
-                        QTextBlockUserData* textBlockData = documentCursor.block().userData();
-                        ScenarioTextBlockInfo* sceneInfo = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
-                        if (sceneInfo != 0 && sceneInfo->sceneNumber()) {
-                            paragraphText += " #" + QString::number(sceneInfo->sceneNumber()) + "#";
+                        //
+                        // Иначе, нужно сказать, что это заголовок сцены добавлением точки в начало
+                        //
+                        if (!startsWithHeading) {
+                            paragraphText.prepend('.');
                         }
+
+                        //
+                        // А если печатаем номера сцен, то добавим в конец этот номер, окруженный #
+                        //
+                        if (_exportParameters.printScenesNumbers) {
+                            QTextBlockUserData* textBlockData = documentCursor.block().userData();
+                            ScenarioTextBlockInfo* sceneInfo = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+                            if (sceneInfo != 0 && sceneInfo->sceneNumber()) {
+                                paragraphText += " #" + QString::number(sceneInfo->sceneNumber()) + "#";
+                            }
+                        }
+
+                        if (!isFirst) {
+                            paragraphText.prepend('\n');
+                        }
+                        break;
                     }
 
-                    if (!isFirst) {
-                        paragraphText = '\n' + paragraphText;
+                    case ScenarioBlockStyle::Character:
+                    {
+                        if (paragraphText != paragraphText.toUpper()) {
+                            //
+                            // Если название персонажа не состоит из заглавных букв,
+                            // то необходимо добавить @ в начало
+                            //
+                            paragraphText.prepend('@');
+                        }
+                        paragraphText.prepend('\n');
+                        break;
                     }
-                }
-                    break;
-                case ScenarioBlockStyle::Character:
-                {
-                    if (paragraphText == paragraphText.toUpper()) {
-                        //
-                        // Если название персонажа из заглавных букв, то все норм
-                        //
-                        paragraphText = '\n' + paragraphText;
-                    } else {
-                        //
-                        // Иначе, нужно добавить @ в начало
-                        //
-                        paragraphText = '@' + paragraphText;
+
+                    case ScenarioBlockStyle::Transition:
+                    {
+                        if (paragraphText.toUpper() == paragraphText) {
+                            //
+                            // Либо переход сделан заглавными буквами.
+                            // Тогда необходимо лишь добавить в конец TO:
+                            //
+                            if (!paragraphText.endsWith("TO:")) {
+                                paragraphText.append(" TO:");
+                            }
+                        } else {
+                            //
+                            // Либо добавить в начало >
+                            //
+                            paragraphText.prepend("> ");
+                        }
+                        paragraphText.prepend('\n');
+                        break;
                     }
-                }
-                    break;
-                case ScenarioBlockStyle::Transition:
-                {
-                    if (paragraphText.toUpper() == paragraphText) {
+
+                    case ScenarioBlockStyle::NoprintableText:
+                    {
                         //
-                        // Либо переход сделан заглавными буквами.
-                        // Тогда необходимо лишь добавить в конец TO:
+                        // Обернем в /* и */
                         //
-                        paragraphText = paragraphText + " TO:";
-                    } else {
-                        //
-                        // Либо добавить в начало >
-                        //
-                        paragraphText = "> " + paragraphText;
+                        paragraphText = "\n/*\n" + paragraphText + "\n*/";
+                        break;
                     }
-                    paragraphText = "\n" + paragraphText;
-                }
-                    break;
-                case ScenarioBlockStyle::NoprintableText:
-                {
-                    //
-                    // Обернем в /* и */
-                    //
-                    paragraphText = "\n/*\n" + paragraphText + "\n*/";
-                }
-                    break;
-                case ScenarioBlockStyle::Action:
-                {
-                    //
-                    // Чтобы действия шли друг за другом более аккуратно,
-                    // не будем разделять подряд идущие действия пустой строкой
-                    //
-                    if (prevType != ScenarioBlockStyle::Action
-                            && !isFirst) {
-                        paragraphText = "\n" + paragraphText;
+
+                    case ScenarioBlockStyle::Action:
+                    {
+                        //
+                        // Чтобы действия шли друг за другом более аккуратно,
+                        // не будем разделять подряд идущие действия пустой строкой
+                        //
+                        if (prevType != ScenarioBlockStyle::Action
+                                && !isFirst) {
+                            paragraphText.prepend('\n');
+                        }
+                        break;
                     }
-                }
-                    break;
-                case ScenarioBlockStyle::FolderHeader:
-                {
-                    //
-                    // Напечатаем в начале столько #, насколько глубоко мы в директории
-                    //
-                    ++dirNesting;
-                    paragraphText = " " + paragraphText;
-                    for (unsigned i = 0; i != dirNesting; ++i) {
-                        paragraphText = '#' + paragraphText;
+
+                    case ScenarioBlockStyle::FolderHeader:
+                    {
+                        //
+                        // Напечатаем в начале столько #, насколько глубоко мы в директории
+                        //
+                        ++dirNesting;
+                        paragraphText = " " + paragraphText;
+                        for (unsigned i = 0; i != dirNesting; ++i) {
+                            paragraphText = '#' + paragraphText;
+                        }
+                        paragraphText.prepend('\n');
+                        break;
                     }
-                    paragraphText = "\n" + paragraphText;
-                }
-                    break;
-                case ScenarioBlockStyle::FolderFooter:
-                {
-                    --dirNesting;
-                    skipBLock = true;
-                }
-                    break;
-                case ScenarioBlockStyle::Dialogue:
-                case ScenarioBlockStyle::Parenthetical:
-                    break;
-                default:
-                {
-                    //
-                    // Игнорируем неизвестные блоки
-                    //
-                    skipBLock = true;
-                }
+
+                    case ScenarioBlockStyle::FolderFooter:
+                    {
+                        --dirNesting;
+                        skipBlock = true;
+                        break;
+                    }
+
+                    case ScenarioBlockStyle::Dialogue:
+                    case ScenarioBlockStyle::Parenthetical:
+                        break;
+                    default:
+                    {
+                        //
+                        // Игнорируем неизвестные блоки
+                        //
+                        skipBlock = true;
+                    }
                 }
                 paragraphText += '\n';
 
@@ -242,9 +251,9 @@ void FountainExporter::exportTo(ScenarioDocument *_scenario, const ExportParamet
                 //
                 // Запишем получившуюся строку
                 //
-                if (!skipBLock) {
+                if (!skipBlock) {
                     isFirst = false;
-                    fountainFile.write(paragraphText.toLocal8Bit());
+                    fountainFile.write(paragraphText.toUtf8());
                 }
             }
             documentCursor.movePosition(QTextCursor::EndOfBlock);

@@ -15,7 +15,7 @@ namespace BusinessLogic{
         /**
          * @brief Экспорт заданного докумета в указанный файл
          */
-        void exportTo(ScenarioDocument *_scenario, const ExportParameters &_exportParameters) const;
+        void exportTo(ScenarioDocument *_scenario, const ExportParameters &_exportParameters) const override;
     };
 }
 
