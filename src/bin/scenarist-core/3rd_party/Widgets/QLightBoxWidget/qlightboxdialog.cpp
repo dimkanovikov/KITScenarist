@@ -32,6 +32,13 @@ namespace {
 }
 
 
+bool QLightBoxDialog::hasOpenDialogs()
+{
+    return s_openedDialogsCount > 0;
+}
+
+int QLightBoxDialog::s_openedDialogsCount = 0;
+
 QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool _isContentStretchable) :
     QLightBoxWidget(parent, _followToHeadWidget),
     m_initialized(false),
@@ -69,12 +76,14 @@ void QLightBoxDialog::setVisible(bool _visible)
     if (_visible) {
         focusedOnExec()->setFocus();
         QLightBoxWidget::setVisible(_visible);
+        ++s_openedDialogsCount;
     }
 
     animate(_visible);
 
     if (!_visible) {
         QLightBoxWidget::setVisible(_visible);
+        --s_openedDialogsCount;
     }
 }
 

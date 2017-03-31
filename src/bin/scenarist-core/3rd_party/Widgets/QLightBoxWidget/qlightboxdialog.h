@@ -25,6 +25,11 @@ public:
         Rejected = 0
     };
 
+    /**
+     * @brief Открыт ли хотя бы один диалог в данный момент
+     */
+    static bool hasOpenDialogs();
+
 public:
     explicit QLightBoxDialog(QWidget *parent = 0, bool _followToHeadWidget = true,
         bool _isContentStretchable = false);
@@ -168,6 +173,11 @@ private:
      * @brief Анимация отображаения/скрытия
      */
     QParallelAnimationGroup* m_animation;
+
+    /**
+     * @brief Количество открытых диалогов
+     */
+    static int s_openedDialogsCount;
 };
 
 #endif // QLIGHTBOXDIALOG_H

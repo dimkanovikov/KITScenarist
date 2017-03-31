@@ -20,6 +20,7 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
@@ -1757,9 +1758,10 @@ void SynchronizationManager::checkNetworkState()
 #ifdef Q_OS_MAC
     //
     // FIXME: Если есть открытый диалог сохранения, или открытия, то он закрывается
-    // при загрузке страницы, поэтому делаем отсрочку на выполнение события
+    // при загрузке страницы, поэтому делаем отсрочку на выполнение проверки
     //
-    if (QApplication::activeModalWidget() != 0) {
+    if (QLightBoxDialog::hasOpenDialogs()
+        || QApplication::activeModalWidget() != 0) {
         QTimer::singleShot(1000, this, &SynchronizationManager::checkNetworkState);
         return;
     }
