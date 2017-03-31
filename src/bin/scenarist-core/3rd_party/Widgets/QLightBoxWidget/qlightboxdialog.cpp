@@ -42,6 +42,7 @@ QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool
     m_execResult(Rejected),
     m_animation(nullptr)
 {
+    updateTitle();
 }
 
 int QLightBoxDialog::exec()
@@ -66,7 +67,6 @@ void QLightBoxDialog::setVisible(bool _visible)
     init();
 
     if (_visible) {
-        updateTitle();
         focusedOnExec()->setFocus();
         QLightBoxWidget::setVisible(_visible);
     }
@@ -174,11 +174,6 @@ void QLightBoxDialog::init()
         //
         // Настраиваем заголовок
         //
-        m_title->setProperty("lightBoxDialogTitle", true);
-        m_title->setWordWrap(true);
-    #ifdef Q_OS_MAC
-        m_title->setAlignment(Qt::AlignHCenter);
-    #endif
         updateTitle();
 
         //
@@ -227,6 +222,11 @@ void QLightBoxDialog::init()
 void QLightBoxDialog::updateTitle()
 {
     if (titleWidget() == m_title) {
+        m_title->setProperty("lightBoxDialogTitle", true);
+        m_title->setWordWrap(true);
+#ifdef Q_OS_MAC
+        m_title->setAlignment(Qt::AlignHCenter);
+#endif
         m_title->setText(windowTitle());
         m_title->setVisible(!m_title->text().isEmpty());
     } else {

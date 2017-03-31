@@ -244,6 +244,8 @@ void LoginDialog::initView()
 
     QWidget::setTabOrder(m_ui->loginEmail, m_ui->loginPasswordEdit);
     QWidget::setTabOrder(m_ui->signUpEmail, m_ui->signUpPasswordEdit);
+
+    clear();
 }
 
 void LoginDialog::initConnections()
