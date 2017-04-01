@@ -191,8 +191,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     initStyleSheet();
 
     aboutUpdateProjectsList();
-
-    reloadApplicationSettings();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -204,6 +202,7 @@ ApplicationManager::~ApplicationManager()
 void ApplicationManager::exec(const QString& _fileToOpen)
 {
     loadViewState();
+    reloadApplicationSettings();
     m_view->show();
 
 
