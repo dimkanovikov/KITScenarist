@@ -202,8 +202,8 @@ ApplicationManager::~ApplicationManager()
 void ApplicationManager::exec(const QString& _fileToOpen)
 {
     loadViewState();
-    reloadApplicationSettings();
     m_view->show();
+    reloadApplicationSettings();
 
 
     if (!_fileToOpen.isEmpty()) {
