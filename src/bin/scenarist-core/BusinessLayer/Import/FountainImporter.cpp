@@ -66,11 +66,11 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
             paragraphs.push_back(str.trimmed());
         }
 
-        const int paragraphSize = paragraphs.size();
+        const int paragraphsCount = paragraphs.size();
         ScenarioBlockStyle::Type prevBlockType = ScenarioBlockStyle::Undefined;
         QStack<QString> dirs;
         ScenarioBlockStyle::Type blockType;
-        for (int i = 0; i != paragraphSize; ++i) {
+        for (int i = 0; i != paragraphsCount; ++i) {
             if (notation
                     || commenting) {
                 //
@@ -213,7 +213,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     }
 
                     if (startsWithHeading
-                            && i + 1 < paragraphSize
+                            && i + 1 < paragraphsCount
                             && paragraphs[i + 1].isEmpty()) {
                         //
                         // Если начинается с одного из времен действия, а после обязательно пустая строка
@@ -248,7 +248,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     } else if (paragraphs[i] == paragraphs[i].toUpper()
                                && i != 0
                                && paragraphs[i-1].isEmpty()
-                               && i + 1 < paragraphSize
+                               && i + 1 < paragraphsCount
                                && paragraphs[i+1].isEmpty()
                                && paragraphs[i].endsWith("TO:")) {
                         //
@@ -269,7 +269,7 @@ QString FountainImporter::importScenario(const ImportParameters &_importParamete
                     } else if (paragraphs[i] == paragraphs[i].toUpper()
                                && i != 0
                                && paragraphs[i-1].isEmpty()
-                               && i + 1 < paragraphSize
+                               && i + 1 < paragraphsCount
                                && !paragraphs[i+1].isEmpty()) {
                         //
                         // Если состоит из только из заглавных букв, впереди не пустая строка, а перед пустая
