@@ -20,6 +20,17 @@
 #include "WebLoader_p.h"
 #include "WebRequest_p.h"
 
+
+void NetworkRequest::stopAllConnections()
+{
+    //
+    // Получаем инстанс очереди
+    //
+    NetworkQueue* nq = NetworkQueue::getInstance();
+
+    nq->stopAll();
+}
+
 NetworkRequestPrivate::NetworkRequestPrivate(QObject* _parent, QNetworkCookieJar* _jar)
     : QObject(_parent), m_cookieJar(_jar), m_loadingTimeout(20000), m_request(new WebRequest())
 
@@ -183,6 +194,22 @@ QUrl NetworkRequest::url() const
     return m_internal->url();
 }
 
+QString NetworkRequest::lastError() const
+{
+    return m_lastError;
+}
+
+QString NetworkRequest::lastErrorDetails() const
+{
+    return m_lastErrorDetails;
+}
+
+void NetworkRequest::stop()
+{
+    NetworkQueue* nq = NetworkQueue::getInstance();
+    nq->stop(m_internal);
+}
+
 void NetworkRequest::downloadCompleteData(const QByteArray& _data)
 {
     m_downloadedData = _data;
@@ -197,30 +224,4 @@ void NetworkRequest::slotError(const QString& _errorStr, const QUrl& _url)
 void NetworkRequest::slotErrorDetails(const QString& _errorStr)
 {
     m_lastErrorDetails = _errorStr;
-}
-
-QString NetworkRequest::lastError() const
-{
-    return m_lastError;
-}
-
-void NetworkRequest::stop()
-{
-    NetworkQueue* nq = NetworkQueue::getInstance();
-    nq->stop(m_internal);
-}
-
-QString NetworkRequest::lastErrorDetails() const
-{
-    return m_lastErrorDetails;
-}
-
-void NetworkRequest::stopAllConnections()
-{
-    //
-    // Получаем инстанс очереди
-    //
-    NetworkQueue* nq = NetworkQueue::getInstance();
-
-    nq->stopAll();
 }

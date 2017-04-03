@@ -264,7 +264,7 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
     NetworkRequest loader;
 
     connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
-    //connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop); // Пока NR не умеет
+    connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop);
 
     loader.setRequestMethod(NetworkRequest::Get);
     loader.clearRequestAttributes();
@@ -367,7 +367,7 @@ void StartUpManager::showUpdateDialog()
             // Нажали "Установить"
             //
 #ifdef Q_OS_WIN
-            if (QProcess::startDetached(QDir::toNativeSeparators(m_updateFile))) {
+            if (QProcess::startDetached(m_updateFile)) {
 #else
             if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
 #endif
