@@ -5,7 +5,6 @@
 
 class QFrame;
 class QLabel;
-class QParallelAnimationGroup;
 class QProgressBar;
 
 
@@ -24,11 +23,6 @@ public:
         Accepted = 1,
         Rejected = 0
     };
-
-    /**
-     * @brief Открыт ли хотя бы один диалог в данный момент
-     */
-    static bool hasOpenDialogs();
 
 public:
     explicit QLightBoxDialog(QWidget *parent = 0, bool _followToHeadWidget = true,
@@ -129,15 +123,6 @@ private:
      */
     void updateTitle();
 
-    /**
-     * @brief Анимировать отображение/сокрытие диалога
-     */
-    /** @{ */
-    void animateShow();
-    void animateHide();
-    void animate(bool _forward);
-    /** @} */
-
 private:
     /**
      * @brief Инициилизирован ли диалог
@@ -168,16 +153,6 @@ private:
      * @brief Актуальный код возврата
      */
     int m_execResult;
-
-    /**
-     * @brief Анимация отображаения/скрытия
-     */
-    QParallelAnimationGroup* m_animation;
-
-    /**
-     * @brief Количество открытых диалогов
-     */
-    static int s_openedDialogsCount;
 };
 
 #endif // QLIGHTBOXDIALOG_H

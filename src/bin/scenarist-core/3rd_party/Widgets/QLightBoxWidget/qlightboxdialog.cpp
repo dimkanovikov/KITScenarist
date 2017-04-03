@@ -1,43 +1,11 @@
 #include "qlightboxdialog.h"
 
-#include <QAbstractScrollArea>
 #include <QEventLoop>
-#include <QGraphicsOpacityEffect>
 #include <QGridLayout>
 #include <QKeyEvent>
 #include <QLabel>
-#include <QParallelAnimationGroup>
 #include <QProgressBar>
-#include <QPropertyAnimation>
-#include <QTimer>
 
-namespace {
-    /**
-     * @brief Создать объект анимации появления/скрытия для заданного виджета
-     */
-    static QPropertyAnimation* createOpacityAnimation(QWidget* _forWidget) {
-        QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(_forWidget);
-
-        QPropertyAnimation* opacityAnimation = new QPropertyAnimation(opacityEffect, "opacity");
-        opacityAnimation->setDuration(120);
-        opacityAnimation->setEasingCurve(QEasingCurve::InCirc);
-        opacityAnimation->setStartValue(0);
-        opacityAnimation->setEndValue(1);
-
-        opacityEffect->setOpacity(0);
-        _forWidget->setGraphicsEffect(opacityEffect);
-
-        return opacityAnimation;
-    }
-}
-
-
-bool QLightBoxDialog::hasOpenDialogs()
-{
-    return s_openedDialogsCount > 0;
-}
-
-int QLightBoxDialog::s_openedDialogsCount = 0;
 
 QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool _isContentStretchable) :
     QLightBoxWidget(parent, _followToHeadWidget),
@@ -46,8 +14,7 @@ QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool
     m_centralWidget(nullptr),
     m_progress(new QProgressBar(this)),
     m_isContentStretchable(_isContentStretchable),
-    m_execResult(Rejected),
-    m_animation(nullptr)
+    m_execResult(Rejected)
 {
     updateTitle();
 }
@@ -75,16 +42,9 @@ void QLightBoxDialog::setVisible(bool _visible)
 
     if (_visible) {
         focusedOnExec()->setFocus();
-        QLightBoxWidget::setVisible(_visible);
-        ++s_openedDialogsCount;
     }
 
-    animate(_visible);
-
-    if (!_visible) {
-        QLightBoxWidget::setVisible(_visible);
-        --s_openedDialogsCount;
-    }
+    QLightBoxWidget::setVisible(_visible);
 }
 
 void QLightBoxDialog::accept()
@@ -240,54 +200,5 @@ void QLightBoxDialog::updateTitle()
         m_title->setVisible(!m_title->text().isEmpty());
     } else {
         m_title->hide();
-    }
-}
-
-void QLightBoxDialog::animateShow()
-{
-    animate(true);
-}
-
-void QLightBoxDialog::animateHide()
-{
-    animate(false);
-}
-
-void QLightBoxDialog::animate(bool _forward)
-{
-    const QAbstractAnimation::Direction direction = _forward ? QAbstractAnimation::Forward : QAbstractAnimation::Backward;
-    if (m_animation != nullptr
-        && (m_animation->state() == QAbstractAnimation::Running
-            || m_animation->direction() == direction)) {
-        return;
-    }
-
-    //
-    // Приходится создавать несколько дополнительных анимаций помимо самого диалога
-    // так же для всех viewport'ов областей прокрутки, т.к. к ним не применяется эффект прозрачности
-    //
-    m_animation = new QParallelAnimationGroup;
-    m_animation->addAnimation(::createOpacityAnimation(this));
-    foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
-        m_animation->addAnimation(::createOpacityAnimation(scrollArea->viewport()));
-    }
-    m_animation->setDirection(direction);
-    m_animation->start();
-
-    //
-    // Ожидаем завершения анимации
-    //
-    QEventLoop animationEventLoop;
-    connect(m_animation, SIGNAL(finished()), &animationEventLoop, SLOT(quit()));
-    animationEventLoop.exec();
-
-    //
-    // Удаляем эффект анимации, т.к. иногда из-за него коряво отрисовываются некоторые виджеты
-    //
-    delete m_animation;
-    m_animation = nullptr;
-    setGraphicsEffect(nullptr);
-    foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
-        scrollArea->setGraphicsEffect(nullptr);
     }
 }

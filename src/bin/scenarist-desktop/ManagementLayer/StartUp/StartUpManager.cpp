@@ -622,7 +622,8 @@ void StartUpManager::checkNewVersion()
                         DataStorageLayer::SettingsStorage::ApplicationSettings);
 
         if (m_updateVersion != QApplication::applicationVersion()
-                && m_updateVersion != prevVersion) {
+            && m_updateVersion != prevVersion
+            && !QLightBoxWidget::hasOpenedWidgets()) {
             //
             // Есть новая версия, которая не совпадает с нашей. Покажем диалог
             //
