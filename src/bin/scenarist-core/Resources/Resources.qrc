@@ -153,10 +153,14 @@
         <file>Translations/qt_de.qm</file>
     </qresource>
     <qresource prefix="/Interface">
-        <file>UI/menuarrow.png</file>
-        <file>UI/comboboxarrow.png</file>
         <file>UI/style-mobile.qss</file>
         <file>UI/style-desktop.qss</file>
+        <file>UI/downarrow.png</file>
+        <file>UI/downarrow-dark.png</file>
+        <file>UI/downarrow-disable.png</file>
+        <file>UI/uparrow.png</file>
+        <file>UI/uparrow-dark.png</file>
+        <file>UI/uparrow-disable.png</file>
     </qresource>
     <qresource prefix="/Templates">
         <file>Templates/default.kitss</file>

@@ -57,7 +57,7 @@ SearchWidget::SearchWidget(QWidget* _parent, bool _showTypesCombo) :
 	m_prevMatch->setFixedWidth(20);
 	m_prevMatch->setText(
 #ifdef Q_OS_WIN
-				QSysInfo::windowsVersion() == QSysInfo::WV_XP ? "◄" : "◀"
+                QSysInfo::windowsVersion() == QSysInfo::WV_XP ? "◄" : "▲"
 #else
 				"◀"
 #endif
@@ -69,7 +69,7 @@ SearchWidget::SearchWidget(QWidget* _parent, bool _showTypesCombo) :
 	m_nextMatch->setFixedWidth(20);
 	m_nextMatch->setText(
 #ifdef Q_OS_WIN
-				QSysInfo::windowsVersion() == QSysInfo::WV_XP ? "►" : "▶"
+                QSysInfo::windowsVersion() == QSysInfo::WV_XP ? "►" : "▼"
 #else
 				"▶"
 #endif
@@ -86,11 +86,6 @@ SearchWidget::SearchWidget(QWidget* _parent, bool _showTypesCombo) :
     m_searchIn->addItem(tr("In parenthetical"), BusinessLogic::ScenarioBlockStyle::Parenthetical);
     m_searchIn->setVisible(_showTypesCombo);
     m_searchIn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    m_searchIn->setProperty("inTopPanel", true);
-    m_searchIn->setProperty("topPanelTopBordered", true);
-    m_searchIn->setProperty("topPanelBottomBordered", true);
-    m_searchIn->setProperty("topPanelLeftBordered", true);
-    m_searchIn->setProperty("topPanelRightBordered", true);
 
 	m_replaceText->setPlaceholderText(tr("Replace with..."));
     m_replaceText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);

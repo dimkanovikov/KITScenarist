@@ -1855,7 +1855,7 @@ void ApplicationManager::reloadApplicationSettings()
     //
     // Внешний вид приложения
     //
-    bool useDarkTheme =
+    const bool useDarkTheme =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
                 "application/use-dark-theme",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -1921,7 +1921,12 @@ void ApplicationManager::reloadApplicationSettings()
         //
         // Чтобы все цветовые изменения подхватились, нужно заново переустановить стиль
         //
-        m_view->setStyleSheet(m_view->styleSheet());
+        QFile styleSheetFile(":/Interface/UI/style-desktop.qss");
+        styleSheetFile.open(QIODevice::ReadOnly);
+        QString styleSheet = styleSheetFile.readAll();
+        styleSheetFile.close();
+        styleSheet.replace("_THEME_POSTFIX", useDarkTheme ? "-dark" : "");
+        m_view->setStyleSheet(styleSheet);
     }
 
     //
