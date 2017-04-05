@@ -5,9 +5,11 @@
 #include <QCloseEvent>
 #include <QIcon>
 #include <QMouseEvent>
+#include <QScrollBar>
 #include <QShortcut>
 #include <QSplitter>
 #include <QSplitterHandle>
+#include <QTimeLine>
 
 using UserInterface::ApplicationView;
 
@@ -35,7 +37,17 @@ void ApplicationView::initSplittersRightClick()
 			&& splitter->objectName() != "draftScenarioEditSplitter") {
 			splitter->handle(1)->installEventFilter(this);
 		}
-	}
+    }
+}
+
+void ApplicationView::initScrollBarsWidthChanges()
+{
+    //
+    // Для всех полос прокрутки добавляем функциональность - при наведении они расширяются
+    //
+    foreach (QScrollBar* scrollBar, findChildren<QScrollBar*>()) {
+        scrollBar->installEventFilter(this);
+    }
 }
 
 void ApplicationView::closeEvent(QCloseEvent* _event)
@@ -63,7 +75,37 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
 				splitter->handle(splitter->indexOf(splitterHandle) + 1)->installEventFilter(this);
 			}
 		}
-	}
+    } else if (QScrollBar* scrollBar = qobject_cast<QScrollBar*>(_object)) {
+        static QTimeLine* timeline = nullptr;
+        if (timeline == nullptr) {
+            timeline = new QTimeLine(60, this);
+            timeline->setFrameRange(96, 150);
+            timeline->setCurveShape(QTimeLine::LinearCurve);
+        }
+
+        if (_event->type() == QEvent::Enter) {
+            timeline->stop();
+            timeline->setDirection(QTimeLine::Forward);
+            timeline->disconnect();
+            const QString scaleProperty = scrollBar->orientation() == Qt::Vertical ? "width" : "height";
+            const QString styleSheetTemplate =
+                    "QScrollBar { " + scaleProperty + ": %1em; border-radius: %2em; }"
+                    "QScrollBar::handle { border-radius: %2em;}";
+            connect(timeline, &QTimeLine::frameChanged, [=] (int _frame) {
+                scrollBar->setStyleSheet(styleSheetTemplate.arg(qreal(_frame)/100.).arg(qreal(_frame/2 - 12)/100.));
+            });
+            timeline->start();
+        } else if (_event->type() == QEvent::Leave) {
+            const bool resume = timeline->state() == QTimeLine::Running;
+            timeline->stop();
+            timeline->setDirection(QTimeLine::Backward);
+            if (resume) {
+                timeline->resume();
+            } else {
+                timeline->start();
+            }
+        }
+    }
 
 	return QWidget::eventFilter(_object, _event);
 }

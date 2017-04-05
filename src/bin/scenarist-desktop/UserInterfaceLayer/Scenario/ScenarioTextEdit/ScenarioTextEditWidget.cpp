@@ -819,4 +819,5 @@ void ScenarioTextEditWidget::initStyleSheet()
     m_countersInfo->setProperty("topPanelRightBordered", true);
 
     m_editorWrapper->setProperty("mainContainer", true);
+    m_reviewView->setProperty("mainContainer", true);
 }

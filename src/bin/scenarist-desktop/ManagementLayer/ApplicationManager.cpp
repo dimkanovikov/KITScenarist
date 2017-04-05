@@ -1270,6 +1270,11 @@ void ApplicationManager::loadViewState()
     // Для всех сплитеров добавляем функциональность - двойной щелчок, разворачивает панели
     //
     m_view->initSplittersRightClick();
+
+    //
+    // Для всех полос прокрутки добавляем функциональность - при наведении они расширяются
+    //
+    m_view->initScrollBarsWidthChanges();
 }
 
 void ApplicationManager::saveViewState()

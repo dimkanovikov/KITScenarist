@@ -274,7 +274,7 @@ QAbstractSpinBox::down-arrow {
 }
 
 QAbstractSpinBox::down-arrow:disabled {
-    image: url(:/Interface/UI/downarrow-disabled.png);
+    image: url(:/Interface/UI/downarrow-disable.png);
 }
 
 QAbstractSpinBox:focus {
@@ -355,15 +355,17 @@ QTabBar::tab:!selected:hover[inTopPanel=true] {
 QScrollBar {
     border: none;
     background: palette(window);
+    border-radius: .36em;
 }
 
+
 QScrollBar:horizontal {
-    height: 0.84em;
+    height: 0.96em;
     margin: .06em 0em .06em 0em;
 }
 
 QScrollBar:vertical {
-    width: 0.84em;
+    width: 0.96em;
     margin: 0em .06em 0em .06em;
 }
 
@@ -371,12 +373,12 @@ QScrollBar::handle {
     background: palette(dark);
     min-height: 0em;
     min-width: 0em;
-    border-radius: .24em;
+    border-radius: .36em;
     border: none;
 }
 
 QScrollBar::handle:vertical {
-    min-height: 1.8em;
+    min-height: 3.6em;
 }
 
 QScrollBar::add-line {
@@ -429,7 +431,7 @@ QRadioButton:checked[inTopPanel=true] {
 
 QRadioButton[inStartUpView=true] {
     spacing: 0em;
-    padding: .48em .72em .48em .72em;
+    padding: .36em .72em .36em .72em;
     background-color: palette(window);
     border: .06em solid palette(dark);
 }

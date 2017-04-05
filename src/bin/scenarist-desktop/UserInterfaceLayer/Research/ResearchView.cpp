@@ -511,7 +511,6 @@ void ResearchView::initView()
     m_ui->researchNavigator->setDragDropMode(QAbstractItemView::DragDrop);
     m_ui->researchNavigator->setDragEnabled(true);
     m_ui->researchNavigator->setDropIndicatorShown(true);
-    m_ui->researchNavigator->setAlternatingRowColors(true);
     m_ui->researchNavigator->setHeaderHidden(true);
     m_ui->researchNavigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_ui->researchNavigator->setSelectionMode(QAbstractItemView::SingleSelection);

@@ -388,6 +388,4 @@ void ScenarioCardsView::initStyleSheet()
     m_toolbarSpacer->setProperty("inTopPanel", true);
     m_toolbarSpacer->setProperty("topPanelTopBordered", true);
     m_toolbarSpacer->setProperty("topPanelRightBordered", true);
-
-    m_cards->setProperty("mainContainer", true);
 }

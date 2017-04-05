@@ -257,6 +257,11 @@ private:
     void initConnections();
 
     /**
+     * @brief Настроить стиль
+     */
+    void initStyleSheet();
+
+    /**
      * @brief Обновить фон
      */
     void updateBackgroundBrush();

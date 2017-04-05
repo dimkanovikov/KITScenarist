@@ -6,6 +6,7 @@
 
 #include <QEvent>
 #include <QScrollBar>
+#include <QVariant>
 #include <QVBoxLayout>
 
 
@@ -17,6 +18,7 @@ CardsView::CardsView(QWidget* _parent) :
 {
     initView();
     initConnections();
+    initStyleSheet();
 }
 
 CardsView::~CardsView()
@@ -243,6 +245,11 @@ void CardsView::initConnections()
 
     connect(m_view, &ScalableGraphicsView::scaleChanged, m_scene, &CardsScene::refresh);
     connect(m_view->horizontalScrollBar(), &QScrollBar::valueChanged, m_scene, &CardsScene::updateActs);
+}
+
+void CardsView::initStyleSheet()
+{
+    m_view->setProperty("mainContainer", true);
 }
 
 void CardsView::updateBackgroundBrush()

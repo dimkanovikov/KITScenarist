@@ -20,6 +20,11 @@ namespace UserInterface
 		 */
 		void initSplittersRightClick();
 
+        /**
+         * @brief Добавить для полос прокрутки возможность расширяться при наведении
+         */
+        void initScrollBarsWidthChanges();
+
 	signals:
 		/**
 		 * @brief Пользователь хочет закрыть приложение
