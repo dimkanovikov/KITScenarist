@@ -354,19 +354,19 @@ QTabBar::tab:!selected:hover[inTopPanel=true] {
  */
 QScrollBar {
     border: none;
-    background: palette(window);
+    background: palette(button);
     border-radius: .36em;
 }
 
 
 QScrollBar:horizontal {
     height: 0.96em;
-    margin: .06em 0em .06em 0em;
+    margin: 0em;
 }
 
 QScrollBar:vertical {
     width: 0.96em;
-    margin: 0em .06em 0em .06em;
+    margin: 0em;
 }
 
 QScrollBar::handle {
@@ -387,6 +387,28 @@ QScrollBar::add-line {
 
 QScrollBar::sub-line {
     height: 0em;
+}
+
+QScrollBar::sub-line:vertical {
+    height: 1.5em;
+    border: none;
+}
+
+QScrollBar::sub-line:vertical:hover {
+    background: palette(dark);
+    border-top-right-radius: .36em;
+    border-top-left-radius: .36em;
+}
+
+QScrollBar::add-line:vertical {
+    height: 1.5em;
+    border: none;
+}
+
+QScrollBar::add-line:vertical:hover {
+    background: palette(dark);
+    border-bottom-right-radius: .36em;
+    border-bottom-left-radius: .36em;
 }
 
 /*

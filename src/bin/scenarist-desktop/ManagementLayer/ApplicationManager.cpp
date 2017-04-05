@@ -1865,7 +1865,7 @@ void ApplicationManager::reloadApplicationSettings()
                 "application/use-dark-theme",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
             .toInt();
-
+    m_view->setUseDarkTheme(useDarkTheme);
     {
         //
         // Настраиваем палитру и стилевые надстройки в зависимости от темы

@@ -20,11 +20,9 @@ ApplicationView::ApplicationView(QWidget *_parent) :
 	setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
 	setWindowTitle(tr("KIT Scenarist"));
 
-#ifdef Q_OS_WIN
 	static UIConfigurator* s_uiConfigurator = new UIConfigurator(this);
     QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+Shift+1"), this);
-	connect(shortcut, &QShortcut::activated, s_uiConfigurator, &UIConfigurator::show);
-#endif
+    connect(shortcut, &QShortcut::activated, s_uiConfigurator, &UIConfigurator::show);
 }
 
 void ApplicationView::initSplittersRightClick()
@@ -47,6 +45,13 @@ void ApplicationView::initScrollBarsWidthChanges()
     //
     foreach (QScrollBar* scrollBar, findChildren<QScrollBar*>()) {
         scrollBar->installEventFilter(this);
+    }
+}
+
+void ApplicationView::setUseDarkTheme(bool _use)
+{
+    if (m_useDarkTheme != _use) {
+        m_useDarkTheme = _use;
     }
 }
 
@@ -89,10 +94,19 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
             timeline->disconnect();
             const QString scaleProperty = scrollBar->orientation() == Qt::Vertical ? "width" : "height";
             const QString styleSheetTemplate =
-                    "QScrollBar { " + scaleProperty + ": %1em; border-radius: %2em; }"
-                    "QScrollBar::handle { border-radius: %2em;}";
+                      "QScrollBar { " + scaleProperty + ": %1em; border-radius: %2em; }"
+                      "QScrollBar::handle { border-radius: %2em; }"
+                      "QScrollBar::add-line:vertical:hover { border-bottom-right-radius: %2em; border-bottom-left-radius: %2em; }"
+                      "QScrollBar::sub-line:vertical:hover { border-top-right-radius: %2em; border-top-left-radius: %2em; }";
             connect(timeline, &QTimeLine::frameChanged, [=] (int _frame) {
-                scrollBar->setStyleSheet(styleSheetTemplate.arg(qreal(_frame)/100.).arg(qreal(_frame/2 - 12)/100.));
+                QString styleSheet = styleSheetTemplate.arg(qreal(_frame)/100.).arg(qreal(_frame/2 - 12)/100.);
+                if (_frame == 150) {
+                    styleSheet.append(
+                        QString("QScrollBar::add-line:vertical { image: url(:/Interface/UI/downarrow%1.png); }"
+                                "QScrollBar::sub-line:vertical { image: url(:/Interface/UI/uparrow%1.png) };")
+                                .arg(m_useDarkTheme ? "-dark" : ""));
+                }
+                scrollBar->setStyleSheet(styleSheet);
             });
             timeline->start();
         } else if (_event->type() == QEvent::Leave) {

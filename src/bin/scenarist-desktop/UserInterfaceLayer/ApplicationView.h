@@ -25,6 +25,11 @@ namespace UserInterface
          */
         void initScrollBarsWidthChanges();
 
+        /**
+         * @brief Установить текущее состояние использования тёмной темы приложением
+         */
+        void setUseDarkTheme(bool _use);
+
 	signals:
 		/**
 		 * @brief Пользователь хочет закрыть приложение
@@ -41,6 +46,12 @@ namespace UserInterface
 		 * @brief Переопределяется для того, чтобы добавить для сплитеров функциональность смены панелей местами
 		 */
 		bool eventFilter(QObject* _object, QEvent* _event);
+
+    private:
+        /**
+         * @brief Использует ли приложение тёмную тему
+         */
+        bool m_useDarkTheme = true;
 	};
 }
 
