@@ -155,7 +155,6 @@ bool ScalableWrapper::event(QEvent* _event)
     //
     else if (_event->type() == QEvent::Show
              || _event->type() == QEvent::Resize) {
-
         //
         // Перед событием отключаем синхронизацию полос прокрутки и отматываем полосу прокрутки
         // представления наверх, для того, чтобы не смещались координаты сцены и виджет редактора
@@ -211,6 +210,21 @@ bool ScalableWrapper::event(QEvent* _event)
                 horizontalScrollBar()->setValue(m_hbarScrollValue);
             });
         }
+    }
+    //
+    // После события обновления компоновки, полностью перенастраиваем полосы прокрутки
+    //
+    else if (_event->type() == QEvent::LayoutRequest) {
+        setupScrollingSynchronization(false);
+        m_vbarScrollValue = verticalScrollBar()->value();
+        m_hbarScrollValue = horizontalScrollBar()->value();
+
+        result = QGraphicsView::event(_event);
+
+        updateTextEditSize();
+        verticalScrollBar()->setValue(m_vbarScrollValue);
+        horizontalScrollBar()->setValue(m_hbarScrollValue);
+        setupScrollingSynchronization(true);
     }
     //
     // Прочие стандартные обработчики событий
@@ -443,11 +457,12 @@ void ScalableWrapper::updateTextEditSize()
     }
 
     //
-    // Размер редактора устанавливается таким образом, чтобы скрыть масштабированные полосы
+    // Размер редактора устанавливается таким образом, чтобы спрятать масштабированные полосы
     // прокрутки (скрывать их нельзя, т.к. тогда теряются значения, которые необходимо проксировать)
     //
-    const int editorWidth = viewport()->width() / m_zoomRange + vbarWidth + m_zoomRange;
-    const int editorHeight = viewport()->height() / m_zoomRange + hbarHeight + m_zoomRange;
+    const int scrollBarsDiff = 2; // Считаем, что скролбар редактора на 2 пикселя шире скролбара обёртки
+    const int editorWidth = width() / m_zoomRange + vbarWidth + m_zoomRange - scrollBarsDiff;
+    const int editorHeight = height() / m_zoomRange + hbarHeight + m_zoomRange - scrollBarsDiff;
     const QSize editorSize(editorWidth, editorHeight);
     if (m_editorProxy->size() != editorSize) {
         m_editorProxy->resize(editorSize);
