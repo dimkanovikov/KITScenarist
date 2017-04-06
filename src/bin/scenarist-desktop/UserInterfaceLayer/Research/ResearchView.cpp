@@ -130,9 +130,11 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
         //
         connect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &ResearchView::currentResearchChanged);
-        connect(_model, &QAbstractItemModel::rowsInserted,
-                [=] (const QModelIndex& _parent) {
+        connect(_model, &QAbstractItemModel::rowsInserted, [=] (const QModelIndex& _parent, int _row) {
             if (_parent.isValid()) {
+                const QModelIndex addedItemIndex = _parent.child(_row, 0);
+                selectItem(addedItemIndex);
+
                 emit researchItemAdded();
             }
         });
@@ -172,6 +174,7 @@ QModelIndex ResearchView::currentResearchIndex() const
 
 void ResearchView::selectItem(const QModelIndex& _index)
 {
+    m_ui->researchNavigator->expand(_index.parent());
     m_ui->researchNavigator->setCurrentIndex(_index);
 }
 

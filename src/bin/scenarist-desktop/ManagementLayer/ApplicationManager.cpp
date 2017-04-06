@@ -209,6 +209,26 @@ void ApplicationManager::exec(const QString& _fileToOpen)
     if (!_fileToOpen.isEmpty()) {
         aboutLoad(_fileToOpen);
     }
+
+    QTimer::singleShot(0, [=] {
+        //
+        // Работаем с отчётами об ошибке
+        //
+        m_startUpManager->checkCrashReports();
+
+        //
+        // Проверяем обновления
+        //
+        m_startUpManager->checkNewVersion();
+
+        //
+        // И авторизуемся
+        //
+        m_startUpManager->setProgressLoginLabel(true);
+        if (!m_synchronizationManager->autoLogin()) {
+            m_startUpManager->setProgressLoginLabel(false);
+        }
+    });
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
@@ -1183,13 +1203,13 @@ void ApplicationManager::aboutShowFullscreen()
         //
         // Возвращаемся в состояние предшествовавшее полноэкранному режиму
         //
+        m_menu->show();
+        m_tabs->show();
         if (m_view->property(IS_MAXIMIZED_PROPERTY).toBool()) {
             m_view->showMaximized();
         } else {
             m_view->showNormal();
         }
-        m_menu->show();
-        m_tabs->show();
     } else {
         //
         // Сохраним состояние окна перед переходом в полноэкранный режим
@@ -1708,13 +1728,6 @@ void ApplicationManager::initConnections()
 
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
-
-    connect(m_startUpManager, &StartUpManager::initialized, [=] {
-        m_startUpManager->setProgressLoginLabel(true);
-        if (!m_synchronizationManager->autoLogin()) {
-            m_startUpManager->setProgressLoginLabel(false);
-        }
-    });
     connect(m_startUpManager, &StartUpManager::loginRequested,
             m_synchronizationManager, &SynchronizationManager::login);
     connect(m_startUpManager, &StartUpManager::signUpRequested,
