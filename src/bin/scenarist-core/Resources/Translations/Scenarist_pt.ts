@@ -110,11 +110,11 @@
     </message>
     <message>
         <source>File exists. It will be replaced after creating.</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo existe. Ele será substituído após a criação.</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançado</translation>
     </message>
 </context>
 <context>
@@ -664,18 +664,18 @@
     </message>
     <message>
         <source>cards in Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartões na fila</translation>
     </message>
 </context>
 <context>
     <name>CardsScene</name>
     <message>
         <source>Convert to scene</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter em cena</translation>
     </message>
     <message>
         <source>Convert to folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter em pasta</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -695,11 +695,11 @@
     </message>
     <message>
         <source>Create card</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar cartão</translation>
     </message>
     <message>
         <source>Stamp:</source>
-        <translation type="unfinished"></translation>
+        <translation>Carimbo:</translation>
     </message>
 </context>
 <context>
@@ -813,7 +813,7 @@
     </message>
     <message>
         <source>Photos</source>
-        <translation type="unfinished"></translation>
+        <translation>Fotos</translation>
     </message>
     <message>
         <source>Unnamed image</source>
@@ -1081,7 +1081,7 @@
     <name>LanguageDialog</name>
     <message>
         <source>Choose application language</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha o idioma do aplicativo</translation>
     </message>
     <message>
         <source>Қазақ</source>
@@ -1117,7 +1117,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn&apos;t find preferred language? Read how you can add it yourself.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Não encontrou o idioma preferido? Leia como você pode adicioná-lo você mesmo.&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -1430,7 +1430,7 @@ O projeto não foi sincronizado.</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Configurar</translation>
     </message>
     <message>
         <source>File</source>
@@ -1474,35 +1474,39 @@ O projeto não foi sincronizado.</translation>
     </message>
     <message>
         <source>Ignore and try to open project?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorar e tentar abrir projeto?</translation>
     </message>
     <message>
         <source>Share error</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartilhar erro</translation>
     </message>
     <message>
         <source>You can&apos;t share project with yourself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Você não pode compartilhar o projeto com você mesmo.</translation>
     </message>
     <message>
         <source>Current project is not available for syncronization now, because project&apos;s owner closed access to project for you.
 
 Project didn&apos;t synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>O projeto atual não está disponível para sincronização agora, porque o proprietário do projeto fechou o acesso ao projeto para você
+.
+O projeto não foi sincronizado.</translation>
     </message>
     <message>
         <source>Sync not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Sincronização não disponível</translation>
     </message>
     <message>
         <source>You have exhausted all available for the use of space on a server.
 
 Project didn&apos;t synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Você esgotou todos os recursos para o uso do espaço em um servidor.
+
+O projeto não foi sincronizado.</translation>
     </message>
     <message>
         <source>New window</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova janela</translation>
     </message>
 </context>
 <context>
@@ -1646,22 +1650,22 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Find All Characters from Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Localizar todos os personagens do roteiro</translation>
     </message>
     <message>
         <source>Find All Locations from Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Localizar todos os locais do roteiro</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::ScenarioCardsManager</name>
     <message>
         <source>Add card</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar cartão</translation>
     </message>
     <message>
         <source>Edit card</source>
-        <translation type="unfinished"></translation>
+        <translation>editar cartão</translation>
     </message>
 </context>
 <context>
@@ -1797,13 +1801,15 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Released version %1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Install&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão lançada%1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt; Instalar &lt;/a&gt;</translation>
     </message>
     <message>
         <source>Can&apos;t install update. There are some problems with downloaded file.
 
 You can try to reload update.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível instalar a atualização. Existem alguns problemas com o arquivo transferido.
+
+Você pode tentar recarregar a atualização.</translation>
     </message>
 </context>
 <context>
@@ -1847,47 +1853,47 @@ You can try to reload update.</source>
     <name>PrintCardsDialog</name>
     <message>
         <source>Print cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir Cartões</translation>
     </message>
     <message>
         <source>Cards on page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartões na página: </translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation>2</translation>
     </message>
     <message>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation>4</translation>
     </message>
     <message>
         <source>6</source>
-        <translation type="unfinished"></translation>
+        <translation>6</translation>
     </message>
     <message>
         <source>8</source>
-        <translation type="unfinished"></translation>
+        <translation>8</translation>
     </message>
     <message>
         <source>Page orientation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientação da página:</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Retrato</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Paisagem</translation>
     </message>
     <message>
         <source>Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-visualização de Impressão</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2244,15 +2250,15 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Ctrl+Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Tab</translation>
     </message>
     <message>
         <source>Add characters to project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicione personagens ao projeto.</translation>
     </message>
     <message>
         <source>Character Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do Personagem: </translation>
     </message>
     <message>
         <source>Real Name:</source>
@@ -2264,71 +2270,71 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Add locations to project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar locais ao projeto.</translation>
     </message>
     <message>
         <source>Location Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do local:</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Folder&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Pasta&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>Folders let you group research data in hierarchy.</source>
-        <translation type="unfinished"></translation>
+        <translation>As pastas permitem agrupar dados de pesquisa em hierarquia.</translation>
     </message>
     <message>
         <source>Add Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar pasta</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Text Document&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Documento texto&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>Text let you store formatted text documents.</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto permite armazenar documentos de texto formatados.</translation>
     </message>
     <message>
         <source>Add Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar Texto</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Mind Map&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Mapa mental&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>Mind map let you create schemes with your thoughts.</source>
-        <translation type="unfinished"></translation>
+        <translation>O mapa mental permite que você crie esquemas com seus pensamentos.</translation>
     </message>
     <message>
         <source>Add Mind Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar Mapa Mental</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Images Gallery&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Galeria de imagens&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>Images gallery let you store group of images.</source>
-        <translation type="unfinished"></translation>
+        <translation>A galeria de imagens permite armazenar um grupo de imagens.</translation>
     </message>
     <message>
         <source>Add Images Gallery</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar Galeria de Imagens</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Url&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Url&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>Url let you have a link to useful web-based documents.</source>
-        <translation type="unfinished"></translation>
+        <translation>O URL permite que você tenha um link para documentos úteis baseados na Web.</translation>
     </message>
     <message>
         <source>Add Url</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar Url</translation>
     </message>
 </context>
 <context>
@@ -2369,7 +2375,7 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Act</source>
-        <translation type="unfinished"></translation>
+        <translation>Ato</translation>
     </message>
 </context>
 <context>
@@ -3341,30 +3347,33 @@ Valor, mm</translation>
     <name>UpdateDialog</name>
     <message>
         <source>New version is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova versão está disponível</translation>
     </message>
     <message>
         <source>KIT Scenarist doesn&apos;t support auto update on your OS now. &lt;br&gt;
 Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;link&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>O KIT Scenarist não suporta atualização automática em seu sistema operacional agora. &lt;br&gt;
+Por favor, faça o download de uma nova versão deste &lt;a href = &quot;https://kitscenarist.ru/en/download.html&quot; style = &quot;color: # 2b78da;&quot; &gt; Link &lt;/a&gt;</translation>
     </message>
     <message>
         <source>I&apos;m sure want to download beta version</source>
-        <translation type="unfinished"></translation>
+        <translation>Tenho certeza de que desejo baixar a versão beta</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;Beta version is an early version of a program or application that contains most of the major features, but is not yet complete. These versions are released to the general public, for testing and feedback.
 &lt;br&gt;&lt;br&gt;If you use beta version and send feedback to developer you helps him to make application better.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Html&gt; &lt;body&gt; &lt;p&gt; A versão beta é uma versão inicial de um programa ou aplicativo que contém a maioria dos recursos principais, mas ainda não está completa. Essas versões são divulgadas ao público em geral, para testes e feedback.
+&lt;br&gt; &lt;br&gt; Se você usar a versão beta e enviar comentários ao desenvolvedor você ajuda-lo a tornar a aplicação melhor. &lt;/P&gt;
+&lt;/Body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"></translation>
+        <translation>Pular</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3610,11 +3619,11 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Find All Characters from Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Localizar todos os personagens do roteiro</translation>
     </message>
     <message>
         <source>Find All Locations from Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Localizar todos os locais do roteiro</translation>
     </message>
     <message>
         <source>Character name</source>
@@ -3622,7 +3631,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Location name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do local</translation>
     </message>
 </context>
 <context>
@@ -3653,11 +3662,11 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Cards.png</source>
-        <translation type="unfinished"></translation>
+        <translation>cartões.png</translation>
     </message>
     <message>
         <source>Save cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar cartões</translation>
     </message>
     <message>
         <source>PNG files (*.png)</source>
@@ -3665,23 +3674,23 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Rascunho</translation>
     </message>
     <message>
         <source>Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteiro</translation>
     </message>
     <message>
         <source>Remove selected card</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover Cartão selecionado</translation>
     </message>
     <message>
         <source>Save cards to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar cartões para arquivo</translation>
     </message>
     <message>
         <source>Print cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir cartões</translation>
     </message>
 </context>
 <context>
@@ -3790,11 +3799,11 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Convert to scene</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter para cena</translation>
     </message>
     <message>
         <source>Convert to folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter para pasta</translation>
     </message>
 </context>
 <context>
@@ -4006,7 +4015,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectar</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Login&lt;/a&gt;</source>
@@ -4115,21 +4124,23 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::UpdateDialog</name>
     <message>
         <source>New version %1 is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova versão%1 está disponível</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Instalar</translation>
     </message>
     <message>
         <source>Error during download update.
 
 You can try to reload update.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro durante a atualização de download.
+
+Você pode tentar recarregar a atualização.</translation>
     </message>
 </context>
 <context>

@@ -84,7 +84,7 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
         static QTimeLine* timeline = nullptr;
         if (timeline == nullptr) {
             timeline = new QTimeLine(60, this);
-            timeline->setFrameRange(96, 150);
+            timeline->setFrameRange(13, 23);
             timeline->setCurveShape(QTimeLine::LinearCurve);
         }
 
@@ -94,13 +94,13 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
             timeline->disconnect();
             const QString scaleProperty = scrollBar->orientation() == Qt::Vertical ? "width" : "height";
             const QString styleSheetTemplate =
-                      "QScrollBar { " + scaleProperty + ": %1em; border-radius: %2em; }"
-                      "QScrollBar::handle { border-radius: %2em; }"
-                      "QScrollBar::add-line:vertical:hover { border-bottom-right-radius: %2em; border-bottom-left-radius: %2em; }"
-                      "QScrollBar::sub-line:vertical:hover { border-top-right-radius: %2em; border-top-left-radius: %2em; }";
+                      "QScrollBar { " + scaleProperty + ": %1px; border-radius: %2px; }"
+                      "QScrollBar::handle { border-radius: %2px; }"
+                      "QScrollBar::add-line:vertical:hover { border-bottom-right-radius: %2px; border-bottom-left-radius: %2px; }"
+                      "QScrollBar::sub-line:vertical:hover { border-top-right-radius: %2px; border-top-left-radius: %2px; }";
             connect(timeline, &QTimeLine::frameChanged, [=] (int _frame) {
-                QString styleSheet = styleSheetTemplate.arg(qreal(_frame)/100.).arg(qreal(_frame/2 - 12)/100.);
-                if (_frame == 150) {
+                QString styleSheet = styleSheetTemplate.arg(_frame).arg(_frame/2 - 1);
+                if (_frame == 23) {
                     styleSheet.append(
                         QString("QScrollBar::add-line:vertical { image: url(:/Interface/UI/downarrow%1.png); }"
                                 "QScrollBar::sub-line:vertical { image: url(:/Interface/UI/uparrow%1.png) };")

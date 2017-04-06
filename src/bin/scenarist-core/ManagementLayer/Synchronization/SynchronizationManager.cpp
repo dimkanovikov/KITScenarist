@@ -1760,7 +1760,7 @@ void SynchronizationManager::checkNetworkState()
     // FIXME: Если есть открытый диалог сохранения, или открытия, то он закрывается
     // при загрузке страницы, поэтому делаем отсрочку на выполнение проверки
     //
-    if (QLightBoxDialog::hasOpenDialogs()
+    if (QLightBoxWidget::hasOpenedWidgets()
         || QApplication::activeModalWidget() != 0) {
         QTimer::singleShot(1000, this, &SynchronizationManager::checkNetworkState);
         return;

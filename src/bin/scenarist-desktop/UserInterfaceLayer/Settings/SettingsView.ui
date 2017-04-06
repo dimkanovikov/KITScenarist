@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>718</width>
-    <height>656</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -145,7 +145,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>5</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -400,7 +400,7 @@
                     <property name="sizeHint" stdset="0">
                      <size>
                       <width>20</width>
-                      <height>343</height>
+                      <height>20</height>
                      </size>
                     </property>
                    </spacer>
@@ -621,7 +621,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>461</height>
+                  <height>20</height>
                  </size>
                 </property>
                </spacer>
@@ -1490,7 +1490,7 @@
                  <property name="sizeHint" stdset="0">
                   <size>
                    <width>20</width>
-                   <height>257</height>
+                   <height>20</height>
                   </size>
                  </property>
                 </spacer>
