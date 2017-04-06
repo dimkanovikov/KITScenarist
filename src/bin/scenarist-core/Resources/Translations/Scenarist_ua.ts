@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>File exists. It will be replaced after creating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл існує. Він буде замінений після створення.</translation>
     </message>
 </context>
 <context>
@@ -1560,17 +1560,19 @@ Project didn&apos;t synchronized.</source>
         <source>Current project is not available for syncronization now, because project&apos;s owner closed access to project for you.
 
 Project didn&apos;t synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Данний проект не доступний для синхронізації, тому що власник проекту закрив доступ до проекту для вас.</translation>
     </message>
     <message>
         <source>Sync not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронізація недоступна</translation>
     </message>
     <message>
         <source>You have exhausted all available for the use of space on a server.
 
 Project didn&apos;t synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви вичерпали весь доступний для використання простір на сервері.
+
+Проект не синхронізовано.</translation>
     </message>
 </context>
 <context>
@@ -1867,11 +1869,13 @@ Project didn&apos;t synchronized.</source>
         <source>Can&apos;t install update. There are some problems with downloaded file.
 
 You can try to reload update.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо встановити оновлення. Є деякі проблеми з завантаженим файлом.
+
+Ви можете спробувати перезавантажити оновлення.</translation>
     </message>
     <message>
         <source>Released version %1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Install&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Випущена версія %1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Встановити&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -1942,51 +1946,51 @@ You can try to reload update.</source>
     <name>PrintCardsDialog</name>
     <message>
         <source>Print cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк карток</translation>
     </message>
     <message>
         <source>Cards on page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Карток на сторінці:</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <source>6</source>
-        <translation type="unfinished">6</translation>
+        <translation>6</translation>
     </message>
     <message>
         <source>8</source>
-        <translation type="unfinished">8</translation>
+        <translation>8</translation>
     </message>
     <message>
         <source>Page orientation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Орієнтація сторінки:</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Портрет</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Альбом</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Скасувати</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <source>Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередній перегляд</translation>
     </message>
 </context>
 <context>
@@ -3437,34 +3441,37 @@ Paragraph</source>
     <name>UpdateDialog</name>
     <message>
         <source>New version is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступна нова версія</translation>
     </message>
     <message>
         <source>KIT Scenarist doesn&apos;t support auto update on your OS now. &lt;br&gt;
 Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;link&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>KIT Scenarist не підтримує автоматичне оновлення на вашій операційній системі в даний час. &lt;br&gt;
+Будь ласка, завантажте нову версію звідси &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;Посилання&lt;/a&gt;</translation>
     </message>
     <message>
         <source>I&apos;m sure want to download beta version</source>
-        <translation type="unfinished"></translation>
+        <translation>Я впевнений, що хочу завантажити бета-версію</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;Beta version is an early version of a program or application that contains most of the major features, but is not yet complete. These versions are released to the general public, for testing and feedback.
 &lt;br&gt;&lt;br&gt;If you use beta version and send feedback to developer you helps him to make application better.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt; Бета-версія є ранньою версією програми, яка містить більшість основних функцій, але ще не завершена. Ці версії випущені для широкої публіки, для тестування і зворотнього зв&apos;язку.
+&lt;br&gt;&lt;br&gt;Якщо ви використовуєте бета-версію і відправите відгук розробнику, ви допоможете йому зробити програму краще.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажити</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"></translation>
+        <translation>Пропустити</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Скасувати</translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -3761,23 +3768,23 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Cards.png</source>
-        <translation type="unfinished"></translation>
+        <translation>Cards.png</translation>
     </message>
     <message>
         <source>Save cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти картки</translation>
     </message>
     <message>
         <source>PNG files (*.png)</source>
-        <translation type="unfinished">PNG файли (*.png)</translation>
+        <translation>PNG файли (*.png)</translation>
     </message>
     <message>
         <source>Save cards to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти картки у файл</translation>
     </message>
     <message>
         <source>Print cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк карток</translation>
     </message>
 </context>
 <context>
@@ -4215,21 +4222,23 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::UpdateDialog</name>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажити</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити</translation>
     </message>
     <message>
         <source>Error during download update.
 
 You can try to reload update.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка під час завантаження оновлення.
+
+Ви можете спробувати перезавантажити оновлення.</translation>
     </message>
     <message>
         <source>New version %1 is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова версія %1 доступна</translation>
     </message>
 </context>
 <context>

@@ -100,6 +100,12 @@ namespace BusinessLogic
          */
         QModelIndexList getPersistentIndexList() const;
 
+    signals:
+        /**
+         * @brief Элемент был перемещён
+         */
+        void itemMoved(const QModelIndex& _index);
+
     private:
         /**
          * @brief Перезагрузить данные разработки

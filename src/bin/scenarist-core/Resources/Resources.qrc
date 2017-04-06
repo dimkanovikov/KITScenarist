@@ -151,6 +151,13 @@
         <file>Translations/qtbase_en.qm</file>
         <file>Translations/qtbase_de.qm</file>
         <file>Translations/qt_de.qm</file>
+        <file>Translations/Scenarist_it.qm</file>
+        <file>Translations/Scenarist_jp.qm</file>
+        <file>Translations/Scenarist_pt.qm</file>
+        <file>Translations/Scenarist_zn.qm</file>
+        <file>Translations/qt_kz.qm</file>
+        <file>Translations/qtbase_pt.qm</file>
+        <file>Translations/qt_pt.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/style-mobile.qss</file>

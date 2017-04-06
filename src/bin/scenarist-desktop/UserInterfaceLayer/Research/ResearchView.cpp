@@ -130,14 +130,6 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
         //
         connect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &ResearchView::currentResearchChanged);
-        connect(_model, &QAbstractItemModel::rowsInserted, [=] (const QModelIndex& _parent, int _row) {
-            if (_parent.isValid()) {
-                const QModelIndex addedItemIndex = _parent.child(_row, 0);
-                selectItem(addedItemIndex);
-
-                emit researchItemAdded();
-            }
-        });
         //
         // TODO: тут должен быть НОРМАЛЬНЫЙ код, который обновляет текущий редактор, если данные сменились
         //

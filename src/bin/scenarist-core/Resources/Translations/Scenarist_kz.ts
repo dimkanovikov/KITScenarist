@@ -57,19 +57,19 @@
     <name>AddProjectDialog</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Project Name</source>
-        <translation type="vanished">Жоба атауы</translation>
+        <translation>Жоба атауы</translation>
     </message>
     <message>
         <source>CREATE</source>
-        <translation type="vanished">ҚҰРУ</translation>
+        <translation>ҚҰРУ</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation type="vanished">БОЛДЫРМАУ</translation>
+        <translation>БОЛДЫРМАУ</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="20"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="61"/>
         <source>Enter Name of New Project:</source>
-        <translation>Жаңа Жобаның Атауын Еңгізіңіз: </translation>
+        <translation type="unfinished">Жаңа Жобаның Атауын Еңгізіңіз: </translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui" line="77"/>
@@ -128,7 +128,7 @@
     <name>ApplicationView</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
 </context>
 <context>
@@ -222,7 +222,7 @@
     <name>BusinessLogic::CharacterReport</name>
     <message>
         <source>Character Report</source>
-        <translation type="vanished">Кейіпкер диалогтары</translation>
+        <translation>Кейіпкер диалогтары</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="27"/>
@@ -435,12 +435,12 @@
     </message>
     <message>
         <source>Scene Group</source>
-        <translation type="vanished">Сахналар тобы</translation>
+        <translation>Сахналар тобы</translation>
     </message>
     <message>
         <source>Scene Group Footer</source>
         <translatorcomment>сноска - сілтеме; нұсқама; түсіндірме (кітап бетінің төменгі жағында берілетін қосымша мәлімет)</translatorcomment>
-        <translation type="vanished">Сахналар Топтарының Түсіндірмесі</translation>
+        <translation>Сахналар Топтарының Түсіндірмесі</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="77"/>
@@ -538,13 +538,13 @@
         <source>SG</source>
         <extracomment>Reduction of Scene Group</extracomment>
         <translatorcomment>Сахналар тобы</translatorcomment>
-        <translation type="vanished">СТ</translation>
+        <translation>СТ</translation>
     </message>
     <message>
         <source>SGF</source>
         <extracomment>Reduction of Scene Group Footer</extracomment>
         <translatorcomment>Сахналар Топтарының Түсіндірмесі</translatorcomment>
-        <translation type="vanished">СТТ</translation>
+        <translation>СТТ</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="114"/>
@@ -594,11 +594,11 @@
     <message>
         <source>CONT&apos;D</source>
         <extracomment>Continued</extracomment>
-        <translation type="vanished">ЖАЛҒАСЫ</translation>
+        <translation>ЖАЛҒАСЫ</translation>
     </message>
     <message>
         <source>MORE</source>
-        <translation type="vanished">АРЫ ҚАРАЙ</translation>
+        <translation>АРЫ ҚАРАЙ</translation>
     </message>
 </context>
 <context>
@@ -792,11 +792,11 @@
     <name>CabinView</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>User Cabinet</source>
-        <translation type="vanished">Жеке кабинет</translation>
+        <translation>Жеке кабинет</translation>
     </message>
 </context>
 <context>
@@ -898,27 +898,27 @@
     <name>CharactersDataEdit</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Add Image</source>
-        <translation type="vanished">Сурет қосу</translation>
+        <translation>Сурет қосу</translation>
     </message>
     <message>
         <source>Choose Character</source>
-        <translation type="vanished">Кейіпкерді таңдаңыз</translation>
+        <translation>Кейіпкерді таңдаңыз</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="vanished">Сипаттама:</translation>
+        <translation>Сипаттама:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="vanished">Аты:</translation>
+        <translation>Аты:</translation>
     </message>
     <message>
         <source>Real Name:</source>
-        <translation type="vanished">Шын аты:</translation>
+        <translation>Шын аты:</translation>
     </message>
 </context>
 <context>
@@ -948,11 +948,11 @@
     <name>DatabaseLayer::Database</name>
     <message>
         <source>Project was created in desktop version.</source>
-        <translation type="vanished">Жоба ПК нұсқасында жасалған.</translation>
+        <translation>Жоба ПК нұсқасында жасалған.</translation>
     </message>
     <message>
         <source>Project was created in mobile version.</source>
-        <translation type="vanished">Жоба мобильді нұсқасында жасалған.</translation>
+        <translation>Жоба мобильді нұсқасында жасалған.</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="59"/>
@@ -1058,7 +1058,7 @@
     </message>
     <message>
         <source>File:</source>
-        <translation type="vanished">Файл:</translation>
+        <translation>Файл:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="185"/>
@@ -1308,7 +1308,7 @@
     </message>
     <message>
         <source>File:</source>
-        <translation type="vanished">Файл:</translation>
+        <translation>Файл:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui" line="71"/>
@@ -1415,53 +1415,53 @@
     </message>
     <message>
         <source>System</source>
-        <translation type="vanished">Жүйелік</translation>
+        <translation>Жүйелік</translation>
     </message>
 </context>
 <context>
     <name>LocationsDataEdit</name>
     <message>
         <source>Dialog</source>
-        <translation type="vanished">Диалог</translation>
+        <translation>Диалог</translation>
     </message>
     <message>
         <source>Add Image</source>
-        <translation type="vanished">Сурет қосу</translation>
+        <translation>Сурет қосу</translation>
     </message>
     <message>
         <source>Choose Location</source>
-        <translation type="vanished">Мекенжайды таңдаңыз</translation>
+        <translation>Мекенжайды таңдаңыз</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="vanished">Аты:</translation>
+        <translation>Аты:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="vanished">Сипаттама:</translation>
+        <translation>Сипаттама:</translation>
     </message>
 </context>
 <context>
     <name>LoginDialog</name>
     <message>
         <source>Authorization</source>
-        <translation type="vanished">Тіркелу</translation>
+        <translation>Тіркелу</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Registration&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Тіркелу&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Тіркелу&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Error message</source>
-        <translation type="vanished">Қателік хабарламасы</translation>
+        <translation>Қателік хабарламасы</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="vanished">Пайдаланушы аты</translation>
+        <translation>Пайдаланушы аты</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="vanished">Құпиясөз</translation>
+        <translation>Құпиясөз</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/LoginDialog.ui" line="60"/>
@@ -1516,27 +1516,27 @@
     <name>LoginView</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Error message</source>
-        <translation type="vanished">Қателік хабарламасы</translation>
+        <translation>Қателік хабарламасы</translation>
     </message>
     <message>
         <source>User Name</source>
-        <translation type="vanished">Пайдаланушы аты</translation>
+        <translation>Пайдаланушы аты</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="vanished">Құпиясөз</translation>
+        <translation>Құпиясөз</translation>
     </message>
     <message>
         <source>SIGN UP</source>
-        <translation type="vanished">ТІРКЕЛУ</translation>
+        <translation>ТІРКЕЛУ</translation>
     </message>
     <message>
         <source>LOG IN</source>
-        <translation type="vanished">КІРУ</translation>
+        <translation>КІРУ</translation>
     </message>
 </context>
 <context>
@@ -1559,7 +1559,7 @@
     </message>
     <message>
         <source>Choose file for new project</source>
-        <translation type="vanished">Жаңа жоба үшін файлды таңдаңыз</translation>
+        <translation>Жаңа жоба үшін файлды таңдаңыз</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="411"/>
@@ -1676,7 +1676,7 @@
     </message>
     <message>
         <source>Project sinchronized</source>
-        <translation type="vanished">Жоба біріктірілді</translation>
+        <translation>Жоба біріктірілді</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="907"/>
@@ -1692,7 +1692,7 @@
         <source>Can&apos;t estabilish network connection.
 
 Continue working in offline mode.</source>
-        <translation type="vanished">Желімен байланыс орнатылмады.
+        <translation>Желімен байланыс орнатылмады.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1710,7 +1710,7 @@ Continue working in offline mode.</source>
         <source>Buyed subscription period is finished.
 
 Continue working in offline mode.</source>
-        <translation type="vanished">Жазылудың төленген кезеңі аяқталды.
+        <translation>Жазылудың төленген кезеңі аяқталды.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1723,7 +1723,7 @@ Continue working in offline mode.</source>
         <source>Can&apos;t correct load all data from service. Please check your internet connection quality and refresh synchronization.
 
 Continue working in offline mode.</source>
-        <translation type="vanished">Серверден барлық деректерді дұрыс жүктеу мүмкін болмады. Өтініш, желі байланысының сапасын тексеріңіз және бағдарламаны қайта қосыңыз.
+        <translation>Серверден барлық деректерді дұрыс жүктеу мүмкін болмады. Өтініш, желі байланысының сапасын тексеріңіз және бағдарламаны қайта қосыңыз.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1734,13 +1734,13 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <source>New session for you account started at other device. Restart session?</source>
-        <translation type="vanished">Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?</translation>
+        <translation>Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?</translation>
     </message>
     <message>
         <source>New session for you account started at other device.
 
 Continue working in offline mode.</source>
-        <translation type="vanished">Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
+        <translation>Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
@@ -1754,13 +1754,13 @@ Continue working in offline mode.</source>
         <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
 
 Continue working in offline mode.</source>
-        <translation type="vanished">Жобаны біріктіру мүмкін емес, себебі, жоба басқарушысында жазылу уақыты аяқталды.
+        <translation>Жобаны біріктіру мүмкін емес, себебі, жоба басқарушысында жазылу уақыты аяқталды.
 
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Қате</translation>
+        <translation>Қате</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="850"/>
@@ -1833,19 +1833,23 @@ Project didn&apos;t synchronized.</source>
         <source>Current project is not available for syncronization now, because project&apos;s owner closed access to project for you.
 
 Project didn&apos;t synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Жобаны біріктіру мүмкін емес, себебі, жоба басқарушысы сізге шектеу қойды.
+
+Жоба біріктірілмеді.</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1026"/>
         <source>Sync not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Біріктіру мүнкім емес</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1027"/>
         <source>You have exhausted all available for the use of space on a server.
 
 Project didn&apos;t synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сіз сервердегі барлық қолдануға болатын кеңістікті тауыстыңыз.
+
+Жоба біріктірілмеді.</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1036"/>
@@ -1948,11 +1952,11 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>Characters</source>
-        <translation type="vanished">Кейіпкерлер</translation>
+        <translation>Кейіпкерлер</translation>
     </message>
     <message>
         <source>Locations</source>
-        <translation type="vanished">Мекенжайлар</translation>
+        <translation>Мекенжайлар</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1561"/>
@@ -2019,56 +2023,56 @@ Project didn&apos;t synchronized.</source>
     <message>
         <source>Can&apos;t estabilish network connection.
 Continue working in offline mode.</source>
-        <translation type="vanished">Желімен байланыс орнатылмады.
+        <translation>Желімен байланыс орнатылмады.
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
-        <translation type="vanished">Жазылудың төленген кезеңі аяқталды.
+        <translation>Жазылудың төленген кезеңі аяқталды.
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>New session for you account started at other device.
 Continue working in offline mode.</source>
-        <translation type="vanished">Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
+        <translation>Басқа қолданушы сіз тіркелген деректермен басқа құрылғыда тіркелді. Қайта қосылу керекпе?
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
-        <translation type="vanished">Кәзір жобаны біріктіру мүмкін емес.
+        <translation>Кәзір жобаны біріктіру мүмкін емес.
 Автономды тәртіпте жұмыс жасаймыз.</translation>
     </message>
     <message>
         <source>Closing Database Connections and Remove Temporatry Files.</source>
-        <translation type="vanished">Деректер базасымен байланысты үзу және уақытша файлдарды өшіру.</translation>
+        <translation>Деректер базасымен байланысты үзу және уақытша файлдарды өшіру.</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersManager</name>
     <message>
         <source>Are you shure to remove characters: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="vanished">Келесі кейіпкерлерді жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>Келесі кейіпкерлерді жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::CharactersNavigatorManager</name>
     <message>
         <source>Add Character</source>
-        <translation type="vanished">Кейіпкер қосу</translation>
+        <translation>Кейіпкер қосу</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="vanished">Аты</translation>
+        <translation>Аты</translation>
     </message>
     <message>
         <source>Add Character Error</source>
-        <translation type="vanished">Кейіпкерді қосу қателігі</translation>
+        <translation>Кейіпкерді қосу қателігі</translation>
     </message>
     <message>
         <source>Character with same name already exist in project</source>
-        <translation type="vanished">Жобада бұндай атаумен кейіпкер бар</translation>
+        <translation>Жобада бұндай атаумен кейіпкер бар</translation>
     </message>
 </context>
 <context>
@@ -2141,26 +2145,26 @@ Continue working with this project in offline mode.</source>
     <name>ManagementLayer::LocationsManager</name>
     <message>
         <source>Are you shure to remove locations: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="vanished">Мекенжайды жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>Мекенжайды жою керекпе: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
     <name>ManagementLayer::LocationsNavigatorManager</name>
     <message>
         <source>Add Location</source>
-        <translation type="vanished">Мекенжай қосу</translation>
+        <translation>Мекенжай қосу</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="vanished">Атауы</translation>
+        <translation>Атауы</translation>
     </message>
     <message>
         <source>Add Location Error</source>
-        <translation type="vanished">Мекенжайды қосу қателігі</translation>
+        <translation>Мекенжайды қосу қателігі</translation>
     </message>
     <message>
         <source>Location with same name already exist in project</source>
-        <translation type="vanished">Осылай аталған мекенжай жобада бар</translation>
+        <translation>Осылай аталған мекенжай жобада бар</translation>
     </message>
 </context>
 <context>
@@ -2378,28 +2382,30 @@ Continue working with this project in offline mode.</source>
         <source>Can&apos;t install update. There are some problems with downloaded file.
 
 You can try to reload update.</source>
-        <translation type="unfinished"></translation>
+        <translation>Жаңарту орнатылмады. Қиындыққа жүктелген файл себеп болды.
+
+Сіз жаңартуды қайта жүктей аласыз.</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/StartUp/StartUpManager.cpp" line="639"/>
         <source>Released version %1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Install&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Дайын нұсқа %1. &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Орнату&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Released version %1 </source>
-        <translation type="vanished">Жақа нұсқасы шықты %1 </translation>
+        <translation>Жақа нұсқасы шықты %1 </translation>
     </message>
     <message>
         <source>download</source>
-        <translation type="vanished">Көшіру</translation>
+        <translation>Көшіру</translation>
     </message>
     <message>
         <source>or</source>
-        <translation type="vanished">әлде</translation>
+        <translation>әлде</translation>
     </message>
     <message>
         <source>read more</source>
-        <translation type="vanished">толығырақ білу</translation>
+        <translation>толығырақ білу</translation>
     </message>
 </context>
 <context>
@@ -2429,58 +2435,58 @@ You can try to reload update.</source>
     <name>ManagementLayer::SynchronizationManager</name>
     <message>
         <source>Authorizing</source>
-        <translation type="vanished">Авторизация</translation>
+        <translation>Авторизация</translation>
     </message>
     <message>
         <source>Checking correction of user name and password.</source>
-        <translation type="vanished">Қолданушының құпиясөзімен  атыжөнінің дұрыстығын тексеру.</translation>
+        <translation>Қолданушының құпиясөзімен  атыжөнінің дұрыстығын тексеру.</translation>
     </message>
     <message>
         <source>Close working session.</source>
-        <translation type="vanished">Істеп тұрған байланысты үзу.</translation>
+        <translation>Істеп тұрған байланысты үзу.</translation>
     </message>
     <message>
         <source>Loading</source>
-        <translation type="vanished">Жүктелу</translation>
+        <translation>Жүктелу</translation>
     </message>
     <message>
         <source>Loading projects list from remote server.</source>
-        <translation type="vanished">Серверде бар жобалардың тізімін жүктеу.</translation>
+        <translation>Серверде бар жобалардың тізімін жүктеу.</translation>
     </message>
     <message>
         <source>Can&apos;t estabilish network connection.</source>
-        <translation type="vanished">Желімен байланыс жоқ.</translation>
+        <translation>Желімен байланыс жоқ.</translation>
     </message>
 </context>
 <context>
     <name>MenuView</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>     Cabin</source>
-        <translation type="vanished">     Жеке кабинет</translation>
+        <translation>     Жеке кабинет</translation>
     </message>
     <message>
         <source>     Projects</source>
-        <translation type="vanished">     Жобалар</translation>
+        <translation>     Жобалар</translation>
     </message>
     <message>
         <source>Project name</source>
-        <translation type="vanished">Жоба атауы</translation>
+        <translation>Жоба атауы</translation>
     </message>
     <message>
         <source>     Save</source>
-        <translation type="vanished">     Сақтау</translation>
+        <translation>     Сақтау</translation>
     </message>
     <message>
         <source>     Text</source>
-        <translation type="vanished">     Мәтін</translation>
+        <translation>     Мәтін</translation>
     </message>
     <message>
         <source>     Settings</source>
-        <translation type="vanished">     Баптамалар</translation>
+        <translation>     Баптамалар</translation>
     </message>
 </context>
 <context>
@@ -2621,7 +2627,7 @@ You can try to reload update.</source>
     <message>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
-        <translation type="vanished">ТОПТЫҢ СОҢЫ</translation>
+        <translation>ТОПТЫҢ СОҢЫ</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="604"/>
@@ -2835,7 +2841,7 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Ctrl+F</source>
-        <translation type="vanished">Ctrl+F</translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="174"/>
@@ -3093,7 +3099,7 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>&lt;h2&gt;Images Galerry&lt;/h2&gt;</source>
-        <translation type="vanished">&lt;h2&gt;Суреттер Галереясы&lt;/h2&gt;</translation>
+        <translation>&lt;h2&gt;Суреттер Галереясы&lt;/h2&gt;</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="823"/>
@@ -3130,11 +3136,11 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="vanished">Атауы:</translation>
+        <translation>Атауы:</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="vanished">Мәтін:</translation>
+        <translation>Мәтін:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="962"/>
@@ -3148,7 +3154,7 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Images:</source>
-        <translation type="vanished">Суреттер:</translation>
+        <translation>Суреттер:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="1043"/>
@@ -3182,30 +3188,30 @@ You can try to reload update.</source>
     <name>ScenarioDataEdit</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Source</source>
-        <translation type="vanished">Негізі</translation>
+        <translation>Негізі</translation>
     </message>
     <message>
         <source>From scenario</source>
-        <translation type="vanished">Сахналар  сипаттамаларын бір документке жинау</translation>
+        <translation>Сахналар  сипаттамаларын бір документке жинау</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="vanished">Атауы:</translation>
+        <translation>Атауы:</translation>
     </message>
 </context>
 <context>
     <name>ScenarioNavigatorView</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Scenario Name</source>
-        <translation type="vanished">Сценария атауы</translation>
+        <translation>Сценария атауы</translation>
     </message>
 </context>
 <context>
@@ -3240,41 +3246,41 @@ You can try to reload update.</source>
     <message>
         <source>Form</source>
         <translatorcomment>Форма</translatorcomment>
-        <translation type="vanished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Scenario Name</source>
-        <translation type="vanished">Сценария атауы</translation>
+        <translation>Сценария атауы</translation>
     </message>
     <message>
         <source>SH</source>
         <translatorcomment>Менекжай және уақыт</translatorcomment>
-        <translation type="vanished">МУ</translation>
+        <translation>МУ</translation>
     </message>
     <message>
         <source>SC</source>
         <translatorcomment>Сахнаға қатысушылар</translatorcomment>
-        <translation type="vanished">СҚ</translation>
+        <translation>СҚ</translation>
     </message>
     <message>
         <source>A</source>
         <translatorcomment>Әрекет сипаттамасы</translatorcomment>
-        <translation type="vanished">ӘС</translation>
+        <translation>ӘС</translation>
     </message>
     <message>
         <source>C</source>
         <translatorcomment>Кейіпкер</translatorcomment>
-        <translation type="vanished">Ке</translation>
+        <translation>Ке</translation>
     </message>
     <message>
         <source>D</source>
         <translatorcomment>Диалог</translatorcomment>
-        <translation type="vanished">Ди</translation>
+        <translation>Ди</translation>
     </message>
     <message>
         <source>P</source>
         <translatorcomment>Кіріспе</translatorcomment>
-        <translation type="vanished">Кі</translation>
+        <translation>Кі</translation>
     </message>
 </context>
 <context>
@@ -3455,11 +3461,11 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Characters module</source>
-        <translation type="vanished">Кейіпкерлер бөлімі</translation>
+        <translation>Кейіпкерлер бөлімі</translation>
     </message>
     <message>
         <source>Locations module</source>
-        <translation type="vanished">Мекенжайлар бөлімі</translation>
+        <translation>Мекенжайлар бөлімі</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="391"/>
@@ -3553,11 +3559,11 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Automatically continue dialogue</source>
-        <translation type="vanished">Диалогты автоматты түрде жалғастыру</translation>
+        <translation>Диалогты автоматты түрде жалғастыру</translation>
     </message>
     <message>
         <source>Automatically corrections on page breaks</source>
-        <translation type="vanished">Парақтар соңындағы мәтіндерді түзеу</translation>
+        <translation>Парақтар соңындағы мәтіндерді түзеу</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1378"/>
@@ -3799,51 +3805,51 @@ Paragraph</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="vanished">Баптаулар</translation>
+        <translation>Баптаулар</translation>
     </message>
     <message>
         <source>Two Panel Mode</source>
-        <translation type="vanished">Екі панельді тәртіптемені қолдану</translation>
+        <translation>Екі панельді тәртіптемені қолдану</translation>
     </message>
     <message>
         <source>Colors for</source>
-        <translation type="vanished">Түстер</translation>
+        <translation>Түстер</translation>
     </message>
     <message>
         <source>Enable automatically replacing</source>
-        <translation type="vanished">Автоматты түрде ауыстыруда қосу</translation>
+        <translation>Автоматты түрде ауыстыруда қосу</translation>
     </message>
     <message>
         <source>Replace lowercase characters to uppercase on start of sentence.
 Replace three single dots to threedots character.
 Replace quotes to language specific.</source>
-        <translation type="vanished">Сөйлем басындағы кіші әріптерді үлкен әріпке ауыстыру.
+        <translation>Сөйлем басындағы кіші әріптерді үлкен әріпке ауыстыру.
 Үш нүктені көп нүкте таңбасына ауыстыру.
 Тырнақшаларды жазылған тіл ерекшелігіне байланысты ауыстыру.</translation>
     </message>
     <message>
         <source>Automatically jump to next paragraph (in scene headings and characters)</source>
-        <translation type="vanished">Автоматты түрде жаңа параграфқа көшу (&quot;Мекенжай және уақыт&quot; және &quot;Кейіпкер&quot; бөлімдерінде)</translation>
+        <translation>Автоматты түрде жаңа параграфқа көшу (&quot;Мекенжай және уақыт&quot; және &quot;Кейіпкер&quot; бөлімдерінде)</translation>
     </message>
     <message>
         <source>Show suggestions in empty blocks</source>
-        <translation type="vanished">Бос блогтарда көмек мәліметтерін көрсету</translation>
+        <translation>Бос блогтарда көмек мәліметтерін көрсету</translation>
     </message>
     <message>
         <source>Use MS Word like highlighting colors</source>
-        <translation type="vanished">MS Word тәріздес маркермен белгілеуді қолдану</translation>
+        <translation>MS Word тәріздес маркермен белгілеуді қолдану</translation>
     </message>
     <message>
         <source>Simbols Counter</source>
-        <translation type="vanished">Таңбалар санаушы</translation>
+        <translation>Таңбалар санаушы</translation>
     </message>
     <message>
         <source>Pages Counter</source>
-        <translation type="vanished">Парақтар санаушысы</translation>
+        <translation>Парақтар санаушысы</translation>
     </message>
     <message>
         <source>Words Counter</source>
-        <translation type="vanished">Сөздер санаушысы</translation>
+        <translation>Сөздер санаушысы</translation>
     </message>
 </context>
 <context>
@@ -3878,15 +3884,15 @@ Replace quotes to language specific.</source>
     <name>SimpleTextEditor</name>
     <message>
         <source>Bold</source>
-        <translation type="vanished">Жуан</translation>
+        <translation>Жуан</translation>
     </message>
     <message>
         <source>Italic</source>
-        <translation type="vanished">Көлденең</translation>
+        <translation>Көлденең</translation>
     </message>
     <message>
         <source>Underline</source>
-        <translation type="vanished">Сызылған</translation>
+        <translation>Сызылған</translation>
     </message>
 </context>
 <context>
@@ -4019,7 +4025,7 @@ Replace quotes to language specific.</source>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Logout&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Шығу&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Шығу&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="530"/>
@@ -4038,7 +4044,7 @@ Replace quotes to language specific.</source>
     </message>
     <message>
         <source>Projects</source>
-        <translation type="vanished">Жобалар</translation>
+        <translation>Жобалар</translation>
     </message>
 </context>
 <context>
@@ -4581,40 +4587,43 @@ Replace quotes to language specific.</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="26"/>
         <source>New version is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Жаңа нұсқа дайын</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="45"/>
         <source>KIT Scenarist doesn&apos;t support auto update on your OS now. &lt;br&gt;
 Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;link&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>КИТ Сценарист сіздің операциондық жүйеңізде автоматты  жаңартуды қамтамасыз етпейді.&lt;br&gt;
+Өтініш, жаңа нұсқаны келесі сітмеде бойынша көшіріңіз. &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;Сілтеме&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="70"/>
         <source>I&apos;m sure want to download beta version</source>
-        <translation type="unfinished"></translation>
+        <translation>Мен бета-нұсқасын көшіретініме сенімдімін</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="83"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;Beta version is an early version of a program or application that contains most of the major features, but is not yet complete. These versions are released to the general public, for testing and feedback.
 &lt;br&gt;&lt;br&gt;If you use beta version and send feedback to developer you helps him to make application better.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;Бета-нұсқа - әлі бітпеген, бірақ барлық негізгі фунцияларының көбі бар, ерте жасалған бағдарламаның әлде программаның нұсқасы. Бұл нұсқалар кең публикадан сынақтардан және  кері байланыс алу үшін  арналған..
+&lt;br&gt;&lt;br&gt;Егерде сіз бета-нұсқасын қолданып және бағдарламашыға өз пікіріңізді жеткізсеңіз, сіз оған бағдарламаны жақсартуға көмектесесіз.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="120"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Көшіру</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="127"/>
         <source>Skip</source>
-        <translation type="unfinished"></translation>
+        <translation>Өткізу</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui" line="134"/>
         <source>Cancel</source>
-        <translation type="unfinished">Болдырмау</translation>
+        <translation>Болдырмау</translation>
     </message>
 </context>
 <context>
@@ -4655,34 +4664,34 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::CharactersDataEdit</name>
     <message>
         <source>Choose Character</source>
-        <translation type="vanished">Есептемені дайындау</translation>
+        <translation>Есептемені дайындау</translation>
     </message>
     <message>
         <source>Character name</source>
-        <translation type="vanished">Кейіпкер аты</translation>
+        <translation>Кейіпкер аты</translation>
     </message>
 </context>
 <context>
     <name>UserInterface::CharactersNavigator</name>
     <message>
         <source>Characters</source>
-        <translation type="vanished">Кейіпкерлер</translation>
+        <translation>Кейіпкерлер</translation>
     </message>
     <message>
         <source>Create New Character</source>
-        <translation type="vanished">Жаңа кейіпкер қосу</translation>
+        <translation>Жаңа кейіпкер қосу</translation>
     </message>
     <message>
         <source>Remove Selected Character</source>
-        <translation type="vanished">Таңдалған кейіпкерді жою</translation>
+        <translation>Таңдалған кейіпкерді жою</translation>
     </message>
     <message>
         <source>Merge Selected Characters</source>
-        <translation type="vanished">Таңдалған кейіпкерлерді біріктіру</translation>
+        <translation>Таңдалған кейіпкерлерді біріктіру</translation>
     </message>
     <message>
         <source>Find All Characters from Scenario</source>
-        <translation type="vanished">Сценариядағы барлық кейіпкерлерді іздеу</translation>
+        <translation>Сценариядағы барлық кейіпкерлерді іздеу</translation>
     </message>
 </context>
 <context>
@@ -4716,11 +4725,11 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <message>
         <source>All Supported Files</source>
         <translatorcomment>нақты емес</translatorcomment>
-        <translation type="vanished">Бекітілген барлық файлдар</translation>
+        <translation>Бекітілген барлық файлдар</translation>
     </message>
     <message>
         <source>KIT Scenarist Project</source>
-        <translation type="vanished">Сценария жобасының файлы</translation>
+        <translation>Сценария жобасының файлы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.cpp" line="81"/>
@@ -4737,30 +4746,30 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::LocationsDataEdit</name>
     <message>
         <source>Choose Location</source>
-        <translation type="vanished">Мекенжайды таңдаңыз</translation>
+        <translation>Мекенжайды таңдаңыз</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="vanished">Мекенжай</translation>
+        <translation>Мекенжай</translation>
     </message>
 </context>
 <context>
     <name>UserInterface::LocationsNavigator</name>
     <message>
         <source>Locations</source>
-        <translation type="vanished">Мекенжайлар</translation>
+        <translation>Мекенжайлар</translation>
     </message>
     <message>
         <source>Create New Location</source>
-        <translation type="vanished">Жаңа мекенжай қосу</translation>
+        <translation>Жаңа мекенжай қосу</translation>
     </message>
     <message>
         <source>Remove Selected Location</source>
-        <translation type="vanished">Таңдалған мекенжайды жою</translation>
+        <translation>Таңдалған мекенжайды жою</translation>
     </message>
     <message>
         <source>Find All Locations From Scenario</source>
-        <translation type="vanished">Сценариядағы барлық мекенжайларды іздеу</translation>
+        <translation>Сценариядағы барлық мекенжайларды іздеу</translation>
     </message>
 </context>
 <context>
@@ -4983,7 +4992,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Scenes group</source>
-        <translation type="vanished">Сахналар тобы</translation>
+        <translation>Сахналар тобы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp" line="99"/>
@@ -5149,7 +5158,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::ScenarioSceneDescription</name>
     <message>
         <source>Notes of</source>
-        <translation type="vanished">Сахна сипаттамасы</translation>
+        <translation>Сахна сипаттамасы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp" line="96"/>
@@ -5219,11 +5228,11 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::ScenarioTextView</name>
     <message>
         <source>DRAFT</source>
-        <translation type="vanished">ӨЗДІК ЖАЗБА</translation>
+        <translation>ӨЗДІК ЖАЗБА</translation>
     </message>
     <message>
         <source>Choose block type</source>
-        <translation type="vanished">Блог форматын таңдаңыз</translation>
+        <translation>Блог форматын таңдаңыз</translation>
     </message>
 </context>
 <context>
@@ -5332,11 +5341,11 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <message>
         <source>Shortcuts Settings</source>
         <translatorcomment>нақты емес</translatorcomment>
-        <translation type="vanished">Жылдам батырмалар баптамалары</translation>
+        <translation>Жылдам батырмалар баптамалары</translation>
     </message>
     <message>
         <source>Review</source>
-        <translation type="vanished">Қысқа шолу</translation>
+        <translation>Қысқа шолу</translation>
     </message>
 </context>
 <context>
@@ -5351,7 +5360,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <name>UserInterface::StartUpView</name>
     <message>
         <source>Logout</source>
-        <translation type="vanished">Шығу</translation>
+        <translation>Шығу</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.cpp" line="101"/>
@@ -5468,7 +5477,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Character dialogues</source>
-        <translation type="vanished">Кейіпкерлер диалогы</translation>
+        <translation>Кейіпкерлер диалогы</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="298"/>
@@ -5504,24 +5513,26 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.cpp" line="39"/>
         <source>New version %1 is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Жаңа нұсқа %1 дайын</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.cpp" line="44"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Көшіру</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.cpp" line="56"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Орнату</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.cpp" line="61"/>
         <source>Error during download update.
 
 You can try to reload update.</source>
-        <translation type="unfinished"></translation>
+        <translation>Жаңартуды жұктеуді қайталаудағы қателік.
+
+Сіз жаңартуды қайта жүктеуді қайталай аласыз.</translation>
     </message>
 </context>
 <context>

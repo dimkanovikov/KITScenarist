@@ -160,7 +160,7 @@ Research* ResearchStorage::character(const QString& _name)
     return research(_name);
 }
 
-Research* ResearchStorage::storeCharacter(const QString& _name)
+Research* ResearchStorage::storeCharacter(const QString& _name, int _sortOrder)
 {
     Research* newCharacter = 0;
 
@@ -188,7 +188,8 @@ Research* ResearchStorage::storeCharacter(const QString& _name)
             //
             // ... в базе данных и полном списке разработок
             //
-            newCharacter = storeResearch(nullptr, Research::Character, characters()->size(), characterName);
+            const int sortOrder = _sortOrder == -1 ? characters()->size() : _sortOrder;
+            newCharacter = storeResearch(nullptr, Research::Character, sortOrder, characterName);
 
             //
             // ... в текущем списке персонажей
@@ -253,7 +254,7 @@ Research* ResearchStorage::location(const QString& _name)
     return research(_name);
 }
 
-Research* ResearchStorage::storeLocation(const QString& _name)
+Research* ResearchStorage::storeLocation(const QString& _name, int _sortOrder)
 {
     Research* newLocation = 0;
 
@@ -281,7 +282,8 @@ Research* ResearchStorage::storeLocation(const QString& _name)
             //
             // ... в базе данных и полном списке разработок
             //
-            newLocation = storeResearch(nullptr, Research::Location, locations()->size(), locationName);
+            const int sortOrder = _sortOrder == -1 ? locations()->size() : _sortOrder;
+            newLocation = storeResearch(nullptr, Research::Location, sortOrder, locationName);
 
             //
             // ... в текущем списке локаций

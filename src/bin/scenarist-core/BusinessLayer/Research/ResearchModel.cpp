@@ -606,6 +606,13 @@ bool ResearchModel::dropMimeData(
     }
 
     //
+    // Уведомим о перемещении элемента
+    //
+    if (!newItems.isEmpty()) {
+        emit itemMoved(indexForItem(newItems.first()));
+    }
+
+    //
     // Удаляем старые данные разработки
     // NOTE: Это необходимо делать перед обновлением порядка сортировки,
     //       чтобы не смешались старые и новые элементы в одном родителе
@@ -774,7 +781,7 @@ void ResearchModel::researchRowsInserted(const QModelIndex& _parent, int _first,
             ResearchModelItem* researchSibling = 0;
             if (researchParent->hasChildren()) {
                 for (int childIndex = 0; childIndex < researchParent->childCount(); ++childIndex) {
-                    if (researchParent->childAt(childIndex)->research()->sortOrder() > research->sortOrder()) {
+                    if (researchParent->childAt(childIndex)->research()->sortOrder() >= research->sortOrder()) {
                         if (childIndex == 0) {
                             isPrepend = true;
                         } else {

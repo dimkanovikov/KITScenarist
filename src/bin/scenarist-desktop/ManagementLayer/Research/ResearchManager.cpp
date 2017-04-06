@@ -245,22 +245,22 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _ty
         //
         // Сохраняем новый элемент, если надо
         //
-        bool selectAdded = true;
+        bool newWasAdded = true;
         switch (m_dialog->researchType()) {
             case Research::Character: {
                 if (!StorageFacade::researchStorage()->hasCharacter(m_dialog->researchName())) {
-                    StorageFacade::researchStorage()->storeCharacter(m_dialog->researchName());
+                    StorageFacade::researchStorage()->storeCharacter(m_dialog->researchName(), insertPosition);
                 } else {
-                    selectAdded = false;
+                    newWasAdded = false;
                 }
                 break;
             }
 
             case Research::Location: {
                 if (!StorageFacade::researchStorage()->hasLocation(m_dialog->researchName())) {
-                    StorageFacade::researchStorage()->storeLocation(m_dialog->researchName());
+                    StorageFacade::researchStorage()->storeLocation(m_dialog->researchName(), insertPosition);
                 } else {
-                    selectAdded = false;
+                    newWasAdded = false;
                 }
                 break;
             }
@@ -276,14 +276,16 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _ty
         }
 
         //
-        // Уведомляем подписчиков
-        //
-        emit researchChanged();
-
-        //
         // И выделяем добавленный элемент в дереве
         //
-        if (selectAdded) {
+        if (newWasAdded) {
+            //
+            // Обновляем порядок сортировки
+            //
+            for (int row = 0; row < parentResearchItem->childCount(); ++row) {
+                parentResearchItem->childAt(row)->research()->setSortOrder(row);
+            }
+
             QModelIndex indexForSelect;
             if (m_dialog->insertResearchInParent()) {
                 indexForSelect = m_model->index(insertPosition, 0, _selectedItemIndex);
@@ -295,6 +297,11 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _ty
                 }
             }
             m_view->selectItem(indexForSelect);
+
+            //
+            // Уведомляем подписчиков
+            //
+            emit researchChanged();
         }
     }
 }
@@ -416,14 +423,24 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
         //
         DataStorageLayer::StorageFacade::researchStorage()->removeResearch(research);
 
+        const QModelIndex parentIndex = _index.parent();
         //
-        // ... реактивируем редактор на родительский, или соседний элемент
+        // Пробуем выделить следующий за удалённым
         //
-        if (_index.row() == 0) {
-            m_view->selectItem(_index.parent());
-        } else {
-            m_view->selectItem(_index.sibling(_index.row() - 1, _index.column()));
+        QModelIndex itemForSelect = m_model->index(_index.row(), 0, parentIndex);
+        //
+        // Если нет, то перед удалённым
+        //
+        if (!itemForSelect.isValid()) {
+            itemForSelect = m_model->index(_index.row() - 1, 0, parentIndex);
         }
+        //
+        // Или же родителя
+        //
+        if (!itemForSelect.isValid()) {
+            itemForSelect = parentIndex;
+        }
+        m_view->selectItem(itemForSelect);
 
         emit researchChanged();
     }
@@ -524,12 +541,16 @@ void ResearchManager::initView()
 
 void ResearchManager::initConnections()
 {
+    connect(m_model, &ResearchModel::itemMoved, [=] (const QModelIndex& _index) {
+        m_view->selectItem(_index);
+        emit researchChanged();
+    });
+
     connect(m_view, &ResearchView::addResearchRequested, this, &ResearchManager::addResearch);
     connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
     connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);
     connect(m_view, &ResearchView::refeshResearchSubtreeRequested, this, &ResearchManager::refreshResearchSubtree);
     connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
-    connect(m_view, &ResearchView::researchItemAdded, this, &ResearchManager::researchChanged);
 
     connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
         emit scenarioNameChanged(_name);
