@@ -29,9 +29,7 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
     m_editor(_editor),
     m_zoomRange(1),
     m_gestureZoomInertionBreak(0),
-    m_needUpdateScrollValues(false),
-    m_vbarScrollValue(0),
-    m_hbarScrollValue(0)
+    m_needUpdateScrollValues(false)
 {
     //
     // Настраиваем лучшее опции прорисовки
@@ -167,13 +165,13 @@ bool ScalableWrapper::event(QEvent* _event)
         // Помечаем необходимым обновление полос прокрутки обёртки
         //
         m_needUpdateScrollValues = true;
-        m_vbarScrollValue = verticalScrollBar()->value();
-        m_hbarScrollValue = horizontalScrollBar()->value();
 
         verticalScrollBar()->setValue(0);
         horizontalScrollBar()->setValue(0);
 
         result = QGraphicsView::event(_event);
+
+        updateTextEditSize();
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
         //
@@ -206,8 +204,8 @@ bool ScalableWrapper::event(QEvent* _event)
             // И сделаем это после того, как выполнятся все события
             //
             QTimer::singleShot(0, [=] {
-                verticalScrollBar()->setValue(m_vbarScrollValue);
-                horizontalScrollBar()->setValue(m_hbarScrollValue);
+                verticalScrollBar()->setValue(m_editor->verticalScrollBar()->value());
+                horizontalScrollBar()->setValue(m_editor->horizontalScrollBar()->value());
             });
         }
     }
@@ -216,14 +214,12 @@ bool ScalableWrapper::event(QEvent* _event)
     //
     else if (_event->type() == QEvent::LayoutRequest) {
         setupScrollingSynchronization(false);
-        m_vbarScrollValue = verticalScrollBar()->value();
-        m_hbarScrollValue = horizontalScrollBar()->value();
 
         result = QGraphicsView::event(_event);
 
         updateTextEditSize();
-        verticalScrollBar()->setValue(m_vbarScrollValue);
-        horizontalScrollBar()->setValue(m_hbarScrollValue);
+        verticalScrollBar()->setValue(m_editor->verticalScrollBar()->value());
+        horizontalScrollBar()->setValue(m_editor->horizontalScrollBar()->value());
         setupScrollingSynchronization(true);
     }
     //

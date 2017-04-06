@@ -124,12 +124,7 @@ private:
 	/**
 	 * @brief Нужно ли обновить положение полос прокрутки после события изменения размера
 	 */
-	bool m_needUpdateScrollValues;
-
-	/**
-	 * @brief Положения полос прокрутки зафиксированные перед событием изменения размера
-	 */
-	int m_vbarScrollValue, m_hbarScrollValue;
+    bool m_needUpdateScrollValues;
 };
 
 #endif // SCALABLEWRAPPER_H
