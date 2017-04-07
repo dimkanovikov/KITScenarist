@@ -7,6 +7,17 @@ QAbstractButton {
 }
 
 /*
+ * Прокручиваемая область
+ */
+QAbstractScrollArea {
+    border: 1px solid palette(dark);
+}
+
+QAbstractScrollArea:focus {
+    border: 1px solid palette(highlight);
+}
+
+/*
  * Кнопка с выравниваем текста по левой стороне
  */
 QPushButton[leftAlignedText=true] {
@@ -21,7 +32,7 @@ QFrame[inTopPanel=true] {
     color: palette(button-text);
     padding-top: 2px;
     padding-bottom: 2px;
-    min-height: 33px;
+    min-height: 30px;
 }
 
 /*
@@ -161,7 +172,7 @@ QComboBox  {
     background: palette(button);
     color: palette(button-text);
     border: 1px solid palette(dark);
-    min-height: 33px;
+    min-height: 28px;
     min-width: 70px;
 }
 
@@ -223,7 +234,7 @@ QComboBox[inTopPanel=true]  {
  */
 QLineEdit {
     border: 1px solid palette(dark);
-    min-height: 33px;
+    min-height: 30px;
     min-width: 70px;
     padding-left: 10px;
 }
@@ -237,7 +248,7 @@ QLineEdit:focus {
  */
 QAbstractSpinBox {
     border: 1px solid palette(dark);
-    min-height: 33px;
+    min-height: 30px;
     min-width: 70px;
     padding-left: 10px;
 }
@@ -549,6 +560,17 @@ QToolTip {
 }
 
 /*
+ * Заголовки таблиц
+ */
+QHeaderView {
+    border: none;
+}
+
+QHeaderView::section {
+    min-height: 33px;
+}
+
+/*
  * Виджет заголовок списка отчётов
  */
 ctkCollapsibleButton[reportButton=true] {
@@ -598,7 +620,7 @@ ctkBasePopupWidget {
 /*
  * Основные виджеты формы
  */
-*[mainContainer=true] {
+*[mainContainer=true], *[mainContainer=true]:focus {
     border: none;
     border-top-width: 1px;
     border-top-style: solid;
@@ -608,7 +630,7 @@ ctkBasePopupWidget {
 /*
  * Виджет без рамок
  */
-*[nobordersContainer=true] {
+*[nobordersContainer=true], *[nobordersContainer=true]:focus {
     border: none;
 }
 

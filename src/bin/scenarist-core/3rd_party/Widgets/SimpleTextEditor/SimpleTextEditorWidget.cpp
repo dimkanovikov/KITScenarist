@@ -140,7 +140,7 @@ SimpleTextEditor* SimpleTextEditorWidget::editor() const
 
 void SimpleTextEditorWidget::initView()
 {
-    setFocusProxy(m_editorWrapper);
+    setFocusProxy(m_editorWrapper->editor());
 
     //
     // Обновить масштаб

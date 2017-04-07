@@ -24,6 +24,8 @@ TemplateDialog::TemplateDialog(QWidget *parent) :
     ui(new Ui::TemplateDialog)
 {
     ui->setupUi(this);
+
+    initStyleSheet();
 }
 
 TemplateDialog::~TemplateDialog()
@@ -368,4 +370,10 @@ void TemplateDialog::initConnections()
 
     connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
     connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
+}
+
+void TemplateDialog::initStyleSheet()
+{
+    ui->blockStyles->setProperty("nobordersContainer", true);
+    ui->scrollArea->setProperty("nobordersContainer", true);
 }

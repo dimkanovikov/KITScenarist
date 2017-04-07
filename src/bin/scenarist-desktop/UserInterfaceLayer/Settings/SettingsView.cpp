@@ -685,6 +685,7 @@ void SettingsView::initView()
 
     m_jumpsTableHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->scenarioEditBlockSettingsTable->setHorizontalHeader(m_jumpsTableHeader);
+    ui->scenarioEditBlockSettingsTable->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     ui->newTemplate->updateIcons();
     ui->editTemplate->updateIcons();
@@ -873,4 +874,15 @@ void SettingsView::initStyleSheet()
     //
     m_applicationTabs->setProperty("inTopPanel", true);
     m_scenarioEditorTabs->setProperty("inTopPanel", true);
+
+    //
+    // Таблицы
+    //
+    ui->scenarioEditBlockSettingsTable->setProperty("nobordersContainer", true);
+    ui->templates->setProperty("mainContainer", true);
+
+    //
+    // Кнопка сброса изменений
+    //
+    ui->resetSettings->setStyleSheet("border-left: none; border-right: none;");
 }
