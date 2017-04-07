@@ -317,6 +317,12 @@ void ResearchManager::editResearch(const QModelIndex& _index)
             m_currentResearch = research;
 
             //
+            // На время установки данных для изменения, отключаем посыл сигналов, чтобы данные
+            // не были восприняты как новые для предыдущего выделенного элемента
+            //
+            m_view->blockSignals(true);
+
+            //
             // В зависимости от типа элемента загрузим необходимые данные в редактор
             //
             switch (research->type()) {
@@ -403,6 +409,8 @@ void ResearchManager::editResearch(const QModelIndex& _index)
                     break;
                 }
             }
+
+            m_view->blockSignals(false);
         }
     }
 }
