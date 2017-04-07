@@ -85,21 +85,25 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
     const int COLOR_RECT_WIDTH = 12;
     const int RIGHT_MARGIN = 12;
 	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
+
 	//
 	// ... фон
 	//
-	_painter->fillRect(opt.rect, backgroundBrush);
+    _painter->fillRect(opt.rect, backgroundBrush);
+
     //
     // ... разделитель
     //
-    QPoint left = opt.rect.bottomLeft();
-    left.setX(0);
-    _painter->setPen(QPen(opt.palette.dark(), 0.5));
-    _painter->drawLine(left, opt.rect.bottomRight());
+    QPoint borderLeft = opt.rect.bottomLeft();
+    borderLeft.setX(0);
+    _painter->setPen(QPen(opt.palette.dark(), 1));
+    _painter->drawLine(borderLeft, opt.rect.bottomRight());
+
 	//
 	// Меняем координаты, чтобы рисовать было удобнее
 	//
 	_painter->translate(opt.rect.topLeft());
+
 	//
 	// ... иконка
     //
@@ -114,6 +118,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	ImageHelper::setIconColor(iconColorized, iconRect.size(), iconColor);
 	icon = iconColorized.pixmap(iconRect.size());
 	_painter->drawPixmap(iconRect, icon);
+
 	//
 	// ... цвета сцены
 	//
@@ -159,11 +164,21 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		if (colorsCount > 0) {
 			colorRectX -= COLOR_RECT_WIDTH;
 		}
-	}
+    }
+
+    //
+    // ... дорисовывем разделитель поверх цветов
+    //
+    borderLeft = QPoint(colorRectX, opt.rect.height());
+    QPoint borderRight(colorRectX + COLOR_RECT_WIDTH, opt.rect.height());
+    _painter->setPen(QPen(opt.palette.dark(), 1));
+    _painter->drawLine(borderLeft, borderRight);
+
 	//
 	// ... текстовая часть
 	//
 	_painter->setPen(textBrush.color());
+
 	//
 	// ... длительность
 	//
@@ -181,6 +196,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
         ICON_SIZE
 		);
     _painter->drawText(chronometryRect, Qt::AlignLeft | Qt::AlignVCenter, chronometry);
+
 	//
 	// ... заголовок
 	//
@@ -212,6 +228,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	}
 	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
     _painter->drawText(headerRect, Qt::AlignLeft | Qt::AlignVCenter, header);
+
 	//
 	// ... описание
 	//

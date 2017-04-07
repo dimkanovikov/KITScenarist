@@ -468,7 +468,7 @@ QRadioButton:checked[inTopPanel=true] {
 
 QRadioButton[inStartUpView=true] {
     spacing: 0px;
-    padding: 5px 12px 5px 12px;
+    padding: 4px 12px 4px 12px;
     background-color: palette(window);
     border: 1px solid palette(dark);
 }

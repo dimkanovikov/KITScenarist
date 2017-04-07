@@ -2186,7 +2186,7 @@ Você pode tentar recarregar a atualização.</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation>Mudar</translation>
+        <translation>Mudança</translation>
     </message>
     <message>
         <source>Image:</source>
@@ -2505,7 +2505,7 @@ Você pode tentar recarregar a atualização.</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation>mudança</translation>
+        <translation>Mudança</translation>
     </message>
     <message>
         <source>Research module</source>
@@ -3410,7 +3410,7 @@ Por favor, faça o download de uma nova versão deste &lt;a href = &quot;https:/
     <name>UserInterface::ChangePasswordDialog</name>
     <message>
         <source>Change</source>
-        <translation>mudança</translation>
+        <translation>Mudança</translation>
     </message>
 </context>
 <context>
