@@ -1,5 +1,5 @@
 Package: scenarist
-Version: 0.7.1.beta7
+Version: 0.7.1.rc1
 Provides: scenarist
 Maintainer: Dimka Novikov <to@dimkanovikov.pro>
 Architecture: amd64
