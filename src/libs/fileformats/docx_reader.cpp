@@ -563,7 +563,7 @@ void DocxReader::readRun()
 }
 
 //-----------------------------------------------------------------------------
-
+#include <QDebug>
 void DocxReader::readRunProperties(Style& style, bool allowstyles)
 {
 	while (m_xml.readNextStartElement()) {
@@ -625,8 +625,13 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
 		//
 		else if (m_xml.qualifiedName() == "w:highlight") {
 			const QColor color(Docx::highlightColor(value.toString()));
-			style.char_format.setProperty(Docx::IsHighlight, true);
-			style.char_format.setBackground(color);
+            //
+            // Игнорируем все оттенки близкие к белому
+            //
+            if (color.value() < 245) {
+                style.char_format.setProperty(Docx::IsHighlight, true);
+                style.char_format.setBackground(color);
+            }
 		}
 		//
 		// Цвет текста
@@ -636,7 +641,7 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
 			//
 			// Игнорируем все оттенки близкие к чёрному
 			//
-			if (color.value() > 10) {
+            if (color.value() > 10) {
 				style.char_format.setProperty(Docx::IsForeground, true);
 				style.char_format.setForeground(color);
 			}
