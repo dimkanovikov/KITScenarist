@@ -512,8 +512,8 @@ void ScenarioTextEditWidget::aboutShowSearch()
     const bool visible = m_search->isChecked();
     if (m_searchLine->isVisible() != visible) {
         const bool FIX = true;
-        WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, FIX, !FIX, visible);
-        QTimer::singleShot(300, [=] { m_searchLine->setVisible(visible); });
+        const int slideDuration = WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, FIX, !FIX, visible);
+        QTimer::singleShot(slideDuration, [=] { m_searchLine->setVisible(visible); });
     }
 
     if (visible) {
