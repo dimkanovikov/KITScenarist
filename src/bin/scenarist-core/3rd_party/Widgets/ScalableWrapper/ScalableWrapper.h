@@ -99,32 +99,37 @@ private:
 	/**
 	 * @brief Сцена в которой будет позиционироваться редактор
 	 */
-	QGraphicsScene* m_scene;
+    QGraphicsScene* m_scene = nullptr;
 
 	/**
 	 * @brief Указатель на сам редактор
 	 */
-	SpellCheckTextEdit* m_editor;
+    SpellCheckTextEdit* m_editor = nullptr;
 
 	/**
 	 * @brief Графическое представление редактора
 	 */
-	QGraphicsProxyWidget* m_editorProxy;
+    QGraphicsProxyWidget* m_editorProxy = nullptr;
 
 	/**
 	 * @brief Коэффициент масштабирования
 	 */
-	qreal m_zoomRange;
+    qreal m_zoomRange = 1;
 
 	/**
 	 * @brief Инерционный тормоз масштабирования при помощи жестов
 	 */
-	int m_gestureZoomInertionBreak;
+    int m_gestureZoomInertionBreak = 0;
 
 	/**
 	 * @brief Вспомогательный элемент, посредством которого настраивается размер полос прокрутки
 	 */
-    QGraphicsRectItem* m_rect;
+    QGraphicsRectItem* m_rect = nullptr;
+
+    /**
+     * @brief Включена ли синхронизация полос прокрутки с редактором текста
+     */
+    bool m_isScrollingSynchronizationActive = false;
 };
 
 #endif // SCALABLEWRAPPER_H

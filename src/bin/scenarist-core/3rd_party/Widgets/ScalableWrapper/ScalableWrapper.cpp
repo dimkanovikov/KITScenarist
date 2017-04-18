@@ -26,9 +26,7 @@ namespace {
 ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) :
     QGraphicsView(_parent),
     m_scene(new QGraphicsScene),
-    m_editor(_editor),
-    m_zoomRange(1),
-    m_gestureZoomInertionBreak(0)
+    m_editor(_editor)
 {
     //
     // Настраиваем лучшее опции прорисовки
@@ -364,6 +362,8 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 
 void ScalableWrapper::setupScrollingSynchronization(bool _needSync)
 {
+    m_isScrollingSynchronizationActive = _needSync;
+
     if (_needSync) {
         connect(m_editor->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ScalableWrapper::updateTextEditSize);
         connect(m_editor->horizontalScrollBar(), &QScrollBar::rangeChanged, this, &ScalableWrapper::updateTextEditSize);
@@ -417,17 +417,27 @@ void ScalableWrapper::syncScrollBarWithTextEdit(bool _syncPosition)
 
 void ScalableWrapper::updateTextEditSize()
 {
+    //
+    // Задаём политику отображения полосы прокрутки.
+    // При смене необходимо отключать синхронизацию, если она была активирована,
+    // чтобы не происходило отбрасывание в нулевую позицию соседнего скролбара
+    //
     auto setScrollBarVisibility = [=] (bool _isVerticalScrollBar, Qt::ScrollBarPolicy _policy) {
-        if (_isVerticalScrollBar) {
-            if (verticalScrollBarPolicy() != _policy) {
-                setVerticalScrollBarPolicy(_policy);
-            }
-        } else {
-            if (horizontalScrollBarPolicy() != _policy) {
-                const int lastVerticalScrollValue = verticalScrollBar()->value();
-                setHorizontalScrollBarPolicy(_policy);
-                verticalScrollBar()->setValue(lastVerticalScrollValue);
-            }
+        const bool needSync = m_isScrollingSynchronizationActive;
+        if (needSync) {
+            setupScrollingSynchronization(false);
+        }
+
+        if (_isVerticalScrollBar
+            && verticalScrollBarPolicy() != _policy) {
+            setVerticalScrollBarPolicy(_policy);
+        } else if (!_isVerticalScrollBar
+                   && horizontalScrollBarPolicy() != _policy) {
+            setHorizontalScrollBarPolicy(_policy);
+        }
+
+        if (needSync) {
+            setupScrollingSynchronization(true);
         }
     };
 
