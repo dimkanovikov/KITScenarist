@@ -174,17 +174,21 @@ namespace BusinessLogic
 
         /**
          * @brief  Xml текст сценария и его MD5-хэш
+         * @note Xml сценария не должен быть null т.к. он участвует в формировании патчей,
+         *       а diffMatchPatch этого не допускает, поэтому инициилизируем его пустой строкой
          */
         /** @{ */
-        QString m_scenarioXml;
+        QString m_scenarioXml = "";
         QByteArray m_scenarioXmlHash;
         /** @} */
 
         /**
          * @brief Xml текст сценария и его MD5-хэш на момент последнего сохранения изменений
+         * @note Xml сценария не должен быть null т.к. он участвует в формировании патчей,
+         *       а diffMatchPatch этого не допускает, поэтому инициилизируем его пустой строкой
          */
         /** @{ */
-        QString m_lastSavedScenarioXml;
+        QString m_lastSavedScenarioXml = "";
         QByteArray m_lastSavedScenarioXmlHash;
         /** @} */
 
