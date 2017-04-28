@@ -182,7 +182,7 @@ void SyntaxHighlighterPrivate::reformatBlocks(int from, int charsRemoved, int ch
 		// Даём выполниться накопившимсяы событиям через каждые COUNTER_LIMIT абзацев
 		//
 		if (processEventsCounter == COUNTER_LIMIT) {
-			QApplication::processEvents();
+            QApplication::processEvents();
 			processEventsCounter = 0;
 		} else {
 			++processEventsCounter;

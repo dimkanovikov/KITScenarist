@@ -137,6 +137,11 @@ void StatisticsView::setPlot(const BusinessLogic::Plot& _plot)
 		m_plotData->graph(plotIndex)->rescaleAxes(plotIndex > 0 ? true : false);
 	}
 
+    //
+    // Показываем данные с нуля, чтобы никакие из них не прилипали к линейке
+    //
+    m_plotData->yAxis->setRangeLower(0);
+
 	m_plotData->replot();
 }
 
