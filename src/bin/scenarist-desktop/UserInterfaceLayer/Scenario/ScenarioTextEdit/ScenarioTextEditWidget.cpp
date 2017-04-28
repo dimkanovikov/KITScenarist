@@ -292,9 +292,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     //
     if (!_description.isEmpty()) {
         m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
-        QTextDocument doc;
-        doc.setHtml(_description);
-        m_editor->insertPlainText(doc.toPlainText());
+        m_editor->insertPlainText(_description);
     }
 
     //
@@ -412,9 +410,7 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
         m_editor->setTextCursor(cursor);
         m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
     }
-    QTextDocument doc;
-    doc.setHtml(_description);
-    m_editor->insertPlainText(doc.toPlainText());
+    m_editor->insertPlainText(_description);
 
     //
     // А теперь скроем блоки с описанием сцены, если мы не в режиме битов

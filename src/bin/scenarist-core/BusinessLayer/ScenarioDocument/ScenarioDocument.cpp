@@ -278,10 +278,7 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             //
             // Установить описание в элемент
             //
-            QTextDocument descriptionDoc;
-            descriptionDoc.setHtml(_description);
-            const QString descriptionPlainText = descriptionDoc.toPlainText();
-            item->setDescription(!descriptionPlainText.isEmpty() ? descriptionPlainText : QString::null);
+            item->setDescription(!_description.isEmpty() ? _description : QString::null);
             m_model->updateItem(item);
 
             //
@@ -364,10 +361,10 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             //
             // ... вставляем новый
             //
-            if (descriptionPlainText.isEmpty()) {
+            if (_description.isEmpty()) {
                 cursor.deletePreviousChar();
             } else {
-                foreach (const QString& descriptionLine, descriptionPlainText.split("\n")) {
+                foreach (const QString& descriptionLine, _description.split("\n")) {
                     if (!cursor.block().text().isEmpty()) {
                         cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
                     }
@@ -375,6 +372,7 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
                     cursor.insertText(descriptionLine);
                 }
             }
+            cursor.setPosition(_position);
             cursor.endEditBlock();
         }
 
@@ -1051,33 +1049,15 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
         cursor.movePosition(QTextCursor::NextBlock);
     }
     //
-    // ... обновляем описание в зависимости от способа его обновления
+    // ... обновляем описание
     //
-    if (m_inSceneDescriptionUpdate // ... пользователь изменил описание в окошке
-        || description.isEmpty()) { // ... или установил в диалоге добавления элемента
-        QTextDocument doc;
-        doc.setHtml(itemDescription(_item));
+    cursor.setPosition(_itemStartPos);
+    ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData());
+    if (info == nullptr) {
+        info = new ScenarioTextBlockInfo;
     }
-    //
-    // ... пользователь изменил описание прямо в редакторе сценария
-    //
-    else {
-        //
-        // FIXME: какое безобразие, нужно это явно сделать красиво!
-        //
-        QTextCursor descriptionCursor = cursor;
-        descriptionCursor.setPosition(_itemStartPos);
-        QTextBlockUserData* textBlockData = descriptionCursor.block().userData();
-        ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
-        if (info == 0) {
-            info = new ScenarioTextBlockInfo;
-        }
-        QTextDocument doc;
-        doc.setPlainText(description);
-        info->setDescription(doc.toHtml());
-        descriptionCursor.block().setUserData(info);
-    }
-
+    info->setDescription(description);
+    cursor.block().setUserData(info);
     // ... длительность
     qreal itemDuration = 0;
     if (itemType == ScenarioModelItem::Scene) {

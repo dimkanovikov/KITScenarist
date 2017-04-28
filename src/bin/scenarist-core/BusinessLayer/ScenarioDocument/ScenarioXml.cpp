@@ -860,8 +860,9 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
                     || tokenType == ScenarioBlockStyle::FolderHeader) {
                     QString synopsis = reader.attributes().value("synopsis").toString();
                     ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
-                    bool htmlEscaped = true;
-                    info->setDescription(synopsis, htmlEscaped);
+                    QTextDocument doc;
+                    doc.setHtml(synopsis);
+                    info->setDescription(doc.toPlainText());
                     cursor.block().setUserData(info);
                 }
 

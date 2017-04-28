@@ -1,6 +1,7 @@
 #include "SimpleTextEditor.h"
 
 #include <QApplication>
+#include <QTextBlock>
 #include <QTextCharFormat>
 #include <QTextEdit>
 #include <QToolBar>
@@ -23,7 +24,9 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	setAddSpaceToBottom(false);
 	setTabChangesFocus(true);
 	setUsePageMode(false);
-	setPageMargins(QMarginsF(2, 2, 2, 2));
+    setPageMargins(QMarginsF(2, 2, 2, 2));
+
+    connect(document(), &QTextDocument::contentsChange, this, &SimpleTextEditor::correctLineSpacing);
 }
 
 void SimpleTextEditor::setTextBold(bool _bold)
@@ -75,7 +78,7 @@ void SimpleTextEditor::setTextFont(const QFont& _font)
 	if (!cursor.hasSelection()) {
 		cursor.select(QTextCursor::BlockUnderCursor);
 	}
-	cursor.mergeCharFormat(fmt);
+    cursor.mergeCharFormat(fmt);
 }
 
 QMimeData* SimpleTextEditor::createMimeDataFromSelection() const
@@ -101,5 +104,27 @@ void SimpleTextEditor::mergeFormatOnWordOrSelection(const QTextCharFormat& forma
 	if (!cursor.hasSelection())
 		cursor.select(QTextCursor::WordUnderCursor);
 	cursor.mergeCharFormat(format);
-	mergeCurrentCharFormat(format);
+    mergeCurrentCharFormat(format);
+}
+
+void SimpleTextEditor::correctLineSpacing(int _from, int _removed, int _added)
+{
+    Q_UNUSED(_removed);
+
+    QTextCursor cursor(document());
+//    cursor.beginEditBlock();
+    cursor.setPosition(_from);
+    do {
+        cursor.select(QTextCursor::BlockUnderCursor);
+        QTextBlockFormat blockFormat = cursor.blockFormat();
+        const int bottomMargin = QFontMetrics(cursor.charFormat().font()).lineSpacing();
+        if (blockFormat.bottomMargin() != bottomMargin) {
+            blockFormat.setBottomMargin(bottomMargin);
+            cursor.setBlockFormat(blockFormat);
+        }
+        cursor.movePosition(QTextCursor::NextBlock);
+        cursor.movePosition(QTextCursor::EndOfBlock);
+    } while (cursor.position() < _from + _added
+             && !cursor.atEnd());
+//    cursor.endEditBlock();
 }

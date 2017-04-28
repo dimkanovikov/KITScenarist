@@ -49,7 +49,7 @@ void ScenarioSceneDescription::setDescription(const QString& _description)
         //
         m_sourceDescription = _description;
 
-        m_description->setHtml(_description);
+        m_description->setPlainText(_description);
 
         m_description->blockSignals(false);
     }
@@ -73,7 +73,7 @@ void ScenarioSceneDescription::aboutDescriptionChanged()
 {
     if (m_sourceDescription != currentDescription()
         || m_description->toPlainText().isEmpty()) {
-        emit descriptionChanged(m_description->toHtml());
+        emit descriptionChanged(m_description->toPlainText());
     }
 }
 
@@ -84,7 +84,7 @@ QString ScenarioSceneDescription::currentTitle() const
 
 QString ScenarioSceneDescription::currentDescription() const
 {
-    return TextEditHelper::removeDocumentTags(m_description->toHtml());
+    return m_description->toPlainText();
 }
 
 void ScenarioSceneDescription::initView()
