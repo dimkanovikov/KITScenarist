@@ -35,6 +35,12 @@ namespace BusinessLogic
 		 */
 		void printPreview(ScenarioDocument* _scenario, const ExportParameters& _exportParameters);
 
+    signals:
+        /**
+         * @brief Документ был напечатан
+         */
+        void printed();
+
 	private slots:
 		/**
 		 * @brief Печатать
