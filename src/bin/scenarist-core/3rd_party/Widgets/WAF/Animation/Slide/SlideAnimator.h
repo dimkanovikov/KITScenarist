@@ -87,6 +87,19 @@ namespace WAF
 
     private:
         /**
+         * @brief Зависит ли от анимации ширина (true) или высота (false) анимируемого виджета
+         */
+        bool isWidth() const;
+
+        /**
+         * @brief Зафиксировать размер в направлении изменяемой анимацией стороны
+         */
+        /** @{ */
+        void fixSize(const QSize& _sourceSize, QSize& _targetSize) const;
+        void fixSizeOfWidgetForSlide(const QSize& _sourceSize) const;
+        /** @} */
+
+        /**
          * @brief Получить виджет, который нужно анимировать
          */
         QWidget* widgetForSlide() const;
