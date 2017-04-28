@@ -115,7 +115,7 @@ void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 					QTextStream stream(&userDictonaryFile);
 					for(QString word = stream.readLine();
 						!word.isEmpty();
-						word = stream.readLine()) {
+                        word = stream.readLine().toLower()) {
 						addWordToChecker(word);
 					}
 					userDictonaryFile.close();

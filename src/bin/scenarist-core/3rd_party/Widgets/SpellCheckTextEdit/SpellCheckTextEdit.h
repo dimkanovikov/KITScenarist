@@ -90,6 +90,11 @@ private:
 	 */
 	QString wordOnPosition(const QPoint& _position) const;
 
+    /**
+     * @brief Удаляет пунктуацию в слове
+     */
+    QString removePunctutaion(const QString& _word) const;
+
 private:
 	/**
 	 * @brief Проверяющий орфографию

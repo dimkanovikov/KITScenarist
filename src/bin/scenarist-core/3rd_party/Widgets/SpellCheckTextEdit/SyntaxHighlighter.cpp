@@ -182,7 +182,7 @@ void SyntaxHighlighterPrivate::reformatBlocks(int from, int charsRemoved, int ch
 		// Даём выполниться накопившимсяы событиям через каждые COUNTER_LIMIT абзацев
 		//
 		if (processEventsCounter == COUNTER_LIMIT) {
-			QApplication::processEvents();
+            QApplication::processEvents();
 			processEventsCounter = 0;
 		} else {
 			++processEventsCounter;
@@ -207,7 +207,14 @@ void SyntaxHighlighterPrivate::reformatBlock(const QTextBlock &block)
 	currentBlock = block;
 
 	formatChanges.fill(QTextCharFormat(), block.length() - 1);
-	q->highlightBlock(block.text());
+    if (block.charFormat().fontCapitalization() == QFont::AllUppercase) {
+        //
+        // Если блок в верхнем регистре, то передадим в этом же регистре спеллчекеру
+        //
+        q->highlightBlock(block.text().toUpper());
+    } else {
+        q->highlightBlock(block.text());
+    }
 	applyFormatChanges();
 
 	currentBlock = QTextBlock();
