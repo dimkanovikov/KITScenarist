@@ -51,26 +51,26 @@ namespace {
 
 ExportDialog::ExportDialog(QWidget* _parent) :
     QLightBoxDialog(_parent),
-    ui(new Ui::ExportDialog)
+    m_ui(new Ui::ExportDialog)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 }
 
 ExportDialog::~ExportDialog()
 {
-    delete ui;
+    delete m_ui;
 }
 
 void ExportDialog::setExportFilePath(const QString& _filePath)
 {
-    ui->file->setText(_filePath);
+    m_ui->file->setText(_filePath);
     QFileInfo fileInfo(_filePath);
     if (fileInfo.suffix() == "docx") {
-        ui->docx->setChecked(true);
+        m_ui->docx->setChecked(true);
     } else if (fileInfo.suffix() == "pdf") {
-        ui->pdf->setChecked(true);
+        m_ui->pdf->setChecked(true);
     } else {
-        ui->fdx->setChecked(true);
+        m_ui->fdx->setChecked(true);
     }
 
     aboutFileNameChanged();
@@ -78,10 +78,10 @@ void ExportDialog::setExportFilePath(const QString& _filePath)
 
 void ExportDialog::setExportFileName(const QString& _fileName)
 {
-    if (ui->file->text().isEmpty()
+    if (m_ui->file->text().isEmpty()
         && m_exportFileName != _fileName) {
         m_exportFileName = _fileName;
-        ui->file->setText(::exportFilePath(_fileName));
+        m_ui->file->setText(::exportFilePath(_fileName));
         aboutFormatChanged();
     }
 
@@ -90,56 +90,56 @@ void ExportDialog::setExportFileName(const QString& _fileName)
 
 void ExportDialog::setCheckPageBreaks(bool _check)
 {
-    ui->checkPageBreaks->setChecked(_check);
+    m_ui->checkPageBreaks->setChecked(_check);
 }
 
 void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 {
-    ui->styles->setModel(_model);
+    m_ui->styles->setModel(_model);
 }
 
 void ExportDialog::setCurrentStyle(const QString& _styleName)
 {
-    ui->styles->setCurrentText(_styleName);
+    m_ui->styles->setCurrentText(_styleName);
 }
 
 void ExportDialog::setPageNumbering(bool _isChecked)
 {
-    ui->pageNumbering->setChecked(_isChecked);
+    m_ui->pageNumbering->setChecked(_isChecked);
 }
 
 void ExportDialog::setScenesNumbering(bool _isChecked)
 {
-    ui->scenesNumbering->setChecked(_isChecked);
+    m_ui->scenesNumbering->setChecked(_isChecked);
 }
 
 void ExportDialog::setScenesPrefix(const QString& _prefix)
 {
-    ui->scenesPrefix->setText(_prefix);
+    m_ui->scenesPrefix->setText(_prefix);
 }
 
 void ExportDialog::setSaveReviewMarks(bool _save)
 {
-    ui->saveReviewMarks->setChecked(_save);
+    m_ui->saveReviewMarks->setChecked(_save);
 }
 
 void ExportDialog::setPrintTitle(bool _isChecked)
 {
-    ui->printTitle->setChecked(_isChecked);
+    m_ui->printTitle->setChecked(_isChecked);
 }
 
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
     BusinessLogic::ExportParameters exportParameters;
-    exportParameters.outline = ui->outline->isChecked();
-    exportParameters.filePath = ui->file->text();
-    exportParameters.checkPageBreaks = ui->checkPageBreaks->isChecked();
-    exportParameters.style = ui->styles->currentText();
-    exportParameters.printTilte = ui->printTitle->isChecked();
-    exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
-    exportParameters.printScenesNumbers = ui->scenesNumbering->isChecked();
-    exportParameters.scenesPrefix = ui->scenesPrefix->text();
-    exportParameters.saveReviewMarks = ui->saveReviewMarks->isChecked();
+    exportParameters.outline = m_ui->outline->isChecked();
+    exportParameters.filePath = m_ui->file->text();
+    exportParameters.checkPageBreaks = m_ui->checkPageBreaks->isChecked();
+    exportParameters.style = m_ui->styles->currentText();
+    exportParameters.printTilte = m_ui->printTitle->isChecked();
+    exportParameters.printPagesNumbers = m_ui->pageNumbering->isChecked();
+    exportParameters.printScenesNumbers = m_ui->scenesNumbering->isChecked();
+    exportParameters.scenesPrefix = m_ui->scenesPrefix->text();
+    exportParameters.saveReviewMarks = m_ui->saveReviewMarks->isChecked();
 
     return exportParameters;
 }
@@ -147,14 +147,14 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 void ExportDialog::aboutFormatChanged()
 {
     QString format;
-    if (ui->docx->isChecked()) {
+    if (m_ui->docx->isChecked()) {
         format = "docx";
-    } else if (ui->pdf->isChecked()) {
+    } else if (m_ui->pdf->isChecked()) {
         format = "pdf";
     } else {
         format = "fdx";
     }
-    QString filePath = ui->file->text();
+    QString filePath = m_ui->file->text();
 
     //
     // Обновить имя файла, если оно уже задано в другом формате
@@ -171,30 +171,30 @@ void ExportDialog::aboutFormatChanged()
             filePath.append("." + format);
         }
 
-        ui->file->setText(filePath);
+        m_ui->file->setText(filePath);
     }
 }
 
 void ExportDialog::aboutChooseFile()
 {
     QString format;
-    if (ui->docx->isChecked()) {
+    if (m_ui->docx->isChecked()) {
         format = "docx";
-    } else if (ui->pdf->isChecked()) {
+    } else if (m_ui->pdf->isChecked()) {
         format = "pdf";
     } else {
         format = "fdx";
     }
     QString filePath =
             QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
-                (!ui->file->text().isEmpty() ? ui->file->text() : ::exportFolderPath()),
+                (!m_ui->file->text().isEmpty() ? m_ui->file->text() : ::exportFolderPath()),
                 tr("%1 files (*%2)").arg(format.toUpper()).arg(format));
 
     if (!filePath.isEmpty()) {
         //
         // Сохраним путь к файлу
         //
-        ui->file->setText(filePath);
+        m_ui->file->setText(filePath);
         ::saveExportFolderPath(filePath);
 
         //
@@ -206,35 +206,35 @@ void ExportDialog::aboutChooseFile()
 
 void ExportDialog::aboutFileNameChanged()
 {
-    int lastCursorPosition = ui->file->cursorPosition();
-    ui->file->setText(FileHelper::systemSavebleFileName(ui->file->text()));
-    ui->file->setCursorPosition(lastCursorPosition);
+    int lastCursorPosition = m_ui->file->cursorPosition();
+    m_ui->file->setText(FileHelper::systemSavebleFileName(m_ui->file->text()));
+    m_ui->file->setCursorPosition(lastCursorPosition);
 
-    ui->exportTo->setEnabled(!ui->file->text().isEmpty());
-    ui->existsLabel->setVisible(QFile::exists(ui->file->text()));
+    m_ui->exportTo->setEnabled(!m_ui->file->text().isEmpty());
+    m_ui->existsLabel->setVisible(QFile::exists(m_ui->file->text()));
 }
 
 void ExportDialog::initView()
 {
-    ui->browseFile->updateIcons();
+    m_ui->browseFile->updateIcons();
 
-    ui->additionalSettings->hide();
+    m_ui->additionalSettings->setVisible(m_ui->showAdditional->isChecked());
 
     resize(width(), sizeHint().height());
 }
 
 void ExportDialog::initConnections()
 {
-    connect(ui->showAdditional, SIGNAL(toggled(bool)), ui->additionalSettings, SLOT(setVisible(bool)));
+    connect(m_ui->showAdditional, SIGNAL(toggled(bool)), m_ui->additionalSettings, SLOT(setVisible(bool)));
 
-    connect(ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
-    connect(ui->docx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
-    connect(ui->pdf, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
-    connect(ui->fdx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
-    connect(ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
-    connect(ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
+    connect(m_ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
+    connect(m_ui->docx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
+    connect(m_ui->pdf, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
+    connect(m_ui->fdx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
+    connect(m_ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
+    connect(m_ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
 
-    connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
-    connect(ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
-    connect(ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(m_ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(m_ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
+    connect(m_ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
 }

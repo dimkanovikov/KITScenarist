@@ -1197,6 +1197,7 @@ void PageTextEdit::setHtml(const QString &text)
     Q_D(PageTextEdit);
     d->control->setHtml(text);
     d->preferRichText = true;
+    d->updateDocumentGeometry();
 }
 
 QString PageTextEdit::toHtml() const
