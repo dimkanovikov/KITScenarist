@@ -531,7 +531,12 @@ void ApplicationManager::aboutSave()
             //
             // Если необходимо создадим резервную копию закрываемого файла
             //
-            QtConcurrent::run(&m_backupHelper, &BackupHelper::saveBackup, ProjectsManager::currentProject().path());
+            QString baseBackupName = "";
+            const Project& currentProject = ProjectsManager::currentProject();
+            if (currentProject.isRemote()) {
+                baseBackupName = QString("%1 [%2]").arg(currentProject.name()).arg(currentProject.id());
+            }
+            QtConcurrent::run(&m_backupHelper, &BackupHelper::saveBackup, ProjectsManager::currentProject().path(), baseBackupName);
         }
         //
         // А если ошибка сохранения, то делаем дополнительные проверки и работаем с пользователем
@@ -794,6 +799,7 @@ void ApplicationManager::editRemoteProjectName(const QModelIndex& _index)
                 tr("Enter new name for project"), project.name());
     if (!newName.isEmpty()) {
         m_synchronizationManager->updateProjectName(project.id(), newName);
+        m_projectsManager->setCurrentProjectName(newName);
     }
 }
 

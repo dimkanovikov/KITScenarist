@@ -80,10 +80,9 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 		// ... формируем путь к файлу проекта
 		//
 		m_path =
-			QString("%1%2%3 [%4]%5")
+            QString("%1%2%3%4")
 				.arg(remoteProjectsFolderPath)
 				.arg(QDir::separator())
-				.arg(m_name)
 				.arg(m_id)
 				.arg(PROJECT_FILE_EXTENSION);
 		//
