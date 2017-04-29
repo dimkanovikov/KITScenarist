@@ -121,6 +121,21 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
     }
 
     //
+    // Если работает в режиме не поэпизодника, то блок нужно сместить после всех блоков
+    // описания текущей сцены
+    //
+    if (!outlineMode()
+        && _blockType != ScenarioBlockStyle::SceneDescription) {
+        ScenarioBlockStyle::Type nextBlockType = ScenarioBlockStyle::forBlock(textCursor().block().next());
+        while (!textCursor().atEnd()
+               && nextBlockType == ScenarioBlockStyle::SceneDescription) {
+            moveCursor(QTextCursor::NextBlock);
+            moveCursor(QTextCursor::EndOfBlock);
+            nextBlockType = ScenarioBlockStyle::forBlock(textCursor().block().next());
+        }
+    }
+
+    //
     // Вставим блок
     //
     textCursor().insertBlock();
