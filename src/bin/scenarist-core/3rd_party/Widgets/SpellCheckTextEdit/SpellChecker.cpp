@@ -84,54 +84,54 @@ SpellChecker::~SpellChecker()
 
 void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 {
-    if (m_spellingLanguage != _spellingLanguage) {
-        m_spellingLanguage = _spellingLanguage;
+	if (m_spellingLanguage != _spellingLanguage) {
+		m_spellingLanguage = _spellingLanguage;
 
-        //
-        // Удаляем предыдущего проверяющего
-        //
-        delete m_checker;
-        m_checker = 0;
+		//
+		// Удаляем предыдущего проверяющего
+		//
+		delete m_checker;
+		m_checker = 0;
 
-        //
-        // Получаем пути к файлам словарей
-        //
-        QString affDictionary = hunspellFilePath(m_spellingLanguage, Affinity);
-        QString dicDictionary = hunspellFilePath(m_spellingLanguage, Dictionary);
+		//
+		// Получаем пути к файлам словарей
+		//
+		QString affDictionary = hunspellFilePath(m_spellingLanguage, Affinity);
+		QString dicDictionary = hunspellFilePath(m_spellingLanguage, Dictionary);
 
-        const QFileInfo affFileInfo(affDictionary);
-        const QFileInfo dicFileInfo(dicDictionary);
-        if (affFileInfo.exists() && affFileInfo.size() > 0
-            && dicFileInfo.exists() && dicFileInfo.size() > 0) {
-            //
-            // Создаём нового проверяющего
-            //
-            m_checker = new Hunspell(affDictionary.toLocal8Bit().constData(),
-                                     dicDictionary.toLocal8Bit().constData());
-            m_checkerTextCodec = QTextCodec::codecForName(m_checker->get_dic_encoding());
+		const QFileInfo affFileInfo(affDictionary);
+		const QFileInfo dicFileInfo(dicDictionary);
+		if (affFileInfo.exists() && affFileInfo.size() > 0
+			&& dicFileInfo.exists() && dicFileInfo.size() > 0) {
+			//
+			// Создаём нового проверяющего
+			//
+			m_checker = new Hunspell(affDictionary.toLocal8Bit().constData(),
+									 dicDictionary.toLocal8Bit().constData());
+			m_checkerTextCodec = QTextCodec::codecForName(m_checker->get_dic_encoding());
 
-            //
-            // Проверяющий обязательно должен быть создан
-            //
-            Q_ASSERT(m_checker);
+			//
+			// Проверяющий обязательно должен быть создан
+			//
+			Q_ASSERT(m_checker);
 
-            //
-            // Загружаем слова из пользовательского словаря
-            //
-            if (!m_userDictionaryPath.isNull()) {
-                QFile userDictonaryFile(m_userDictionaryPath);
-                if (userDictonaryFile.open(QIODevice::ReadOnly)) {
-                    QTextStream stream(&userDictonaryFile);
-                    for(QString word = stream.readLine();
-                        !word.isEmpty();
-                        word = stream.readLine()) {
-                        addWordToChecker(word);
-                    }
-                    userDictonaryFile.close();
-                }
-            }
-        }
-    }
+			//
+			// Загружаем слова из пользовательского словаря
+			//
+			if (!m_userDictionaryPath.isNull()) {
+				QFile userDictonaryFile(m_userDictionaryPath);
+				if (userDictonaryFile.open(QIODevice::ReadOnly)) {
+					QTextStream stream(&userDictonaryFile);
+					for(QString word = stream.readLine();
+						!word.isEmpty();
+                        word = stream.readLine().toLower()) {
+						addWordToChecker(word);
+					}
+					userDictonaryFile.close();
+				}
+			}
+		}
+	}
 }
 
 bool SpellChecker::spellCheckWord(const QString& _word) const
