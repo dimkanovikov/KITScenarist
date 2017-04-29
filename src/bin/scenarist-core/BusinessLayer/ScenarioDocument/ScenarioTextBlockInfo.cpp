@@ -60,36 +60,18 @@ void ScenarioTextBlockInfo::setTitle(const QString& _title)
 	}
 }
 
-QString ScenarioTextBlockInfo::description(bool htmlEscaped) const
+QString ScenarioTextBlockInfo::description() const
 {
-	QString resultDescription = m_description;
-	if (htmlEscaped) {
-		resultDescription = TextEditHelper::toHtmlEscaped(resultDescription);
-	}
-
-	return resultDescription;
+    return m_description;
 }
 
-void ScenarioTextBlockInfo::setDescription(const QString& _description, bool htmlEscaped)
+void ScenarioTextBlockInfo::setDescription(const QString& _description)
 {
-	//
-	// При необходимости избавимся от html-преобразованных символов
-	//
-	QString inputDescription = _description;
-	if (htmlEscaped) {
-		inputDescription = TextEditHelper::fromHtmlEscaped(inputDescription);
-	}
-
-	//
-	// Уберём лишнее
-	//
-	inputDescription = TextEditHelper::removeDocumentTags(inputDescription);
-
 	//
 	// Обновим описание, если он изменился
 	//
-	if (m_description != inputDescription) {
-		m_description = inputDescription;
+    if (m_description != _description) {
+        m_description = _description;
 	}
 }
 

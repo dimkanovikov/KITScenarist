@@ -170,7 +170,7 @@ namespace UserInterface
         void initConnections() override;
 
 	private:
-		Ui::ExportDialog* ui;
+		Ui::ExportDialog* m_ui;
 
 		/**
 		 * @brief Имя файла для экспорта

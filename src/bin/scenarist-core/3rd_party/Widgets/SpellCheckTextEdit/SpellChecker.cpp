@@ -14,63 +14,72 @@
 
 QString SpellChecker::languageCode(SpellChecker::Language _language)
 {
-	QString code;
-	switch (_language) {
-		case Russian:
-			code = "ru_RU";
-			break;
-		case RussianWithYo:
-			code = "ru_RU_yo";
-			break;
-		case ArmenianEastern:
-			code = "arm_ARM_east";
-			break;
-		case ArmenianWestern:
-			code = "arm_ARM_west";
-			break;
-		case Belorussian:
-			code = "be_BY";
-			break;
-		case EnglishGB:
-			code = "en_GB";
-			break;
-		case EnglishUS:
-			code = "en_US";
-			break;
-		case French:
-			code = "fr_FR";
-			break;
-		case Kazakh:
-			code = "kk_KZ";
-			break;
-		case Spanish:
-			code = "es_ES";
-			break;
-		case Ukrainian:
-			code = "uk_UA";
-			break;
-		default:
-			break;
-	}
+    QString code;
+    switch (_language) {
+        case Russian:
+            code = "ru_RU";
+            break;
+        case RussianWithYo:
+            code = "ru_RU_yo";
+            break;
+        case ArmenianEastern:
+            code = "arm_ARM_east";
+            break;
+        case ArmenianWestern:
+            code = "arm_ARM_west";
+            break;
+        case Belorussian:
+            code = "be_BY";
+            break;
+        case EnglishGB:
+            code = "en_GB";
+            break;
+        case EnglishUS:
+            code = "en_US";
+            break;
+        case French:
+            code = "fr_FR";
+            break;
+        case Kazakh:
+            code = "kk_KZ";
+            break;
+        case Spanish:
+            code = "es_ES";
+            break;
+        case Ukrainian:
+            code = "uk_UA";
+            break;
+        case Portuguese:
+            code = "pt_PT";
+            break;
+        case PortugueseBrazilian:
+            code = "pt_BR";
+            break;
+        case Swedish:
+            code = "sv_SE";
+            break;
+        default:
+            break;
+    }
 
-	return code;
+    return code;
 }
 
 SpellChecker*SpellChecker::createSpellChecker(const QString& _userDictionaryPath)
 {
-	if (s_spellChecker == nullptr) {
-		s_spellChecker = new SpellChecker(_userDictionaryPath);
-	}
+    if (s_spellChecker == nullptr) {
+        s_spellChecker = new SpellChecker(_userDictionaryPath);
+    }
 
-	return s_spellChecker;
+    return s_spellChecker;
 }
 
 SpellChecker* SpellChecker::s_spellChecker = nullptr;
 
 SpellChecker::~SpellChecker()
 {
-	delete m_checker;
-	m_checker = 0;
+    delete m_checker;
+    m_checker = 0;
 }
 
 void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
@@ -127,51 +136,51 @@ void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 
 bool SpellChecker::spellCheckWord(const QString& _word) const
 {
-	bool spelled = false;
-	if (m_checker != 0) {
-		//
-		// Преобразуем слово в кодировку словаря и осуществим проверку
-		//
-		QByteArray encodedWordData = m_checkerTextCodec->fromUnicode(_word);
-		const char* encodedWord = encodedWordData.constData();
-		spelled = m_checker->spell(encodedWord);
-	}
-	return spelled;
+    bool spelled = false;
+    if (m_checker != 0) {
+        //
+        // Преобразуем слово в кодировку словаря и осуществим проверку
+        //
+        QByteArray encodedWordData = m_checkerTextCodec->fromUnicode(_word);
+        const char* encodedWord = encodedWordData.constData();
+        spelled = m_checker->spell(encodedWord);
+    }
+    return spelled;
 }
 
 QStringList SpellChecker::suggestionsForWord(const QString& _word) const
 {
-	QStringList suggestions;
+    QStringList suggestions;
 
-	if (m_checker != 0) {
-		QByteArray encodedWordData = m_checkerTextCodec->fromUnicode(_word);
-		const char* encodedWord = encodedWordData.constData();
-		//
-		// Проверяем необходимость получения списка вариантов
-		//
-		if (!m_checker->spell(encodedWord)) {
-			//
-			// Получим массив вариантов
-			//
-			char ** suggestionsArray;
-			int suggestionsCount = m_checker->suggest(&suggestionsArray, encodedWord);
-			if (suggestionsCount > 0)
-			{
-				//
-				// Преобразуем массив вариантов в список строк
-				//
-				for (int suggestionIndex = 0; suggestionIndex < suggestionsCount; suggestionIndex++) {
-					suggestions.append(m_checkerTextCodec->toUnicode(suggestionsArray[suggestionIndex]));
-				}
-				//
-				// Освобождаем память
-				//
-				m_checker->free_list(&suggestionsArray, suggestionsCount);
-			}
-		}
-	}
+    if (m_checker != 0) {
+        QByteArray encodedWordData = m_checkerTextCodec->fromUnicode(_word);
+        const char* encodedWord = encodedWordData.constData();
+        //
+        // Проверяем необходимость получения списка вариантов
+        //
+        if (!m_checker->spell(encodedWord)) {
+            //
+            // Получим массив вариантов
+            //
+            char ** suggestionsArray;
+            int suggestionsCount = m_checker->suggest(&suggestionsArray, encodedWord);
+            if (suggestionsCount > 0)
+            {
+                //
+                // Преобразуем массив вариантов в список строк
+                //
+                for (int suggestionIndex = 0; suggestionIndex < suggestionsCount; suggestionIndex++) {
+                    suggestions.append(m_checkerTextCodec->toUnicode(suggestionsArray[suggestionIndex]));
+                }
+                //
+                // Освобождаем память
+                //
+                m_checker->free_list(&suggestionsArray, suggestionsCount);
+            }
+        }
+    }
 
-	return suggestions;
+    return suggestions;
 }
 
 //QMap<QString, QSet<QString> > SpellChecker::synonimsForWord(const QString& _word) const
@@ -234,84 +243,84 @@ QStringList SpellChecker::suggestionsForWord(const QString& _word) const
 
 void SpellChecker::ignoreWord(const QString& _word) const
 {
-	//
-	// Добавим слово в словарный запас проверяющего на текущую сессию
-	//
-	addWordToChecker(_word);
+    //
+    // Добавим слово в словарный запас проверяющего на текущую сессию
+    //
+    addWordToChecker(_word);
 }
 
 void SpellChecker::addWordToDictionary(const QString& _word) const
 {
-	//
-	// Добавим слово в словарный запас проверяющего
-	//
-	addWordToChecker(_word);
+    //
+    // Добавим слово в словарный запас проверяющего
+    //
+    addWordToChecker(_word);
 
-	//
-	// Запишем слово в пользовательский словарь
-	//
-	if (!m_userDictionaryPath.isNull()) {
-		QFile userDictonaryFile(m_userDictionaryPath);
-		if (userDictonaryFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
-			QTextStream stream(&userDictonaryFile);
-			stream << _word << "\n";
-			userDictonaryFile.close();
-		}
-	}
+    //
+    // Запишем слово в пользовательский словарь
+    //
+    if (!m_userDictionaryPath.isNull()) {
+        QFile userDictonaryFile(m_userDictionaryPath);
+        if (userDictonaryFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
+            QTextStream stream(&userDictonaryFile);
+            stream << _word << "\n";
+            userDictonaryFile.close();
+        }
+    }
 }
 
 SpellChecker::Language SpellChecker::spellingLanguage() const
 {
-	return m_spellingLanguage;
+    return m_spellingLanguage;
 }
 
 SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
-	m_spellingLanguage(SpellChecker::Undefined),
-	m_checker(0),
-	m_checkerTextCodec(0),
-	m_userDictionaryPath(_userDictionaryPath)
+    m_spellingLanguage(SpellChecker::Undefined),
+    m_checker(0),
+    m_checkerTextCodec(0),
+    m_userDictionaryPath(_userDictionaryPath)
 {
 }
 
 QString SpellChecker::hunspellFilePath(SpellChecker::Language _language,
-		SpellChecker::FileType _fileType) const
+        SpellChecker::FileType _fileType) const
 {
-	//
-	// Получим файл со словарём в зависимости от выбранного языка,
-	// по-умолчанию используется русский язык
-	//
-	QString fileName = languageCode(_language);
+    //
+    // Получим файл со словарём в зависимости от выбранного языка,
+    // по-умолчанию используется русский язык
+    //
+    QString fileName = languageCode(_language);
 
-	//
-	// Определим расширение файла, в зависимости от словаря
-	//
-	fileName += _fileType == Affinity ? ".aff" : ".dic";
+    //
+    // Определим расширение файла, в зависимости от словаря
+    //
+    fileName += _fileType == Affinity ? ".aff" : ".dic";
 
-	//
-	// Сохраним словарь на диск во папку программы, если такового ещё нет
-	//
-	// ... определяемся с именем файла
-	//
-	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
-	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + fileName;
-	return dictionaryFilePath;
+    //
+    // Сохраним словарь на диск во папку программы, если такового ещё нет
+    //
+    // ... определяемся с именем файла
+    //
+    QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
+    QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + fileName;
+    return dictionaryFilePath;
 }
 
 QString SpellChecker::mythesFilePath(SpellChecker::Language _language, FileType _fileType) const
 {
-	//
-	// Словари хранятся в файлах ресурсов, но для ханспела нужны реальные файлы
-	// поэтому, сохраняем файл из ресурсов на диск
-	//
-	const QString rcFilePath = ":/Thesaurus/MyThesDictionaries/";
-	QString fileName;
+    //
+    // Словари хранятся в файлах ресурсов, но для ханспела нужны реальные файлы
+    // поэтому, сохраняем файл из ресурсов на диск
+    //
+    const QString rcFilePath = ":/Thesaurus/MyThesDictionaries/";
+    QString fileName;
 
-	//
-	// Получим файл со словарём в зависимости от выбранного языка,
-	// по-умолчанию используется русский язык
-	//
-	fileName += languageCode(_language);
+    //
+    // Получим файл со словарём в зависимости от выбранного языка,
+    // по-умолчанию используется русский язык
+    //
+    fileName += languageCode(_language);
 //	switch (_language) {
 //		default:
 //		case Russian:
@@ -334,53 +343,53 @@ QString SpellChecker::mythesFilePath(SpellChecker::Language _language, FileType 
 //			break;
 //	}
 
-	//
-	// Определим расширение файла, в зависимости от словаря
-	//
-	fileName += _fileType == Indexes ? ".idx" : ".dat";
+    //
+    // Определим расширение файла, в зависимости от словаря
+    //
+    fileName += _fileType == Indexes ? ".idx" : ".dat";
 
-	//
-	// Сохраним словарь на диск во папку программы, если такового ещё нет
-	//
-	// ... определяемся с именем файла
-	//
-	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "MyThes";
-	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + fileName;
-	//
-	// ... создаём папку для пользовательских файлов
-	//
-	QDir rootFolder = QDir::root();
-	rootFolder.mkpath(hunspellDictionariesFolderPath);
-	//
-	//  создаём файл если такого ещё нет
-	//
-	if (!QFile::exists(dictionaryFilePath)) {
-		QFile resourseFile(rcFilePath + fileName);
-		resourseFile.open(QIODevice::ReadOnly);
-		//
-		QFile dictionaryFile(dictionaryFilePath);
-		dictionaryFile.open(QIODevice::WriteOnly);
-		dictionaryFile.write(resourseFile.readAll());
-		//
-		resourseFile.close();
-		dictionaryFile.close();
-	}
+    //
+    // Сохраним словарь на диск во папку программы, если такового ещё нет
+    //
+    // ... определяемся с именем файла
+    //
+    QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "MyThes";
+    QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + fileName;
+    //
+    // ... создаём папку для пользовательских файлов
+    //
+    QDir rootFolder = QDir::root();
+    rootFolder.mkpath(hunspellDictionariesFolderPath);
+    //
+    //  создаём файл если такого ещё нет
+    //
+    if (!QFile::exists(dictionaryFilePath)) {
+        QFile resourseFile(rcFilePath + fileName);
+        resourseFile.open(QIODevice::ReadOnly);
+        //
+        QFile dictionaryFile(dictionaryFilePath);
+        dictionaryFile.open(QIODevice::WriteOnly);
+        dictionaryFile.write(resourseFile.readAll());
+        //
+        resourseFile.close();
+        dictionaryFile.close();
+    }
 
-	//
-	// TODO: логирование корректности записи файла
-	//
+    //
+    // TODO: логирование корректности записи файла
+    //
 
-	return dictionaryFilePath;
+    return dictionaryFilePath;
 }
 
 void SpellChecker::addWordToChecker(const QString& _word) const
 {
-	if (m_checker != 0) {
-		//
-		// Преобразуем слово в кодировку словаря и добавляем его в словарный запас
-		//
-		QByteArray encodedWord = m_checkerTextCodec->fromUnicode(_word);
-		m_checker->add(encodedWord.constData());
-	}
+    if (m_checker != 0) {
+        //
+        // Преобразуем слово в кодировку словаря и добавляем его в словарный запас
+        //
+        QByteArray encodedWord = m_checkerTextCodec->fromUnicode(_word);
+        m_checker->add(encodedWord.constData());
+    }
 }

@@ -71,7 +71,7 @@ void ScenarioSchemeItemDialog::setCardTitle(const QString& _title)
 
 QString ScenarioSchemeItemDialog::cardDescription() const
 {
-    return m_ui->cardDescription->toHtml();
+    return m_ui->cardDescription->toPlainText();
 }
 
 void ScenarioSchemeItemDialog::setCardDescription(const QString& _description)

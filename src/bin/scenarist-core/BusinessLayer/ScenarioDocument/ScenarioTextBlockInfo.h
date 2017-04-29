@@ -56,12 +56,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить описание
 		 */
-		QString description(bool htmlEscaped = false) const;
+        QString description() const;
 
 		/**
 		 * @brief Установить описание
 		 */
-		void setDescription(const QString& _description, bool htmlEscaped = false);
+        void setDescription(const QString& _description);
 
 		/**
 		 * @brief Создать дубликат

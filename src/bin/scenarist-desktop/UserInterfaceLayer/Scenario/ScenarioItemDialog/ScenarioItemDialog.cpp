@@ -66,7 +66,7 @@ QColor ScenarioItemDialog::color() const
 
 QString ScenarioItemDialog::description() const
 {
-    return m_description->toHtml();
+    return m_description->toPlainText();
 }
 
 void ScenarioItemDialog::aboutUpdateCurrentTextStyle()

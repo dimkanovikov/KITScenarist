@@ -33,7 +33,7 @@ void ResearchItemDialog::setInsertParent(const QString& _parentName)
         m_ui->isInsert->setText(QString::null);
     }
 }
-#include <QDebug>
+
 void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocationAllow)
 {
     disconnect(m_ui->character, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
@@ -201,6 +201,8 @@ QWidget* ResearchItemDialog::focusedOnExec() const
 
 void ResearchItemDialog::initView()
 {
+    m_ui->otherType->setEnabled(m_ui->other->isChecked());
+
 #ifdef Q_OS_WIN
     //
     // В виндовс XP webengine не работает, поэтому скрываем пункт с добавлением ссылки

@@ -109,6 +109,11 @@ namespace UserInterface
 		 * @brief Исходный текст описания, используется для контроля изменений
 		 */
 		QString m_sourceDescription;
+
+        /**
+         * @brief Находимся ли в моменте изменения описания сцены
+         */
+        int m_inDescriptionChange = 0;
 	};
 }
 

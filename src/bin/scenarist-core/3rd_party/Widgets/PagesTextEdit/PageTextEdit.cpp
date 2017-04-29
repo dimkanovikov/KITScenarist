@@ -1154,6 +1154,7 @@ void PageTextEdit::setPlainText(const QString &text)
 {
     Q_D(PageTextEdit);
     d->control->setPlainText(text);
+    d->updateDocumentGeometry();
     d->preferRichText = false;
 }
 
@@ -1196,6 +1197,7 @@ void PageTextEdit::setHtml(const QString &text)
 {
     Q_D(PageTextEdit);
     d->control->setHtml(text);
+    d->updateDocumentGeometry();
     d->preferRichText = true;
 }
 
