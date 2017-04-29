@@ -11,6 +11,10 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 
+namespace {
+    const char* focusProperty = "focusedOnExec";
+}
+
 
 QString QLightBoxInputDialog::getText(QWidget* _parent, const QString& _title, const QString& _label, const QString& _text)
 {
@@ -18,6 +22,7 @@ QString QLightBoxInputDialog::getText(QWidget* _parent, const QString& _title, c
     dialog.setWindowTitle(_title);
     dialog.m_label->setText(_label);
     dialog.m_lineEdit->setText(_text);
+    dialog.m_lineEdit->setProperty(::focusProperty, true);
     dialog.m_textEdit->hide();
     dialog.m_listWidget->hide();
 
@@ -35,6 +40,7 @@ QString QLightBoxInputDialog::getLongText(QWidget* _parent, const QString& _titl
     dialog.m_label->setText(_label);
     dialog.m_lineEdit->hide();
     dialog.m_textEdit->setPlainText(_text);
+    dialog.m_textEdit->setProperty(::focusProperty, true);
     dialog.m_listWidget->hide();
 
     QString result;
@@ -141,9 +147,9 @@ void QLightBoxInputDialog::initConnections()
 QWidget* QLightBoxInputDialog::focusedOnExec() const
 {
     QWidget* focusTarget = m_label;
-    if (m_lineEdit->isVisible()) {
+    if (m_lineEdit->property(::focusProperty).toBool()) {
         focusTarget = m_lineEdit;
-    } else if (m_textEdit->isVisible()) {
+    } else if (m_textEdit->property(::focusProperty).toBool()) {
         focusTarget = m_textEdit;
     }
 

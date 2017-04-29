@@ -28,6 +28,12 @@ public:
      */
     void setVisible(bool _visible);
 
+signals:
+    /**
+     * @brief Диалог показан
+     */
+    void showed();
+
 protected:
     /**
      * @brief Переопределяется для отслеживания собитий родительского виджета

@@ -179,6 +179,13 @@ void QLightBoxWidget::animate(bool _visible)
     foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
         scrollArea->setGraphicsEffect(nullptr);
     }
+
+    //
+    // Уведомляем клиентов, что диалог был показан
+    //
+    if (_visible) {
+        emit showed();
+    }
 }
 
 void QLightBoxWidget::updateSelf()

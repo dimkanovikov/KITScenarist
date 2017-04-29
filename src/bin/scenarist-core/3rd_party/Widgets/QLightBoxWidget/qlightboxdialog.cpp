@@ -40,10 +40,6 @@ void QLightBoxDialog::setVisible(bool _visible)
 {
     init();
 
-    if (_visible) {
-        focusedOnExec()->setFocus();
-    }
-
     QLightBoxWidget::setVisible(_visible);
 }
 
@@ -139,6 +135,11 @@ void QLightBoxDialog::init()
 
         initView();
         initConnections();
+
+        //
+        // Устанавливаем фокус после того, как диалог будет полностью показан
+        //
+        connect(this, &QLightBoxDialog::showed, [=] { focusedOnExec()->setFocus(); });
 
         //
         // Настраиваем заголовок
