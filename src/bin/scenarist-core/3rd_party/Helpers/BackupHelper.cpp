@@ -42,7 +42,7 @@ void BackupHelper::setBackupDir(const QString& _dir)
 	}
 }
 
-void BackupHelper::saveBackup(const QString& _filePath)
+void BackupHelper::saveBackup(const QString& _filePath, const QString& _newName)
 {
 	if (m_isActive
 		&& !m_isInProgress) {
@@ -62,12 +62,13 @@ void BackupHelper::saveBackup(const QString& _filePath)
 		}
 
 		QFileInfo fileInfo(_filePath);
-		const QString tmpBackupFileName =
-				QString("%1%2.backup.tmp.%3").arg(backupPath, fileInfo.completeBaseName(), fileInfo.completeSuffix());
+        const QString backupBaseName = _newName.isEmpty() ? fileInfo.completeBaseName() : _newName;
+        const QString tmpBackupFileName =
+                QString("%1%2.backup.tmp.%3").arg(backupPath, backupBaseName, fileInfo.completeSuffix());
 		const QString backupFileName =
-				QString("%1%2.full.backup.%3").arg(backupPath, fileInfo.completeBaseName(), fileInfo.completeSuffix());
+                QString("%1%2.full.backup.%3").arg(backupPath, backupBaseName, fileInfo.completeSuffix());
 		const QString backupVersionsFileName =
-				QString("%1%2.versions.backup.%3").arg(backupPath, fileInfo.completeBaseName(), BACKUP_VERSIONS_EXTENSION);
+                QString("%1%2.versions.backup.%3").arg(backupPath, backupBaseName, BACKUP_VERSIONS_EXTENSION);
 
 		//
 		// Копируем файл во временную резервную копию

@@ -25,7 +25,7 @@ public:
 	/**
 	 * @brief Создать резервную копию файла
 	 */
-	void saveBackup(const QString& _filePath);
+    void saveBackup(const QString& _filePath, const QString& _newName = "");
 
 private:
 	/**
