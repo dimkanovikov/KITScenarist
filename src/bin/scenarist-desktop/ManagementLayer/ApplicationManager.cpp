@@ -534,6 +534,10 @@ void ApplicationManager::aboutSave()
             QString baseBackupName = "";
             const Project& currentProject = ProjectsManager::currentProject();
             if (currentProject.isRemote()) {
+                //
+                // Для удаленных проектов имя бекапа - имя проекта + id проекта
+                // В случае, если имя удаленного проекта изменилось, то бэкапы со старым именем останутся навсегда
+                //
                 baseBackupName = QString("%1 [%2]").arg(currentProject.name()).arg(currentProject.id());
             }
             QtConcurrent::run(&m_backupHelper, &BackupHelper::saveBackup, ProjectsManager::currentProject().path(), baseBackupName);
