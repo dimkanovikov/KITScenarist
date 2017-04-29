@@ -102,17 +102,12 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos, QWidget* _paren
 		//
         QString wordWithoutPunct = removePunctutaion(wordUnderCursor);
 
-        QString wordWithoutPunctInCorrectRegister;
+        QString wordWithoutPunctInCorrectRegister = wordWithoutPunct;
         if (cursorForPosition(_pos).charFormat().fontCapitalization() == QFont::AllUppercase) {
             //
             // Приведем к верхнему регистру
             //
             wordWithoutPunctInCorrectRegister = wordWithoutPunct.toUpper();
-        } else {
-            //
-            // Приведем к нижнему регистру
-            //
-            wordWithoutPunctInCorrectRegister = wordWithoutPunct.toLower();
         }
 
 		//
