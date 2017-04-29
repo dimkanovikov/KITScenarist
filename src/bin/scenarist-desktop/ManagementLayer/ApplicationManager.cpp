@@ -421,6 +421,12 @@ void ApplicationManager::createNewRemoteProject(const QString& _projectName, con
 void ApplicationManager::aboutSaveAs()
 {
     //
+    // Освобождаем очередь событий, чтобы диалог сохранения успел открыться до
+    // следующей проверки соединения. В противном случае диалог закрывается на уровне ОС
+    //
+    QApplication::processEvents();
+
+    //
     // Получим имя файла для сохранения
     //
     QString saveAsProjectFileName =
