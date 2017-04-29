@@ -716,7 +716,7 @@ void ScenarioManager::aboutUpdateCurrentSceneTitle(const QString& _title)
 
 void ScenarioManager::aboutUpdateCurrentSceneDescription(const QString& _description)
 {
-    workingScenario()->setItemDescriptionAtPosition(cursorPosition, _description);
+    workingScenario()->setItemDescriptionAtPosition(m_textEditManager->cursorPosition(), _description);
 }
 
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)

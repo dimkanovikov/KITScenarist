@@ -332,7 +332,9 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
                     if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
                         cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
                         cursor.removeSelectedText();
-                        cursor.deleteChar();
+//                        cursor.deleteChar();
+
+                        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
                     }
                     //
                     // ... нет - идём к следующему блоку
@@ -357,7 +359,16 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             else {
                 cursor.movePosition(QTextCursor::EndOfBlock);
             }
-            cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
+            //
+            // ...
+            //
+            const QTextBlock nextBlock = cursor.block().next();
+            if (nextBlock.text().isEmpty()
+                && ScenarioBlockStyle::forBlock(nextBlock) == ScenarioBlockStyle::SceneDescription) {
+                cursor.movePosition(QTextCursor::NextBlock);
+            } else {
+                cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
+            }
             //
             // ... вставляем новый
             //
@@ -372,7 +383,6 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
                     cursor.insertText(descriptionLine);
                 }
             }
-            cursor.setPosition(_position);
             cursor.endEditBlock();
         }
 
@@ -971,7 +981,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
     int openedFolders = 0; // кол-во открытых папок
     cursor.movePosition(QTextCursor::NextBlock);
     while (!cursor.atEnd()
-           && cursor.position() < _itemEndPos) {
+           && cursor.position() <= _itemEndPos) {
         cursor.movePosition(QTextCursor::EndOfBlock);
 
         ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
