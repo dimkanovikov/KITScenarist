@@ -2021,7 +2021,7 @@ You can try to reload update.</source>
     </message>
     <message>
         <source>Change project name</source>
-        <translation type="unfinished">Змінити назву проекту</translation>
+        <translation>Змінити назву проекту</translation>
     </message>
     <message>
         <source>Remove project</source>
