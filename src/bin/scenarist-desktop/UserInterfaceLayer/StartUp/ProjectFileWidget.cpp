@@ -39,6 +39,7 @@ void ProjectFileWidget::configureOptions(bool _isRemote, bool _isOwner)
     m_ui->change->setVisible(_isRemote && _isOwner);
     m_ui->remove->setVisible(_isRemote);
     m_ui->share->setVisible(_isRemote && _isOwner);
+    m_ui->shareDetails->setVisible(_isRemote);
 
     m_ui->hide->setVisible(!_isRemote);
 }
@@ -61,20 +62,16 @@ void ProjectFileWidget::setMouseHover(bool _hover)
     //
     QString styleSheet;
     if (_hover) {
-        styleSheet = "background-color: palette(alternate-base);";
+        styleSheet = "QFrame { background-color: palette(alternate-base); }";
     } else {
-        styleSheet = "background-color: palette(base);";
+        styleSheet = "QFrame { background-color: palette(base); }";
     }
     setStyleSheet(styleSheet);
 
     //
-    // Показываем, или скрываем кнопку параметров
+    // Показываем, или скрываем кнопки параметров
     //
-    if (_hover || m_ui->options->isChecked()) {
-        m_ui->options->show();
-    } else {
-        m_ui->options->hide();
-    }
+    m_ui->optionsPanel->setVisible(_hover);
 }
 
 void ProjectFileWidget::enterEvent(QEvent* _event)
@@ -107,30 +104,31 @@ void ProjectFileWidget::initView()
     m_ui->remove->setIcons(m_ui->remove->icon());
     m_ui->hide->setIcons(m_ui->hide->icon());
     m_ui->share->setIcons(m_ui->share->icon());
-    m_ui->options->setIcons(m_ui->options->icon());
-
-    m_ui->optionsPanel->hide();
+    m_ui->shareDetails->setIcons(m_ui->shareDetails->icon());
 
     m_ui->users->hide();
 }
 
 void ProjectFileWidget::initConnections()
 {
-    connect(m_ui->options, &FlatButton::toggled, [=] (bool _toggled) {
-        const bool FIX = true;
-        WAF::Animation::slide(m_ui->optionsPanel, WAF::FromRightToLeft, FIX, !FIX, _toggled);
-        if (m_ui->usersLayout->count() > 0) {
-            WAF::Animation::slide(m_ui->users, WAF::FromBottomToTop, !FIX, !FIX, _toggled);
-        }
-    });
-
     connect(m_ui->change, &FlatButton::clicked, this, &ProjectFileWidget::editClicked);
     connect(m_ui->remove, &FlatButton::clicked, this, &ProjectFileWidget::removeClicked);
     connect(m_ui->hide, &FlatButton::clicked, this, &ProjectFileWidget::hideClicked);
     connect(m_ui->share, &FlatButton::clicked, this, &ProjectFileWidget::shareClicked);
+    connect(m_ui->shareDetails, &FlatButton::toggled, [=] (bool _toggled) {
+        const bool FIX = true;
+        if (m_ui->usersLayout->count() > 0) {
+            WAF::Animation::slide(m_ui->users, WAF::FromBottomToTop, !FIX, !FIX, _toggled);
+        }
+    });
 }
 
 void ProjectFileWidget::initStylesheet()
 {
     m_ui->filePath->setStyleSheet("color: palette(mid);");
+    m_ui->change->setProperty("projectAction", true);
+    m_ui->remove->setProperty("projectAction", true);
+    m_ui->hide->setProperty("projectAction", true);
+    m_ui->share->setProperty("projectAction", true);
+    m_ui->shareDetails->setProperty("projectAction", true);
 }

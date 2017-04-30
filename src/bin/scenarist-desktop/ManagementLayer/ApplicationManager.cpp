@@ -767,6 +767,16 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
     }
 }
 
+void ApplicationManager::hideLocalProject(const QModelIndex& _index)
+{
+    const QString question = tr("Are you sure to hide project <b>%1</b> from recent?")
+                             .arg(m_projectsManager->project(_index).name());
+    if (QLightBoxMessage::question(m_view, QString::null, question)
+        == QDialogButtonBox::Yes) {
+        m_projectsManager->hideProjectFromLocal(_index);
+    }
+}
+
 void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 {
     //
@@ -822,8 +832,7 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     // Если пользователь является владельцем файла, то он может его удалить
     //
     if (project.isUserOwner()) {
-        if (QLightBoxMessage::question(m_view, tr("Project removing"),
-                                       tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
+        if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
             m_synchronizationManager->removeProject(project.id());
         }
@@ -832,8 +841,7 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     // А если нет, то только отписаться от него
     //
     else {
-        if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
-                                       tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
+        if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
             m_synchronizationManager->unshareProject(project.id());
         }
@@ -854,8 +862,7 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
 {
     const bool IS_REMOTE = false;
     const Project project = m_projectsManager->project(_index, IS_REMOTE);
-    if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
-                                   tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>?")
+    if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>?")
                                    .arg(_userEmail)
                                    .arg(project.name()))
         == QDialogButtonBox::Yes) {
@@ -1769,7 +1776,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_projectsManager, &ProjectsManager::refreshProjects);
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManager, &SynchronizationManager::loadProjects);
     connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
-    connect(m_startUpManager, &StartUpManager::hideRecentProjectRequested, m_projectsManager, &ProjectsManager::hideProjectFromLocal);
+    connect(m_startUpManager, &StartUpManager::hideRecentProjectRequested, this, &ApplicationManager::hideLocalProject);
     connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
     connect(m_startUpManager, &StartUpManager::editRemoteProjectRequested, this, &ApplicationManager::editRemoteProjectName);
     connect(m_startUpManager, &StartUpManager::removeRemoteProjectRequested, this, &ApplicationManager::removeRemoteProject);

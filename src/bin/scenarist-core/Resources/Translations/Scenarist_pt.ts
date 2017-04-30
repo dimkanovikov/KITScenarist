@@ -155,6 +155,10 @@
         <source>OpenDocument Text</source>
         <translation>Texto OpenDocument</translation>
     </message>
+    <message>
+        <source>Final Draft template</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::CastReport</name>
@@ -1250,7 +1254,7 @@
     </message>
     <message>
         <source>Project removing</source>
-        <translation>Remoção do projeto</translation>
+        <translation type="vanished">Remoção do projeto</translation>
     </message>
     <message>
         <source>Are you sure to remove project &lt;b&gt;%1&lt;/b&gt;?</source>
@@ -1258,7 +1262,7 @@
     </message>
     <message>
         <source>Project unsubscribing</source>
-        <translation>Cancelamento da inscrição do projeto</translation>
+        <translation type="vanished">Cancelamento da inscrição do projeto</translation>
     </message>
     <message>
         <source>Are you sure to remove your subscription to project &lt;b&gt;%1&lt;/b&gt;?</source>
@@ -1511,6 +1515,10 @@ O projeto não foi sincronizado.</translation>
     <message>
         <source>New window</source>
         <translation>Nova janela</translation>
+    </message>
+    <message>
+        <source>Are you sure to hide project &lt;b&gt;%1&lt;/b&gt; from recent?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1917,6 +1925,26 @@ Você pode tentar recarregar a atualização.</translation>
     <message>
         <source>/file/path</source>
         <translation>/arquivo/caminho</translation>
+    </message>
+    <message>
+        <source>Change project name</source>
+        <translation type="unfinished">Mudar o nome do projeto</translation>
+    </message>
+    <message>
+        <source>Remove project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide project from recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add cowriter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show cowriters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4001,6 +4029,18 @@ Por favor, faça o download de uma nova versão deste &lt;a href = &quot;https:/
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese (Brazil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese (Portugal)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

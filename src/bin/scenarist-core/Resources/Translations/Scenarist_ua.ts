@@ -151,6 +151,10 @@
         <source>OpenDocument Text</source>
         <translation>OpenDocument Text</translation>
     </message>
+    <message>
+        <source>Final Draft template</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::CastReport</name>
@@ -1109,7 +1113,7 @@
     </message>
     <message>
         <source>Português</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1454,7 +1458,7 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <source>Project removing</source>
-        <translation>Проект видалено</translation>
+        <translation type="vanished">Проект видалено</translation>
     </message>
     <message>
         <source>Are you sure to remove project &lt;b&gt;%1&lt;/b&gt;?</source>
@@ -1462,7 +1466,7 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <source>Project unsubscribing</source>
-        <translation>Проект відписано</translation>
+        <translation type="vanished">Проект відписано</translation>
     </message>
     <message>
         <source>Are you sure to remove your subscription to project &lt;b&gt;%1&lt;/b&gt;?</source>
@@ -1577,6 +1581,10 @@ Project didn&apos;t synchronized.</source>
         <translation>Ви вичерпали весь доступний для використання простір на сервері.
 
 Проект не синхронізовано.</translation>
+    </message>
+    <message>
+        <source>Are you sure to hide project &lt;b&gt;%1&lt;/b&gt; from recent?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2010,6 +2018,26 @@ You can try to reload update.</source>
     <message>
         <source>/file/path</source>
         <translation>/файл/шлях</translation>
+    </message>
+    <message>
+        <source>Change project name</source>
+        <translation type="unfinished">Змінити назву проекту</translation>
+    </message>
+    <message>
+        <source>Remove project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide project from recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add cowriter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show cowriters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4095,6 +4123,18 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese (Brazil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese (Portugal)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

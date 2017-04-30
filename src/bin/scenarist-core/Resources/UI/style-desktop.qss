@@ -97,6 +97,23 @@ QToolButton::menu-arrow[inTopPanel=true] {
     image: url(:Interface/UI/downarrow_THEME_POSTFIX.png);
 }
 
+QToolButton[projectAction=true] {
+    background: palette(alternate-base);
+    color: palette(button-text);
+    border: none;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+QToolButton:hover[projectAction=true] {
+    background: palette(dark);
+}
+
+QToolButton:pressed[projectAction=true] {
+    background: palette(dark);
+    padding-top: 1px;
+}
+
 FlatButton[hasMenu=true] {
     padding-left: 6px;
     padding-right: 22px;
@@ -366,7 +383,6 @@ QTabBar::tab:!selected:hover[inTopPanel=true] {
 QScrollBar {
     border: none;
     background: palette(button);
-    border-radius: 6px;
 }
 
 
@@ -384,7 +400,6 @@ QScrollBar::handle {
     background: palette(dark);
     min-height: 0px;
     min-width: 0px;
-    border-radius: 6px;
     border: none;
 }
 
@@ -411,8 +426,6 @@ QScrollBar::sub-line:vertical {
 
 QScrollBar::sub-line:vertical:hover {
     background: palette(dark);
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
 }
 
 QScrollBar::add-line:vertical {
@@ -422,8 +435,6 @@ QScrollBar::add-line:vertical {
 
 QScrollBar::add-line:vertical:hover {
     background: palette(dark);
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
 }
 
 /*
