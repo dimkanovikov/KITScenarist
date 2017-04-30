@@ -132,7 +132,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
     //
     // Установка постраничного режима так же тянет за собой ряд настроек
     //
-    QMarginsF pageMargins(15, 5, 5, 5);
+    QMarginsF pageMargins(15, 5, 12, 5);
     Qt::Alignment pageNumbersAlign;
     if (_use) {
         m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());

@@ -809,6 +809,7 @@ void ScenarioManager::aboutSetItemColors(const QModelIndex& _itemIndex, const QS
 
     const int position = workingScenario()->itemStartPosition(_itemIndex);
     workingScenario()->setItemColorsAtPosition(position, _colors);
+    m_textEditManager->view()->update();
 
     emit scenarioChanged();
 }
