@@ -166,7 +166,12 @@ QString ScenarioCardsView::beforeNewItemUuid() const
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 {
     m_addCard->setEnabled(!_isCommentOnly);
+    m_removeCard->setEnabled(!_isCommentOnly);
     m_sort->setEnabled(!_isCommentOnly);
+    m_cards->setReadOnly(_isCommentOnly);
+    for (QShortcut* shortcut : findChildren<QShortcut*>()) {
+        shortcut->setEnabled(!_isCommentOnly);
+    }
 }
 
 void ScenarioCardsView::resortCards()

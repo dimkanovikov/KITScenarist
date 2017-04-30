@@ -375,11 +375,28 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
     m_ui->titlePageGenre->setReadOnly(_isCommentOnly);
     m_ui->titlePageYear->setReadOnly(_isCommentOnly);
     m_ui->synopsisText->setReadOnly(_isCommentOnly);
+    m_ui->characterName->setReadOnly(_isCommentOnly);
+    m_ui->characterRealName->setReadOnly(_isCommentOnly);
+    m_ui->characterDescription->setReadOnly(_isCommentOnly);
+    m_ui->locationName->setReadOnly(_isCommentOnly);
+    m_ui->locationDescription->setReadOnly(_isCommentOnly);
     m_ui->textName->setReadOnly(_isCommentOnly);
     m_ui->textDescription->setReadOnly(_isCommentOnly);
-    //
-    // FIXME: остальные редакторы
-    //
+    m_ui->mindMapName->setReadOnly(_isCommentOnly);
+    m_ui->mindMapToolbar->setEnabled(!_isCommentOnly);
+    m_ui->mindMap->setReadOnly(_isCommentOnly);
+    m_ui->imagesGalleryName->setReadOnly(_isCommentOnly);
+    m_ui->imagesGalleryPane->setReadOnly(_isCommentOnly);
+    m_ui->imageName->setReadOnly(_isCommentOnly);
+    m_ui->imageChange->setEnabled(!_isCommentOnly);
+//    m_ui->imageEdit->setReadOnly
+    m_ui->urlName->setReadOnly(_isCommentOnly);
+    m_ui->urlLink->setReadOnly(_isCommentOnly);
+    m_ui->addFolder->setEnabled(!_isCommentOnly);
+    m_ui->addText->setEnabled(!_isCommentOnly);
+    m_ui->addMindMap->setEnabled(!_isCommentOnly);
+    m_ui->addImagesGallery->setEnabled(!_isCommentOnly);
+    m_ui->addUrl->setEnabled(!_isCommentOnly);
     m_ui->searchWidget->setSearchOnly(_isCommentOnly);
 }
 

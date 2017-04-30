@@ -76,6 +76,11 @@ private:
 
 private:
     /**
+     * @brief Можно ли изменять содержимое
+     */
+    bool m_isReadOnly = false;
+
+    /**
      * @brief Последняя позиция мыши в момент скроллинга полотна
      */
     QPoint m_scrollingLastPos;

@@ -9,6 +9,10 @@
 #include <QVariant>
 #include <QVBoxLayout>
 
+namespace {
+    const QVector<QEvent::Type> editingEvents = { QEvent::MouseButtonPress, QEvent::MouseButtonDblClick, QEvent::KeyPress};
+}
+
 
 CardsView::CardsView(QWidget* _parent) :
     QWidget(_parent),
@@ -24,6 +28,11 @@ CardsView::CardsView(QWidget* _parent) :
 CardsView::~CardsView()
 {
     delete m_undoStack;
+}
+
+void CardsView::setReadOnly(bool _readOnly)
+{
+    m_view->setInteractive(!_readOnly);
 }
 
 void CardsView::setUseCorkboardBackground(bool _use)
