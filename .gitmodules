@@ -1,0 +1,3 @@
+[submodule "src/bin/scenarist-core"]
+	path = src/bin/scenarist-core
+	url = https://github.com/dimkanovikov/KITScenaristCore
