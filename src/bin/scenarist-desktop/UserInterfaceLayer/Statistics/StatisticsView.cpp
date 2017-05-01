@@ -72,7 +72,7 @@ namespace {
 
 StatisticsView::StatisticsView(QWidget* _parent) :
     QWidget(_parent),
-    m_leftTopEmptyLabel(new QLabel(this)),
+    m_leftTopEmptyLabel(new QLabel(tr("Statistics"), this)),
     m_rightTopEmptyLabel(new QLabel(this)),
     m_settings(new FlatButton(this)),
     m_print(new FlatButton(this)),

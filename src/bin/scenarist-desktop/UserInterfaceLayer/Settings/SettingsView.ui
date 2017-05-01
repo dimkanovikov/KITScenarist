@@ -45,7 +45,7 @@
        <item>
         <widget class="QLabel" name="topLeftEmptyLabel">
          <property name="text">
-          <string/>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
