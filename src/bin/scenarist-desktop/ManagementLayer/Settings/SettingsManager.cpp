@@ -282,11 +282,11 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 	//
 	// ... удалим файлы, если они пустые (баг прошлых версий)
 	//
-	if (affFileInfo.size() == 0) {
+    if (affFileInfo.size() < 100) {
 		QFile::remove(affFileInfo.absoluteFilePath());
 		affFileInfo.refresh();
 	}
-	if (dicFileInfo.size() == 0) {
+    if (dicFileInfo.size() < 100) {
 		QFile::remove(dicFileInfo.absoluteFilePath());
 		dicFileInfo.refresh();
 	}
@@ -299,7 +299,8 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 		// ... покажем прелоадер
 		//
 		QLightBoxProgress progress(m_view);
-		progress.showProgress(tr("Dictionary loading"), tr("Please wait, loading of spell checking dictionary can take a few minutes."));
+        progress.showProgress(tr("Dictionary loading"), tr("Please wait, loading of spell checking dictionary can take a few minutes."));
+        progress.setProgressValue(0);
 
 		//
 		// ... создаём папку для пользовательских файлов
@@ -312,17 +313,20 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 		//
 		const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
 		//
-		const QByteArray affFileData = NetworkRequestLoader::loadSync(hunspellDictionariesFolderUrl + affFileName);
+        NetworkRequest dictionaryLoader;
+        connect(&dictionaryLoader, &NetworkRequest::downloadProgress, &progress, &QLightBoxProgress::setProgressValue);
+        const QByteArray affFileData = dictionaryLoader.loadSync(hunspellDictionariesFolderUrl + affFileName);
 		bool downloadingAffFileSuccess = affFileData.size() > 0;
 		if (downloadingAffFileSuccess) {
 			QFile affFile(hunspellDictionariesFolderPath + affFileName);
 			affFile.open(QIODevice::WriteOnly);
 			affFile.write(affFileData);
 			affFile.close();
-		}
-		//
-		const QByteArray dicFileData = NetworkRequestLoader::loadSync(hunspellDictionariesFolderUrl + dicFileName);
-		bool downloadingDicFileSuccess = dicFileData.size() > 0;
+        }
+        //
+        progress.setProgressValue(0);
+        const QByteArray dicFileData = dictionaryLoader.loadSync(hunspellDictionariesFolderUrl + dicFileName);
+        bool downloadingDicFileSuccess = dicFileData.size() > 100;
 		if (downloadingDicFileSuccess) {
 			QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
 			dicFile.open(QIODevice::WriteOnly);

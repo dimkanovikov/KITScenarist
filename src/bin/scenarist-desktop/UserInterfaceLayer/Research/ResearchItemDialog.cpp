@@ -11,9 +11,6 @@ ResearchItemDialog::ResearchItemDialog(QWidget* _parent) :
     m_ui(new Ui::ResearchItemDialog)
 {
     m_ui->setupUi(this);
-
-    initView();
-    initConnections();
 }
 
 ResearchItemDialog::~ResearchItemDialog()
@@ -36,7 +33,7 @@ void ResearchItemDialog::setInsertParent(const QString& _parentName)
         m_ui->isInsert->setText(QString::null);
     }
 }
-#include <QDebug>
+
 void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocationAllow)
 {
     disconnect(m_ui->character, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
@@ -204,7 +201,7 @@ QWidget* ResearchItemDialog::focusedOnExec() const
 
 void ResearchItemDialog::initView()
 {
-    QLightBoxDialog::initView();
+    m_ui->otherType->setEnabled(m_ui->other->isChecked());
 
 #ifdef Q_OS_WIN
     //
@@ -226,6 +223,4 @@ void ResearchItemDialog::initConnections()
         }
     });
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &QLightBoxDialog::reject);
-
-    QLightBoxDialog::initConnections();
 }

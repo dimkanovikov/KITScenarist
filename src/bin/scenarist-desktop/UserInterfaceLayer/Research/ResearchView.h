@@ -182,11 +182,6 @@ namespace UserInterface
         void mindMapChanged(const QString& _xml);
         /** @{ */
 
-        /**
-         * @brief Элемент был добавлен, или переставлен на другое место в дереве
-         */
-        void researchItemAdded();
-
     protected:
         /**
          * @brief Переопределяем для обновления цвета иконок, при смене палитры

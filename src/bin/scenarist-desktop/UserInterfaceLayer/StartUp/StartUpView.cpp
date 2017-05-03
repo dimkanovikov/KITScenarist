@@ -252,8 +252,10 @@ void StartUpView::initStyleSheet()
     ui->localProjects->setProperty("inStartUpView", true);
     ui->remoteProjects->setProperty("inStartUpView", true);
 
-    ui->recentFiles->viewport()->setStyleSheet("background-color: palette(base);");
-    ui->remoteFiles->viewport()->setStyleSheet("background-color: palette(base);");
+    ui->recentFiles->setProperty("nobordersContainer", true);
+    ui->recentFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(base); }");
+    ui->remoteFiles->setProperty("nobordersContainer", true);
+    ui->remoteFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(base); }");
 }
 
 void StartUpView::initIconsColor()

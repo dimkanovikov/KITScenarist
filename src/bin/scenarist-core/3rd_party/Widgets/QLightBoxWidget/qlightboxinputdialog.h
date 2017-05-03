@@ -15,70 +15,70 @@ class SimpleTextEditorWidget;
  */
 class QLightBoxInputDialog : public QLightBoxDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/**
-	 * @brief Получить текст
-	 */
-	static QString getText(QWidget* _parent, const QString& _title, const QString& _label,
-		const QString& _text = QString::null);
+    /**
+     * @brief Получить текст
+     */
+    static QString getText(QWidget* _parent, const QString& _title, const QString& _label,
+        const QString& _text = QString::null);
 
-	/**
-	 * @brief Получить большой текст
-	 */
-	static QString getLongText(QWidget* _parent, const QString& _title, const QString& _label,
-		const QString& _text = QString::null);
+    /**
+     * @brief Получить большой текст
+     */
+    static QString getLongText(QWidget* _parent, const QString& _title, const QString& _label,
+        const QString& _text = QString::null);
 
-	/**
-	 * @brief Выбор элемента из списка
-	 */
-	static QString getItem(QWidget* _parent, const QString& _title, const QStringList& _items,
-		const QString& _selectedItem = QString::null);
+    /**
+     * @brief Выбор элемента из списка
+     */
+    static QString getItem(QWidget* _parent, const QString& _title, const QStringList& _items,
+        const QString& _selectedItem = QString::null);
 
 private:
-	explicit QLightBoxInputDialog(QWidget* _parent = 0, bool _isContentStretchable = false);
+    explicit QLightBoxInputDialog(QWidget* _parent = 0, bool _isContentStretchable = false);
 
-	/**
-	 * @brief Настроить представление
-	 */
+    /**
+     * @brief Настроить представление
+     */
     void initView() override;
 
-	/**
-	 * @brief Настроить соединения
-	 */
+    /**
+     * @brief Настроить соединения
+     */
     void initConnections() override;
 
-	/**
-	 * @brief Виджет на который установить фокус при отображении
-	 */
+    /**
+     * @brief Виджет на который установить фокус при отображении
+     */
     QWidget* focusedOnExec() const override;
 
 private:
-	/**
-	 * @brief Текстовая метка
-	 */
-	QLabel* m_label;
+    /**
+     * @brief Текстовая метка
+     */
+    QLabel* m_label;
 
-	/**
-	 * @brief Поле для текстового ввода
-	 */
-	QLineEdit* m_lineEdit;
+    /**
+     * @brief Поле для текстового ввода
+     */
+    QLineEdit* m_lineEdit;
 
-	/**
-	 * @brief Поле для ввода большого кол-ва текста
-	 */
-	SimpleTextEditorWidget* m_textEdit;
+    /**
+     * @brief Поле для ввода большого кол-ва текста
+     */
+    SimpleTextEditorWidget* m_textEdit;
 
-	/**
-	 * @brief Виджет для обработки списковых операций
-	 */
-	QListWidget* m_listWidget;
+    /**
+     * @brief Виджет для обработки списковых операций
+     */
+    QListWidget* m_listWidget;
 
-	/**
-	 * @brief Кнопки диалога
-	 */
-	QDialogButtonBox* m_buttons;
+    /**
+     * @brief Кнопки диалога
+     */
+    QDialogButtonBox* m_buttons;
 };
 
 #endif // QLIGHTBOXINPUTDIALOG_H

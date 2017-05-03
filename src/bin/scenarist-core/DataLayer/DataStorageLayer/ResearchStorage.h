@@ -77,7 +77,7 @@ namespace DataStorageLayer
         /**
          * @brief Сохранить персонажа
          */
-        Research* storeCharacter(const QString& _name);
+        Research* storeCharacter(const QString& _name, int _sortOrder = -1);
 
         /**
          * @brief Обновить персонажа
@@ -111,7 +111,7 @@ namespace DataStorageLayer
         /**
          * @brief Сохранить локацию
          */
-        Research* storeLocation(const QString& _name);
+        Research* storeLocation(const QString& _name, int _sortOrder = -1);
 
         /**
          * @brief Обновить локацию

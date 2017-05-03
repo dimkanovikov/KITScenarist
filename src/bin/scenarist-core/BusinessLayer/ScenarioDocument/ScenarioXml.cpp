@@ -860,8 +860,9 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
                     || tokenType == ScenarioBlockStyle::FolderHeader) {
                     QString synopsis = reader.attributes().value("synopsis").toString();
                     ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
-                    bool htmlEscaped = true;
-                    info->setDescription(synopsis, htmlEscaped);
+                    QTextDocument doc;
+                    doc.setHtml(synopsis);
+                    info->setDescription(doc.toPlainText());
                     cursor.block().setUserData(info);
                 }
 
@@ -936,10 +937,8 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
     }
 
     //
-    // Последний использемый тип блока при обработке загружаемого текста
+    // Собственно считываем данные
     //
-    ScenarioBlockStyle::Type lastTokenType = ScenarioBlockStyle::Undefined;
-
     QXmlStreamReader reader(_xml);
     while (!reader.atEnd()) {
         //
@@ -996,7 +995,10 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
                         || tokenType == ScenarioBlockStyle::FolderHeader) {
                         ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
                         if (reader.attributes().hasAttribute(ATTRIBUTE_UUID)) {
-                            info->setUuid(reader.attributes().value(ATTRIBUTE_UUID).toString());
+                            const QString uuid = reader.attributes().value(ATTRIBUTE_UUID).toString();
+                            if (!isScenarioHaveUuid(uuid)) {
+                                info->setUuid(uuid);
+                            }
                         }
                         if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
                             info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
@@ -1076,13 +1078,6 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
                     }
                 }
 
-                //
-                // Обновим последний использовавшийся тип блока
-                //
-                if (tokenName != NODE_VALUE) {
-                    lastTokenType = tokenType;
-                }
-
                 break;
             }
 
@@ -1108,4 +1103,22 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
     // Завершаем операцию
     //
     cursor.endEditBlock();
+}
+
+bool ScenarioXml::isScenarioHaveUuid(const QString& _uuid) const
+{
+    auto currentBlock = m_scenario->document()->begin();
+    while (currentBlock.isValid()) {
+        const ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(currentBlock);
+        if (currentBlockType == ScenarioBlockStyle::SceneHeading
+            || currentBlockType == ScenarioBlockStyle::FolderHeader) {
+            if (ScenarioTextBlockInfo* info = static_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
+                if (info->uuid() == _uuid) {
+                    return true;
+                }
+            }
+        }
+        currentBlock = currentBlock.next();
+    }
+    return false;
 }

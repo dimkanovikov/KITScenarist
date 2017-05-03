@@ -4,6 +4,13 @@
 
 #include <QPainter>
 
+namespace {
+    const int ICON_SIZE = 20;
+    const int TOP_MARGIN = 8;
+    const int BOTTOM_MARGIN = 8;
+    const int ITEMS_SPACING = 8;
+}
+
 using UserInterface::ResearchNavigatorItemDelegate;
 
 
@@ -32,6 +39,12 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	QBrush backgroundBrush = opt.palette.background();
 	QBrush textBrush = opt.palette.text();
 	QFont headerFont = opt.font;
+    //
+    // ... если это родитель верхнего уровня
+    //
+    if (!_index.parent().isValid()) {
+        headerFont.setBold(true);
+    }
 	//
 	// ... для выделенных элементов
 	//
@@ -62,25 +75,27 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 
 	//
 	// Рисуем
-	//
-	const int MARGIN = 2;
-	const int RIGHT_MARGIN = 12;
-	const int ITEMS_SPACING = 4;
-	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
+    //
+    const int RIGHT_MARGIN = 12;
 	//
 	// ... фон
 	//
 	_painter->fillRect(opt.rect, backgroundBrush);
+    //
+    // ... разделитель
+    //
+    QPoint left = opt.rect.bottomLeft();
+    left.setX(0);
+    _painter->setPen(QPen(opt.palette.dark(), 0.5));
+    _painter->drawLine(left, opt.rect.bottomRight());
 	//
 	// Меняем координаты, чтобы рисовать было удобнее
 	//
 	_painter->translate(opt.rect.topLeft());
 	//
 	// ... иконка
-	//
-	const int iconSize =  20;
-	const int iconTopMargin = MARGIN;
-	const QRect iconRect(MARGIN, iconTopMargin, iconSize, iconSize);
+    //
+    const QRect iconRect(0, TOP_MARGIN, ICON_SIZE, ICON_SIZE);
 	QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
 	QIcon iconColorized(icon);
 	QColor iconColor = textBrush.color();
@@ -94,13 +109,13 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	_painter->setFont(headerFont);
 	const QRect headerRect(
 		iconRect.right() + ITEMS_SPACING,
-		MARGIN,
+        TOP_MARGIN,
 		opt.rect.width() - iconRect.right() - ITEMS_SPACING - RIGHT_MARGIN,
-		TEXT_LINE_HEIGHT
+        ICON_SIZE
 		);
 	QString header = _index.data(Qt::DisplayRole).toString();
 	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
-	_painter->drawText(headerRect, header);
+    _painter->drawText(headerRect, Qt::AlignLeft | Qt::AlignVCenter, header);
 
 	_painter->restore();
 }
@@ -110,8 +125,7 @@ QSize ResearchNavigatorItemDelegate::sizeHint(const QStyleOptionViewItem& _optio
 	Q_UNUSED(_option);
 	Q_UNUSED(_index);
 
-	const int margins = 3 + 3;
-	const int height = _option.fontMetrics.height() + margins;
+    const int height = TOP_MARGIN + ICON_SIZE + BOTTOM_MARGIN;
 	const int width = 50;
 	return QSize(width, height);
 }

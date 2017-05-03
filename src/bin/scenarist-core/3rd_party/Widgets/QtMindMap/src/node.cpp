@@ -70,6 +70,7 @@ void Node::deleteEdge(Node *otherEnd)
              it->edge->destNode() == otherEnd))
         {
             delete it->edge;
+            it->edge = nullptr;
             return;
         }
     }

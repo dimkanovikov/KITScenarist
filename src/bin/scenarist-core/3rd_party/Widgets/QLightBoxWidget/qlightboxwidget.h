@@ -3,59 +3,83 @@
 
 #include <QWidget>
 
+class QParallelAnimationGroup;
+
 
 /**
  * @brief Класс перекрытия
  */
 class QLightBoxWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit QLightBoxWidget(QWidget* _parent, bool _folowToHeadWidget = false);
-	~QLightBoxWidget();
+    /**
+     * @brief Открыт ли хотя бы один диалог в данный момент
+     */
+    static bool hasOpenedWidgets();
+
+public:
+    explicit QLightBoxWidget(QWidget* _parent, bool _folowToHeadWidget = false);
+    ~QLightBoxWidget();
+
+    /**
+     * @brief Переопределяется для того, чтобы перед отображением настроить внешний вид
+     */
+    void setVisible(bool _visible);
+
+signals:
+    /**
+     * @brief Диалог показан
+     */
+    void showed();
 
 protected:
-	/**
-	 * @brief Переопределяется для отслеживания собитий родительского виджета
-	 */
-	bool eventFilter(QObject* _object, QEvent* _event);
+    /**
+     * @brief Переопределяется для отслеживания собитий родительского виджета
+     */
+    bool eventFilter(QObject* _object, QEvent* _event);
 
-	/**
-	 * @brief Переопределяется для того, чтобы эмитировать эффект перекрытия
-	 */
-	void paintEvent(QPaintEvent* _event);
-
-	/**
-	 * @brief Переопределяется для того, чтобы перед отображением настроить внешний вид
-	 */
-	void showEvent(QShowEvent* _event);
+    /**
+     * @brief Переопределяется для того, чтобы эмитировать эффект перекрытия
+     */
+    void paintEvent(QPaintEvent* _event);
 
 private:
-	/**
-	 * @brief Переустановить родителя, чтобы быть последним виджетом среди детей родителя
-	 */
-	void resetParent();
+    /**
+     * @brief Анимировать отображение/сокрытие диалога
+     */
+    void animate(bool _visible);
 
-	/**
-	 * @brief Обновить размер и картинку фона
-	 */
-	void updateSelf();
+    /**
+     * @brief Обновить размер и картинку фона
+     */
+    void updateSelf();
 
-	/**
-	 * @brief Разрешает конфликт рекурсивного обновления
-	 */
-	bool m_isInUpdateSelf;
+    /**
+     * @brief Разрешает конфликт рекурсивного обновления
+     */
+    bool m_isInUpdateSelf;
 
-	/**
-	 * @brief Обновить картинку фона
-	 */
-	QPixmap grabParentWidgetPixmap() const;
+    /**
+     * @brief Обновить картинку фона
+     */
+    QPixmap grabParentWidgetPixmap() const;
 
-	/**
-	 * @brief Картинка фона
-	 */
-	QPixmap m_parentWidgetPixmap;
+    /**
+     * @brief Картинка фона
+     */
+    QPixmap m_parentWidgetPixmap;
+
+    /**
+     * @brief Анимация отображаения/скрытия
+     */
+    QParallelAnimationGroup* m_animation;
+
+    /**
+     * @brief Количество открытых диалогов
+     */
+    static int s_openedWidgetsCount;
 };
 
 #endif // QLIGHTBOXWIDGET_H

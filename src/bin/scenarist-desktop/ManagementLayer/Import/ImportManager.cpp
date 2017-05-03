@@ -42,6 +42,7 @@ namespace {
 	 * @brief Формат файлов Final Draft
 	 */
 	const QString FINAL_DRAFT_EXTENSION = ".fdx";
+    const QString FINAL_DRAFT_TEMPLATE_EXTENSION = ".fdxt";
 
 	/**
 	 * @brief Формат файлов Trelby
@@ -56,15 +57,15 @@ namespace {
 
 
 ImportManager::ImportManager(QObject* _parent, QWidget* _parentWidget) :
-	QObject(_parent),
-	m_importDialog(new ImportDialog(_parentWidget))
+    QObject(_parent),
+    m_importDialog(new ImportDialog(_parentWidget))
 {
-	initView();
-	initConnections();
+    initView();
+    initConnections();
 }
 
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition,
-	const BusinessLogic::ImportParameters& _importParameters)
+    const BusinessLogic::ImportParameters& _importParameters)
 {
 	//
 	// Получим xml-представление импортируемого сценария
@@ -72,7 +73,8 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 	QString importScenarioXml;
 	if (_importParameters.filePath.toLower().endsWith(KIT_SCENARIST_EXTENSION)) {
 		importScenarioXml = BusinessLogic::KitScenaristImporter().importScenario(_importParameters);
-	} else if (_importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)) {
+	} else if (_importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)
+               || _importParameters.filePath.toLower().endsWith(FINAL_DRAFT_TEMPLATE_EXTENSION)) {) {
 		importScenarioXml = BusinessLogic::FdxImporter().importScenario(_importParameters);
 	} else if (_importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
 		importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(_importParameters);
@@ -128,110 +130,110 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			foreach (DomainObject* domainObject,
                      DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
                 Research* character = dynamic_cast<Research*>(domainObject);
-				if (!characters.contains(character->name())) {
-					charactersToDelete.insert(character->name());
-				}
-			}
+                if (!characters.contains(character->name())) {
+                    charactersToDelete.insert(character->name());
+                }
+            }
 
-			//
-			// Удалить тех, кого нет
-			//
-			DatabaseLayer::Database::transaction();
-			foreach (const QString& character, charactersToDelete) {
+            //
+            // Удалить тех, кого нет
+            //
+            DatabaseLayer::Database::transaction();
+            foreach (const QString& character, charactersToDelete) {
                 DataStorageLayer::StorageFacade::researchStorage()->removeCharacter(character);
-			}
-			DatabaseLayer::Database::commit();
+            }
+            DatabaseLayer::Database::commit();
 
-			//
-			// Добавить новых
-			//
-			DatabaseLayer::Database::transaction();
-			foreach (const QString& character, characters) {
+            //
+            // Добавить новых
+            //
+            DatabaseLayer::Database::transaction();
+            foreach (const QString& character, characters) {
                 if (!DataStorageLayer::StorageFacade::researchStorage()->hasCharacter(character)) {
                     DataStorageLayer::StorageFacade::researchStorage()->storeCharacter(character);
-				}
-			}
-			DatabaseLayer::Database::commit();
-		}
+                }
+            }
+            DatabaseLayer::Database::commit();
+        }
 
-		//
-		// Локации
-		//
-		{
-			QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
+        //
+        // Локации
+        //
+        {
+            QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
 
-			//
-			// Определить локации, которых нет в тексте
-			//
-			QSet<QString> locationsToDelete;
-			foreach (DomainObject* domainObject,
+            //
+            // Определить локации, которых нет в тексте
+            //
+            QSet<QString> locationsToDelete;
+            foreach (DomainObject* domainObject,
                      DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
                 Research* location = dynamic_cast<Research*>(domainObject);
-				if (!locations.contains(location->name())) {
-					locationsToDelete.insert(location->name());
-				}
-			}
+                if (!locations.contains(location->name())) {
+                    locationsToDelete.insert(location->name());
+                }
+            }
 
-			//
-			// Удалить те, которых нет
-			//
-			DatabaseLayer::Database::transaction();
-			foreach (const QString& location, locationsToDelete) {
+            //
+            // Удалить те, которых нет
+            //
+            DatabaseLayer::Database::transaction();
+            foreach (const QString& location, locationsToDelete) {
                 DataStorageLayer::StorageFacade::researchStorage()->removeLocation(location);
-			}
-			DatabaseLayer::Database::commit();
+            }
+            DatabaseLayer::Database::commit();
 
-			//
-			// Добавить новых
-			//
-			DatabaseLayer::Database::transaction();
-			foreach (const QString& location, locations) {
+            //
+            // Добавить новых
+            //
+            DatabaseLayer::Database::transaction();
+            foreach (const QString& location, locations) {
                 if (!DataStorageLayer::StorageFacade::researchStorage()->hasLocation(location)) {
                     DataStorageLayer::StorageFacade::researchStorage()->storeLocation(location);
-				}
-			}
-			DatabaseLayer::Database::commit();
-		}
-	}
+                }
+            }
+            DatabaseLayer::Database::commit();
+        }
+    }
 }
 
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, const QString& _importFilePath)
 {
-	BusinessLogic::ImportParameters importParameters;
-	importParameters.filePath = _importFilePath;
-	importScenario(_scenario, 0, importParameters);
+    BusinessLogic::ImportParameters importParameters;
+    importParameters.filePath = _importFilePath;
+    importScenario(_scenario, 0, importParameters);
 }
 
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition)
 {
-	if (m_importDialog->exec() == QLightBoxDialog::Accepted) {
-		BusinessLogic::ImportParameters importParameters = m_importDialog->importParameters();
-		if (!importParameters.filePath.toLower().endsWith(MS_DOC_EXTENSION)) {
-			//
-			// Покажем уведомление пользователю
-			//
-			QLightBoxProgress progress(m_importDialog->parentWidget());
-			progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
+    if (m_importDialog->exec() == QLightBoxDialog::Accepted) {
+        BusinessLogic::ImportParameters importParameters = m_importDialog->importParameters();
+        if (!importParameters.filePath.toLower().endsWith(MS_DOC_EXTENSION)) {
+            //
+            // Покажем уведомление пользователю
+            //
+            QLightBoxProgress progress(m_importDialog->parentWidget());
+            progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
 
-			//
-			// Импортируем
-			//
-			importScenario(_scenario, _cursorPosition, importParameters);
+            //
+            // Импортируем
+            //
+            importScenario(_scenario, _cursorPosition, importParameters);
 
-			//
-			// Закроем уведомление
-			//
-			progress.finish();
-		}
-		//
-		// Формат MS DOC не поддерживается, он отображается только для того, чтобы пользователи
-		// не теряли свои файлы
-		//
-		else {
-			QLightBoxMessage::information(m_importDialog, tr("File format not supported"),
-				tr("Microsoft <b>DOC</b> files are not supported. You need save it to <b>DOCX</b> file and reimport."));
-		}
-	}
+            //
+            // Закроем уведомление
+            //
+            progress.finish();
+        }
+        //
+        // Формат MS DOC не поддерживается, он отображается только для того, чтобы пользователи
+        // не теряли свои файлы
+        //
+        else {
+            QLightBoxMessage::information(m_importDialog, tr("File format not supported"),
+                tr("Microsoft <b>DOC</b> files are not supported. You need save it to <b>DOCX</b> file and reimport."));
+        }
+    }
 }
 
 void ImportManager::initView()

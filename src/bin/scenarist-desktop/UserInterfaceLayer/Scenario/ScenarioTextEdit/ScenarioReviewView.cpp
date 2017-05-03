@@ -32,7 +32,7 @@ ScenarioReviewView::ScenarioReviewView(QWidget* _parent) :
 	m_editor(0)
 {
 	initView();
-	initConnections();
+    initConnections();
 }
 
 void ScenarioReviewView::setEditor(ScenarioTextEdit* _editor)
@@ -271,5 +271,5 @@ void ScenarioReviewView::initConnections()
 	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(aboutContextMenuRequested(QPoint)));
 
 	connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutMoveCursorToMark(QModelIndex)));
-	connect(this, SIGNAL(activated(QModelIndex)), this, SLOT(aboutMoveCursorToMark(QModelIndex)));
+    connect(this, SIGNAL(activated(QModelIndex)), this, SLOT(aboutMoveCursorToMark(QModelIndex)));
 }

@@ -45,6 +45,12 @@ public:
         Post
     };
 
+    /**
+     * @brief Остановить все текущие соединения
+     */
+    static void stopAllConnections();
+
+public:
     explicit NetworkRequest(QObject* _parent = 0, QNetworkCookieJar* _jar = 0);
     virtual ~NetworkRequest();
 
@@ -118,6 +124,12 @@ public:
     QString lastError() const;
     QString lastErrorDetails() const;
 
+    /*!
+     * \brief Остановка выполнения запроса, связанного с текущим объектом
+     * и удаление запросов, ожидающих в очереди, связанных с текущим объектом
+     */
+    void stop();
+
 signals:
     /*!
      * \brief Прогресс отправки запроса на сервер
@@ -140,6 +152,18 @@ signals:
      */
     void error(QString, QUrl);
 
+private slots:
+    /*!
+     * \brief Данные загружены. Используется при синхронной загрузке
+     */
+    void downloadCompleteData(const QByteArray&);
+
+    /*!
+     * \brief Ошибка при получении данных
+     */
+    void slotError(const QString&, const QUrl&);
+    void slotErrorDetails(const QString&);
+
 private:
 
     /*!
@@ -157,24 +181,6 @@ private:
      */
     QString m_lastError;
     QString m_lastErrorDetails;
-
-    /*!
-     * \brief Остановка выполнения запроса, связанного с текущим объектом
-     * и удаление запросов, ожидающих в очереди, связанных с текущим объектом
-     */
-    void stop();
-
-private slots:
-    /*!
-     * \brief Данные загружены. Используется при синхронной загрузке
-     */
-    void downloadCompleteData(const QByteArray&);
-
-    /*!
-     * \brief Ошибка при получении данных
-     */
-    void slotError(const QString&, const QUrl&);
-    void slotErrorDetails(const QString&);
 };
 
 #endif // NETWORKREQUEST_H

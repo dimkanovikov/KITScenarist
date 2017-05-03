@@ -121,7 +121,6 @@ void NetworkQueue::stop(NetworkRequestPrivate* _internal) {
                 //
                 iter.key()->stop();
 
-                iter.value()->done();
                 //
                 // Удалим из списка используемых
                 // К списку свободных WebLoader'ов припишет слот downloadComplete
@@ -131,6 +130,22 @@ void NetworkQueue::stop(NetworkRequestPrivate* _internal) {
                 break;
             }
         }
+    }
+}
+
+void NetworkQueue::stopAll()
+{
+    //
+    // Очистим очередь ожидающих запросов
+    //
+    m_queue.clear();
+    m_inQueue.clear();
+
+    //
+    // Остановим уже обрабатывающиеся запросы
+    //
+    for (NetworkRequestPrivate* request : m_busyLoaders.values()) {
+        stop(request);
     }
 }
 

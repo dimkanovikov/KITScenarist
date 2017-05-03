@@ -133,6 +133,7 @@ void ProjectsList::initView()
     layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
     QWidget* content = new QWidget;
+    content->setObjectName("ProjectListsContent");
     content->setLayout(layout);
 
     setWidget(content);

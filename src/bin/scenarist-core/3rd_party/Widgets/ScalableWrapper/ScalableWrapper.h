@@ -80,10 +80,15 @@ private:
 	 */
 	void setupScrollingSynchronization(bool _needSync);
 
+    /**
+     * @brief Настроить полосы прокрутки в соответствии с полосами редактора текста
+     */
+    void syncScrollBarWithTextEdit(bool _syncPosition = true);
+
 	/**
 	 * @brief Пересчитать размер редактора текста
 	 */
-	void updateTextEditSize();
+    void updateTextEditSize();
 
 	/**
 	 * @brief Собственно масштабирование представления текстового редактора
@@ -94,42 +99,37 @@ private:
 	/**
 	 * @brief Сцена в которой будет позиционироваться редактор
 	 */
-	QGraphicsScene* m_scene;
+    QGraphicsScene* m_scene = nullptr;
 
 	/**
 	 * @brief Указатель на сам редактор
 	 */
-	SpellCheckTextEdit* m_editor;
+    SpellCheckTextEdit* m_editor = nullptr;
 
 	/**
 	 * @brief Графическое представление редактора
 	 */
-	QGraphicsProxyWidget* m_editorProxy;
+    QGraphicsProxyWidget* m_editorProxy = nullptr;
 
 	/**
 	 * @brief Коэффициент масштабирования
 	 */
-	qreal m_zoomRange;
+    qreal m_zoomRange = 1;
 
 	/**
 	 * @brief Инерционный тормоз масштабирования при помощи жестов
 	 */
-	int m_gestureZoomInertionBreak;
+    int m_gestureZoomInertionBreak = 0;
 
 	/**
 	 * @brief Вспомогательный элемент, посредством которого настраивается размер полос прокрутки
 	 */
-	QGraphicsRectItem* m_rect;
+    QGraphicsRectItem* m_rect = nullptr;
 
-	/**
-	 * @brief Нужно ли обновить положение полос прокрутки после события изменения размера
-	 */
-	bool m_needUpdateScrollValues;
-
-	/**
-	 * @brief Положения полос прокрутки зафиксированные перед событием изменения размера
-	 */
-	int m_vbarScrollValue, m_hbarScrollValue;
+    /**
+     * @brief Включена ли синхронизация полос прокрутки с редактором текста
+     */
+    bool m_isScrollingSynchronizationActive = false;
 };
 
 #endif // SCALABLEWRAPPER_H

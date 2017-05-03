@@ -188,18 +188,9 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 {
     initView();
     initConnections();
+    initStyleSheet();
 
     aboutUpdateProjectsList();
-
-    reloadApplicationSettings();
-
-    QTimer::singleShot(0, [this] {
-        m_startUpManager->setProgressLoginLabel(true);
-        if (!m_synchronizationManager->autoLogin()) {
-            m_startUpManager->setProgressLoginLabel(false);
-        }
-    });
-    initStyleSheet();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -210,13 +201,34 @@ ApplicationManager::~ApplicationManager()
 
 void ApplicationManager::exec(const QString& _fileToOpen)
 {
+    reloadApplicationSettings();
     loadViewState();
     m_view->show();
 
 
     if (!_fileToOpen.isEmpty()) {
         aboutLoad(_fileToOpen);
-       }
+    }
+
+    QTimer::singleShot(0, [=] {
+        //
+        // Работаем с отчётами об ошибке
+        //
+        m_startUpManager->checkCrashReports();
+
+        //
+        // Проверяем обновления
+        //
+        m_startUpManager->checkNewVersion();
+
+        //
+        // И авторизуемся
+        //
+        m_startUpManager->setProgressLoginLabel(true);
+        if (!m_synchronizationManager->autoLogin()) {
+            m_startUpManager->setProgressLoginLabel(false);
+        }
+    });
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
@@ -409,6 +421,12 @@ void ApplicationManager::createNewRemoteProject(const QString& _projectName, con
 void ApplicationManager::aboutSaveAs()
 {
     //
+    // Освобождаем очередь событий, чтобы диалог сохранения успел открыться до
+    // следующей проверки соединения. В противном случае диалог закрывается на уровне ОС
+    //
+    QApplication::processEvents();
+
+    //
     // Получим имя файла для сохранения
     //
     QString saveAsProjectFileName =
@@ -519,7 +537,16 @@ void ApplicationManager::aboutSave()
             //
             // Если необходимо создадим резервную копию закрываемого файла
             //
-            QtConcurrent::run(&m_backupHelper, &BackupHelper::saveBackup, ProjectsManager::currentProject().path());
+            QString baseBackupName = "";
+            const Project& currentProject = ProjectsManager::currentProject();
+            if (currentProject.isRemote()) {
+                //
+                // Для удаленных проектов имя бекапа - имя проекта + id проекта
+                // В случае, если имя удаленного проекта изменилось, то бэкапы со старым именем останутся навсегда
+                //
+                baseBackupName = QString("%1 [%2]").arg(currentProject.name()).arg(currentProject.id());
+            }
+            QtConcurrent::run(&m_backupHelper, &BackupHelper::saveBackup, ProjectsManager::currentProject().path(), baseBackupName);
         }
         //
         // А если ошибка сохранения, то делаем дополнительные проверки и работаем с пользователем
@@ -740,6 +767,16 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
     }
 }
 
+void ApplicationManager::hideLocalProject(const QModelIndex& _index)
+{
+    const QString question = tr("Are you sure to hide project <b>%1</b> from recent?")
+                             .arg(m_projectsManager->project(_index).name());
+    if (QLightBoxMessage::question(m_view, QString::null, question)
+        == QDialogButtonBox::Yes) {
+        m_projectsManager->hideProjectFromLocal(_index);
+    }
+}
+
 void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 {
     //
@@ -782,6 +819,7 @@ void ApplicationManager::editRemoteProjectName(const QModelIndex& _index)
                 tr("Enter new name for project"), project.name());
     if (!newName.isEmpty()) {
         m_synchronizationManager->updateProjectName(project.id(), newName);
+        m_projectsManager->setCurrentProjectName(newName);
     }
 }
 
@@ -794,8 +832,7 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     // Если пользователь является владельцем файла, то он может его удалить
     //
     if (project.isUserOwner()) {
-        if (QLightBoxMessage::question(m_view, tr("Project removing"),
-                                       tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
+        if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
             m_synchronizationManager->removeProject(project.id());
         }
@@ -804,8 +841,7 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     // А если нет, то только отписаться от него
     //
     else {
-        if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
-                                       tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
+        if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
             m_synchronizationManager->unshareProject(project.id());
         }
@@ -826,8 +862,7 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
 {
     const bool IS_REMOTE = false;
     const Project project = m_projectsManager->project(_index, IS_REMOTE);
-    if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
-                                   tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>?")
+    if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>?")
                                    .arg(_userEmail)
                                    .arg(project.name()))
         == QDialogButtonBox::Yes) {
@@ -1191,13 +1226,13 @@ void ApplicationManager::aboutShowFullscreen()
         //
         // Возвращаемся в состояние предшествовавшее полноэкранному режиму
         //
+        m_menu->show();
+        m_tabs->show();
         if (m_view->property(IS_MAXIMIZED_PROPERTY).toBool()) {
             m_view->showMaximized();
         } else {
             m_view->showNormal();
         }
-        m_menu->show();
-        m_tabs->show();
     } else {
         //
         // Сохраним состояние окна перед переходом в полноэкранный режим
@@ -1278,6 +1313,11 @@ void ApplicationManager::loadViewState()
     // Для всех сплитеров добавляем функциональность - двойной щелчок, разворачивает панели
     //
     m_view->initSplittersRightClick();
+
+    //
+    // Для всех полос прокрутки добавляем функциональность - при наведении они расширяются
+    //
+    m_view->initScrollBarsWidthChanges();
 }
 
 void ApplicationManager::saveViewState()
@@ -1711,7 +1751,6 @@ void ApplicationManager::initConnections()
 
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
-
     connect(m_startUpManager, &StartUpManager::loginRequested,
             m_synchronizationManager, &SynchronizationManager::login);
     connect(m_startUpManager, &StartUpManager::signUpRequested,
@@ -1737,7 +1776,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_projectsManager, &ProjectsManager::refreshProjects);
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManager, &SynchronizationManager::loadProjects);
     connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
-    connect(m_startUpManager, &StartUpManager::hideRecentProjectRequested, m_projectsManager, &ProjectsManager::hideProjectFromLocal);
+    connect(m_startUpManager, &StartUpManager::hideRecentProjectRequested, this, &ApplicationManager::hideLocalProject);
     connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
     connect(m_startUpManager, &StartUpManager::editRemoteProjectRequested, this, &ApplicationManager::editRemoteProjectName);
     connect(m_startUpManager, &StartUpManager::removeRemoteProjectRequested, this, &ApplicationManager::removeRemoteProject);
@@ -1857,12 +1896,12 @@ void ApplicationManager::reloadApplicationSettings()
     //
     // Внешний вид приложения
     //
-    bool useDarkTheme =
+    const bool useDarkTheme =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
                 "application/use-dark-theme",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
             .toInt();
-
+    m_view->setUseDarkTheme(useDarkTheme);
     {
         //
         // Настраиваем палитру и стилевые надстройки в зависимости от темы
@@ -1923,7 +1962,12 @@ void ApplicationManager::reloadApplicationSettings()
         //
         // Чтобы все цветовые изменения подхватились, нужно заново переустановить стиль
         //
-        m_view->setStyleSheet(m_view->styleSheet());
+        QFile styleSheetFile(":/Interface/UI/style-desktop.qss");
+        styleSheetFile.open(QIODevice::ReadOnly);
+        QString styleSheet = styleSheetFile.readAll();
+        styleSheetFile.close();
+        styleSheet.replace("_THEME_POSTFIX", useDarkTheme ? "-dark" : "");
+        m_view->setStyleSheet(styleSheet);
     }
 
     //

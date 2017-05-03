@@ -2,6 +2,8 @@
 
 #include <ManagementLayer/ApplicationManager.h>
 
+#include <NetworkRequest.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -39,7 +41,7 @@ Application::Application(int& _argc, char** _argv) :
     setOrganizationName("DimkaNovikov labs.");
     setOrganizationDomain("dimkanovikov.pro");
     setApplicationName("Scenarist");
-    setApplicationVersion("0.7.1 beta 5");
+    setApplicationVersion("0.7.1 rc 2");
 
     //
     // Настроим стиль отображения внешнего вида приложения
@@ -71,6 +73,14 @@ Application::Application(int& _argc, char** _argv) :
         }
     });
     m_idleTimer.start();
+}
+
+Application::~Application()
+{
+    //
+    // Остановим все текущие соединения
+    //
+    NetworkRequest::stopAllConnections();
 }
 
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)
@@ -123,6 +133,7 @@ void Application::initTranslation()
     QString translationSuffix = QLocale::system().name();
     translationSuffix.truncate(translationSuffix.lastIndexOf('_'));
     QString qtTranslationSuffix = translationSuffix;
+    QString qtBaseTranslationSuffix = translationSuffix;
     //
     // ... если не удалось определить локаль, используем англоязычный перевод
     //
@@ -134,28 +145,42 @@ void Application::initTranslation()
 
     if (language == 0) {
         translationSuffix = "ru";
+        qtTranslationSuffix = "ru";
+        qtBaseTranslationSuffix = "ru";
         currentLanguage = QLocale::Russian;
     } else if (language == 1) {
         translationSuffix = "es";
+        qtTranslationSuffix = "es";
+        qtBaseTranslationSuffix = "es";
         currentLanguage = QLocale::Spanish;
     } else if (language == 2) {
         translationSuffix = "en";
         currentLanguage = QLocale::English;
     } else if (language == 3) {
         translationSuffix = "fr";
+        qtTranslationSuffix = "fr";
+        qtBaseTranslationSuffix = "fr";
         currentLanguage = QLocale::French;
     } else if (language == 4) {
         translationSuffix = "kz";
-        qtTranslationSuffix = "ru";
+        qtTranslationSuffix = "kz";
+        qtBaseTranslationSuffix = "ru";
         currentLanguage = QLocale::Kazakh;
     } else if (language == 5) {
         translationSuffix = "ua";
         qtTranslationSuffix = "ru";
+        qtBaseTranslationSuffix = "ru";
         currentLanguage = QLocale::Ukrainian;
     } else if (language == 6) {
         translationSuffix = "de";
         qtTranslationSuffix = "de";
+        qtBaseTranslationSuffix = "de";
         currentLanguage = QLocale::German;
+    } else if (language == 7) {
+        translationSuffix = "pt";
+        qtTranslationSuffix = "pt";
+        qtBaseTranslationSuffix = "pt";
+        currentLanguage = QLocale::Portuguese;
     }
 
     QLocale::setDefault(QLocale(currentLanguage));
@@ -175,7 +200,7 @@ void Application::initTranslation()
         // Подключим дополнительный файл переводов Qt
         //
         QTranslator* qtBaseTranslator = new QTranslator;
-        qtBaseTranslator->load(":/Translations/Translations/qtbase_" + qtTranslationSuffix + ".qm");
+        qtBaseTranslator->load(":/Translations/Translations/qtbase_" + qtBaseTranslationSuffix + ".qm");
         installTranslator(qtBaseTranslator);
     }
 

@@ -25,6 +25,11 @@ public:
 
     GraphWidget(QWidget* parent = 0);
 
+    /**
+     * @brief Запретить/разрешить возможность редактирования
+     */
+    void setReadOnly(bool _readOnly);
+
     void newScene();
     void closeScene();
 
@@ -67,7 +72,14 @@ private:
     void scaleView(qreal factor);
 
 private:
+    /**
+     * @brief Сцена на которой рисуется схема
+     */
     QGraphicsScene *m_scene;
+
+    /**
+     * @brief Класс обработчик логики работы ментальной карты
+     */
     GraphLogic *m_graphlogic;
 
     /**

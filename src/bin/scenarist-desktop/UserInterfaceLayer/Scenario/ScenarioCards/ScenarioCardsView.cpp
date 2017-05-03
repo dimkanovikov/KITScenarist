@@ -166,7 +166,12 @@ QString ScenarioCardsView::beforeNewItemUuid() const
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 {
     m_addCard->setEnabled(!_isCommentOnly);
+    m_removeCard->setEnabled(!_isCommentOnly);
     m_sort->setEnabled(!_isCommentOnly);
+    m_cards->setReadOnly(_isCommentOnly);
+    for (QShortcut* shortcut : findChildren<QShortcut*>()) {
+        shortcut->setEnabled(!_isCommentOnly);
+    }
 }
 
 void ScenarioCardsView::resortCards()
@@ -388,6 +393,4 @@ void ScenarioCardsView::initStyleSheet()
     m_toolbarSpacer->setProperty("inTopPanel", true);
     m_toolbarSpacer->setProperty("topPanelTopBordered", true);
     m_toolbarSpacer->setProperty("topPanelRightBordered", true);
-
-    m_cards->setProperty("mainContainer", true);
 }

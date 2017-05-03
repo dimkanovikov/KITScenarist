@@ -132,7 +132,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
     //
     // Установка постраничного режима так же тянет за собой ряд настроек
     //
-    QMarginsF pageMargins(15, 5, 5, 5);
+    QMarginsF pageMargins(15, 5, 12, 5);
     Qt::Alignment pageNumbersAlign;
     if (_use) {
         m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());
@@ -292,9 +292,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     //
     if (!_description.isEmpty()) {
         m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
-        QTextDocument doc;
-        doc.setHtml(_description);
-        m_editor->insertPlainText(doc.toPlainText());
+        m_editor->insertPlainText(_description);
     }
 
     //
@@ -412,9 +410,7 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
         m_editor->setTextCursor(cursor);
         m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
     }
-    QTextDocument doc;
-    doc.setHtml(_description);
-    m_editor->insertPlainText(doc.toPlainText());
+    m_editor->insertPlainText(_description);
 
     //
     // А теперь скроем блоки с описанием сцены, если мы не в режиме битов
@@ -512,8 +508,8 @@ void ScenarioTextEditWidget::aboutShowSearch()
     const bool visible = m_search->isChecked();
     if (m_searchLine->isVisible() != visible) {
         const bool FIX = true;
-        WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, FIX, !FIX, visible);
-        QTimer::singleShot(300, [=] { m_searchLine->setVisible(visible); });
+        const int slideDuration = WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, FIX, !FIX, visible);
+        QTimer::singleShot(slideDuration, [=] { m_searchLine->setVisible(visible); });
     }
 
     if (visible) {
@@ -819,4 +815,5 @@ void ScenarioTextEditWidget::initStyleSheet()
     m_countersInfo->setProperty("topPanelRightBordered", true);
 
     m_editorWrapper->setProperty("mainContainer", true);
+    m_reviewView->setProperty("mainContainer", true);
 }

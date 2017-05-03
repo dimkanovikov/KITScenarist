@@ -20,6 +20,11 @@ public:
     ~CardsView();
 
     /**
+     * @brief Запретить/разрешить возможность редактирования
+     */
+    void setReadOnly(bool _readOnly);
+
+    /**
      * @brief Необходимо ли использовать в качестве фона пробковую доску
      */
     void setUseCorkboardBackground(bool _use);
@@ -255,6 +260,11 @@ private:
      * @brief Настройка соединений
      */
     void initConnections();
+
+    /**
+     * @brief Настроить стиль
+     */
+    void initStyleSheet();
 
     /**
      * @brief Обновить фон

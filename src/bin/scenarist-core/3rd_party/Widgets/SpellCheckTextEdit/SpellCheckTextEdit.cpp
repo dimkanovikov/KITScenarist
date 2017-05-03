@@ -98,24 +98,17 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos, QWidget* _paren
 		QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
 		//
-		// Убираем знаки препинания окружающие слово
+        // Уберем пунктуацию в слове
 		//
-		QString wordWithoutPunct = wordUnderCursor.trimmed();
-		while (!wordWithoutPunct.isEmpty()
-			   && (wordWithoutPunct.at(0).isPunct()
-				   || wordWithoutPunct.at(wordWithoutPunct.length()-1).isPunct())) {
-			if (wordWithoutPunct.at(0).isPunct()) {
-				wordWithoutPunct = wordWithoutPunct.mid(1);
-			} else {
-				wordWithoutPunct = wordWithoutPunct.left(wordWithoutPunct.length()-1);
-			}
-		}
+        QString wordWithoutPunct = removePunctutaion(wordUnderCursor);
 
-		//
-		// Корректируем регистр слова
-		//
-		QString wordWithoutPunctInCorrectRegister =
-				wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+        QString wordWithoutPunctInCorrectRegister = wordWithoutPunct;
+        if (cursorForPosition(_pos).charFormat().fontCapitalization() == QFont::AllUppercase) {
+            //
+            // Приведем к верхнему регистру
+            //
+            wordWithoutPunctInCorrectRegister = wordWithoutPunct.toUpper();
+        }
 
 		//
 		// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
@@ -225,16 +218,20 @@ void SpellCheckTextEdit::aboutIgnoreWord() const
 	//
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
+    //
+    // Уберем пунктуацию
+    //
+    QString wordUnderCursorWithoutPunct = removePunctutaion(wordUnderCursor);
+
 	//
 	// Скорректируем регистр слова
 	//
-	QString wordUnderCursorInCorrectRegister =
-			wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
+    QString wordUnderCursorWithoutPunctInCorrectRegister = wordUnderCursorWithoutPunct.toLower();
 
 	//
 	// Объявляем проверяющему о том, что это слово нужно игнорировать
 	//
-	m_spellChecker->ignoreWord(wordUnderCursorInCorrectRegister);
+    m_spellChecker->ignoreWord(wordUnderCursorWithoutPunctInCorrectRegister);
 
 	//
 	// Уберём выделение с игнорируемых слов
@@ -250,15 +247,19 @@ void SpellCheckTextEdit::aboutAddWordToUserDictionary() const
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
 	//
-	// Скорректируем регистр слова
+    // Уберем пунктуацию в слове
 	//
-	QString wordUnderCursorInCorrectRegister =
-			wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
+    QString wordUnderCursorWithoutPunct = removePunctutaion(wordUnderCursor);
+
+    //
+    // Приведем к нижнему регистру
+    //
+    QString wordUnderCursorWithoutPunctInCorrectRegister = wordUnderCursorWithoutPunct.toLower();
 
 	//
 	// Объявляем проверяющему о том, что это слово нужно добавить в пользовательский словарь
 	//
-	m_spellChecker->addWordToDictionary(wordUnderCursorInCorrectRegister);
+    m_spellChecker->addWordToDictionary(wordUnderCursorWithoutPunctInCorrectRegister);
 
 	//
 	// Уберём выделение со слов добавленных в словарь
@@ -283,5 +284,23 @@ QString SpellCheckTextEdit::wordOnPosition(const QPoint& _position) const
 {
 	QTextCursor tc = cursorForPosition(_position);
 	tc.select(QTextCursor::WordUnderCursor);
-	return tc.selectedText();
+    return tc.selectedText();
+}
+
+QString SpellCheckTextEdit::removePunctutaion(const QString &_word) const
+{
+    //
+    // Убираем знаки препинания окружающие слово
+    //
+    QString wordWithoutPunct = _word.trimmed();
+    while (!wordWithoutPunct.isEmpty()
+           && (wordWithoutPunct.at(0).isPunct()
+               || wordWithoutPunct.at(wordWithoutPunct.length()-1).isPunct())) {
+        if (wordWithoutPunct.at(0).isPunct()) {
+            wordWithoutPunct = wordWithoutPunct.mid(1);
+        } else {
+            wordWithoutPunct = wordWithoutPunct.left(wordWithoutPunct.length()-1);
+        }
+    }
+    return wordWithoutPunct;
 }

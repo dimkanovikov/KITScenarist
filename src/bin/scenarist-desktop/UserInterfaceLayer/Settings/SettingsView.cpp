@@ -149,6 +149,11 @@ void SettingsView::setApplicationLanguage(int _value)
             ui->applicationLanguage->setText(tr("German"));
             break;
         }
+
+        case 7: {
+            ui->applicationLanguage->setText(tr("Portuguese"));
+            break;
+        }
     }
 }
 
@@ -646,7 +651,10 @@ void SettingsView::initData()
     ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
     ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
     ui->spellCheckingLanguage->addItem(tr("Kazakh"), SpellChecker::Kazakh);
+    ui->spellCheckingLanguage->addItem(tr("Portuguese (Brazil)"), SpellChecker::PortugueseBrazilian);
+    ui->spellCheckingLanguage->addItem(tr("Portuguese (Portugal)"), SpellChecker::Portuguese);
     ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
+    ui->spellCheckingLanguage->addItem(tr("Swedish"), SpellChecker::Swedish);
     ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 }
 
@@ -680,6 +688,7 @@ void SettingsView::initView()
 
     m_jumpsTableHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->scenarioEditBlockSettingsTable->setHorizontalHeader(m_jumpsTableHeader);
+    ui->scenarioEditBlockSettingsTable->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     ui->newTemplate->updateIcons();
     ui->editTemplate->updateIcons();
@@ -868,4 +877,15 @@ void SettingsView::initStyleSheet()
     //
     m_applicationTabs->setProperty("inTopPanel", true);
     m_scenarioEditorTabs->setProperty("inTopPanel", true);
+
+    //
+    // Таблицы
+    //
+    ui->scenarioEditBlockSettingsTable->setProperty("nobordersContainer", true);
+    ui->templates->setProperty("mainContainer", true);
+
+    //
+    // Кнопка сброса изменений
+    //
+    ui->resetSettings->setStyleSheet("border-left: none; border-right: none;");
 }

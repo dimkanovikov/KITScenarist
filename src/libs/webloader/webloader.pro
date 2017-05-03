@@ -25,18 +25,27 @@ MOC_DIR = $$DESTDIR/.moc
 RCC_DIR = $$DESTDIR/.qrc
 UI_DIR = $$DESTDIR/.ui
 
+# Включить создание pdb-файла для релизной сборки
+win32-msvc* {
+CONFIG += debug_and_release warn_on
+CONFIG += thread exceptions rtti stl
+
+QMAKE_CXXFLAGS_RELEASE +=  /Zi
+QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
+}
+
 HEADERS += src/HttpMultiPart_p.h \
-	   src/NetworkQueue_p.h \
-	   src/NetworkRequest.h \
-	   src/NetworkRequestPrivate_p.h \
-	   src/WebLoader_p.h \
-	   src/WebRequest_p.h \
-	   src/NetworkRequestLoader.h \
+       src/NetworkQueue_p.h \
+       src/NetworkRequest.h \
+       src/NetworkRequestPrivate_p.h \
+       src/WebLoader_p.h \
+       src/WebRequest_p.h \
+       src/NetworkRequestLoader.h \
            src/WebLoaderGlobal.h
 
 SOURCES += src/HttpMultiPart_p.cpp \
-	   src/WebLoader_p.cpp \
-	   src/WebRequest_p.cpp \
-	   src/NetworkQueue_p.cpp \
-	   src/NetworkRequest.cpp \
+       src/WebLoader_p.cpp \
+       src/WebRequest_p.cpp \
+       src/NetworkQueue_p.cpp \
+       src/NetworkRequest.cpp \
     src/NetworkRequestLoader.cpp

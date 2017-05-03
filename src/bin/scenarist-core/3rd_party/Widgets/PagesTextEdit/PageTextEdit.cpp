@@ -1154,6 +1154,7 @@ void PageTextEdit::setPlainText(const QString &text)
 {
     Q_D(PageTextEdit);
     d->control->setPlainText(text);
+    d->updateDocumentGeometry();
     d->preferRichText = false;
 }
 
@@ -1196,6 +1197,7 @@ void PageTextEdit::setHtml(const QString &text)
 {
     Q_D(PageTextEdit);
     d->control->setHtml(text);
+    d->updateDocumentGeometry();
     d->preferRichText = true;
 }
 
@@ -1845,6 +1847,73 @@ void PageTextEditPrivate::paintWatermark(QPainter* _painter)
         _painter->drawText(0, 0, m_watermarkMulti);
 
         _painter->restore();
+    }
+}
+
+void PageTextEditPrivate::clipPageDecorationRegions(QPainter* _painter)
+{
+    Q_Q(PageTextEdit);
+
+    //
+    // Область обрезается только тогда, когда редактор находится в постраничном режиме и если заданы поля
+    //
+    if (m_usePageMode && !m_pageMetrics.pxPageMargins().isNull()) {
+        QSizeF pageSize(m_pageMetrics.pxPageSize());
+        QMarginsF pageMargins(m_pageMetrics.pxPageMargins());
+
+        //
+        // Текущие высота и ширина которые отображаются на экране
+        //
+        qreal curHeight = pageSize.height() - (vbar->value() % int(pageSize.height()));
+
+        //
+        // Начало поля должно учитывать смещение полосы прокрутки
+        //
+        qreal leftMarginPosition = 0;
+        //
+        // Итоговая ширина поля
+        //
+        qreal marginWidth = pageSize.width();
+
+        //
+        // Формируем область
+        //
+        QRegion clipPath(viewport->rect());
+
+        //
+        // Верхнее поле первой страницы на экране, когда не видно предыдущей страницы
+        //
+        if (curHeight - pageMargins.top() >= 0) {
+            QRect topMarginRect(leftMarginPosition, curHeight - pageSize.height(), marginWidth, pageMargins.top());
+            clipPath = clipPath.xored(topMarginRect);
+        }
+
+        //
+        // Для всех видимых страниц
+        //
+        while (curHeight < q->height()) {
+            //
+            // Определить прямоугольник нижнего поля
+            //
+            QRect bottomMarginRect(leftMarginPosition, curHeight - pageMargins.bottom(), marginWidth, pageMargins.bottom());
+            clipPath = clipPath.xored(bottomMarginRect);
+
+            //
+            // Определить прямоугольник верхнего поля следующей страницы
+            //
+            QRect topMarginRect(leftMarginPosition, curHeight, marginWidth, pageMargins.top());
+            clipPath = clipPath.xored(topMarginRect);
+
+            curHeight += pageSize.height();
+        }
+
+        //
+        // Определить прямоугольник нижнего поля когда на экране одна страница
+        //
+        QRect bottomMarginRect(leftMarginPosition, curHeight - pageMargins.bottom(), marginWidth, pageMargins.bottom());
+        clipPath = clipPath.xored(bottomMarginRect);
+
+        _painter->setClipRegion(clipPath);
     }
 }
 
@@ -3333,6 +3402,12 @@ void PageTextEdit::setWatermark(const QString& _watermark)
 
         d->relayoutDocument();
     }
+}
+
+void PageTextEdit::clipPageDecorationRegions(QPainter* _painter)
+{
+    Q_D(PageTextEdit);
+    d->clipPageDecorationRegions(_painter);
 }
 
 void PageTextEdit::relayoutDocument()

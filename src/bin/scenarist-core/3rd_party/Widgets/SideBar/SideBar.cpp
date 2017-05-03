@@ -44,7 +44,7 @@ namespace {
     /**
      * @brief Высота индикатора
      */
-    const int INDICATOR_HEIGHT = 30;
+    const int INDICATOR_HEIGHT = 33;
 
     /**
      * @brief Размер иконки индикатора

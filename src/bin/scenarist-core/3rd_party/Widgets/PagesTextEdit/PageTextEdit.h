@@ -366,6 +366,11 @@ public Q_SLOTS:
 	 */
 	void setWatermark(const QString& _watermark);
 
+    /**
+     * @brief Установить область обрезки так, чтобы вырезалось всё, что выходит на поля страницы
+     */
+    void clipPageDecorationRegions(QPainter* _painter);
+
 	/**
 	 * @brief Перестроить документ
 	 */

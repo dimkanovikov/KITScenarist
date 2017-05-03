@@ -10,9 +10,6 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
 {
     ui->setupUi(this);
 
-    initView();
-    initConnections();
-
     if (_language == -1) {
         ui->system->setChecked(true);
     } else if (_language == 0) {
@@ -29,6 +26,8 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
         ui->ukrainian->setChecked(true);
     } else if (_language == 6) {
         ui->german->setChecked(true);
+    } else if (_language == 7) {
+        ui->portugues->setChecked(true);
     }
 }
 
@@ -56,6 +55,8 @@ int LanguageDialog::language() const
         result = 5;
     } else if (ui->german->isChecked()) {
         result = 6;
+    } else if (ui->portugues->isChecked()) {
+        result = 7;
     }
 
     return result;
@@ -63,12 +64,9 @@ int LanguageDialog::language() const
 
 void LanguageDialog::initView()
 {
-    QLightBoxDialog::initView();
 }
 
 void LanguageDialog::initConnections()
 {
     connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
-
-    QLightBoxDialog::initConnections();
 }

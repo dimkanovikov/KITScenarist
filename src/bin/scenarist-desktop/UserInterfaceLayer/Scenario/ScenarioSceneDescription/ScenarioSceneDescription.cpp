@@ -41,7 +41,11 @@ void ScenarioSceneDescription::setTitle(const QString& _title)
 
 void ScenarioSceneDescription::setDescription(const QString& _description)
 {
-    if (currentDescription() != _description) {
+    //
+    // Если задан новый текст и мы не в режиме применения собственных изменений
+    //
+    if (m_inDescriptionChange == 0
+        && currentDescription() != _description) {
         m_description->blockSignals(true);
 
         //
@@ -49,7 +53,7 @@ void ScenarioSceneDescription::setDescription(const QString& _description)
         //
         m_sourceDescription = _description;
 
-        m_description->setHtml(_description);
+        m_description->setPlainText(_description);
 
         m_description->blockSignals(false);
     }
@@ -71,9 +75,15 @@ void ScenarioSceneDescription::aboutTitleChanged()
 
 void ScenarioSceneDescription::aboutDescriptionChanged()
 {
+    //
+    // События от клавиатуры могут приходить достаточно часто, поэтому используем тут
+    // числового охранника, чтобы быть уверенным, что все события были выполнены корректно
+    //
     if (m_sourceDescription != currentDescription()
         || m_description->toPlainText().isEmpty()) {
-        emit descriptionChanged(m_description->toHtml());
+        ++m_inDescriptionChange;
+        emit descriptionChanged(m_description->toPlainText());
+        --m_inDescriptionChange;
     }
 }
 
@@ -84,7 +94,7 @@ QString ScenarioSceneDescription::currentTitle() const
 
 QString ScenarioSceneDescription::currentDescription() const
 {
-    return TextEditHelper::removeDocumentTags(m_description->toHtml());
+    return m_description->toPlainText();
 }
 
 void ScenarioSceneDescription::initView()

@@ -590,7 +590,12 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
             // ... затираем текст ячеек
             //
             sourceNodes.at(sourceCurrentNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
+            QDomElement sourceNodeReviews = sourceNodes.at(sourceCurrentNodePosition).firstChildElement("reviews");
+            sourceNodes.at(sourceCurrentNodePosition).removeChild(sourceNodeReviews);
+            //
             targetNodes.at(targetCurrentNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
+            QDomElement targetNodeReviews = targetNodes.at(targetCurrentNodePosition).firstChildElement("reviews");
+            targetNodes.at(targetCurrentNodePosition).removeChild(targetNodeReviews);
 
             //
             // ... скорректируем позицию затрагиваемую патчем на длину стёртой строки

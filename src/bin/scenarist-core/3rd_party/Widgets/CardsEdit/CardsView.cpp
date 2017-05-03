@@ -6,7 +6,12 @@
 
 #include <QEvent>
 #include <QScrollBar>
+#include <QVariant>
 #include <QVBoxLayout>
+
+namespace {
+    const QVector<QEvent::Type> editingEvents = { QEvent::MouseButtonPress, QEvent::MouseButtonDblClick, QEvent::KeyPress};
+}
 
 
 CardsView::CardsView(QWidget* _parent) :
@@ -17,11 +22,17 @@ CardsView::CardsView(QWidget* _parent) :
 {
     initView();
     initConnections();
+    initStyleSheet();
 }
 
 CardsView::~CardsView()
 {
     delete m_undoStack;
+}
+
+void CardsView::setReadOnly(bool _readOnly)
+{
+    m_view->setInteractive(!_readOnly);
 }
 
 void CardsView::setUseCorkboardBackground(bool _use)
@@ -243,6 +254,11 @@ void CardsView::initConnections()
 
     connect(m_view, &ScalableGraphicsView::scaleChanged, m_scene, &CardsScene::refresh);
     connect(m_view->horizontalScrollBar(), &QScrollBar::valueChanged, m_scene, &CardsScene::updateActs);
+}
+
+void CardsView::initStyleSheet()
+{
+    m_view->setProperty("mainContainer", true);
 }
 
 void CardsView::updateBackgroundBrush()

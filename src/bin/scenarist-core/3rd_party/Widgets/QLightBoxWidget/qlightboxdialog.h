@@ -13,140 +13,146 @@ class QProgressBar;
  */
 class QLightBoxDialog : public QLightBoxWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/**
-	 * @brief Коды возврата
-	 */
-	enum DialogCode {
-		Accepted = 1,
-		Rejected = 0
-	};
+    /**
+     * @brief Коды возврата
+     */
+    enum DialogCode {
+        Accepted = 1,
+        Rejected = 0
+    };
 
 public:
-	explicit QLightBoxDialog(QWidget *parent = 0, bool _followToHeadWidget = true,
-		bool _isContentStretchable = false);
+    explicit QLightBoxDialog(QWidget *parent = 0, bool _followToHeadWidget = true,
+        bool _isContentStretchable = false);
 
 public slots:
-	/**
-	 * @brief Выполнить диалог
-	 */
-	int exec();
+    /**
+     * @brief Открыть диалог заблокировав выполнение цикла событий приложения
+     */
+    int exec();
 
-	/**
-	 * @brief Позитивное и негативное закрытие диалога
-	 */
-	/** @{ */
-	void accept();
-	void reject();
-	/** @} */
+    /**
+     * @brief Переопределяем, чтобы инициилизировать диалог, перед отображением
+     */
+    void setVisible(bool _visible);
 
-	/**
-	 * @brief Закрыть диалог с установленным кодом возврата
-	 */
-	void done(int _result);
+    /**
+     * @brief Позитивное и негативное закрытие диалога
+     */
+    /** @{ */
+    void accept();
+    void reject();
+    /** @} */
 
-	/**
-	 * @brief Виден ли прогрессбар в данный момент
-	 */
-	bool isProressVisible() const;
+    /**
+     * @brief Закрыть диалог с установленным кодом возврата
+     */
+    void done(int _result);
 
-	/**
-	 * @brief Показать прогрессбар с установленными параметрами
-	 */
-	void showProgress(int _minimumValue = 0, int _maximumValue = 0);
+    /**
+     * @brief Виден ли прогрессбар в данный момент
+     */
+    bool isProressVisible() const;
 
-	/**
-	 * @brief Установить текущее значение прогресса
-	 */
-	void setProgressValue(int _value);
+    /**
+     * @brief Показать прогрессбар с установленными параметрами
+     */
+    void showProgress(int _minimumValue = 0, int _maximumValue = 0);
 
-	/**
-	 * @brief Скрыть прогрессбар
-	 */
-	void hideProgress();
+    /**
+     * @brief Установить текущее значение прогресса
+     */
+    void setProgressValue(int _value);
+
+    /**
+     * @brief Скрыть прогрессбар
+     */
+    void hideProgress();
 
 signals:
-	/**
-	 * @brief Сигналы о позитивном и негативном закрытии диалога
-	 */
-	/** @{ */
-	void accepted();
-	void rejected();
-	/** @} */
+    /**
+     * @brief Сигналы о позитивном и негативном закрытии диалога
+     */
+    /** @{ */
+    void accepted();
+    void rejected();
+    /** @} */
 
-	/**
-	 * @brief Диалог закрыт с заданным кодом возврата
-	 */
-	void finished(int _result);
+    /**
+     * @brief Диалог закрыт с заданным кодом возврата
+     */
+    void finished(int _result);
 
 protected:
-	/**
-	 * @brief Переопределяется для перехвата нажатия Enter и Escape
-	 */
-	bool event(QEvent* _event);
+    /**
+     * @brief Переопределяется для перехвата нажатия Enter и Escape
+     */
+    bool event(QEvent* _event);
 
-	/**
-	 * @brief Настроить представление
-	 */
-	virtual void initView();
+    /**
+     * @brief Настроить представление
+     */
+    virtual void initView() = 0;
 
-	/**
-	 * @brief Настроить соединения
-	 */
-	virtual void initConnections();
+    /**
+     * @brief Настроить соединения
+     */
+    virtual void initConnections() = 0;
 
-	/**
-	 * @brief Виджет заголовок
-	 */
-	virtual QWidget* titleWidget() const;
+    /**
+     * @brief Виджет заголовок
+     */
+    virtual QWidget* titleWidget() const;
 
-	/**
-	 * @brief Виджет на который нужно установить фокус при отображении
-	 */
-	virtual QWidget* focusedOnExec() const;
-
-private:
-	/**
-	 * @brief Обновить заголовок
-	 */
-	void updateTitle();
-
-	/**
-	 * @brief Анимировать отображение/сокрытие диалога
-	 */
-	/** @{ */
-	void animateShow();
-	void animateHide();
-	void animate(bool _forward);
-	/** @} */
+    /**
+     * @brief Виджет на который нужно установить фокус при отображении
+     */
+    virtual QWidget* focusedOnExec() const;
 
 private:
-	/**
-	 * @brief Заголовок диалога
-	 */
-	QLabel* m_title;
+    /**
+     * @brief Инициилизировать диалог
+     */
+    void init();
 
-	/**
-	 * @brief Виджет диалога
-	 */
-	QFrame* m_centralWidget;
+    /**
+     * @brief Обновить заголовок
+     */
+    void updateTitle();
 
-	/**
-	 * @brief Прогрессбар для диалога
-	 */
-	QProgressBar* m_progress;
+private:
+    /**
+     * @brief Инициилизирован ли диалог
+     */
+    bool m_initialized;
 
-	/**
-	 * @brief Нужно ли расстягивать виджет с содержимым диалога
-	 */
-	bool m_isContentStretchable;
+    /**
+     * @brief Заголовок диалога
+     */
+    QLabel* m_title;
 
-	/**
-	 * @brief Актуальный код возврата
-	 */
-	int m_execResult;
+    /**
+     * @brief Виджет диалога
+     */
+    QFrame* m_centralWidget;
+
+    /**
+     * @brief Прогрессбар для диалога
+     */
+    QProgressBar* m_progress;
+
+    /**
+     * @brief Нужно ли расстягивать виджет с содержимым диалога
+     */
+    bool m_isContentStretchable;
+
+    /**
+     * @brief Актуальный код возврата
+     */
+    int m_execResult;
 };
 
 #endif // QLIGHTBOXDIALOG_H

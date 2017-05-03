@@ -25,8 +25,6 @@ UpdateDialog::UpdateDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
-    initView();
-    initConnections();
     initStylesheet();
 }
 
@@ -68,8 +66,6 @@ void UpdateDialog::showDownloadError()
 void UpdateDialog::initView()
 {
     m_ui->text->setOpenExternalLinks(true);
-
-    QLightBoxDialog::initView();
 }
 
 void UpdateDialog::initConnections()
@@ -87,8 +83,6 @@ void UpdateDialog::initConnections()
             emit downloadUpdate();
         }
     });
-
-    QLightBoxDialog::initConnections();
 }
 
 void UpdateDialog::initStylesheet()

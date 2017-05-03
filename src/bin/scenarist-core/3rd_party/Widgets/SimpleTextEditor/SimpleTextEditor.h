@@ -23,7 +23,7 @@ public:
 	void setTextItalic(bool _italic);
 	void setTextColor(const QColor& _color);
 	void setTextBackgroundColor(const QColor& _color);
-	void setTextFont(const QFont& _font);
+    void setTextFont(const QFont& _font);
 	/** @} */
 
 protected:
@@ -42,6 +42,11 @@ private:
 	 * @brief Объединить новое форматированные с выделенным текстом, или со словом под курсором
 	 */
 	void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+
+    /**
+     * @brief Скорректировать межстрочный интервал
+     */
+    void correctLineSpacing(int _from, int _removed, int _added);
 
 	/**
 	 * @brief Даём виджету доступ к защищённым членам класса

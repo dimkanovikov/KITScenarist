@@ -121,6 +121,21 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
     }
 
     //
+    // Если работает в режиме не поэпизодника, то блок нужно сместить после всех блоков
+    // описания текущей сцены
+    //
+    if (!outlineMode()
+        && _blockType != ScenarioBlockStyle::SceneDescription) {
+        ScenarioBlockStyle::Type nextBlockType = ScenarioBlockStyle::forBlock(textCursor().block().next());
+        while (!textCursor().atEnd()
+               && nextBlockType == ScenarioBlockStyle::SceneDescription) {
+            moveCursor(QTextCursor::NextBlock);
+            moveCursor(QTextCursor::EndOfBlock);
+            nextBlockType = ScenarioBlockStyle::forBlock(textCursor().block().next());
+        }
+    }
+
+    //
     // Вставим блок
     //
     textCursor().insertBlock();
@@ -760,15 +775,21 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
             //
             // Определить область прорисовки слева от текста
             //
-            const int left = 0;
-            const int right = document()->rootFrame()->frameFormat().leftMargin() - 10;
+            const int pageLeft = 0;
+            const int textLeft = document()->rootFrame()->frameFormat().leftMargin() - 10;
+            const int textRight = viewport()->width() + horizontalScrollBar()->maximum()
+                                  - document()->rootFrame()->frameFormat().rightMargin() + 10;
 
 
             QPainter painter(viewport());
+            clipPageDecorationRegions(&painter);
 
             QTextBlock block = document()->begin();
             const QRectF viewportGeometry = viewport()->geometry();
             const int leftDelta = -horizontalScrollBar()->value();
+            int lastBlockBottom = 0;
+            int colorRectWidth = 0;
+            QColor lastSceneColor;
 
             QTextCursor cursor(document());
             while (block.isValid()) {
@@ -779,7 +800,38 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 
                 if (block.isVisible()) {
                     cursor.setPosition(block.position());
-                    QRect cursorR = cursorRect(cursor);
+                    const QRect cursorR = cursorRect(cursor);
+                    cursor.movePosition(QTextCursor::EndOfBlock);
+                    const QRect cursorREnd = cursorRect(cursor);
+
+                    //
+                    // Определим цвет
+                    //
+                    if (blockType == ScenarioBlockStyle::SceneHeading
+                        || blockType == ScenarioBlockStyle::FolderHeader) {
+                        lastBlockBottom = cursorR.top() - (cursorR.height() / 2);
+                        colorRectWidth = QFontMetrics(cursor.charFormat().font()).width(".");
+                        lastSceneColor = QColor();
+                        if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(block.userData())) {
+                            if (!info->colors().isEmpty()) {
+                                lastSceneColor = QColor(info->colors().split(";").first());
+                            }
+                        }
+                    }
+
+                    //
+                    // Нарисуем цвет
+                    //
+                    if (lastSceneColor.isValid()) {
+                        painter.save();
+                        QPointF topLeft(textRight + leftDelta, lastBlockBottom);
+                        QPointF bottomRight(textRight + colorRectWidth + leftDelta, cursorREnd.bottom());
+                        QRectF rect(topLeft, bottomRight);
+                        painter.setPen(lastSceneColor);
+                        painter.setBrush(lastSceneColor);
+                        painter.drawRect(rect);
+                        painter.restore();
+                    }
 
                     //
                     // Курсор на экране
@@ -796,8 +848,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
                             //
                             // Определим область для отрисовки и выведем символ в редактор
                             //
-                            QPointF topLeft(left + leftDelta, cursorR.top());
-                            QPointF bottomRight(right + leftDelta, cursorR.bottom());
+                            QPointF topLeft(pageLeft + leftDelta, cursorR.top());
+                            QPointF bottomRight(textLeft + leftDelta, cursorR.bottom() + 2);
                             QRectF rect(topLeft, bottomRight);
                             painter.setFont(cursor.charFormat().font());
                             painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, "» ");
@@ -821,8 +873,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
                                     //
                                     // Определим область для отрисовки и выведем номер сцены в редактор
                                     //
-                                    QPointF topLeft(left + leftDelta, cursorR.top());
-                                    QPointF bottomRight(right + leftDelta, cursorR.bottom());
+                                    QPointF topLeft(pageLeft + leftDelta, cursorR.top());
+                                    QPointF bottomRight(textLeft + leftDelta, cursorR.bottom());
                                     QRectF rect(topLeft, bottomRight);
                                     painter.setFont(cursor.charFormat().font());
                                     painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
@@ -830,6 +882,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
                             }
                         }
                     }
+
+                    lastBlockBottom = cursorREnd.bottom();
                 }
 
                 block = block.next();

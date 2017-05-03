@@ -235,9 +235,9 @@ Plot CharactersActivityPlot::makePlot(QTextDocument* _scenario, const BusinessLo
 		//
 		// По игрику активность персонажей
 		//
-		// Позицию по игрику наращиваем, потому что мы будем строить график из горбов
+        // Позицию по игрику наращиваем, потому что мы будем строить графики один над другим
 		//
-		int lastY = 0;
+        int lastY = 0;
 		for (int characterIndex = 0; characterIndex < characters.size(); ++characterIndex) {
 			if (_parameters.charactersActivityNames.contains(characters.at(characterIndex))) {
 				lastY += 1;
@@ -252,7 +252,7 @@ Plot CharactersActivityPlot::makePlot(QTextDocument* _scenario, const BusinessLo
 	}
 	info.insert(lastX, QStringList());
 	//
-	Plot resultPlot;
+    Plot resultPlot;
 	resultPlot.info = info;
 	//
 	// ... Формируем список графиков снизу вверх, чтоби они не закрашивались при выводе

@@ -87,8 +87,8 @@ namespace UserInterface
          */
         void setWindowWaiting(bool _isWaiting);
 
-        void initConnections() override;
         void initView() override;
+        void initConnections() override;
 
     private:
         Ui::RenewSubscriptionDialog *m_ui;

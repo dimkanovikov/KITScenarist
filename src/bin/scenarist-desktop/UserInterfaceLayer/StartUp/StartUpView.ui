@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1153</width>
-    <height>652</height>
+    <width>797</width>
+    <height>493</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -576,15 +576,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>AcceptebleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
+  </customwidget>
+  <customwidget>
    <class>UserInterface::ProjectsList</class>
    <extends>QScrollArea</extends>
    <header location="global">UserInterfaceLayer/StartUp/ProjectsList.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AcceptebleLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

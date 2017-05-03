@@ -1048,6 +1048,7 @@ void CardsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
                 group->addAnimation(moveToBottomAnimation);
                 connect(group, &QSequentialAnimationGroup::finished, [=] {
                    removeCard(movedCard->uuid());
+                   movedCard->setScale(movedCard->scale() + 0.2);
                    folder->setZValue(1);
                 });
                 group->start(QAbstractAnimation::DeleteWhenStopped);

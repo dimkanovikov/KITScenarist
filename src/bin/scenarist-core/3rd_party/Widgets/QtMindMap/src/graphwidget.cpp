@@ -45,6 +45,11 @@ GraphWidget::GraphWidget(QWidget *parent) :
     });
 }
 
+void GraphWidget::setReadOnly(bool _readOnly)
+{
+    setInteractive(!_readOnly);
+}
+
 void GraphWidget::newScene()
 {
     m_graphlogic->removeAllNodes();
@@ -161,8 +166,9 @@ void GraphWidget::gestureEvent(QGestureEvent *_event)
 void GraphWidget::keyPressEvent(QKeyEvent *_event)
 {
     // if GraphLogic handles the event then stop.
-    if (m_graphlogic->processKeyEvent(_event))
+    if (m_graphlogic->processKeyEvent(_event)) {
         return;
+    }
 
     if ((_event->key() == Qt::Key_Plus || _event->key() == Qt::Key_Equal) &&
         _event->modifiers() & Qt::ControlModifier)

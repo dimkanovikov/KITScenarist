@@ -133,6 +133,7 @@
         <file>Images/cards-print-portrait-4.png</file>
         <file>Images/cards-print-portrait-2.png</file>
         <file>Images/cards-print-portrait-1.png</file>
+        <file>Icons/Editing/account-multiple.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
@@ -151,12 +152,23 @@
         <file>Translations/qtbase_en.qm</file>
         <file>Translations/qtbase_de.qm</file>
         <file>Translations/qt_de.qm</file>
+        <file>Translations/Scenarist_it.qm</file>
+        <file>Translations/Scenarist_jp.qm</file>
+        <file>Translations/Scenarist_pt.qm</file>
+        <file>Translations/Scenarist_zn.qm</file>
+        <file>Translations/qt_kz.qm</file>
+        <file>Translations/qtbase_pt.qm</file>
+        <file>Translations/qt_pt.qm</file>
     </qresource>
     <qresource prefix="/Interface">
-        <file>UI/menuarrow.png</file>
-        <file>UI/comboboxarrow.png</file>
         <file>UI/style-mobile.qss</file>
         <file>UI/style-desktop.qss</file>
+        <file>UI/downarrow.png</file>
+        <file>UI/downarrow-dark.png</file>
+        <file>UI/downarrow-disable.png</file>
+        <file>UI/uparrow.png</file>
+        <file>UI/uparrow-dark.png</file>
+        <file>UI/uparrow-disable.png</file>
     </qresource>
     <qresource prefix="/Templates">
         <file>Templates/default.kitss</file>

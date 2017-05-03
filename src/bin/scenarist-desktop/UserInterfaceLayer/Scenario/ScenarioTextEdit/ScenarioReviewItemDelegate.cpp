@@ -20,7 +20,7 @@ namespace {
 	/**
 	 * @brief Расстояния
 	 */
-	const int TOP_MARGIN = 3, SPACING = 6, BOTTOM_MARGIN = 0, RIGHT_MARGIN = 3;
+    const int TOP_MARGIN = 8, SPACING = 8, BOTTOM_MARGIN = 8, RIGHT_MARGIN = 3 ;
 
 	/**
 	 * @brief Рассчитать высоту текста по заданной ширине
@@ -106,12 +106,11 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	// Определим кисти и шрифты
 	//
 	QColor backgroundColor = opt.palette.base().color();
-	QColor replyBackgroundColor = opt.palette.alternateBase().color();
-	QColor borderColor = opt.palette.midlight().color();
+    QColor replyBackgroundColor = opt.palette.alternateBase().color();
 	QColor textColor = opt.palette.windowText().color();
-	QColor replyColor = opt.palette.windowText().color();
-	QColor dateColor = opt.palette.dark().color();
-	QFont headerFont = opt.font;
+    QColor replyColor = opt.palette.windowText().color();
+    QColor dateColor = opt.palette.dark().color();
+    QFont headerFont = opt.font;
 	headerFont.setBold(true);
 	QFont dateFont = opt.font;
 	dateFont.setBold(true);
@@ -126,7 +125,10 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	//
 	if (opt.state.testFlag(QStyle::State_Selected)) {
 		backgroundColor = opt.palette.highlight().color();
-		textColor = opt.palette.highlightedText().color();
+        textColor = opt.palette.highlightedText().color();
+        dateColor = textColor.darker(135);
+        replyBackgroundColor = backgroundColor;
+        replyColor = textColor;
 	}
 
 	//
@@ -175,20 +177,22 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		//
 		// ... фон
 		//
-		_painter->fillRect(rect, commentIndex == 0 ? backgroundColor : replyBackgroundColor);
+        _painter->fillRect(rect, commentIndex == 0 ? backgroundColor : replyBackgroundColor);
 
 		//
 		// ... цвет заметки
 		//
 		const QColor color = _index.data(Qt::DecorationRole).value<QColor>();
-		const QRect colorRect(0, lastTop, COLOR_MARK_WIDTH, height);
+        const QRect colorRect(0, lastTop, COLOR_MARK_WIDTH, height);
 		_painter->fillRect(colorRect, commentIndex == 0 ? color : replyBackgroundColor);
 
-		//
-		// ... границы
-		//
-		_painter->setPen(borderColor);
-		_painter->drawRect(rect);
+        //
+        // ... разделитель
+        //
+        const QPoint left(0, lastTop + height);
+        const QPoint right(rect.right(), lastTop + height);
+        _painter->setPen(QPen(opt.palette.dark(), 1));
+        _painter->drawLine(left, right);
 
 		//
 		// ... автор
@@ -210,8 +214,8 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		_painter->setFont(dateFont);
 		const QRect dateRect(
 			colorRect.right() + SPACING,
-			headerRect.bottom(),
-			width - colorRect.right() - SPACING - RIGHT_MARGIN,
+            headerRect.bottom() + 2,
+            width - colorRect.right() - SPACING - RIGHT_MARGIN,
 			DATE_LINE_HEIGHT
 			);
 		const QString date = QDateTime::fromString(dates.value(commentIndex), Qt::ISODate).toString("dd.MM.yyyy hh:mm");
@@ -235,8 +239,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 			width - colorRect.right() - SPACING - RIGHT_MARGIN,
 			height - headerHeight - SPACING
 			);
-		_painter->drawText(commentRect, Qt::TextWordWrap, comments.value(commentIndex));
-
+        _painter->drawText(commentRect, Qt::TextWordWrap, comments.value(commentIndex));
 
 		lastTop += height;
 	}
@@ -262,7 +265,7 @@ QSize ScenarioReviewItemDelegate::sizeHint(const QStyleOptionViewItem& _option, 
 		//
 		// ... высота заголовка: отступ сверху + две строки (автор и дата) + отступ снизу
 		//
-		const int headerHeight = TOP_MARGIN + _option.fontMetrics.height() * 2 + BOTTOM_MARGIN;
+        const int headerHeight = TOP_MARGIN + _option.fontMetrics.height() * 2 + BOTTOM_MARGIN;
 		//
 		// ... полная высота
 		//

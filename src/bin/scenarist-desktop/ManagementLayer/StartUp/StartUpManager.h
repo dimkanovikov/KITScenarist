@@ -48,11 +48,20 @@ namespace ManagementLayer
         QWidget* view() const;
 
         /**
+         * @brief Проверить наличие отчётов об ошибке
+         */
+        void checkCrashReports();
+
+        /**
+         * @brief Проверить наличие новой версии
+         */
+        void checkNewVersion();
+
+        /**
          * @brief Для процесса автологина меняет строку "Авторизация" на "Подключение"
          */
         void setProgressLoginLabel(bool _enable);
 
-    public slots:
         /**
          * @brief Открыт ли в данный момент диалог авторизации/регистрации или смены пароля
          */
@@ -284,16 +293,6 @@ namespace ManagementLayer
          * @brief Настроить соединения
          */
         void initConnections();
-
-        /**
-         * @brief Проверить наличие отчётов об ошибке
-         */
-        void checkCrashReports();
-
-        /**
-         * @brief Проверить наличие новой версии
-         */
-        void checkNewVersion();
 
     private:
         /**

@@ -225,15 +225,15 @@ namespace {
     /**
      * @brief Прокрутить диалог предпросмотра к заданной позиции
      */
-    static void setPrintPreviewScrollValue(QPrintPreviewDialog& _dialog, int _value) {
-
-
+    static bool setPrintPreviewScrollValue(QPrintPreviewDialog& _dialog, int _value) {
         foreach (QAbstractScrollArea* child, _dialog.findChildren<QAbstractScrollArea*>()) {
             if (QString(child->metaObject()->className()) == "GraphicsView") {
+                qDebug() << _value << child->verticalScrollBar()->maximum();
                 child->verticalScrollBar()->setValue(_value);
                 break;
             }
         }
+        return true;
     }
 
     /**
@@ -244,6 +244,7 @@ namespace {
         foreach (const QAbstractScrollArea* child, _dialog.findChildren<QAbstractScrollArea*>()) {
             if (QString(child->metaObject()->className()) == "GraphicsView") {
                 value = child->verticalScrollBar()->value();
+                break;
             }
         }
         return value;
@@ -312,10 +313,15 @@ void PdfExporter::printPreview(ScenarioDocument* _scenario, const ExportParamete
     //
     QPrintPreviewDialog printDialog(printer, qApp->activeWindow());
     printDialog.setWindowState(Qt::WindowMaximized);
-    connect(&printDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(aboutPrint(QPrinter*)));
+    connect(&printDialog, &QPrintPreviewDialog::paintRequested, this, &PdfExporter::aboutPrint);
     if (m_lastScenarioPreviewScrollPosition.first == _scenario) {
-        QTimer::singleShot(0, [this, &printDialog] {
-            ::setPrintPreviewScrollValue(printDialog, m_lastScenarioPreviewScrollPosition.second);
+        //
+        // Если осуществляется повторный предпросмотр документа, пробуем восстановить положение полосы прокрутки
+        //
+        connect(this, &PdfExporter::printed, [this, &printDialog] {
+            QTimer::singleShot(300, [this, &printDialog] {
+                setPrintPreviewScrollValue(printDialog, m_lastScenarioPreviewScrollPosition.second);
+            });
         });
     } else {
         m_lastScenarioPreviewScrollPosition.first = _scenario;
@@ -344,6 +350,8 @@ void PdfExporter::printPreview(ScenarioDocument* _scenario, const ExportParamete
 void PdfExporter::aboutPrint(QPrinter* _printer)
 {
     ::printDocument(m_documentForPrint, _printer);
+
+    emit printed();
 }
 
 QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const
