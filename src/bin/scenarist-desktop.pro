@@ -323,7 +323,9 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.cpp \
+    scenarist-core/BusinessLayer/Import/FountainImporter.cpp \
+    scenarist-core/BusinessLayer/Export/FountainExporter.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -574,7 +576,9 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.h \
-    scenarist-core/3rd_party/Helpers/TextUtils.h
+    scenarist-core/3rd_party/Helpers/TextUtils.h \
+    scenarist-core/BusinessLayer/Import/FountainImporter.h \
+    scenarist-core/BusinessLayer/Export/FountainExporter.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

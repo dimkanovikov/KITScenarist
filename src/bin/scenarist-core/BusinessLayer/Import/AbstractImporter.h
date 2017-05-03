@@ -74,24 +74,26 @@ namespace BusinessLogic
          */
         virtual QString importScenario(const ImportParameters& _importParameters) const = 0;
 
-        /**
-         * @brief Список видов файлов, которые могут быть импортированы
-         */
-        static QString filters() {
-            QString filters;
-            filters.append(QApplication::translate("BusinessLogic::AbstractImporter", "All Supported Files") + QLatin1String(" (*.kitsp *.fdx *.fdxt *.trelby *.docx *.doc *.odt)"));
-            filters.append(";;");
-            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","KIT Scenarist Project") + QLatin1String(" (*.kitsp)"));
-            filters.append(";;");
-            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Final Draft screenplay") + QLatin1String(" (*.fdx)"));
+		/**
+		 * @brief Список видов файлов, которые могут быть импортированы
+		 */
+		static QString filters() {
+			QString filters;
+            filters.append(QApplication::translate("BusinessLogic::AbstractImporter", "All Supported Files") + QLatin1String(" (*.kitsp *.fdx *.trelby *.docx *.doc *.odt *.fountain)"));
+			filters.append(";;");
+			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","KIT Scenarist Project") + QLatin1String(" (*.kitsp)"));
+			filters.append(";;");
+			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Final Draft screenplay") + QLatin1String(" (*.fdx)"));
             filters.append(";;");
             filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Final Draft template") + QLatin1String(" (*.fdxt)"));
+			filters.append(";;");
+			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Trelby screenplay") + QLatin1String(" (*.trelby)"));
+			filters.append(";;");
+			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Office Open XML") + QLatin1String(" (*.docx *.doc)"));
+			filters.append(";;");
+			filters.append(QApplication::translate("BusinessLogic::AbstractImporter","OpenDocument Text") + QLatin1String(" (*.odt)"));
             filters.append(";;");
-            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Trelby screenplay") + QLatin1String(" (*.trelby)"));
-            filters.append(";;");
-            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Office Open XML") + QLatin1String(" (*.docx *.doc)"));
-            filters.append(";;");
-            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","OpenDocument Text") + QLatin1String(" (*.odt)"));
+            filters.append(QApplication::translate("BusinessLogic::AbstractImporter","Fountain Text") + QLatin1String(" (*.fountain)"));
 
             return filters;
         }

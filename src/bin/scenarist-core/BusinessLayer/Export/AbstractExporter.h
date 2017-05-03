@@ -22,7 +22,8 @@ namespace BusinessLogic
 			printTilte(false),
 			printPagesNumbers(false),
 			printScenesNumbers(false),
-			saveReviewMarks(true)
+            saveReviewMarks(true),
+            saveInvisible(false)
 		{}
 
 		/**
@@ -81,6 +82,11 @@ namespace BusinessLogic
 		 * @brief Сохранять редакторские пометки
 		 */
 		bool saveReviewMarks;
+
+        /**
+         * @brief Сохранять ли непечатаемые комментарии
+         */
+        bool saveInvisible;
 	};
 
 
