@@ -18,4 +18,4 @@ and provide a simple way to work with it.
 %attr(0755,root,root) /usr/bin/scenarist
 /usr/share/applications
 /usr/share/KIT
-/usr/share/pixmaps
+%attr(0644,root,root) /usr/share/pixmaps/scenarist.png
