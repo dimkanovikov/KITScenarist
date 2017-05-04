@@ -7,6 +7,7 @@
 #include <BusinessLayer/Export/DocxExporter.h>
 #include <BusinessLayer/Export/PdfExporter.h>
 #include <BusinessLayer/Export/FdxExporter.h>
+#include <BusinessLayer/Export/FountainExporter.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -99,6 +100,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                     exporter = new BusinessLogic::PdfExporter;
                 } else if (fileInfo.suffix() == "fdx") {
                     exporter = new BusinessLogic::FdxExporter;
+                } else if (fileInfo.suffix() == "fountain") {
+                    exporter = new BusinessLogic::FountainExporter;
                 } else {
                     Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
                 }

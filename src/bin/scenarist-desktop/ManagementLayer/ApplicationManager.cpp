@@ -1,6 +1,5 @@
 #include "ApplicationManager.h"
 
-#include "Project/ProjectsManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Research/ResearchManager.h"
 #include "Scenario/ScenarioCardsManager.h"
@@ -10,6 +9,7 @@
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
 
+#include <ManagementLayer/Project/ProjectsManager.h>
 #include <ManagementLayer/Synchronization/SynchronizationManager.h>
 #include <ManagementLayer/Synchronization/Sync.h>
 
