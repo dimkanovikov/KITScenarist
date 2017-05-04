@@ -146,6 +146,7 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     scenarist-core/3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
     scenarist-core/BusinessLayer/Export/PdfExporter.cpp \
+    scenarist-core/BusinessLayer/Export/FountainExporter.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.cpp \
@@ -178,6 +179,7 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/Import/ImportManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.cpp \
     scenarist-core/BusinessLayer/Import/DocumentImporter.cpp \
+    scenarist-core/BusinessLayer/Import/FountainImporter.cpp \
     scenarist-core/BusinessLayer/Export/DocxExporter.cpp \
     scenarist-core/3rd_party/Widgets/ScalableWrapper/ScalableWrapper.cpp \
     scenarist-core/BusinessLayer/Chronometry/PagesChronometer.cpp \
@@ -369,6 +371,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
     scenarist-core/BusinessLayer/Export/AbstractExporter.h \
     scenarist-core/BusinessLayer/Export/PdfExporter.h \
+    scenarist-core/BusinessLayer/Export/FountainExporter.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.h \
@@ -402,6 +405,7 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Import/ImportManager.h \
     scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.h \
     scenarist-core/BusinessLayer/Import/DocumentImporter.h \
+    scenarist-core/BusinessLayer/Import/FountainImporter.h \
     scenarist-core/BusinessLayer/Export/DocxExporter.h \
     scenarist-core/3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h \
     scenarist-core/BusinessLayer/Chronometry/PagesChronometer.h \
