@@ -250,7 +250,7 @@ void ScenarioCardsView::initView(bool _isDraft)
 
     m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
         QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
-    m_fullscreen->setToolTip(tr("On/off fullscreen mode (F5)"));
+    m_fullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
     m_fullscreen->setCheckable(true);
 
     m_toolbarSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
