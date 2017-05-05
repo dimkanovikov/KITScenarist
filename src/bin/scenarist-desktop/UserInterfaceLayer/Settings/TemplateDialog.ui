@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>809</width>
+    <width>814</width>
     <height>681</height>
    </rect>
   </property>
@@ -325,7 +325,7 @@
            <x>0</x>
            <y>0</y>
            <width>524</width>
-           <height>463</height>
+           <height>446</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
@@ -710,11 +710,17 @@
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
      <property name="verticalScrollMode">
       <enum>QAbstractItemView::ScrollPerPixel</enum>
      </property>
      <property name="resizeMode">
       <enum>QListView::Adjust</enum>
+     </property>
+     <property name="currentRow">
+      <number>-1</number>
      </property>
     </widget>
    </item>

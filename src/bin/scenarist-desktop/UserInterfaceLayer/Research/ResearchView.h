@@ -25,9 +25,9 @@ namespace UserInterface
         ~ResearchView();
 
         /**
-         * @brief Настроить редактор синопсиса
+         * @brief Установить параметры текста
          */
-        void setSynopsisSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign);
+        void setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font);
 
         /**
          * @brief Загрузить модель разработки

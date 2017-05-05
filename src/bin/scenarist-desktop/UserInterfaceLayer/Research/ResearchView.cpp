@@ -97,9 +97,10 @@ ResearchView::~ResearchView()
     delete m_ui;
 }
 
-void ResearchView::setSynopsisSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign)
+void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font)
 {
     m_ui->synopsisText->setPageSettings(_pageSize, _margins, _numberingAlign);
+    m_ui->synopsisText->setDefaultFont(_font);
 }
 
 void ResearchView::setResearchModel(QAbstractItemModel* _model)

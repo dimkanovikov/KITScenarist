@@ -21,16 +21,18 @@ namespace {
 
 TemplateDialog::TemplateDialog(QWidget *parent) :
     QLightBoxDialog(parent),
-    ui(new Ui::TemplateDialog)
+    m_ui(new Ui::TemplateDialog)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
+
+    connect(this, &TemplateDialog::showed, [=] { m_ui->blockStyles->setCurrentRow(0); });
 
     initStyleSheet();
 }
 
 TemplateDialog::~TemplateDialog()
 {
-    delete ui;
+    delete m_ui;
 }
 
 void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template, bool _isNew)
@@ -44,43 +46,38 @@ void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& 
     // Общие параметры шаблона
     //
     if (_isNew) {
-        ui->name->clear();
-        ui->description->clear();
+        m_ui->name->clear();
+        m_ui->description->clear();
     } else {
-        ui->name->setText(m_template.name());
-        ui->description->setText(m_template.description());
+        m_ui->name->setText(m_template.name());
+        m_ui->description->setText(m_template.description());
     }
     if (m_template.pageSizeId() == QPageSize::A4) {
-        ui->pageFormatA4->setChecked(true);
+        m_ui->pageFormatA4->setChecked(true);
     } else {
-        ui->pageFormatLetter->setChecked(true);
+        m_ui->pageFormatLetter->setChecked(true);
     }
-    ui->leftField->setValue(m_template.pageMargins().left());
-    ui->topField->setValue(m_template.pageMargins().top());
-    ui->rightField->setValue(m_template.pageMargins().right());
-    ui->bottomField->setValue(m_template.pageMargins().bottom());
+    m_ui->leftField->setValue(m_template.pageMargins().left());
+    m_ui->topField->setValue(m_template.pageMargins().top());
+    m_ui->rightField->setValue(m_template.pageMargins().right());
+    m_ui->bottomField->setValue(m_template.pageMargins().bottom());
     int verticalAlignIndex = 0; // по умолчанию сверху
     if (m_template.numberingAlignment().testFlag(Qt::AlignBottom)) {
         verticalAlignIndex = 1;
     }
-    ui->numberingVerticalAlignment->setCurrentIndex(verticalAlignIndex);
+    m_ui->numberingVerticalAlignment->setCurrentIndex(verticalAlignIndex);
     int horizontalAlignIndex = 2; // по умолчанию справа
     if (m_template.numberingAlignment().testFlag(Qt::AlignLeft)) {
         horizontalAlignIndex = 0;
     } else if (m_template.numberingAlignment().testFlag(Qt::AlignCenter)) {
         horizontalAlignIndex = 1;
     }
-    ui->numberingHorizontalAlignment->setCurrentIndex(horizontalAlignIndex);
+    m_ui->numberingHorizontalAlignment->setCurrentIndex(horizontalAlignIndex);
 
     //
     // Очистим последний выбранный стиль блока
     //
     m_blockStyle = m_template.blockStyle(ScenarioBlockStyle::Undefined);
-    //
-    // ... и выберем первый из списка, для обновления интерфейса
-    //
-    ui->blockStyles->clearSelection();
-    ui->blockStyles->setCurrentIndex(ui->blockStyles->model()->index(0, 0));
 }
 
 BusinessLogic::ScenarioTemplate TemplateDialog::scenarioTemplate()
@@ -93,24 +90,24 @@ BusinessLogic::ScenarioTemplate TemplateDialog::scenarioTemplate()
     //
     // Сохраним основные параметры шаблона
     //
-    if (!ui->name->text().isEmpty()) {
-        m_template.setName(ui->name->text());
+    if (!m_ui->name->text().isEmpty()) {
+        m_template.setName(m_ui->name->text());
     } else {
         m_template.setName(tr("Unnamed Template"));
     }
-    m_template.setDescription(ui->description->text());
-    m_template.setPageSizeId(ui->pageFormatA4->isChecked() ? QPageSize::A4 : QPageSize::Letter);
-    m_template.setPageMargins(QMarginsF(ui->leftField->value(),
-                                     ui->topField->value(),
-                                     ui->rightField->value(),
-                                     ui->bottomField->value()));
+    m_template.setDescription(m_ui->description->text());
+    m_template.setPageSizeId(m_ui->pageFormatA4->isChecked() ? QPageSize::A4 : QPageSize::Letter);
+    m_template.setPageMargins(QMarginsF(m_ui->leftField->value(),
+                                     m_ui->topField->value(),
+                                     m_ui->rightField->value(),
+                                     m_ui->bottomField->value()));
     Qt::Alignment numberingAlignment;
-    switch (ui->numberingVerticalAlignment->currentIndex()) {
+    switch (m_ui->numberingVerticalAlignment->currentIndex()) {
         default:
         case 0: numberingAlignment |= Qt::AlignTop; break;
         case 1: numberingAlignment |= Qt::AlignBottom; break;
     }
-    switch (ui->numberingHorizontalAlignment->currentIndex()) {
+    switch (m_ui->numberingHorizontalAlignment->currentIndex()) {
         case 0: numberingAlignment |= Qt::AlignLeft; break;
         case 1: numberingAlignment |= Qt::AlignCenter; break;
         default:
@@ -133,17 +130,17 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
         //
         // Обновим параметры стиля блока
         //
-        m_blockStyle.setIsActive(ui->isActive->isChecked());
+        m_blockStyle.setIsActive(m_ui->isActive->isChecked());
 
-        QFont blockFont(ui->fontFamily->currentText(), ui->fontSize->value());
-        blockFont.setBold(ui->bold->isChecked());
-        blockFont.setItalic(ui->italic->isChecked());
-        blockFont.setUnderline(ui->underline->isChecked());
-        blockFont.setCapitalization(ui->uppercase->isChecked() ? QFont::AllUppercase : QFont::MixedCase);
+        QFont blockFont(m_ui->fontFamily->currentText(), m_ui->fontSize->value());
+        blockFont.setBold(m_ui->bold->isChecked());
+        blockFont.setItalic(m_ui->italic->isChecked());
+        blockFont.setUnderline(m_ui->underline->isChecked());
+        blockFont.setCapitalization(m_ui->uppercase->isChecked() ? QFont::AllUppercase : QFont::MixedCase);
         m_blockStyle.setFont(blockFont);
 
         Qt::Alignment align = Qt::AlignLeft;
-        switch (ui->alignment->currentIndex()) {
+        switch (m_ui->alignment->currentIndex()) {
             default:
             case 0: align = Qt::AlignLeft; break;
             case 1: align = Qt::AlignCenter; break;
@@ -152,15 +149,15 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
         }
         m_blockStyle.setAlign(align);
 
-        m_blockStyle.setTopSpace(ui->topSpace->value());
-        m_blockStyle.setBottomSpace(ui->bottomSpace->value());
-        m_blockStyle.setLeftMargin(ui->leftIndent->value());
-        m_blockStyle.setTopMargin(ui->topIndent->value());
-        m_blockStyle.setRightMargin(ui->rightIndent->value());
-        m_blockStyle.setBottomMargin(ui->bottomIndent->value());
+        m_blockStyle.setTopSpace(m_ui->topSpace->value());
+        m_blockStyle.setBottomSpace(m_ui->bottomSpace->value());
+        m_blockStyle.setLeftMargin(m_ui->leftIndent->value());
+        m_blockStyle.setTopMargin(m_ui->topIndent->value());
+        m_blockStyle.setRightMargin(m_ui->rightIndent->value());
+        m_blockStyle.setBottomMargin(m_ui->bottomIndent->value());
 
         ScenarioBlockStyle::LineSpacing lineSpacing;
-        switch (ui->lineSpacing->currentIndex()) {
+        switch (m_ui->lineSpacing->currentIndex()) {
             default:
             case 0: lineSpacing = ScenarioBlockStyle::SingleLineSpacing; break;
             case 1: lineSpacing = ScenarioBlockStyle::OneAndHalfLineSpacing; break;
@@ -168,8 +165,8 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
             case 3: lineSpacing = ScenarioBlockStyle::FixedLineSpacing; break;
         }
         m_blockStyle.setLineSpacing(lineSpacing);
-        m_blockStyle.setLineSpacingValue(ui->lineSpacingValue->value());
-        if (ui->framingBrackets->isChecked()) {
+        m_blockStyle.setLineSpacingValue(m_ui->lineSpacingValue->value());
+        if (m_ui->framingBrackets->isChecked()) {
             m_blockStyle.setPrefix("(");
             m_blockStyle.setPostfix(")");
         } else {
@@ -219,13 +216,13 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
         //
         // Настроим представление
         //
-        ui->isActive->setChecked(activatedBlockStyle.isActive());
-        ui->fontFamily->setEditText(activatedBlockStyle.font().family());
-        ui->fontSize->setValue(activatedBlockStyle.font().pointSize());
-        ui->bold->setChecked(activatedBlockStyle.font().bold());
-        ui->italic->setChecked(activatedBlockStyle.font().italic());
-        ui->underline->setChecked(activatedBlockStyle.font().underline());
-        ui->uppercase->setChecked(activatedBlockStyle.font().capitalization() == QFont::AllUppercase);
+        m_ui->isActive->setChecked(activatedBlockStyle.isActive());
+        m_ui->fontFamily->setEditText(activatedBlockStyle.font().family());
+        m_ui->fontSize->setValue(activatedBlockStyle.font().pointSize());
+        m_ui->bold->setChecked(activatedBlockStyle.font().bold());
+        m_ui->italic->setChecked(activatedBlockStyle.font().italic());
+        m_ui->underline->setChecked(activatedBlockStyle.font().underline());
+        m_ui->uppercase->setChecked(activatedBlockStyle.font().capitalization() == QFont::AllUppercase);
         int alignIndex = 0;
         switch (activatedBlockStyle.align()) {
             default:
@@ -234,21 +231,21 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
             case Qt::AlignRight: alignIndex = 2; break;
             case Qt::AlignJustify: alignIndex = 3; break;
         }
-        ui->alignment->setCurrentIndex(alignIndex);
-        ui->topSpace->setValue(activatedBlockStyle.topSpace());
-        ui->bottomSpace->setValue(activatedBlockStyle.bottomSpace());
-        ui->leftIndent->setValue(activatedBlockStyle.leftMargin());
-        ui->topIndent->setValue(activatedBlockStyle.topMargin());
-        ui->rightIndent->setValue(activatedBlockStyle.rightMargin());
-        ui->bottomIndent->setValue(activatedBlockStyle.bottomMargin());
+        m_ui->alignment->setCurrentIndex(alignIndex);
+        m_ui->topSpace->setValue(activatedBlockStyle.topSpace());
+        m_ui->bottomSpace->setValue(activatedBlockStyle.bottomSpace());
+        m_ui->leftIndent->setValue(activatedBlockStyle.leftMargin());
+        m_ui->topIndent->setValue(activatedBlockStyle.topMargin());
+        m_ui->rightIndent->setValue(activatedBlockStyle.rightMargin());
+        m_ui->bottomIndent->setValue(activatedBlockStyle.bottomMargin());
         //
         // Настроим текущий тип вертикальных отступов блока
         //
         {
             if (activatedBlockStyle.hasVerticalSpacingInMM()) {
-                ui->spacingType->setCurrentIndex(1);
+                m_ui->spacingType->setCurrentIndex(1);
             } else {
-                ui->spacingType->setCurrentIndex(0);
+                m_ui->spacingType->setCurrentIndex(0);
             }
         }
         int lineSpacingIndex = 0;
@@ -259,14 +256,14 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
             case ScenarioBlockStyle::DoubleLineSpacing: lineSpacingIndex = 2; break;
             case ScenarioBlockStyle::FixedLineSpacing: lineSpacingIndex = 3; break;
         }
-        ui->lineSpacing->setCurrentIndex(lineSpacingIndex);
-        ui->lineSpacingValue->setValue(activatedBlockStyle.lineSpacingValue());
+        m_ui->lineSpacing->setCurrentIndex(lineSpacingIndex);
+        m_ui->lineSpacingValue->setValue(activatedBlockStyle.lineSpacingValue());
 
         //
         // Настроим возможность обрамления скобками
         //
-        ui->framingBrackets->setEnabled(activatedType == ScenarioBlockStyle::SceneCharacters);
-        ui->framingBrackets->setChecked(activatedBlockStyle.hasDecoration());
+        m_ui->framingBrackets->setEnabled(activatedType == ScenarioBlockStyle::SceneCharacters);
+        m_ui->framingBrackets->setChecked(activatedBlockStyle.hasDecoration());
 
         //
         // Запомним стиль блока
@@ -290,26 +287,26 @@ void TemplateDialog::aboutSpacingTypeChanged()
     //
     // ... линиями
     //
-    if (ui->spacingType->currentIndex() == LINE_SPACING_INDEX) {
-        ui->topSpace->show();
-        ui->bottomSpace->show();
+    if (m_ui->spacingType->currentIndex() == LINE_SPACING_INDEX) {
+        m_ui->topSpace->show();
+        m_ui->bottomSpace->show();
 
-        ui->topIndent->hide();
-        ui->topIndent->setValue(0);
-        ui->bottomIndent->hide();
-        ui->bottomIndent->setValue(0);
+        m_ui->topIndent->hide();
+        m_ui->topIndent->setValue(0);
+        m_ui->bottomIndent->hide();
+        m_ui->bottomIndent->setValue(0);
     }
     //
     // ... в миллиметрах
     //
     else {
-        ui->topIndent->show();
-        ui->bottomIndent->show();
+        m_ui->topIndent->show();
+        m_ui->bottomIndent->show();
 
-        ui->topSpace->hide();
-        ui->topSpace->setValue(0);
-        ui->bottomSpace->hide();
-        ui->bottomSpace->setValue(0);
+        m_ui->topSpace->hide();
+        m_ui->topSpace->setValue(0);
+        m_ui->bottomSpace->hide();
+        m_ui->bottomSpace->setValue(0);
     }
 }
 
@@ -320,12 +317,12 @@ void TemplateDialog::aboutLineSpacingChanged()
     //
     const int FIXED_LINE_SPACING_INDEX = 3;
     bool isEnabled = false;
-    if (ui->lineSpacing->currentIndex() == FIXED_LINE_SPACING_INDEX) {
+    if (m_ui->lineSpacing->currentIndex() == FIXED_LINE_SPACING_INDEX) {
         isEnabled = true;
     }
 
-    ui->lineSpacingValueLabel->setEnabled(isEnabled);
-    ui->lineSpacingValue->setEnabled(isEnabled);
+    m_ui->lineSpacingValueLabel->setEnabled(isEnabled);
+    m_ui->lineSpacingValue->setEnabled(isEnabled);
 }
 
 void TemplateDialog::initView()
@@ -333,27 +330,27 @@ void TemplateDialog::initView()
     //
     // Формируем модель стилей блоков (она для всех стилей едина)
     //
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneHeading));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneCharacters));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Action));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Character));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Parenthetical));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Dialogue));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Transition));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Note));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::TitleHeader));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Title));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::FolderHeader));
-    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneDescription));
-    ui->blockStyles->setAutoFillBackground(true);
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneHeading));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneCharacters));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Action));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Character));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Parenthetical));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Dialogue));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Transition));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Note));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::TitleHeader));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Title));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::FolderHeader));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneDescription));
+    m_ui->blockStyles->setAutoFillBackground(true);
 
     //
     // Сформируем модель из списка шрифтов системы
     //
-    QStringListModel* fontsModel = new QStringListModel(ui->fontFamily);
+    QStringListModel* fontsModel = new QStringListModel(m_ui->fontFamily);
     fontsModel->setStringList(QFontDatabase().families());
-    ui->fontFamily->setModel(fontsModel);
+    m_ui->fontFamily->setModel(fontsModel);
 
     //
     // Предварительная настройка типа вертикальных отступов
@@ -363,17 +360,17 @@ void TemplateDialog::initView()
 
 void TemplateDialog::initConnections()
 {
-    connect(ui->blockStyles, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
+    connect(m_ui->blockStyles, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
             this, SLOT(aboutBlockStyleActivated(QListWidgetItem*)));
-    connect(ui->spacingType, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutSpacingTypeChanged()));
-    connect(ui->lineSpacing, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutLineSpacingChanged()));
+    connect(m_ui->spacingType, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutSpacingTypeChanged()));
+    connect(m_ui->lineSpacing, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutLineSpacingChanged()));
 
-    connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
 }
 
 void TemplateDialog::initStyleSheet()
 {
-    ui->blockStyles->setProperty("nobordersContainer", true);
-    ui->scrollArea->setProperty("nobordersContainer", true);
+    m_ui->blockStyles->setProperty("nobordersContainer", true);
+    m_ui->scrollArea->setProperty("nobordersContainer", true);
 }

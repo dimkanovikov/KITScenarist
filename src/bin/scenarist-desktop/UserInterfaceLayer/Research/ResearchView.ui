@@ -137,7 +137,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>9</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -210,7 +210,7 @@
              </property>
             </spacer>
            </item>
-           <item row="3" column="0" colspan="3">
+           <item row="3" column="0" colspan="4">
             <widget class="SimpleTextEditorWidget" name="scenarioLogline" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">

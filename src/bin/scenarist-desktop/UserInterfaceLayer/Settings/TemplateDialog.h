@@ -71,7 +71,7 @@ namespace UserInterface
         /**
          * @brief Интерфейс
          */
-        Ui::TemplateDialog *ui;
+        Ui::TemplateDialog *m_ui;
 
         /**
          * @brief Текущий шаблон
