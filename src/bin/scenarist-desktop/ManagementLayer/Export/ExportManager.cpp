@@ -35,9 +35,9 @@ using UserInterface::ExportDialog;
 
 namespace {
     /**
-     * @brief По умолчанию необходимо экспортировать редакторские пометки
+     * @brief Истинное значение для умолчальных значений, загружаемых из настроек
      */
-    const QString SAVE_REVIEW_MARKS_BY_DEFAULT = "1";
+    const QString TRUE_VALUE = "1";
 }
 
 
@@ -209,12 +209,14 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
     m_exportDialog->setPageNumbering(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/page-numbering").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+                    DataStorageLayer::SettingsStorage::ApplicationSettings,
+                    TRUE_VALUE).toInt()
                 );
     m_exportDialog->setScenesNumbering(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/scenes-numbering").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+                    DataStorageLayer::SettingsStorage::ApplicationSettings,
+                    TRUE_VALUE).toInt()
                 );
     m_exportDialog->setScenesPrefix(
                 StorageFacade::settingsStorage()->value(
@@ -225,12 +227,13 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
                 StorageFacade::settingsStorage()->value(
                     QString("%1/save-review-marks").arg(projectKey),
                     DataStorageLayer::SettingsStorage::ApplicationSettings,
-                    SAVE_REVIEW_MARKS_BY_DEFAULT).toInt()
+                    TRUE_VALUE).toInt()
                 );
     m_exportDialog->setPrintTitle(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/print-title").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+                    DataStorageLayer::SettingsStorage::ApplicationSettings,
+                    TRUE_VALUE).toInt()
                 );
 }
 
