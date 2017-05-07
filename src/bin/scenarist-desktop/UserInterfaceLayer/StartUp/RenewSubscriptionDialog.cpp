@@ -64,9 +64,9 @@ void RenewSubscriptionDialog::showPrepared()
     m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
     setWindowWaiting(false);
 
-    setPaymentText();
-
     show();
+
+    setPaymentText();
 }
 
 void RenewSubscriptionDialog::showThanks(const QString &_expDate)

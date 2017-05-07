@@ -87,7 +87,14 @@ namespace UserInterface
          */
         void setWindowWaiting(bool _isWaiting);
 
+        /**
+         * @brief Настроить представление
+         */
         void initView() override;
+
+        /**
+         * @brief Настроить соединения
+         */
         void initConnections() override;
 
     private:

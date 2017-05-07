@@ -86,7 +86,7 @@ void ProjectFileWidget::leaveEvent(QEvent* _event)
     QWidget::leaveEvent(_event);
 }
 
-void ProjectFileWidget::mousePressEvent(QMouseEvent* _event)
+void ProjectFileWidget::mouseReleaseEvent(QMouseEvent* _event)
 {
     emit clicked();
     QWidget::mousePressEvent(_event);
