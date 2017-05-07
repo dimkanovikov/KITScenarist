@@ -29,7 +29,7 @@ public:
 	/**
 	 * @brief Переопределяется для определения события простоя приложения (idle)
 	 */
-	bool notify(QObject* _object, QEvent* _event);
+    bool notify(QObject* _object, QEvent* _event);
 
 protected:
 	/**
@@ -53,6 +53,11 @@ private:
 	 * @brief Таймер для определения события простоя
 	 */
 	QTimer m_idleTimer;
+
+    /**
+     * @brief Файл, который надо открыть с запуском приложения
+     */
+    QString m_fileToOpen;
 };
 
 #endif // APPLICATION_H

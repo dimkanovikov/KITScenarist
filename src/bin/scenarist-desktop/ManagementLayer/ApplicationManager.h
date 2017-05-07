@@ -52,6 +52,14 @@ namespace ManagementLayer
          */
         void openFile(const QString& _fileToOpen);
 
+        /**
+         * @brief Сделать работу необходимую при старте
+         * проверка отчётов об ошибках
+         * проверка выхода новых версий
+         * автризация
+         */
+        void makeStartUpChecks();
+
     private slots:
         /**
          * @brief Обновить списки проектов на стартовой странице

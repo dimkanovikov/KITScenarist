@@ -205,35 +205,35 @@ void ApplicationManager::exec(const QString& _fileToOpen)
     loadViewState();
     m_view->show();
 
-
     if (!_fileToOpen.isEmpty()) {
         aboutLoad(_fileToOpen);
     }
-
-    QTimer::singleShot(0, [=] {
-        //
-        // Работаем с отчётами об ошибке
-        //
-        m_startUpManager->checkCrashReports();
-
-        //
-        // Проверяем обновления
-        //
-        m_startUpManager->checkNewVersion();
-
-        //
-        // И авторизуемся
-        //
-        m_startUpManager->setProgressLoginLabel(true);
-        if (!m_synchronizationManager->autoLogin()) {
-            m_startUpManager->setProgressLoginLabel(false);
-        }
-    });
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
 {
     aboutLoad(_fileToOpen);
+}
+
+void ApplicationManager::makeStartUpChecks()
+{
+    //
+    // Работаем с отчётами об ошибке
+    //
+    m_startUpManager->checkCrashReports();
+
+    //
+    // Проверяем обновления
+    //
+    m_startUpManager->checkNewVersion();
+
+    //
+    // И авторизуемся
+    //
+    m_startUpManager->setProgressLoginLabel(true);
+    if (!m_synchronizationManager->autoLogin()) {
+        m_startUpManager->setProgressLoginLabel(false);
+    }
 }
 
 void ApplicationManager::aboutUpdateProjectsList()

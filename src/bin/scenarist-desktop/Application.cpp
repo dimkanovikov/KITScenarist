@@ -86,6 +86,9 @@ Application::~Application()
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)
 {
     m_applicationManager = _manager;
+    if (!m_fileToOpen.isEmpty()) {
+        m_applicationManager->openFile(m_fileToOpen);
+    }
 }
 
 bool Application::notify(QObject* _object, QEvent* _event)
@@ -109,10 +112,13 @@ bool Application::notify(QObject* _object, QEvent* _event)
 bool Application::event(QEvent* _event)
 {
     bool result = true;
-    if (_event->type() == QEvent::FileOpen
-        && m_applicationManager != 0) {
+    if (_event->type() == QEvent::FileOpen) {
         QFileOpenEvent* fileOpenEvent = static_cast<QFileOpenEvent*>(_event);
-        m_applicationManager->openFile(::preparePath(fileOpenEvent->file()));
+        if (m_applicationManager != 0) {
+            m_applicationManager->openFile(::preparePath(fileOpenEvent->file()));
+        } else {
+            m_fileToOpen = ::preparePath(fileOpenEvent->file());
+        }
     } else {
         result = QApplication::event(_event);
     }
