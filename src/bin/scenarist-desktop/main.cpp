@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	//
 	// Получим имя файла, который пользователь возможно хочет открыть
 	//
-	QString fileToOpen = application.arguments().value(1, QString::null);
+    const QString fileToOpen = application.arguments().value(1, QString::null);
 	ManagementLayer::ApplicationManager applicationManager;
 	applicationManager.exec(fileToOpen);
 
@@ -33,6 +33,11 @@ int main(int argc, char *argv[])
 	// Установим управляющего в приложение, для возможности открытия файлов
 	//
 	application.setupManager(&applicationManager);
+
+    //
+    // Запускаем остальную работу приложения
+    //
+    applicationManager.makeStartUpChecks();
 
 	return application.exec();
 }
