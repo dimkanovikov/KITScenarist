@@ -20,6 +20,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
+#include <QAction>
 #include <QApplication>
 #include <QComboBox>
 #include <QCryptographicHash>
@@ -768,13 +769,14 @@ void ScenarioTextEditWidget::initEditorConnections()
     connect(m_outline, &FlatButton::toggled, this, &ScenarioTextEditWidget::updateTextMode);
     connect(m_editor, &ScenarioTextEdit::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
     connect(m_editor, &ScenarioTextEdit::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
-    connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
-    connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
-    connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
-    connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
-    connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
-    connect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
-    connect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
+    connect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextEditWidget::aboutUpdateTextStyle);
+    connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEditWidget::aboutUpdateTextStyle);
+    connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEditWidget::aboutCursorPositionChanged);
+    connect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextEditWidget::aboutTextChanged);
+    connect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextEditWidget::aboutStyleChanged);
+    connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
+    connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
+    connect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setAdditionalContextMenuActions);
 
     updateTextMode(m_outline->isChecked());
 }
@@ -784,13 +786,14 @@ void ScenarioTextEditWidget::removeEditorConnections()
     disconnect(m_outline, &FlatButton::toggled, this, &ScenarioTextEditWidget::updateTextMode);
     disconnect(m_editor, &ScenarioTextEdit::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
     disconnect(m_editor, &ScenarioTextEdit::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
-    disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
-    disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
-    disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
-    disconnect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
-    disconnect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
-    disconnect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
-    disconnect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
+    disconnect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextEditWidget::aboutUpdateTextStyle);
+    disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEditWidget::aboutUpdateTextStyle);
+    disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEditWidget::aboutCursorPositionChanged);
+    disconnect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextEditWidget::aboutTextChanged);
+    disconnect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextEditWidget::aboutStyleChanged);
+    disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
+    disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
+    disconnect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setAdditionalContextMenuActions);
 }
 
 void ScenarioTextEditWidget::initStyleSheet()

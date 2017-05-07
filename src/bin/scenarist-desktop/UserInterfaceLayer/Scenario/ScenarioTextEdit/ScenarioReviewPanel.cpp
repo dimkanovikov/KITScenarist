@@ -14,6 +14,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
 
+#include <QAction>
 #include <QApplication>
 #include <QEvent>
 #include <QHBoxLayout>
@@ -225,6 +226,34 @@ void ScenarioReviewPanel::clearReview()
     model->removeMarks(from, to);
 }
 
+void ScenarioReviewPanel::updateContextMenuActions()
+{
+    //
+    // Удаляем старые действия
+    //
+    qDeleteAll(m_contextMenuActions);
+    m_contextMenuActions.clear();
+
+    //
+    // Создаём новые действия
+    //
+    if (m_activateButton->isChecked()) {
+        QAction* textColorAction = new QAction(m_textColor->icon(), m_textColor->toolTip());
+        connect(textColorAction, &QAction::triggered, m_textColor, &ColoredToolButton::click);
+        m_contextMenuActions.append(textColorAction);
+        //
+        QAction* textBgColorAction = new QAction(m_textBgColor->icon(), m_textBgColor->toolTip());
+        connect(textBgColorAction, &QAction::triggered, m_textBgColor, &ColoredToolButton::click);
+        m_contextMenuActions.append(textBgColorAction);
+        //
+        QAction* commentAction = new QAction(m_comment->icon(), m_comment->toolTip());
+        connect(commentAction, &QAction::triggered, m_comment, &ColoredToolButton::click);
+        m_contextMenuActions.append(commentAction);
+    }
+
+    emit contextMenuActionsUpdated(m_contextMenuActions);
+}
+
 void ScenarioReviewPanel::initView()
 {
     m_activateButton->setIcons(QIcon(":/Graphics/Icons/Editing/review.png"));
@@ -296,6 +325,12 @@ void ScenarioReviewPanel::initConnections()
     connect(m_comment, SIGNAL(clicked(QColor)), this, SLOT(aboutAddComment(QColor)));
     connect(m_done, SIGNAL(toggled(bool)), this, SLOT(doneReview(bool)));
     connect(m_clear, SIGNAL(clicked()), this, SLOT(clearReview()));
+
+    connect(m_activateButton, &FlatButton::toggled, this, &ScenarioReviewPanel::updateContextMenuActions);
+    connect(m_textColor, &ColoredToolButton::colorChanged, this, &ScenarioReviewPanel::updateContextMenuActions);
+    connect(m_textBgColor, &ColoredToolButton::colorChanged, this, &ScenarioReviewPanel::updateContextMenuActions);
+    connect(m_textHighlight, &ColoredToolButton::colorChanged, this, &ScenarioReviewPanel::updateContextMenuActions);
+    connect(m_comment, &ColoredToolButton::colorChanged, this, &ScenarioReviewPanel::updateContextMenuActions);
 }
 
 void ScenarioReviewPanel::initStyleSheet()

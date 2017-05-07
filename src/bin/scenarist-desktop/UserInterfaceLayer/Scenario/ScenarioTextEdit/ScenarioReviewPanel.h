@@ -4,7 +4,7 @@
 #include <QFrame>
 
 namespace BusinessLogic {
-	class ScenarioReviewModel;
+    class ScenarioReviewModel;
 }
 
 class ColoredToolButton;
@@ -13,100 +13,115 @@ class QAbstractItemModel;
 
 namespace UserInterface
 {
-	class ScenarioTextEdit;
+    class ScenarioTextEdit;
 
 
-	/**
-	 * @brief Класс панели рецензирования
-	 */
-	class ScenarioReviewPanel : public QFrame
-	{
-		Q_OBJECT
+    /**
+     * @brief Класс панели рецензирования
+     */
+    class ScenarioReviewPanel : public QFrame
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _parent = 0);
+    public:
+        explicit ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _parent = 0);
 
-	signals:
-		/**
-		 * @brief Включение/выключение режима рецензирования
-		 */
-		void toggled(bool);
+    signals:
+        /**
+         * @brief Включение/выключение режима рецензирования
+         */
+        void toggled(bool);
 
-	private slots:
-		/**
-		 * @brief Обновить доступность действий при смене курсора
-		 */
-		void aboutUpdateActionsEnable();
+        /**
+         * @brief Обновился список действий рецензирования для контекстного меню
+         */
+        void contextMenuActionsUpdated(const QList<QAction*>& _actions);
 
-		void aboutChangeTextColor(const QColor& _color);
-		void aboutChangeTextBgColor(const QColor& _color);
-		void aboutChangeTextHighlight(const QColor& _color);
-		void aboutAddComment(const QColor& _color);
-		void doneReview(bool _done);
-		void clearReview();
+    private slots:
+        /**
+         * @brief Обновить доступность действий при смене курсора
+         */
+        void aboutUpdateActionsEnable();
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        void aboutChangeTextColor(const QColor& _color);
+        void aboutChangeTextBgColor(const QColor& _color);
+        void aboutChangeTextHighlight(const QColor& _color);
+        void aboutAddComment(const QColor& _color);
+        void doneReview(bool _done);
+        void clearReview();
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+        /**
+         * @brief Обновить список действий рецензирования для контекстного меню
+         */
+        void updateContextMenuActions();
 
-		/**
-		 * @brief Настроить внешний вид
-		 */
-		void initStyleSheet();
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-		/**
-		 * @brief Получить указатель на модель редакторских заметок
-		 */
-		BusinessLogic::ScenarioReviewModel* reviewModel() const;
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
 
-	private:
-		/**
-		 * @brief Редактор текста, к которому привязана панель
-		 */
-		ScenarioTextEdit* m_editor;
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
 
-		/**
-		 * @brief Кнопка активации панели
-		 */
-		FlatButton* m_activateButton;
+        /**
+         * @brief Получить указатель на модель редакторских заметок
+         */
+        BusinessLogic::ScenarioReviewModel* reviewModel() const;
 
-		/**
-		 * @brief Цвет текста
-		 */
-		ColoredToolButton* m_textColor;
+    private:
+        /**
+         * @brief Редактор текста, к которому привязана панель
+         */
+        ScenarioTextEdit* m_editor;
 
-		/**
-		 * @brief Цвет фона
-		 */
-		ColoredToolButton* m_textBgColor;
+        /**
+         * @brief Кнопка активации панели
+         */
+        FlatButton* m_activateButton;
 
-		/**
-		 * @brief Выделение текста (а-ля вордовский маркер)
-		 */
-		ColoredToolButton* m_textHighlight;
+        /**
+         * @brief Цвет текста
+         */
+        ColoredToolButton* m_textColor;
 
-		/**
-		 * @brief Комментарий
-		 */
-		ColoredToolButton* m_comment;
+        /**
+         * @brief Цвет фона
+         */
+        ColoredToolButton* m_textBgColor;
 
-		/**
-		 * @brief Решено
-		 */
-		FlatButton* m_done;
+        /**
+         * @brief Выделение текста (а-ля вордовский маркер)
+         */
+        ColoredToolButton* m_textHighlight;
 
-		/**
-		 * @brief Очистить форматирование
-		 */
-		FlatButton* m_clear;
-	};
+        /**
+         * @brief Комментарий
+         */
+        ColoredToolButton* m_comment;
+
+        /**
+         * @brief Решено
+         */
+        FlatButton* m_done;
+
+        /**
+         * @brief Очистить форматирование
+         */
+        FlatButton* m_clear;
+
+        /**
+         * @brief Список действий рецензирования для контекстного меню
+         */
+        QList<QAction*> m_contextMenuActions;
+    };
 }
 
 #endif // SCENARIOREVIEWPANEL_H
