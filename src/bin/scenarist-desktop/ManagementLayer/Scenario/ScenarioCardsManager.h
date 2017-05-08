@@ -91,6 +91,11 @@ namespace ManagementLayer
         void cardsChanged();
 
         /**
+         * @brief Запрос на переход к тексту карточки с заданным идентификатором
+         */
+        void goToCardRequest(const QModelIndex& _index);
+
+        /**
          * @brief Запрос на добавление элемента
          */
         void addCardRequest(const QModelIndex& _afterItemIndex, int _type, const QString& _title,
@@ -123,6 +128,11 @@ namespace ManagementLayer
         void fullscreenRequest();
 
     private:
+        /**
+         * @brief Перейти к сцене
+         */
+        void goToCard(const QString& _uuid);
+
         /**
          * @brief Добавить элемент после выбранного
          */

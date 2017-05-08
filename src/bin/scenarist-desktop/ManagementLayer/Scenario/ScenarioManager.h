@@ -184,6 +184,11 @@ namespace ManagementLayer
          */
         void updateCursorsRequest(int _position, bool _isDraft);
 
+        /**
+         * @brief Была активирована ссылка для перехода между модулями программы
+         */
+        void linkActivated(const QUrl& _url);
+
     private slots:
         /**
          * @brief Отменить последнее действие
@@ -238,6 +243,11 @@ namespace ManagementLayer
         void aboutMoveCursorToItem(const QModelIndex& _index);
         void aboutMoveCursorToItem(int _itemPosition);
         /** @} */
+
+        /**
+         * @brief Перейти к тексту заданной сцены
+         */
+        void aboutGoToItemFromCards(const QModelIndex& _index);
 
         /**
          * @brief Добавить элемент, после заданного

@@ -120,6 +120,11 @@ namespace UserInterface {
         void redoRequest();
 
         /**
+         * @brief Запрос на переход к тексту карточки с заданным идентификатором
+         */
+        void goToCardRequest(const QString& _uuid);
+
+        /**
          * @brief Нажата кнопка добавления карточки
          */
         void addCardClicked();

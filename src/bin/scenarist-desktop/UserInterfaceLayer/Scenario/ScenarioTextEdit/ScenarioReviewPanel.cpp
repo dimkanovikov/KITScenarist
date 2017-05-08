@@ -242,9 +242,15 @@ void ScenarioReviewPanel::updateContextMenuActions()
         connect(textColorAction, &QAction::triggered, m_textColor, &ColoredToolButton::click);
         m_contextMenuActions.append(textColorAction);
         //
-        QAction* textBgColorAction = new QAction(m_textBgColor->icon(), m_textBgColor->toolTip());
-        connect(textBgColorAction, &QAction::triggered, m_textBgColor, &ColoredToolButton::click);
-        m_contextMenuActions.append(textBgColorAction);
+        if (m_textBgColor->isVisible()) {
+            QAction* textBgColorAction = new QAction(m_textBgColor->icon(), m_textBgColor->toolTip());
+            connect(textBgColorAction, &QAction::triggered, m_textBgColor, &ColoredToolButton::click);
+            m_contextMenuActions.append(textBgColorAction);
+        } else {
+            QAction* textHighlightAction = new QAction(m_textHighlight->icon(), m_textHighlight->toolTip());
+            connect(textHighlightAction, &QAction::triggered, m_textHighlight, &ColoredToolButton::click);
+            m_contextMenuActions.append(textHighlightAction);
+        }
         //
         QAction* commentAction = new QAction(m_comment->icon(), m_comment->toolTip());
         connect(commentAction, &QAction::triggered, m_comment, &ColoredToolButton::click);

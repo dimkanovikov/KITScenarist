@@ -578,7 +578,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.h \
-    scenarist-core/3rd_party/Helpers/TextUtils.h
+    scenarist-core/3rd_party/Helpers/TextUtils.h \
+    scenarist-core/3rd_party/Helpers/StyleHelper.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

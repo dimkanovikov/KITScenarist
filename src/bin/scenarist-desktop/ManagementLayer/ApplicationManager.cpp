@@ -1278,8 +1278,6 @@ void ApplicationManager::aboutInnerLinkActivated(const QUrl& _url)
                 // Выполняем события, чтобы пропустить первую прокрутку текста, после запуска
                 // приложения к последнему рабочему месту в сценарии
                 //
-                QApplication::processEvents();
-                //
                 m_scenarioManager->setCursorPosition(cursorPosition);
             }
         }
@@ -1794,6 +1792,7 @@ void ApplicationManager::initConnections()
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncScenario);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
+    connect(m_scenarioManager, &ScenarioManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
 
     connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
     connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);

@@ -745,6 +745,17 @@ void ScenarioManager::aboutMoveCursorToItem(int _itemPosition)
     m_textEditManager->setCursorPosition(_itemPosition);
 }
 
+void ScenarioManager::aboutGoToItemFromCards(const QModelIndex& _index)
+{
+    //
+    // Работа с карточками идёт только в режиме чистовика
+    //
+    setWorkingMode(m_navigatorManager);
+
+    const int startPosition = workingScenario()->itemStartPosition(_index);
+    emit linkActivated(QString("inapp://scenario?position=%1").arg(startPosition));
+}
+
 void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType,
     const QString& _title, const QColor& _color, const QString& _description)
 {
@@ -988,8 +999,9 @@ void ScenarioManager::initView()
 
 void ScenarioManager::initConnections()
 {
-    connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
+    connect(m_showFullscreen, &FlatButton::clicked, this, &ScenarioManager::showFullscreen);
 
+    connect(m_cardsManager, &ScenarioCardsManager::goToCardRequest, this, &ScenarioManager::aboutGoToItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);

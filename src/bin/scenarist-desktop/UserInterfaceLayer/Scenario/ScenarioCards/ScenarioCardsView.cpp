@@ -281,6 +281,9 @@ void ScenarioCardsView::initConnections()
 {
     connect(m_cards, &CardsView::cardsChanged, this, &ScenarioCardsView::cardsChanged);
 
+    connect(m_cards, &CardsView::goToActRequest, this, &ScenarioCardsView::goToCardRequest);
+    connect(m_cards, &CardsView::goToCardRequest, this, &ScenarioCardsView::goToCardRequest);
+
     connect(m_addCard, &FlatButton::clicked, [=] {
         m_newCardPosition = QPointF();
         emit addCardClicked();

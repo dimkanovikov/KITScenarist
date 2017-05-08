@@ -54,7 +54,12 @@ namespace {
     /**
      * @brief Исходная позиция курсора после загрузки программы
      */
-    int initCursorPosition = INVALID_CURSOR_POSITION;
+    int g_initCursorPosition = INVALID_CURSOR_POSITION;
+
+    /**
+     * @brief Был ли показан редактор текста хоть раз
+     */
+    bool g_isBeforeFirstShow = true;
 }
 
 
@@ -183,27 +188,31 @@ int ScenarioTextEditWidget::cursorPosition() const
     return m_editor->textCursor().position();
 }
 
-void ScenarioTextEditWidget::setCursorPosition(int _position)
+void ScenarioTextEditWidget::setCursorPosition(int _position, bool _isReset)
 {
     //
     // Если виджет пока ещё не видно, откладываем событие назначения позиции до этого момента.
     // Делаем это потому что иногда установка курсора происходит до первой отрисовки обёртки
     // масштабирования, что приводит в свою очередь к тому, что полосы прокрутки остаются в начале.
     //
+    // Но если редактор ещё ни разу не был показан и пришло новое событие установки, то нужно
+    // использовать самую последнюю актуальную позицию
+    //
+    if (!_isReset) {
+        g_initCursorPosition = _position;
+    }
     if (!isVisible()) {
-        //
-        // ... но делаем это только в случае, когда курсор устанавливается в виджет в первый раз,
-        //     если позиция курсора потом меняется ещё раз, то устанавливаем её
-        //
-        if (initCursorPosition == INVALID_CURSOR_POSITION) {
-            initCursorPosition = _position;
-        }
-        if (initCursorPosition == _position) {
+        if (g_isBeforeFirstShow) {
             QTimer::singleShot(300, Qt::PreciseTimer, [=] {
-                setCursorPosition(_position);
+                setCursorPosition(g_initCursorPosition, true);
             });
             return;
         }
+    } else {
+        if (_isReset) {
+            _position = g_initCursorPosition;
+        }
+        g_isBeforeFirstShow = false;
     }
 
     //
@@ -809,6 +818,7 @@ void ScenarioTextEditWidget::initStyleSheet()
     m_redo->setProperty("inTopPanel", true);
     m_search->setProperty("inTopPanel", true);
     m_fastFormat->setProperty("inTopPanel", true);
+    m_review->setStyleSheet("#scenarioReview { border: none; border-left: 1px solid palette(dark); }");
 
     m_duration->setProperty("inTopPanel", true);
     m_duration->setProperty("topPanelTopBordered", true);

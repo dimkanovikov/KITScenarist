@@ -228,6 +228,12 @@ void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
     m_view->setCommentOnly(_isCommentOnly);
 }
 
+void ScenarioCardsManager::goToCard(const QString& _uuid)
+{
+    const QModelIndex indexForUpdate = m_model->indexForUuid(_uuid);
+    emit goToCardRequest(indexForUpdate);
+}
+
 void ScenarioCardsManager::addCard()
 {
     m_addItemDialog->setWindowTitle(tr("Add card"));
@@ -658,6 +664,7 @@ void ScenarioCardsManager::initConnections()
     connect(m_view, &ScenarioCardsView::undoRequest, this, &ScenarioCardsManager::undoRequest);
     connect(m_view, &ScenarioCardsView::redoRequest, this, &ScenarioCardsManager::redoRequest);
 
+    connect(m_view, &ScenarioCardsView::goToCardRequest, this, &ScenarioCardsManager::goToCard);
     connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
     connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
     connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);

@@ -7,6 +7,8 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Helpers/StyleHelper.h>
+
 #include <QFileOpenEvent>
 #include <QFontDatabase>
 #include <QStyle>
@@ -46,7 +48,7 @@ Application::Application(int& _argc, char** _argv) :
     //
     // Настроим стиль отображения внешнего вида приложения
     //
-    setStyle(QStyleFactory::create("Fusion"));
+    setStyle(new BigMenuIconStyle(QStyleFactory::create("Fusion")));
 
     //
     // Загрузим шрифты в базу шрифтов программы, если их там ещё нет
