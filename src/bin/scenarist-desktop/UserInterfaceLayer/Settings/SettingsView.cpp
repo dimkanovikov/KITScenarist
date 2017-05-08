@@ -709,6 +709,12 @@ void SettingsView::initConnections()
     connect(m_applicationTabs, &TabBar::currentChanged, ui->applicationPageStack, &QStackedWidget::setCurrentIndex);
     // ... активация автосохранения
     connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
+    // ... корректировка описания автосохранения
+    connect(ui->autosaveInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=] (int _interval) {
+        ui->autosaveDescription->setToolTip(
+            tr("Autosave works very accuracy. It saves project every 3 seconds if you don't use mouse or keyboard, \n"
+               "but if you work with no terminations it saves project every %1 minutes.").arg(_interval));
+    });
     // ... активация проверки орфографии
     connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
     // ... выбор папки сохранения резервных копий
