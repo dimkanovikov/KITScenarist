@@ -1847,6 +1847,8 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::passwordChanged);
     connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded,
             m_startUpManager, &StartUpManager::setSubscriptionInfo);
+    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded,
+            m_projectsManager, &ProjectsManager::setRemoteProjectsSyncAvailable);
     connect(m_synchronizationManager, &SynchronizationManager::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
     connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded,
