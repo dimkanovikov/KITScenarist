@@ -108,7 +108,8 @@ void ScenarioFastFormatWidget::setEditor(ScenarioTextEdit* _editor)
 
 void ScenarioFastFormatWidget::selectCurrentBlock()
 {
-	if (m_editor != 0) {
+    if (m_editor != 0
+        && m_grabFocus->isChecked()) {
 		QTextCursor cursor = m_editor->textCursor();
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
