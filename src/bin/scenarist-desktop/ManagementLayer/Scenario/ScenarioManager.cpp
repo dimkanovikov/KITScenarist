@@ -753,7 +753,7 @@ void ScenarioManager::aboutGoToItemFromCards(const QModelIndex& _index)
     setWorkingMode(m_navigatorManager);
 
     const int startPosition = workingScenario()->itemStartPosition(_index);
-    emit linkActivated(QString("inapp://scenario?position=%1").arg(startPosition));
+    emit linkActivated(QString("inapp://scenario?position=%1&from=cards").arg(startPosition));
 }
 
 void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType,

@@ -1260,17 +1260,31 @@ void ApplicationManager::aboutInnerLinkActivated(const QUrl& _url)
             const QStringList parameters = _url.query().split("&");
             const int INVALID_CURSOR_POSITION = -1;
             int cursorPosition = INVALID_CURSOR_POSITION;
+            int fromTabIndex = RESEARCH_TAB_INDEX;
             foreach (const QString parameter, parameters) {
                 const QStringList paramaterDetails = parameter.split("=");
                 if (paramaterDetails.first() == "position") {
                     cursorPosition = paramaterDetails.last().toInt();
                 }
+                if (paramaterDetails.first() == "from") {
+                    const QString from = paramaterDetails.last();
+                    if (from == "research") {
+                        fromTabIndex = RESEARCH_TAB_INDEX;
+                    } else if (from == "cards") {
+                        fromTabIndex = SCENARIO_CARDS_TAB_INDEX;
+                    } else if (from == "statistics") {
+                        fromTabIndex = STATISTICS_TAB_INDEX;
+                    }
+                }
             }
 
             if (cursorPosition != INVALID_CURSOR_POSITION) {
-                if (m_tabsSecondary->isVisible() &&
-                    m_tabs->currentTab() == STATISTICS_TAB_INDEX) {
-                    m_tabsSecondary->setCurrentTab(SCENARIO_TAB_INDEX);
+                if (m_tabsSecondary->isVisible()) {
+                    if (m_tabs->currentTab() == fromTabIndex) {
+                        m_tabsSecondary->setCurrentTab(SCENARIO_TAB_INDEX);
+                    } else {
+                        m_tabs->setCurrentTab(SCENARIO_TAB_INDEX);
+                    }
                 } else {
                     m_tabs->setCurrentTab(SCENARIO_TAB_INDEX);
                 }
