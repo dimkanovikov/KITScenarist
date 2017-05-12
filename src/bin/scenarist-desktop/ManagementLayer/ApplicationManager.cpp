@@ -2092,7 +2092,7 @@ void ApplicationManager::updateWindowTitle()
     const QString projectFileName =
             QString("%1 [%2]")
             .arg(ProjectsManager::currentProject().name())
-            .arg(m_projectsManager->currentProject().isLocal() ? tr("local") : tr("in cloud"));
+            .arg(m_projectsManager->currentProject().isLocal() ? tr("on local computer") : tr("in cloud"));
 #ifdef Q_OS_MAC
     m_view->setWindowTitle(projectFileName);
 #else
