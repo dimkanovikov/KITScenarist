@@ -1,5 +1,7 @@
 #include "ScenarioTextEditManager.h"
 
+#include <QTextCursor>
+
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
@@ -171,6 +173,11 @@ void ScenarioTextEditManager::setCommentOnly(bool _isCommentOnly)
 void ScenarioTextEditManager::scrollToAdditionalCursor(int _additionalCursorIndex)
 {
     m_view->scrollToAdditionalCursor(_additionalCursorIndex);
+}
+
+void ScenarioTextEditManager::scrollToCursor(const QTextCursor &_cursor)
+{
+    m_view->setCursorPosition(_cursor.position());
 }
 
 void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,

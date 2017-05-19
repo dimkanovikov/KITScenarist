@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class QTextCursor;
+
 
 namespace UserInterface {
     class ScenarioTextEditWidget;
@@ -71,6 +73,8 @@ namespace ManagementLayer
          * @brief Пролистать сценарий, чтобы был виден заданный курсор соавтора
          */
         void scrollToAdditionalCursor(int _additionalCursorIndex);
+
+        void scrollToCursor(const QTextCursor& _cursor);
 
     public slots:
         /**

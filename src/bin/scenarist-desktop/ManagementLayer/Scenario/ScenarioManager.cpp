@@ -651,13 +651,19 @@ void ScenarioManager::scrollToAdditionalCursor(int _additionalCursorIndex)
 void ScenarioManager::aboutUndo()
 {
     aboutSaveScenarioChanges();
-    workingScenario()->document()->undoReimpl();
+    QTextCursor toScroll = workingScenario()->document()->undoReimpl();
+    if (!toScroll.isNull()) {
+        m_textEditManager->scrollToCursor(toScroll);
+    }
     m_cardsManager->undo();
 }
 
 void ScenarioManager::aboutRedo()
 {
-    workingScenario()->document()->redoReimpl();
+    QTextCursor toScroll = workingScenario()->document()->redoReimpl();
+    if (!toScroll.isNull()) {
+        m_textEditManager->scrollToCursor(toScroll);
+    }
     m_cardsManager->redo();
 }
 

@@ -6,6 +6,7 @@
 class FlatButton;
 class QComboBox;
 class QLabel;
+class QTextCursor;
 class ScalableWrapper;
 class SearchWidget;
 
