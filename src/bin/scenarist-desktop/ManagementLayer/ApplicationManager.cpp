@@ -427,13 +427,18 @@ void ApplicationManager::aboutSaveAs()
     QApplication::processEvents();
 
     //
+    // Изначально высвечивается текущее имя проекта
+    //
+    const QString projectPath = ProjectsManager::currentProject().path();
+
+    //
     // Получим имя файла для сохранения
     //
     QString saveAsProjectFileName =
             QFileDialog::getSaveFileName(
                 m_view,
                 tr("Choose file for save project"),
-                projectsFolderPath(),
+                projectPath,
                 tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
                 );
 
