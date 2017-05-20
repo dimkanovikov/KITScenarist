@@ -74,7 +74,10 @@ namespace ManagementLayer
          */
         void scrollToAdditionalCursor(int _additionalCursorIndex);
 
-        void scrollToCursor(const QTextCursor& _cursor);
+        /**
+         * @brief Пролистать сценарий, чтобы был виден заданный курсор
+         */
+        void scrollToPosition(int _position);
 
     public slots:
         /**
