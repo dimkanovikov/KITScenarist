@@ -173,6 +173,11 @@ void ScenarioTextEditManager::scrollToAdditionalCursor(int _additionalCursorInde
     m_view->scrollToAdditionalCursor(_additionalCursorIndex);
 }
 
+void ScenarioTextEditManager::scrollToPosition(int _position)
+{
+    m_view->setCursorPosition(_position);
+}
+
 void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,
     const QString& _title, const QColor& _color, const QString& _description)
 {
