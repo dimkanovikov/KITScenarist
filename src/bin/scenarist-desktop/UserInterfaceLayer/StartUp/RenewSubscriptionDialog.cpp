@@ -78,11 +78,6 @@ void RenewSubscriptionDialog::showThanks(const QString &_expDate)
     m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 }
 
-void RenewSubscriptionDialog::setPaymentMonth(int _paymentMonth)
-{
-    m_paymentMonth = _paymentMonth;
-}
-
 void RenewSubscriptionDialog::setPaymentText()
 {
     m_ui->payment->setText(tr("for %1 rubles").arg(amount()));
@@ -103,13 +98,16 @@ void RenewSubscriptionDialog::setWindowWaiting(bool _isWaiting)
 
 unsigned RenewSubscriptionDialog::durationToAmount(unsigned _duration) const
 {
-    unsigned amount = _duration * m_paymentMonth;
+    //
+    // 1 месяц - 299 рублей
+    //
+    unsigned amount = _duration * 299;
 
     //
     // Применим скидку, если число месяцев больше 5
     //
     if(_duration > 5) {
-        amount *= 1.0 - static_cast<double>(_duration) / 100;
+        amount *= 1 - _duration / 100;
     }
     return amount;
 }

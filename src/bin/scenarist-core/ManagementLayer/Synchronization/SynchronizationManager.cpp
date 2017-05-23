@@ -281,16 +281,12 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
                             DataStorageLayer::StorageFacade::settingsStorage()->value(
                                 "application/subscriptionExpiredDate",
                                 DataStorageLayer::SettingsStorage::ApplicationSettings);
-                int paymentMonth =
-                            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                                "application/subscriptionPaymentMonth",
-                                DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
 
                 //
                 // Уведомим об этом
                 //
                 emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
-                emit loginAccepted(userName, m_userEmail, paymentMonth);
+                emit loginAccepted(userName, m_userEmail);
 
                 //
                 // Хоть как то авторизовались, тепер нас интересует статус интернета
@@ -303,7 +299,6 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
 
     QString userName;
     QString date;
-    int paymentMonth = -1;
 
     //
     // Найдем наш ключ сессии, имя пользователя, информацию о подписке
@@ -329,15 +324,10 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
             responseReader.readNext();
             date = responseReader.text().toString();
             responseReader.readNext();
-        } else if (responseReader.name().toString() == "payment_month") {
-            responseReader.readNext();
-            paymentMonth = responseReader.text().toInt();
-            responseReader.readNext();
         }
     }
 
-    if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())
-            || paymentMonth < 0) {
+    if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())) {
         handleError(Sync::UnknownError);
         m_sessionKey.clear();
         return;
@@ -380,18 +370,13 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
                 dateTransform(date),
                 SettingsStorage::ApplicationSettings);
 
-    StorageFacade::settingsStorage()->setValue(
-                "application/subscriptionPaymentMonth",
-                QString::number(paymentMonth),
-                SettingsStorage::ApplicationSettings);
-
     //
     // Запомним email
     //
     m_userEmail = _email;
 
     emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
-    emit loginAccepted(userName, m_userEmail, paymentMonth);
+    emit loginAccepted(userName, m_userEmail);
 
     //
     // Авторизовались, тепер нас интересует статус интернета
