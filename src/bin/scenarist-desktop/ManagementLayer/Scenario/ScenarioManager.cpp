@@ -651,13 +651,19 @@ void ScenarioManager::scrollToAdditionalCursor(int _additionalCursorIndex)
 void ScenarioManager::aboutUndo()
 {
     aboutSaveScenarioChanges();
-    workingScenario()->document()->undoReimpl();
+    int toScroll = workingScenario()->document()->undoReimpl();
+    if (toScroll != -1) {
+        m_textEditManager->scrollToPosition(toScroll);
+    }
     m_cardsManager->undo();
 }
 
 void ScenarioManager::aboutRedo()
 {
-    workingScenario()->document()->redoReimpl();
+    int toScroll = workingScenario()->document()->redoReimpl();
+    if (toScroll != -1) {
+        m_textEditManager->scrollToPosition(toScroll);
+    }
     m_cardsManager->redo();
 }
 
