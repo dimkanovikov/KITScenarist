@@ -229,3 +229,4 @@ void Application::initTranslation()
         setLayoutDirection(Qt::RightToLeft);
     }
 }
+
