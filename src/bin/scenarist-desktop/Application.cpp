@@ -189,6 +189,9 @@ void Application::initTranslation()
         qtTranslationSuffix = "pt";
         qtBaseTranslationSuffix = "pt";
         currentLanguage = QLocale::Portuguese;
+    } else if (language == 8) {
+        translationSuffix = "fa";
+        currentLanguage = QLocale::Persian;
     }
 
     QLocale::setDefault(QLocale(currentLanguage));
@@ -218,4 +221,11 @@ void Application::initTranslation()
     QTranslator* appTranslator = new QTranslator;
     appTranslator->load(":/Translations/Translations/Scenarist_" + translationSuffix + ".qm");
     installTranslator(appTranslator);
+
+    //
+    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
+    //
+    if (currentLanguage == QLocale::Persian) {
+        setLayoutDirection(Qt::RightToLeft);
+    }
 }

@@ -28,6 +28,8 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
         ui->german->setChecked(true);
     } else if (_language == 7) {
         ui->portugues->setChecked(true);
+    } else if (_language == 8) {
+        ui->farsi->setChecked(true);
     }
 }
 
@@ -57,6 +59,8 @@ int LanguageDialog::language() const
         result = 6;
     } else if (ui->portugues->isChecked()) {
         result = 7;
+    } else if (ui->farsi->isChecked()) {
+        result = 8;
     }
 
     return result;

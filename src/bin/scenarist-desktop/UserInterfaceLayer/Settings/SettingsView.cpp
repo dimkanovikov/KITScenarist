@@ -649,6 +649,7 @@ void SettingsView::initData()
     ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
     ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
     ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
+    ui->spellCheckingLanguage->addItem(tr("Farsi"), SpellChecker::Farsi);
     ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
     ui->spellCheckingLanguage->addItem(tr("Kazakh"), SpellChecker::Kazakh);
     ui->spellCheckingLanguage->addItem(tr("Portuguese (Brazil)"), SpellChecker::PortugueseBrazilian);
