@@ -188,7 +188,7 @@ int ScenarioTextEditWidget::cursorPosition() const
     return m_editor->textCursor().position();
 }
 
-void ScenarioTextEditWidget::setCursorPosition(int _position, bool _isReset)
+void ScenarioTextEditWidget::setCursorPosition(int _position, bool _isReset, bool _forceScroll)
 {
     //
     // Если виджет пока ещё не видно, откладываем событие назначения позиции до этого момента.
@@ -236,8 +236,11 @@ void ScenarioTextEditWidget::setCursorPosition(int _position, bool _isReset)
         //
         // Возвращаем курсор в поле зрения
         //
-        m_editor->ensureCursorVisible(cursor);
-        m_editorWrapper->setFocus();
+        if (_forceScroll
+                || !m_editor->visibleRegion().contains(m_editor->cursorRect(cursor))) {
+            m_editor->ensureCursorVisible(cursor);
+            m_editorWrapper->setFocus();
+        }
     }
     //
     // Если нужно обновить в текущей позиции курсора просто имитируем отправку сигнала

@@ -111,7 +111,7 @@ namespace UserInterface
         /**
          * @brief Установить позицию курсора
          */
-        void setCursorPosition(int _position, bool _isReset = false);
+        void setCursorPosition(int _position, bool _isReset = false, bool _forceScroll = true);
 
         /**
          * @brief Установить тип текущего блока
