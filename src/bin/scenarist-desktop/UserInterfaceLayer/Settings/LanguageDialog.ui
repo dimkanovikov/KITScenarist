@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>497</width>
-    <height>287</height>
+    <height>317</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,36 +20,6 @@
    <string>Choose application language</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="9" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="0">
-    <widget class="QRadioButton" name="german">
-     <property name="text">
-      <string>Deutsch</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QRadioButton" name="english">
      <property name="text">
@@ -60,13 +30,24 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QRadioButton" name="system">
+   <item row="8" column="0">
+    <widget class="QRadioButton" name="ukrainian">
      <property name="text">
-      <string>Detect language from system locale</string>
+      <string>Українська мова</string>
      </property>
-     <property name="checked">
-      <bool>true</bool>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QRadioButton" name="german">
+     <property name="text">
+      <string>Deutsch</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QRadioButton" name="kazakh">
+     <property name="text">
+      <string>Қазақ</string>
      </property>
     </widget>
    </item>
@@ -74,13 +55,6 @@
     <widget class="QRadioButton" name="spanish">
      <property name="text">
       <string>Español</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QRadioButton" name="french">
-     <property name="text">
-      <string>Français</string>
      </property>
     </widget>
    </item>
@@ -94,21 +68,41 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QRadioButton" name="kazakh">
+   <item row="6" column="0">
+    <widget class="QRadioButton" name="portugues">
      <property name="text">
-      <string>Қазақ</string>
+      <string>Português</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
-    <widget class="QRadioButton" name="ukrainian">
+   <item row="4" column="0">
+    <widget class="QRadioButton" name="french">
      <property name="text">
-      <string>Українська мова</string>
+      <string>Français</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="1" column="1">
+    <widget class="QRadioButton" name="farsi">
+     <property name="text">
+      <string>فارْسِى</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QRadioButton" name="system">
+     <property name="text">
+      <string>Detect language from system locale</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QDialogButtonBox" name="buttons">
@@ -119,13 +113,26 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="0">
-    <widget class="QRadioButton" name="portugues">
-     <property name="text">
-      <string>Português</string>
+   <item row="10" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="checked">
-      <bool>false</bool>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
