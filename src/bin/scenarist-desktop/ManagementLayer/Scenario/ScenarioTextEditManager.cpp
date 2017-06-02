@@ -175,7 +175,7 @@ void ScenarioTextEditManager::scrollToAdditionalCursor(int _additionalCursorInde
 
 void ScenarioTextEditManager::scrollToPosition(int _position)
 {
-    m_view->setCursorPosition(_position);
+    m_view->setCursorPosition(_position, false, false);
 }
 
 void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,
