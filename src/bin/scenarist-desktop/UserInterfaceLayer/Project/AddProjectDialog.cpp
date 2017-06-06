@@ -135,6 +135,20 @@ void AddProjectDialog::initView()
     m_ui->existsLabel->hide();
 
     m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
+
+    //
+    // Предустановить название проекта по-умолчанию
+    //
+    const QString projectName = tr("New Project");
+    m_ui->projectName->setText(projectName);
+    if (m_ui->isLocal->isChecked()) {
+        int projectCopy = 0;
+        while (QFile::exists(projectFilePath())) {
+            ++projectCopy;
+            m_ui->projectName->setText(QString("%1 (%2)").arg(projectName).arg(projectCopy));
+        }
+    }
+    m_ui->projectName->selectAll();
 }
 
 void AddProjectDialog::initConnections()

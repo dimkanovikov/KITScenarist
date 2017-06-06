@@ -20,7 +20,10 @@
    <string>Add New Project</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">#namePanel, #advancedPanel {
+margin-top: 0ex;
+border: 1px solid palette(dark);
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -213,14 +216,14 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ToolTipLabel</class>
+   <extends>QLabel</extends>
+   <header>3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ToolTipLabel</class>
-   <extends>QLabel</extends>
-   <header location="global">3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
