@@ -222,11 +222,11 @@ void Application::initTranslation()
     appTranslator->load(":/Translations/Translations/Scenarist_" + translationSuffix + ".qm");
     installTranslator(appTranslator);
 
-    //
-    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
-    //
-    if (currentLanguage == QLocale::Persian) {
-        setLayoutDirection(Qt::RightToLeft);
-    }
+//    //
+//    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
+//    //
+//    if (currentLanguage == QLocale::Persian) {
+//        setLayoutDirection(Qt::RightToLeft);
+//    }
 }
 

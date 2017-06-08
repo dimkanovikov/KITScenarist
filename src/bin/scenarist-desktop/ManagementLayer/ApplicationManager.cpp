@@ -1905,10 +1905,12 @@ void ApplicationManager::initStyleSheet()
     m_menu->setProperty("inTopPanel", true);
     m_menu->setProperty("topPanelTopBordered", true);
     m_menu->setProperty("topPanelRightBordered", true);
+    m_menu->setProperty("topPanelLeftBordered", true);
     //
     m_menuSecondary->setProperty("inTopPanel", true);
     m_menuSecondary->setProperty("topPanelTopBordered", true);
     m_menuSecondary->setProperty("topPanelRightBordered", true);
+    m_menuSecondary->setProperty("topPanelLeftBordered", true);
 }
 
 void ApplicationManager::reloadApplicationSettings()
