@@ -248,7 +248,7 @@ void ApplicationManager::aboutCreateNew()
     // Спросить у пользователя хочет ли он сохранить проект
     //
     if (saveIfNeeded()) {
-        AddProjectDialog dlg(m_view);
+        AddProjectDialog dlg(m_view, m_synchronizationManager->isInternetConnectionActive());
         dlg.setIsRemoteAvailable(m_synchronizationManager->isLogged(),
                                  m_synchronizationManager->isSubscriptionActive(),
                                  !m_startUpManager->isOnLocalProjectsTab());

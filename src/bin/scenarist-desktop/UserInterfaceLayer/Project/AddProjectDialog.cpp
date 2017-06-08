@@ -72,11 +72,14 @@ namespace {
 }
 
 
-AddProjectDialog::AddProjectDialog(QWidget* _parent) :
+AddProjectDialog::AddProjectDialog(QWidget* _parent, bool _hasInternetConnection) :
     QLightBoxDialog(_parent),
-    m_ui(new Ui::AddProjectDialog)
+    m_ui(new Ui::AddProjectDialog),
+    m_hasInternetConnection(_hasInternetConnection)
 {
     m_ui->setupUi(this);
+
+    initStyleSheet();
 }
 
 AddProjectDialog::~AddProjectDialog()
@@ -86,9 +89,17 @@ AddProjectDialog::~AddProjectDialog()
 
 void AddProjectDialog::setIsRemoteAvailable(bool _isAvailable, bool _isEnabled, bool _isSelected)
 {
+    m_ui->cloudBlocker->hide();
+
     if (_isAvailable) {
         m_ui->isRemote->setEnabled(_isEnabled);
         m_ui->isRemote->setChecked(_isSelected);
+
+        //
+        // Покажем сообщение о невозможности создания проекта в облаке при отсутствии подключения
+        //
+        const bool cantCreateInCloud = _isSelected && !m_hasInternetConnection;
+        setCloudCreateBlockerVisible(cantCreateInCloud);
     } else {
         m_ui->isLocal->hide();
         m_ui->isRemote->hide();
@@ -124,6 +135,21 @@ QWidget* AddProjectDialog::focusedOnExec() const
     return m_ui->projectName;
 }
 
+void AddProjectDialog::setCloudCreateBlockerVisible(bool _visible)
+{
+    m_ui->cloudBlocker->setVisible(_visible);
+    m_ui->namePanel->setVisible(!_visible);
+    m_ui->advanced->setVisible(!_visible);
+    if (m_ui->advanced->isChecked()) {
+        m_ui->advancedPanel->setVisible(!_visible);
+    }
+    for (auto* button : m_ui->buttons->buttons()) {
+        if (m_ui->buttons->buttonRole(button) == QDialogButtonBox::AcceptRole) {
+            button->setEnabled(!_visible);
+        }
+    }
+}
+
 void AddProjectDialog::initView()
 {
     m_ui->browseSaveDir->updateIcons();
@@ -157,10 +183,16 @@ void AddProjectDialog::initConnections()
     // Настроим видимость возможности выбора папки сохранения файла
     //
     connect(m_ui->isLocal, &QRadioButton::toggled, [=] {
-        const bool  visible = m_ui->isLocal->isChecked();
-        m_ui->saveDirLabel->setVisible(visible);
-        m_ui->saveDir->setVisible(visible);
-        m_ui->browseSaveDir->setVisible(visible);
+        const bool isLocal = m_ui->isLocal->isChecked();
+        m_ui->saveDirLabel->setVisible(isLocal);
+        m_ui->saveDir->setVisible(isLocal);
+        m_ui->browseSaveDir->setVisible(isLocal);
+
+        //
+        // Покажем сообщение о невозможности создания проекта в облаке при отсутствии подключения
+        //
+        const bool cantCreateInCloud = !isLocal && !m_hasInternetConnection;
+        setCloudCreateBlockerVisible(cantCreateInCloud);
     });
 
     //
@@ -204,4 +236,10 @@ void AddProjectDialog::initConnections()
 
     connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &AddProjectDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &AddProjectDialog::reject);
+}
+
+void AddProjectDialog::initStyleSheet()
+{
+    m_ui->browseSaveDir->setProperty("isBrowseButton", true);
+    m_ui->browseImportFile->setProperty("isBrowseButton", true);
 }

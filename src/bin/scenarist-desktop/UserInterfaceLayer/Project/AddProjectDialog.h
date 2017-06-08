@@ -18,11 +18,14 @@ namespace UserInterface
         Q_OBJECT
 
     public:
-        explicit AddProjectDialog(QWidget* _parent = 0);
+        explicit AddProjectDialog(QWidget* _parent, bool _hasInternetConnection);
         ~AddProjectDialog();
 
         /**
          * @brief Установить возможность добавления проектов из облака
+         * @param _isAvailable - показывать ли переключатель облачных проектов
+         * @param _isEnabled - доступен ли переключатель облачных проектов
+         * @param _isSelected - выбран ли в данных момент переключатель облачных проектов
          */
         void setIsRemoteAvailable(bool _isAvailable, bool _isEnabled = false, bool _isSelected = false);
 
@@ -54,6 +57,12 @@ namespace UserInterface
 
     private:
         /**
+         * @brief Настроить видимость метки с сообщением о невозможности создать проект в облаке
+         */
+        void setCloudCreateBlockerVisible(bool _visible);
+
+    private:
+        /**
          * @brief Настроить представление
          */
         void initView() override;
@@ -63,11 +72,21 @@ namespace UserInterface
          */
         void initConnections() override;
 
+        /**
+         * @brief Настроить стили
+         */
+        void initStyleSheet();
+
     private:
         /**
          * @brief Интерфейс
          */
         Ui::AddProjectDialog* m_ui;
+
+        /**
+         * @brief Есть ли подключение к облачному сервису
+         */
+        bool m_hasInternetConnection = false;
     };
 }
 
