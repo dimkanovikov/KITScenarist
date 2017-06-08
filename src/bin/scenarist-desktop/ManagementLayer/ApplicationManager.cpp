@@ -1474,6 +1474,7 @@ void ApplicationManager::goToEditCurrentProject()
     //
     if (m_projectsManager->currentProject().isRemote()) {
         setSyncIndicator();
+        m_synchronizationManager->prepareToFullSynchronization();
     }
 
     //
