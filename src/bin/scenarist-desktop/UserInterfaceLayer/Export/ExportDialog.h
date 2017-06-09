@@ -169,7 +169,15 @@ namespace UserInterface
 		 */
         void initConnections() override;
 
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
+
 	private:
+        /**
+         * @brief Интерфейс
+         */
 		Ui::ExportDialog* m_ui;
 
 		/**

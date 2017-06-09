@@ -54,6 +54,8 @@ ExportDialog::ExportDialog(QWidget* _parent) :
     m_ui(new Ui::ExportDialog)
 {
     m_ui->setupUi(this);
+
+    initStyleSheet();
 }
 
 ExportDialog::~ExportDialog()
@@ -241,4 +243,9 @@ void ExportDialog::initConnections()
     connect(m_ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
     connect(m_ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
     connect(m_ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
+}
+
+void ExportDialog::initStyleSheet()
+{
+    m_ui->browseFile->setProperty("isBrowseButton", true);
 }

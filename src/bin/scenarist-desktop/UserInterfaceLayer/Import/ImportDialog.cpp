@@ -44,33 +44,34 @@ namespace {
 
 ImportDialog::ImportDialog(QWidget *parent) :
     QLightBoxDialog(parent),
-    ui(new Ui::ImportDialog)
+    m_ui(new Ui::ImportDialog)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 
-    m_import = ui->buttons->addButton(tr("Import"), QDialogButtonBox::AcceptRole);
+    m_import = m_ui->buttons->addButton(tr("Import"), QDialogButtonBox::AcceptRole);
+    initStyleSheet();
 }
 
 ImportDialog::~ImportDialog()
 {
-    delete ui;
+    delete m_ui;
 }
 
 BusinessLogic::ImportParameters ImportDialog::importParameters() const
 {
     BusinessLogic::ImportParameters importParameters;
-    importParameters.outline = ui->outline->isChecked();
-    importParameters.filePath = ui->file->text();
-    importParameters.removeScenesNumbers = ui->removeScenesNumbers->isChecked();
-    if (ui->replaceScenario->isChecked()) {
+    importParameters.outline = m_ui->outline->isChecked();
+    importParameters.filePath = m_ui->file->text();
+    importParameters.removeScenesNumbers = m_ui->removeScenesNumbers->isChecked();
+    if (m_ui->replaceScenario->isChecked()) {
         importParameters.insertionMode = BusinessLogic::ImportParameters::ReplaceDocument;
-    } else if (ui->currentCursorPosition->isChecked()) {
+    } else if (m_ui->currentCursorPosition->isChecked()) {
         importParameters.insertionMode = BusinessLogic::ImportParameters::ToCursorPosition;
     } else {
         importParameters.insertionMode = BusinessLogic::ImportParameters::ToDocumentEnd;
     }
-    importParameters.findCharactersAndLocations = ui->findCharactersAndLocations->isChecked();
-    importParameters.saveReviewMarks = ui->saveReviewMarks->isChecked();
+    importParameters.findCharactersAndLocations = m_ui->findCharactersAndLocations->isChecked();
+    importParameters.saveReviewMarks = m_ui->saveReviewMarks->isChecked();
 
     return importParameters;
 }
@@ -85,28 +86,33 @@ void ImportDialog::aboutChooseFile()
         //
         // Сохраним путь к файлу
         //
-        ui->file->setText(filePath);
+        m_ui->file->setText(filePath);
         ::saveImportFolderPath(filePath);
     }
 }
 
 void ImportDialog::aboutFileNameChanged()
 {
-    m_import->setEnabled(!ui->file->text().isEmpty());
+    m_import->setEnabled(!m_ui->file->text().isEmpty());
 }
 
 void ImportDialog::initView()
 {
-    ui->browseFile->updateIcons();
+    m_ui->browseFile->updateIcons();
 
     m_import->setEnabled(false);
 }
 
 void ImportDialog::initConnections()
 {
-    connect(ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
-    connect(ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
+    connect(m_ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
+    connect(m_ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
 
-    connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
+}
+
+void ImportDialog::initStyleSheet()
+{
+    m_ui->browseFile->setProperty("isBrowseButton", true);
 }

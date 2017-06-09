@@ -35,6 +35,9 @@ border: 1px solid palette(dark);
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0" colspan="5">
+       <widget class="QLineEdit" name="projectName"/>
+      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -42,10 +45,7 @@ border: 1px solid palette(dark);
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="projectName"/>
-      </item>
-      <item row="1" column="1">
+      <item row="0" column="1">
        <widget class="ToolTipLabel" name="existsLabel">
         <property name="maximumSize">
          <size>
@@ -66,6 +66,19 @@ border: 1px solid palette(dark);
          <bool>true</bool>
         </property>
        </widget>
+      </item>
+      <item row="0" column="2" colspan="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>18</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>

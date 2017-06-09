@@ -112,7 +112,7 @@ namespace ManagementLayer
         /**
          * @brief Получена информация о подписке
          */
-        void setSubscriptionInfo(bool _isActive, const QString& _expiredDate);
+        void setSubscriptionInfo(bool _isActive, const QString& _expiredDate, quint64 _usedSize, quint64 _availableSize);
 
         /**
          * @brief Установить список недавно используемых проектов

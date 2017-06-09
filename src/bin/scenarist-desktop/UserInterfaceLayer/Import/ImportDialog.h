@@ -54,8 +54,16 @@ namespace UserInterface
 		 */
         void initConnections() override;
 
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
+
 	private:
-		Ui::ImportDialog *ui;
+        /**
+         * @brief Интерфейс
+         */
+        Ui::ImportDialog* m_ui = nullptr;
 
 		/**
 		 * @brief Кнопка импорта

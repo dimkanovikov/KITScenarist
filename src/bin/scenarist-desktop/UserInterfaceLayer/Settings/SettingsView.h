@@ -292,7 +292,7 @@ namespace UserInterface
 		/**
 		 * @brief Форма
 		 */
-		Ui::SettingsView *ui;
+        Ui::SettingsView* m_ui = nullptr;
 
 		/**
 		 * @brief Язык приложения

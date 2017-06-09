@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>316</height>
+    <height>329</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -55,6 +55,9 @@ border: 1px solid palette(dark);
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <property name="horizontalSpacing">
+       <number>0</number>
+      </property>
       <item row="1" column="1">
        <widget class="QLineEdit" name="file">
         <property name="text">
@@ -67,6 +70,12 @@ border: 1px solid palette(dark);
       </item>
       <item row="1" column="2">
        <widget class="FlatButton" name="browseFile">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="toolTip">
          <string>Browse...</string>
         </property>

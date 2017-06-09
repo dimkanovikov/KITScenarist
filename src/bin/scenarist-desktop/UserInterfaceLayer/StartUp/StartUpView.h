@@ -47,7 +47,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить информацию о подписке
 		 */
-		void setSubscriptionInfo(bool _isActive, const QString& _expDate);
+        void setSubscriptionInfo(bool _isActive, const QString& _expDate, quint64 _usedSpace, quint64 _availableSpace);
 
 		/**
 		 * @brief Установить список доступных проектов
@@ -194,8 +194,14 @@ namespace UserInterface
 		void initIconsColor();
 
 	private:
-		Ui::StartUpView *ui;
+        /**
+         * @brief Интерфейс
+         */
+        Ui::StartUpView* m_ui = nullptr;
 
+        /**
+         * @brief Находимся ли в данный момент в процессе авторизации
+         */
         bool m_isProcessLogin = false;
 	};
 }
