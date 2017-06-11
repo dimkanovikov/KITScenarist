@@ -105,7 +105,12 @@ void StartUpView::setSubscriptionInfo(bool _isActive, const QString &_expDate, q
         m_ui->subscriptionEndDate->clear();
     }
 
-
+    //
+    // Делаем вид, что пользователь не может использовать больше, чем ему доступно
+    //
+    if (_usedSpace > _availableSpace) {
+        _usedSpace = _availableSpace;
+    }
     m_ui->availableSpaceInfo->setText(
                 tr("Used %1 Gb from %2 Gb")
                 .arg(QString::number(qreal(_usedSpace / 1000000000.), 'f', 2))
