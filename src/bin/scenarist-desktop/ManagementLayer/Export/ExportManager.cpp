@@ -94,16 +94,14 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                 // Определим экспортирующего
                 //
                 BusinessLogic::AbstractExporter* exporter = 0;
-                if (fileInfo.suffix() == "docx") {
+                if (m_exportDialog->exportFormat() == "docx") {
                     exporter = new BusinessLogic::DocxExporter;
-                } else if (fileInfo.suffix() == "pdf") {
+                } else if (m_exportDialog->exportFormat() == "pdf") {
                     exporter = new BusinessLogic::PdfExporter;
-                } else if (fileInfo.suffix() == "fdx") {
+                } else if (m_exportDialog->exportFormat() == "fdx") {
                     exporter = new BusinessLogic::FdxExporter;
-                } else if (fileInfo.suffix() == "fountain") {
-                    exporter = new BusinessLogic::FountainExporter;
                 } else {
-                    Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
+                    exporter = new BusinessLogic::FountainExporter;
                 }
 
                 //
@@ -111,7 +109,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                 //
                 exporter->exportTo(_scenario, exportParameters);
                 delete exporter;
-                exporter = 0;
+                exporter = nullptr;
             }
             //
             // Если невозможно записать в файл

@@ -6,167 +6,124 @@
 class QAbstractItemModel;
 
 namespace Ui {
-	class ExportDialog;
+    class ExportDialog;
 }
 
 namespace BusinessLogic {
-	class ExportParameters;
+    class ExportParameters;
 }
 
 
 namespace UserInterface
 {
-	/**
-	 * @brief Диалог экспорта
-	 */
-	class ExportDialog : public QLightBoxDialog
-	{
-		Q_OBJECT
+    /**
+     * @brief Диалог экспорта
+     */
+    class ExportDialog : public QLightBoxDialog
+    {
+        Q_OBJECT
 
-	public:
-		explicit ExportDialog(QWidget* _parent = 0);
-		~ExportDialog();
+    public:
+        explicit ExportDialog(QWidget* _parent = 0);
+        ~ExportDialog();
 
-		/**
-		 * @brief Установить путь экспортируемого файла
-		 */
-		void setExportFilePath(const QString& _filePath);
+        /**
+         * @brief Установить путь экспортируемого файла
+         */
+        void setExportFilePath(const QString& _filePath);
 
-		/**
-		 * @brief Установить имя экспортируемого файла
-		 */
-		void setExportFileName(const QString& _fileName);
+        /**
+         * @brief Установить имя экспортируемого файла
+         */
+        void setExportFileName(const QString& _fileName);
 
-		/**
-		 * @brief Установить необходимость проверять переносы страниц
-		 */
-		void setCheckPageBreaks(bool _check);
+        /**
+         * @brief Установить необходимость проверять переносы страниц
+         */
+        void setCheckPageBreaks(bool _check);
 
-		/**
-		 * @brief Установить модель стилей
-		 */
-		void setStylesModel(QAbstractItemModel* _model);
+        /**
+         * @brief Установить модель стилей
+         */
+        void setStylesModel(QAbstractItemModel* _model);
 
-		/**
-		 * @brief Установить текущий стиль
-		 */
-		void setCurrentStyle(const QString& _styleName);
+        /**
+         * @brief Установить текущий стиль
+         */
+        void setCurrentStyle(const QString& _styleName);
 
-		/**
-		 * @brief Установить нумеровать ли страницы
-		 */
-		void setPageNumbering(bool _isChecked);
+        /**
+         * @brief Установить нумеровать ли страницы
+         */
+        void setPageNumbering(bool _isChecked);
 
-		/**
-		 * @brief Установить нумеровать ли сцены
-		 */
-		void setScenesNumbering(bool _isChecked);
+        /**
+         * @brief Установить нумеровать ли сцены
+         */
+        void setScenesNumbering(bool _isChecked);
 
-		/**
-		 * @brief Установить приставку сцен
-		 */
-		void setScenesPrefix(const QString& _prefix);
+        /**
+         * @brief Установить приставку сцен
+         */
+        void setScenesPrefix(const QString& _prefix);
 
-		/**
-		 * @brief Установить необходимость сохранения редакторских пометок
-		 */
-		void setSaveReviewMarks(bool _save);
+        /**
+         * @brief Установить необходимость сохранения редакторских пометок
+         */
+        void setSaveReviewMarks(bool _save);
 
-		/**
-		 * @brief Установить печатать ли титульный лист
-		 */
-		void setPrintTitle(bool _isChecked);
+        /**
+         * @brief Установить печатать ли титульный лист
+         */
+        void setPrintTitle(bool _isChecked);
 
-		/**
-		 * @brief Название сценария
-		 */
-		/** @{ */
-		QString scenarioName() const;
-		void setScenarioName(const QString& _name);
-		/** @} */
+        /**
+         * @brief Получить настройки экспорта
+         */
+        BusinessLogic::ExportParameters exportParameters() const;
 
-		/**
-		 * @brief Дополнительная информация
-		 */
-		/** @{ */
-		QString scenarioAdditionalInfo() const;
-		void setScenarioAdditionalInfo(const QString& _additionalInfo);
-		/** @} */
+        /**
+         * @brief Формат экспорта
+         */
+        QString exportFormat() const;
 
-		/**
-		 * @brief Жанр
-		 */
-		/** @{ */
-		QString scenarioGenre() const;
-		void setScenarioGenre(const QString& _genre);
-		/** @} */
+    signals:
+        /**
+         * @brief Сменился стиль
+         */
+        void currentStyleChanged(const QString& _styleName);
 
-		/**
-		 * @brief Автор
-		 */
-		/** @{ */
-		QString scenarioAuthor() const;
-		void setScenarioAuthor(const QString _author);
-		/** @} */
+        /**
+         * @brief Показать предварительный просмотр
+         */
+        void printPreview();
 
-		/**
-		 * @brief Контактная информация
-		 */
-		/** @{ */
-		QString scenarioContacts() const;
-		void setScenarioContacts(const QString& _contacts);
-		/** @} */
+    private slots:
+        /**
+         * @brief Сменился формат
+         */
+        void aboutFormatChanged();
 
-		/**
-		 * @brief Год
-		 */
-		/** @{ */
-		QString scenarioYear() const;
-		void setScenarioYear(const QString& _year);
-		/** @} */
+        /**
+         * @brief Выбрать файл
+         */
+        void aboutChooseFile();
 
-		/**
-		 * @brief Получить настройки экспорта
-		 */
-		BusinessLogic::ExportParameters exportParameters() const;
+        /**
+         * @brief При смене имени файла, обновить доступность кнопки экспорта,
+         *		  а также проверить не будет ли произведено пересохранение
+         */
+        void aboutFileNameChanged();
 
-	signals:
-		/**
-		 * @brief Сменился стиль
-		 */
-		void currentStyleChanged(const QString& _styleName);
-
-		/**
-		 * @brief Показать предварительный просмотр
-		 */
-		void printPreview();
-
-	private slots:
-		/**
-		 * @brief Сменился формат
-		 */
-		void aboutFormatChanged();
-
-		/**
-		 * @brief Выбрать файл
-		 */
-		void aboutChooseFile();
-
-		/**
-		 * @brief При смене имени файла, обновить доступность кнопки экспорта,
-		 *		  а также проверить не будет ли произведено пересохранение
-		 */
-		void aboutFileNameChanged();
-
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
+    private:
+        /**
+         * @brief Настроить представление
+         */
         void initView() override;
 
-		/**
-		 * @brief Настроить соединения
-		 */
+        /**
+         * @brief Настроить соединения
+         */
         void initConnections() override;
 
         /**
@@ -174,17 +131,17 @@ namespace UserInterface
          */
         void initStyleSheet();
 
-	private:
+    private:
         /**
          * @brief Интерфейс
          */
-		Ui::ExportDialog* m_ui;
+        Ui::ExportDialog* m_ui;
 
-		/**
-		 * @brief Имя файла для экспорта
-		 */
-		QString m_exportFileName;
-	};
+        /**
+         * @brief Имя файла для экспорта
+         */
+        QString m_exportFileName;
+    };
 }
 
 #endif // EXPORTDIALOG_H

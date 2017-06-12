@@ -98,13 +98,14 @@ bool Application::notify(QObject* _object, QEvent* _event)
     //
     // Работа с таймером определяющим простой приложения
     //
-    if (_event->type() == QEvent::MouseMove
-        || _event->type() == QEvent::MouseButtonPress
-        || _event->type() == QEvent::MouseButtonDblClick
-        || _event->type() == QEvent::KeyPress
-        || _event->type() == QEvent::InputMethod
-        || _event->type() == QEvent::Wheel
-        || _event->type() == QEvent::Gesture) {
+    if (_event != nullptr
+        && (_event->type() == QEvent::MouseMove
+            || _event->type() == QEvent::MouseButtonPress
+            || _event->type() == QEvent::MouseButtonDblClick
+            || _event->type() == QEvent::KeyPress
+            || _event->type() == QEvent::InputMethod
+            || _event->type() == QEvent::Wheel
+            || _event->type() == QEvent::Gesture)) {
         m_idleTimer.start();
     }
 
