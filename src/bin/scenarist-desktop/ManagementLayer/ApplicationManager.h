@@ -155,7 +155,7 @@ namespace ManagementLayer
         /**
          * @brief Синхронизация остановленна с ошибкой
          */
-        void aboutSyncClosedWithError(int errorCode, const QString& _error = QString::null);
+        void aboutSyncClosedWithError(int _errorCode, const QString& _error = QString::null);
 
         /**
          * @brief Импортировать документ

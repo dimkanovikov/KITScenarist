@@ -1769,25 +1769,17 @@ void ApplicationManager::initConnections()
 
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
-    connect(m_startUpManager, &StartUpManager::loginRequested,
-            m_synchronizationManager, &SynchronizationManager::login);
-    connect(m_startUpManager, &StartUpManager::signUpRequested,
-            m_synchronizationManager, &SynchronizationManager::signUp);
-    connect(m_startUpManager, &StartUpManager::verifyRequested,
-            m_synchronizationManager, &SynchronizationManager::verify);
-    connect(m_startUpManager, &StartUpManager::restoreRequested,
-            m_synchronizationManager, &SynchronizationManager::restorePassword);
-    connect(m_startUpManager, &StartUpManager::logoutRequested,
-            m_synchronizationManager, &SynchronizationManager::logout);
-    connect(m_startUpManager, &StartUpManager::renewSubscriptionRequested,
-            m_synchronizationManager, &SynchronizationManager::renewSubscription);
-    connect(m_startUpManager, &StartUpManager::userNameChangeRequested,
-            m_synchronizationManager, &SynchronizationManager::changeUserName);
-    connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested,
-            m_synchronizationManager, &SynchronizationManager::loadSubscriptionInfo);
-    connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
-            m_synchronizationManager, &SynchronizationManager::changePassword);
-    //
+
+    connect(m_startUpManager, &StartUpManager::loginRequested, m_synchronizationManager, &SynchronizationManager::login);
+    connect(m_startUpManager, &StartUpManager::signUpRequested, m_synchronizationManager, &SynchronizationManager::signUp);
+    connect(m_startUpManager, &StartUpManager::verifyRequested, m_synchronizationManager, &SynchronizationManager::verify);
+    connect(m_startUpManager, &StartUpManager::restoreRequested, m_synchronizationManager, &SynchronizationManager::restorePassword);
+    connect(m_startUpManager, &StartUpManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::logout);
+    connect(m_startUpManager, &StartUpManager::renewSubscriptionRequested, m_synchronizationManager, &SynchronizationManager::renewSubscription);
+    connect(m_startUpManager, &StartUpManager::userNameChangeRequested, m_synchronizationManager, &SynchronizationManager::changeUserName);
+    connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested, m_synchronizationManager, &SynchronizationManager::loadSubscriptionInfo);
+    connect(m_startUpManager, &StartUpManager::passwordChangeRequested, m_synchronizationManager, &SynchronizationManager::changePassword);
+
     connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::aboutCreateNew);
     connect(m_startUpManager, &StartUpManager::openProjectRequested, [=] { aboutLoad(); });
     connect(m_startUpManager, &StartUpManager::helpRequested, this, &ApplicationManager::aboutShowHelp);
@@ -1836,6 +1828,10 @@ void ApplicationManager::initConnections()
     connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
     connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
+    connect(m_synchronizationManager, &SynchronizationManager::syncClosedWithError, this, &ApplicationManager::aboutSyncClosedWithError);
+    connect(m_synchronizationManager, &SynchronizationManager::networkStatusChanged, this, &ApplicationManager::setSyncIndicator);
+    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, m_tabs, &SideTabBar::removeIndicator);
+
     connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
             m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
     connect(m_synchronizationManager, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
@@ -1847,10 +1843,6 @@ void ApplicationManager::initConnections()
             m_tabs->setIndicatorMenu(QVector<QString>::fromList(_cursors.keys()));
         }
     });
-    connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
-            this, SLOT(aboutSyncClosedWithError(int,QString)));
-    connect(m_synchronizationManager, &SynchronizationManager::networkStatusChanged,
-            this, &ApplicationManager::setSyncIndicator);
 
     connect(m_synchronizationManager, &SynchronizationManager::loginAccepted,
             m_startUpManager, &StartUpManager::completeLogin);
@@ -1868,12 +1860,8 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::setSubscriptionInfo);
     connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded,
             m_projectsManager, &ProjectsManager::setRemoteProjectsSyncAvailable);
-    connect(m_synchronizationManager, &SynchronizationManager::syncClosedWithError,
-            this, &ApplicationManager::aboutSyncClosedWithError);
     connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded,
             m_projectsManager, &ProjectsManager::setRemoteProjects);
-    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished,
-            m_tabs, &SideTabBar::removeIndicator);
 
     //
     // Когда пользователь вышел из своего аккаунта, закрываем текущий проект, если он из облака
