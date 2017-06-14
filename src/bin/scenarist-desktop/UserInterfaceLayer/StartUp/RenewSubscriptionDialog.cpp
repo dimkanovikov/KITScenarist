@@ -121,7 +121,7 @@ void RenewSubscriptionDialog::initView()
     m_ui->duration->addItem(tr("3 month"), 3);
     m_ui->duration->addItem(tr("6 month (6% discount)"), 6);
     m_ui->duration->addItem(tr("12 month (12% discount)"), 12);
-    m_ui->duration->setCurrentIndex(0);
+    m_ui->duration->setCurrentIndex(2);
 }
 
 void RenewSubscriptionDialog::initConnections()

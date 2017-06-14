@@ -110,9 +110,9 @@ namespace ManagementLayer
         void showPasswordError(const QString& _error);
 
         /**
-         * @brief Получена информация о подписке
+         * @brief Установить информацию о подписке
          */
-        void setSubscriptionInfo(bool _isActive, const QString& _expiredDate, quint64 _usedSize, quint64 _availableSize);
+        void setSubscriptionInfo(bool _isActive, const QString& _expiredDate, quint64 _usedSpace, quint64 _availableSpace);
 
         /**
          * @brief Установить список недавно используемых проектов

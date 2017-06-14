@@ -1844,24 +1844,15 @@ void ApplicationManager::initConnections()
         }
     });
 
-    connect(m_synchronizationManager, &SynchronizationManager::loginAccepted,
-            m_startUpManager, &StartUpManager::completeLogin);
-    connect(m_synchronizationManager, &SynchronizationManager::signUpFinished,
-            m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManager, &SynchronizationManager::verified,
-            m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManager, &SynchronizationManager::passwordRestored,
-            m_startUpManager, &StartUpManager::userPassRestored);
-    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished,
-            m_startUpManager, &StartUpManager::completeLogout);
-    connect(m_synchronizationManager, &SynchronizationManager::passwordChanged,
-            m_startUpManager, &StartUpManager::passwordChanged);
-    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded,
-            m_startUpManager, &StartUpManager::setSubscriptionInfo);
-    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded,
-            m_projectsManager, &ProjectsManager::setRemoteProjectsSyncAvailable);
-    connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded,
-            m_projectsManager, &ProjectsManager::setRemoteProjects);
+    connect(m_synchronizationManager, &SynchronizationManager::loginAccepted, m_startUpManager, &StartUpManager::completeLogin);
+    connect(m_synchronizationManager, &SynchronizationManager::signUpFinished, m_startUpManager, &StartUpManager::userAfterSignUp);
+    connect(m_synchronizationManager, &SynchronizationManager::verified, m_startUpManager, &StartUpManager::userAfterSignUp);
+    connect(m_synchronizationManager, &SynchronizationManager::passwordRestored, m_startUpManager, &StartUpManager::userPassRestored);
+    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, m_startUpManager, &StartUpManager::completeLogout);
+    connect(m_synchronizationManager, &SynchronizationManager::passwordChanged, m_startUpManager, &StartUpManager::passwordChanged);
+    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded, m_startUpManager, &StartUpManager::setSubscriptionInfo);
+    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded, m_projectsManager, &ProjectsManager::setRemoteProjectsSyncAvailable);
+    connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded, m_projectsManager, &ProjectsManager::setRemoteProjects);
 
     //
     // Когда пользователь вышел из своего аккаунта, закрываем текущий проект, если он из облака

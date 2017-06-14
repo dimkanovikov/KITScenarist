@@ -56,7 +56,7 @@ namespace UserInterface
         void showPrepared();
 
         /**
-         * @brief Покажем окно с благодарностью
+         * @brief Покажем окно с благодарностью об оплате
          */
         void showThanks(const QString& _expDate);
 

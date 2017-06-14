@@ -357,7 +357,7 @@ void StartUpManager::showPasswordError(const QString& _error)
     }
 }
 
-void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expiredDate, quint64 _usedSize, quint64 _availableSize)
+void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expiredDate, quint64 _usedSpace, quint64 _availableSpace)
 {
     if (m_renewSubscriptionDialog->isVisible()) {
         //
@@ -369,7 +369,7 @@ void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expired
             // Обновилось, обновим окно и поле в StartUpView
             //
             m_renewSubscriptionDialog->showThanks(_expiredDate);
-            m_view->setSubscriptionInfo(_isActive, _expiredDate, _usedSize, _availableSize);
+            m_view->setSubscriptionInfo(_isActive, _expiredDate, _usedSpace, _availableSpace);
         } else {
             //
             // Не обновилось, запросим еще раз
@@ -381,7 +381,7 @@ void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expired
         // Иначе, это обычный запрос на обновление
         //
         m_subscriptionEndDate = _expiredDate;
-        m_view->setSubscriptionInfo(_isActive, _expiredDate, _usedSize, _availableSize);
+        m_view->setSubscriptionInfo(_isActive, _expiredDate, _usedSpace, _availableSpace);
     }
 }
 
