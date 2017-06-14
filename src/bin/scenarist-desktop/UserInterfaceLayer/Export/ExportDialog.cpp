@@ -146,7 +146,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
     return exportParameters;
 }
 
-void ExportDialog::aboutFormatChanged()
+QString ExportDialog::exportFormat() const
 {
     QString format;
     if (m_ui->docx->isChecked()) {
@@ -158,6 +158,12 @@ void ExportDialog::aboutFormatChanged()
     } else {
         format = "fountain";
     }
+    return format;
+}
+
+void ExportDialog::aboutFormatChanged()
+{
+    const QString format = exportFormat();
     QString filePath = m_ui->file->text();
 
     //
