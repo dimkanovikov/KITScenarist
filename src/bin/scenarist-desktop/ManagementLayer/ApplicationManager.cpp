@@ -1387,13 +1387,13 @@ void ApplicationManager::currentTabIndexChanged()
             {
                 QWidget* widget = widgetForTab(m_tabs->currentTab());
                 m_tabsWidgets->addWidget(widget);
-                m_tabsWidgets->setCurrentWidget(widget);
+        m_tabsWidgets->setCurrentWidget(widget);
             }
             //
             if (m_tabsSecondary->isVisible()) {
                 QWidget* widget = widgetForTab(m_tabsSecondary->currentTab());
                 m_tabsWidgetsSecondary->addWidget(widget);
-                m_tabsWidgetsSecondary->setCurrentWidget(widget);
+        m_tabsWidgetsSecondary->setCurrentWidget(widget);
             }
         }
 
@@ -1537,6 +1537,8 @@ void ApplicationManager::goToEditCurrentProject()
     //
     // Закроем уведомление
     //
+    QApplication::sendPostedEvents();
+    QApplication::processEvents();//QEventLoop::ExcludeUserInputEvents);
     progress.finish();
 }
 
