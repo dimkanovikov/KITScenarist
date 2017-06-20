@@ -128,6 +128,8 @@ void WebLoader::loadAsync(const QUrl& _urlToLoad, const QUrl& _referer)
 {
     stop();
 
+    m_downloadedData.clear();
+
     m_request->setUrlToLoad(_urlToLoad);
     m_request->setUrlReferer(_referer);
 

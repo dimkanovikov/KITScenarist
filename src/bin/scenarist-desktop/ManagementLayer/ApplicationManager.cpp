@@ -877,8 +877,8 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
 
 void ApplicationManager::setSyncIndicator()
 {
-    bool isActiveInternet = m_synchronizationManager->isInternetConnectionActive();
-    bool isRemoteProject = m_projectsManager->isCurrentProjectValid() &&
+    const bool isActiveInternet = m_synchronizationManager->isInternetConnectionActive();
+    const bool isRemoteProject = m_projectsManager->isCurrentProjectValid() &&
             m_projectsManager->currentProject().isRemote();
 
     QString iconPath;
@@ -1041,6 +1041,9 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             break;
         }
 
+        //
+        // Пользователь пытается открыть доступ к проекту самому себе
+        //
         case Sync::DisallowToShareSelf: {
             title = tr("Share error");
             error = tr("You can't share project with yourself.");
@@ -1070,10 +1073,14 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             break;
         }
 
+        //
+        // Закончилось доступное меcто в облаке
+        //
         case Sync::StorageSizeFinished: {
             title = tr("Sync not available");
             error = tr("You have exhausted all available for the use of space on a server.\n\n"
                        "Project didn't synchronized.");
+            disableSyncForCurrentProject = true;
             break;
         }
 

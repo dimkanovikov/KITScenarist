@@ -622,8 +622,6 @@ void StartUpManager::initConnections()
 
     connect(m_renewSubscriptionDialog, &RenewSubscriptionDialog::renewSubsciptionRequested, [this] {
         emit renewSubscriptionRequested(m_renewSubscriptionDialog->duration(), m_renewSubscriptionDialog->paymentSystemType());
-    });
-    connect(m_renewSubscriptionDialog, &RenewSubscriptionDialog::renewSubsciptionRequested, [this] {
         QTimer::singleShot(3000, this, &StartUpManager::getSubscriptionInfoRequested);
     });
 }
