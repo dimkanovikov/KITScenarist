@@ -1537,6 +1537,8 @@ void ApplicationManager::goToEditCurrentProject()
     //
     // Закроем уведомление
     //
+    QApplication::sendPostedEvents();
+    QApplication::processEvents();
     progress.finish();
 }
 
