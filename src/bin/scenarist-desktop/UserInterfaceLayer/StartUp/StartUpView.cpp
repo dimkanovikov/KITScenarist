@@ -173,9 +173,9 @@ bool StartUpView::event(QEvent* _event)
 void StartUpView::aboutFilesSourceChanged()
 {
     if (m_ui->localProjects->isChecked()) {
-        m_ui->filesSouces->setCurrentWidget(m_ui->recentFilesPage);
+        m_ui->filesSources->setCurrentWidget(m_ui->recentFilesPage);
     } else {
-        m_ui->filesSouces->setCurrentWidget(m_ui->remoteFilesPage);
+        m_ui->filesSources->setCurrentWidget(m_ui->remoteFilesPage);
     }
 }
 
@@ -211,7 +211,7 @@ void StartUpView::initView()
     m_ui->cabinetFrame->hide();
     m_ui->userEmail->hide();
 
-    m_ui->filesSouces->setCurrentWidget(m_ui->recentFilesPage);
+    m_ui->filesSources->setCurrentWidget(m_ui->recentFilesPage);
 
     initIconsColor();
 }
@@ -249,8 +249,10 @@ void StartUpView::initStyleSheet()
     m_ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
 
     m_ui->mainContainer->setProperty("mainContainer", true);
+    m_ui->mainContainer->setProperty("baseForeground", true);
+    m_ui->cabinetFrame->setProperty("baseForeground", true);
     m_ui->projectsFrame->setProperty("mainContainer", true);
-    m_ui->projectsFrame->setProperty("baseForeground", true);
+    m_ui->projectsFrame->setProperty("windowForeground", true);
 
     m_ui->userName->setProperty("editableLabel", true);
 
@@ -268,9 +270,9 @@ void StartUpView::initStyleSheet()
     m_ui->refreshProjects->setProperty("isUpdateButton", true);
 
     m_ui->recentFiles->setProperty("nobordersContainer", true);
-    m_ui->recentFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(base); }");
+    m_ui->recentFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(window); }");
     m_ui->remoteFiles->setProperty("nobordersContainer", true);
-    m_ui->remoteFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(base); }");
+    m_ui->remoteFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(window); }");
 }
 
 void StartUpView::initIconsColor()
