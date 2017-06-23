@@ -11,7 +11,7 @@ namespace UserInterface
 	 */
 	class ScenarioNavigatorItemDelegate : public QStyledItemDelegate
 	{
-		Q_OBJECT
+        Q_OBJECT
 
 	public:
 		explicit ScenarioNavigatorItemDelegate(QObject* _parent = 0);

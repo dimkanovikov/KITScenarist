@@ -176,6 +176,7 @@ void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const Q
 {
     m_editor->viewport()->setStyleSheet(QString("color: %1; background-color: %2;").arg(_textColor.name(), _backgroundColor.name()));
     m_editor->setStyleSheet(QString("#scenarioEditor { color: %1; }").arg(_textColor.name()));
+    m_editor->setTextColor(_textColor);
 }
 
 void ScenarioTextEditWidget::setTextEditZoomRange(qreal _zoomRange)

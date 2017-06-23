@@ -52,7 +52,8 @@ namespace UserInterface
 		void setApplicationAutosave(bool);
 		void setApplicationAutosaveInterval(int);
 		void setApplicationSaveBackups(bool _save);
-		void setApplicationSaveBackupsFolder(const QString& _folder);
+        void setApplicationSaveBackupsFolder(const QString& _folder);
+        void setApplicationCompactMode(bool _enable);
 		void setApplicationTwoPanelMode(bool _use);
 		void setApplicationModuleResearch(bool _use);
 		void setApplicationModuleCards(bool _use);
@@ -126,7 +127,8 @@ namespace UserInterface
 		void applicationAutosaveChanged(bool);
 		void applicationAutosaveIntervalChanged(int);
 		void applicationSaveBackupsChanged(bool);
-		void applicationSaveBackupsFolderChanged(const QString&);
+        void applicationSaveBackupsFolderChanged(const QString&);
+        void applicationCompactModeChanged(bool);
 		void applicationTwoPanelModeChanged(bool);
 		void applicationModuleResearchChanged(bool);
 		void applicationModuleCardsChanged(bool);

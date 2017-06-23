@@ -8,10 +8,10 @@
 #include <QPainter>
 
 namespace {
-    const int ICON_SIZE = 20;
-    const int TOP_MARGIN = 8;
-    const int BOTTOM_MARGIN = 8;
-    const int ITEMS_SPACING = 6;
+    static int s_iconSize = 20;
+    static int s_topMargin = 8;
+    static int s_bottomMargin = 8;
+    static int s_itemsSpacing = 6;
 }
 
 using UserInterface::ScenarioNavigatorItemDelegate;
@@ -107,7 +107,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... иконка
     //
-    const QRect iconRect(0, TOP_MARGIN, ICON_SIZE, ICON_SIZE);
+    const QRect iconRect(0, s_topMargin, s_iconSize, s_iconSize);
 	QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
 	QIcon iconColorized(icon);
 	QColor iconColor = textBrush.color();
@@ -126,7 +126,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	QStringList colorsNamesList = colorsNames.split(";", QString::SkipEmptyParts);
 	const int maxColorsInColumn = m_showSceneDescription ? m_sceneDescriptionHeight + 1 : 1;
 	int colorsCount = colorsNamesList.size();
-	int colorRectX = TREE_INDICATOR_WIDTH + opt.rect.width() - COLOR_RECT_WIDTH - ITEMS_SPACING - RIGHT_MARGIN;
+    int colorRectX = TREE_INDICATOR_WIDTH + opt.rect.width() - COLOR_RECT_WIDTH - s_itemsSpacing - RIGHT_MARGIN;
 	while (colorsCount > 0) {
 		//
 		// Выссчитываем сколько влезет в одну колонку
@@ -190,10 +190,10 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 			: "";
 	const int chronometryRectWidth = _painter->fontMetrics().width(chronometry);
 	const QRect chronometryRect(
-		colorRectX - chronometryRectWidth - ITEMS_SPACING,
-        TOP_MARGIN,
+        colorRectX - chronometryRectWidth - s_itemsSpacing,
+        s_topMargin,
 		chronometryRectWidth,
-        ICON_SIZE
+        s_iconSize
 		);
     _painter->drawText(chronometryRect, Qt::AlignLeft | Qt::AlignVCenter, chronometry);
 
@@ -202,10 +202,10 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	_painter->setFont(headerFont);
 	const QRect headerRect(
-		iconRect.right() + ITEMS_SPACING,
-        TOP_MARGIN,
-		chronometryRect.left() - iconRect.right() - ITEMS_SPACING*2,
-        ICON_SIZE
+        iconRect.right() + s_itemsSpacing,
+        s_topMargin,
+        chronometryRect.left() - iconRect.right() - s_itemsSpacing*2,
+        s_iconSize
 		);
 	QString header = _index.data(Qt::DisplayRole).toString().toUpper();
 	if (m_showSceneTitle) {
@@ -236,7 +236,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		_painter->setFont(textFont);
 		const QRect descriptionRect(
 			headerRect.left(),
-			headerRect.bottom() + ITEMS_SPACING,
+            headerRect.bottom() + s_itemsSpacing,
 			chronometryRect.right() - headerRect.left(),
 			TEXT_LINE_HEIGHT * m_sceneDescriptionHeight
 			);
@@ -261,10 +261,10 @@ QSize ScenarioNavigatorItemDelegate::sizeHint(const QStyleOptionViewItem& _optio
     // + отступы TOP_MARGIN сверху + BOTTOM_MARGIN снизу + ITEMS_SPACING между текстом
 	//
     int lines = 0;
-    int additionalHeight = TOP_MARGIN + ICON_SIZE + BOTTOM_MARGIN;
+    int additionalHeight = s_topMargin + s_iconSize + s_bottomMargin;
 	if (m_showSceneDescription) {
 		lines += m_sceneDescriptionHeight;
-        additionalHeight += ITEMS_SPACING;
+        additionalHeight += s_itemsSpacing;
 	}
 	const int height = _option.fontMetrics.height() * lines + additionalHeight;
 	const int width = 50;

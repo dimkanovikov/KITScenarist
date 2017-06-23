@@ -82,8 +82,8 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
         }
     } else if (QScrollBar* scrollBar = qobject_cast<QScrollBar*>(_object)) {
         static QTimeLine* timeline = nullptr;
-        const int startFrame = 13;
-        const int lastFrame = 23;
+        const int startFrame = 10;
+        const int lastFrame = 20;
         if (timeline == nullptr) {
             timeline = new QTimeLine(60, this);
             timeline->setFrameRange(startFrame, lastFrame);

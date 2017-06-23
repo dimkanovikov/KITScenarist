@@ -119,6 +119,7 @@ application/geometry - состояние главного окна и его в
 application/use-dark-theme - использовать тёмную тему
 application/save-backups - сохранять резервные копии
 application/save-backups-folder - папка сохранения резервных копий
+application/compact-mode - компактный режим интерфейса (0 - выключен, 1 - включён)
 application/two-panel-mode - режим разделения экрана на 2 панели (0 - выключен, 1 - включён)
 application/modules/... - включённые/выключенные модули
 application/modules/research

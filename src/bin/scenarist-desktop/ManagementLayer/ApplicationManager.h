@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTimer>
 
+class FlatButton;
 class SideTabBar;
 class QLabel;
 class QSplitter;
@@ -287,7 +288,7 @@ namespace ManagementLayer
         /**
          * @brief Меню приложения
          */
-        QToolButton* m_menu;
+        FlatButton* m_menu;
 
         /**
          * @brief Заглушка для верха правой панели

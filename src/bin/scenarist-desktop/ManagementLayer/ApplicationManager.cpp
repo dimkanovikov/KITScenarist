@@ -26,6 +26,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -34,6 +35,7 @@
 #include <UserInterfaceLayer/ApplicationView.h>
 #include <UserInterfaceLayer/Project/AddProjectDialog.h>
 #include <UserInterfaceLayer/Project/ShareDialog.h>
+#include <UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <QApplication>
 #include <QComboBox>
@@ -169,7 +171,7 @@ namespace {
 ApplicationManager::ApplicationManager(QObject *parent) :
     QObject(parent),
     m_view(new ApplicationView),
-    m_menu(new QToolButton(m_view)),
+    m_menu(new FlatButton(m_view)),
     m_menuSecondary(new QLabel(m_view)),
     m_tabs(new SideTabBar(m_view)),
     m_tabsSecondary(new SideTabBar(m_view)),
@@ -1604,8 +1606,7 @@ void ApplicationManager::initView()
     // Настроим меню
     //
     m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_menu->setText(tr("Menu"));
-    m_menu->setPopupMode(QToolButton::MenuButtonPopup);
+    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
     m_menu->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
@@ -1878,7 +1879,7 @@ void ApplicationManager::initStyleSheet()
     //
     // Загрузим стиль
     //
-    QFile styleSheetFile(":/Interface/UI/style-desktop.qss");
+    QFile styleSheetFile(":/Interface/UI/style-desktop-compact.qss");
     styleSheetFile.open(QIODevice::ReadOnly);
     QString styleSheet = styleSheetFile.readAll();
     styleSheetFile.close();
@@ -1973,23 +1974,35 @@ void ApplicationManager::reloadApplicationSettings()
         //
         // Чтобы все цветовые изменения подхватились, нужно заново переустановить стиль
         //
-        QFile styleSheetFile(":/Interface/UI/style-desktop.qss");
+        const bool useCompactMode =
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "application/compact-mode",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt();
+        QFile styleSheetFile(useCompactMode
+                             ? ":/Interface/UI/style-desktop-compact.qss"
+                             : ":/Interface/UI/style-desktop.qss");
         styleSheetFile.open(QIODevice::ReadOnly);
         QString styleSheet = styleSheetFile.readAll();
         styleSheetFile.close();
         styleSheet.replace("_THEME_POSTFIX", useDarkTheme ? "-dark" : "");
         m_view->setStyleSheet(styleSheet);
+
+        //
+        // Настроим боковую панель в зависимости от необходимости быть компактным
+        //
+        m_tabs->setCompactMode(useCompactMode);
     }
 
     //
     // Автосохранение
     //
-    bool autosave =
+    const bool autosave =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
                 "application/autosave",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
             .toInt();
-    int autosaveInterval =
+    const int autosaveInterval =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
                 "application/autosave-interval",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)

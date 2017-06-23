@@ -55,7 +55,8 @@ namespace ManagementLayer
 		void applicationAutosaveChanged(bool _value);
 		void applicationAutosaveIntervalChanged(int _value);
 		void applicationSaveBackupsChanged(bool _value);
-		void applicationSaveBackupsFolderChanged(const QString& _value);
+        void applicationSaveBackupsFolderChanged(const QString& _value);
+        void applicationCompactModeChanged(bool _enable);
 		void applicationTwoPanelModeChanged(bool _value);
 		void applicationModuleResearchChanged(bool _value);
 		void applicationModuleCardsChanged(bool _value);

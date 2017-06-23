@@ -182,6 +182,11 @@ void SettingsView::setApplicationSaveBackupsFolder(const QString& _folder)
     m_ui->saveBackupsFolder->setText(_folder);
 }
 
+void SettingsView::setApplicationCompactMode(bool _enable)
+{
+    m_ui->applicationCompactMode->setChecked(_enable);
+}
+
 void SettingsView::setApplicationTwoPanelMode(bool _use)
 {
     m_ui->applicationTwoPanelMode->setChecked(_use);
@@ -674,7 +679,7 @@ void SettingsView::initView()
 
     m_applicationTabs->addTab(tr("Common"));
     m_applicationTabs->addTab(tr("Modules"));
-    m_applicationTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    m_applicationTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Ignored);
     m_ui->applicationPageLayout->addWidget(m_applicationTabs, 0, 0);
     m_ui->applicationPageLayout->addWidget(m_ui->topRightEmptyLabel_1, 0, 1);
     m_ui->applicationPageStack->setCurrentIndex(0);
@@ -682,7 +687,7 @@ void SettingsView::initView()
     m_scenarioEditorTabs->addTab(tr("Common"));
     m_scenarioEditorTabs->addTab(tr("Editing"));
     m_scenarioEditorTabs->addTab(tr("Shortcuts"));
-    m_scenarioEditorTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    m_scenarioEditorTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Ignored);
     m_ui->scenarioEditPageLayout->addWidget(m_scenarioEditorTabs, 0, 0);
     m_ui->scenarioEditPageLayout->addWidget(m_ui->topRightEmptyLabel_2, 0, 1);
     m_ui->scenarioEditPageStack->setCurrentIndex(0);
@@ -758,6 +763,7 @@ void SettingsView::initConnections()
     connect(m_ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));
     connect(m_ui->saveBackups, SIGNAL(toggled(bool)), this, SIGNAL(applicationSaveBackupsChanged(bool)));
     connect(m_ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
+    connect(m_ui->applicationCompactMode, &QCheckBox::toggled, this, &SettingsView::applicationCompactModeChanged);
     connect(m_ui->applicationTwoPanelMode, &QCheckBox::toggled, this, &SettingsView::applicationTwoPanelModeChanged);
     connect(m_ui->applicationModuleResearch, &QCheckBox::toggled, this, &SettingsView::applicationModuleResearchChanged);
     connect(m_ui->applicationModuleCards, &QCheckBox::toggled, this, &SettingsView::applicationModuleCardsChanged);
