@@ -192,7 +192,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     initConnections();
     initStyleSheet();
 
-    aboutUpdateProjectsList();
+    aboutUpdateProjectsLists();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -238,7 +238,7 @@ void ApplicationManager::makeStartUpChecks()
     }
 }
 
-void ApplicationManager::aboutUpdateProjectsList()
+void ApplicationManager::aboutUpdateProjectsLists()
 {
     m_startUpManager->setRecentProjects(m_projectsManager->recentProjects());
     m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
@@ -1777,8 +1777,8 @@ void ApplicationManager::initConnections()
     });
     connect(m_tabs, &SideTabBar::indicatorMenuClicked, m_scenarioManager, &ScenarioManager::scrollToAdditionalCursor);
 
-    connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
-    connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
+    connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsLists()));
+    connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsLists()));
 
     connect(m_startUpManager, &StartUpManager::loginRequested, m_synchronizationManager, &SynchronizationManager::login);
     connect(m_startUpManager, &StartUpManager::signUpRequested, m_synchronizationManager, &SynchronizationManager::signUp);

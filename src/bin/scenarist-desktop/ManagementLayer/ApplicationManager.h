@@ -65,7 +65,7 @@ namespace ManagementLayer
         /**
          * @brief Обновить списки проектов на стартовой странице
          */
-        void aboutUpdateProjectsList();
+        void aboutUpdateProjectsLists();
 
         /**
          * @brief Создать новый

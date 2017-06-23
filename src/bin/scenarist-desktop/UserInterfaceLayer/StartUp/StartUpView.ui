@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>797</width>
+    <width>815</width>
     <height>592</height>
    </rect>
   </property>
@@ -641,7 +641,7 @@
   <customwidget>
    <class>UserInterface::ProjectsList</class>
    <extends>QScrollArea</extends>
-   <header location="global">UserInterfaceLayer/StartUp/ProjectsList.h</header>
+   <header location="global">UserInterfaceLayer/ProjectsList/ProjectsList.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

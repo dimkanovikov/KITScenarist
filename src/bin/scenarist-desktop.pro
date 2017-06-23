@@ -294,9 +294,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp \
     scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp \
     scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.cpp \
@@ -325,7 +322,10 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.cpp \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.cpp \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectsList.cpp \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -539,9 +539,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h \
     scenarist-core/BusinessLayer/Import/TrelbyImporter.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.h \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.h \
     scenarist-core/BusinessLayer/Import/KitScenaristImporter.h \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.h \
@@ -579,7 +576,10 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.h \
     scenarist-core/3rd_party/Helpers/TextUtils.h \
-    scenarist-core/3rd_party/Helpers/StyleHelper.h
+    scenarist-core/3rd_party/Helpers/StyleHelper.h \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.h \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectsList.h \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -597,13 +597,13 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.ui \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.ui \
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui
 
 
 RESOURCES += \
