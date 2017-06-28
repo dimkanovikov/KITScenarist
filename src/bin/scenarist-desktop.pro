@@ -138,7 +138,7 @@ SOURCES += \
     scenarist-core/Domain/Place.cpp \
     scenarist-core/Domain/Scenario.cpp \
     scenarist-core/Domain/ScenarioDay.cpp \
-    scenarist-core/Domain/Time.cpp \
+    scenarist-core/Domain/SceneTime.cpp \
     scenarist-core/3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
