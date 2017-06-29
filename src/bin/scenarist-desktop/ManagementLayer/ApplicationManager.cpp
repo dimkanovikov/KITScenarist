@@ -1606,7 +1606,8 @@ void ApplicationManager::initView()
     // Настроим меню
     //
     m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
+//    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
+    m_menu->setText(tr("Menu"));
     m_menu->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 

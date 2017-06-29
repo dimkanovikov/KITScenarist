@@ -301,7 +301,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideBackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideForegroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Animation.cpp \
@@ -548,7 +548,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideBackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideForegroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Animation.h \
