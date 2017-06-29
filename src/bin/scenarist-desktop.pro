@@ -138,7 +138,7 @@ SOURCES += \
     scenarist-core/Domain/Place.cpp \
     scenarist-core/Domain/Scenario.cpp \
     scenarist-core/Domain/ScenarioDay.cpp \
-    scenarist-core/Domain/Time.cpp \
+    scenarist-core/Domain/SceneTime.cpp \
     scenarist-core/3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
@@ -362,7 +362,7 @@ HEADERS += \
     scenarist-core/Domain/Place.h \
     scenarist-core/Domain/Scenario.h \
     scenarist-core/Domain/ScenarioDay.h \
-    scenarist-core/Domain/Time.h \
+    scenarist-core/Domain/SceneTime.h \
     scenarist-core/3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
