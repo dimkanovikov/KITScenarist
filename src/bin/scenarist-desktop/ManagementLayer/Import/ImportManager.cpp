@@ -28,26 +28,26 @@ using ManagementLayer::ImportManager;
 using UserInterface::ImportDialog;
 
 namespace {
-	/**
-	 * @brief Старый вордовский формат не поддерживается
-	 */
-	const QString MS_DOC_EXTENSION = ".doc";
+    /**
+     * @brief Старый вордовский формат не поддерживается
+     */
+    const QString MS_DOC_EXTENSION = ".doc";
 
-	/**
-	 * @brief Формат файлов КИТ Сценарист
-	 */
-	const QString KIT_SCENARIST_EXTENSION = ".kitsp";
+    /**
+     * @brief Формат файлов КИТ Сценарист
+     */
+    const QString KIT_SCENARIST_EXTENSION = ".kitsp";
 
-	/**
-	 * @brief Формат файлов Final Draft
-	 */
-	const QString FINAL_DRAFT_EXTENSION = ".fdx";
+    /**
+     * @brief Формат файлов Final Draft
+     */
+    const QString FINAL_DRAFT_EXTENSION = ".fdx";
     const QString FINAL_DRAFT_TEMPLATE_EXTENSION = ".fdxt";
 
-	/**
-	 * @brief Формат файлов Trelby
-	 */
-	const QString TRELBY_EXTENSION = ".trelby";
+    /**
+     * @brief Формат файлов Trelby
+     */
+    const QString TRELBY_EXTENSION = ".trelby";
 
     /**
      * @brief Формат файлов Fountain
@@ -67,67 +67,68 @@ ImportManager::ImportManager(QObject* _parent, QWidget* _parentWidget) :
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition,
     const BusinessLogic::ImportParameters& _importParameters)
 {
-	//
-	// Получим xml-представление импортируемого сценария
-	//
-	QString importScenarioXml;
-	if (_importParameters.filePath.toLower().endsWith(KIT_SCENARIST_EXTENSION)) {
-		importScenarioXml = BusinessLogic::KitScenaristImporter().importScenario(_importParameters);
-	} else if (_importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)
+    //
+    // Получим xml-представление импортируемого сценария
+    //
+    QScopedPointer<BusinessLogic::AbstractImporter> importer;
+    if (_importParameters.filePath.toLower().endsWith(KIT_SCENARIST_EXTENSION)) {
+        importer.reset(new BusinessLogic::KitScenaristImporter);
+    } else if (_importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)
                || _importParameters.filePath.toLower().endsWith(FINAL_DRAFT_TEMPLATE_EXTENSION)) {
-		importScenarioXml = BusinessLogic::FdxImporter().importScenario(_importParameters);
-	} else if (_importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
-		importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(_importParameters);
-    } else if (_importParameters.filePath.toLower().endsWith(FOUNTAIN_EXTENSION)){
-        importScenarioXml = BusinessLogic::FountainImporter().importScenario(_importParameters);
-    } else{
-		importScenarioXml = BusinessLogic::DocumentImporter().importScenario(_importParameters);
-	}
+        importer.reset(new BusinessLogic::FdxImporter);
+    } else if (_importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
+        importer.reset(new BusinessLogic::TrelbyImporter);
+    } else if (_importParameters.filePath.toLower().endsWith(FOUNTAIN_EXTENSION)) {
+        importer.reset(new BusinessLogic::FountainImporter);
+    } else {
+        importer.reset(new BusinessLogic::DocumentImporter);
+    }
+    const QString importScenarioXml = importer->importScenario(_importParameters);
 
-	//
-	// Загрузим импортируемый текст в сценарий
-	//
-	// ... определим позицию вставки
-	//
-	int insertPosition = 0;
-	switch (_importParameters.insertionMode) {
-		case BusinessLogic::ImportParameters::ReplaceDocument: {
-			_scenario->clear();
-			insertPosition = 0;
-			break;
-		}
+    //
+    // Загрузим импортируемый текст в сценарий
+    //
+    // ... определим позицию вставки
+    //
+    int insertPosition = 0;
+    switch (_importParameters.insertionMode) {
+        case BusinessLogic::ImportParameters::ReplaceDocument: {
+            _scenario->clear();
+            insertPosition = 0;
+            break;
+        }
 
-		case BusinessLogic::ImportParameters::ToCursorPosition: {
-			insertPosition = _cursorPosition;
-			break;
-		}
+        case BusinessLogic::ImportParameters::ToCursorPosition: {
+            insertPosition = _cursorPosition;
+            break;
+        }
 
-		default:
-		case BusinessLogic::ImportParameters::ToDocumentEnd: {
-			insertPosition = _scenario->document()->characterCount() - 1;
-			break;
-		}
-	}
-	//
-	// ... загрузим текст
-	//
-	_scenario->document()->insertFromMime(insertPosition, importScenarioXml);
+        default:
+        case BusinessLogic::ImportParameters::ToDocumentEnd: {
+            insertPosition = _scenario->document()->characterCount() - 1;
+            break;
+        }
+    }
+    //
+    // ... загрузим текст
+    //
+    _scenario->document()->insertFromMime(insertPosition, importScenarioXml);
 
-	//
-	// ... в случае необходимости определяем локации и персонажей
-	//
-	if (_importParameters.findCharactersAndLocations) {
-		//
-		// Персонажи
-		//
-		{
-			QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
+    //
+    // ... в случае необходимости определяем локации и персонажей
+    //
+    if (_importParameters.findCharactersAndLocations) {
+        //
+        // Персонажи
+        //
+        {
+            QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
 
-			//
-			// Определить персонажи, которых нет в тексте
-			//
-			QSet<QString> charactersToDelete;
-			foreach (DomainObject* domainObject,
+            //
+            // Определить персонажи, которых нет в тексте
+            //
+            QSet<QString> charactersToDelete;
+            foreach (DomainObject* domainObject,
                      DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
                 Research* character = dynamic_cast<Research*>(domainObject);
                 if (!characters.contains(character->name())) {
@@ -194,6 +195,17 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
             }
             DatabaseLayer::Database::commit();
         }
+    }
+
+
+    //
+    // Загрузим данные разработки
+    //
+    const QVariantMap research = importer->importResearch(_importParameters);
+    if (!research.isEmpty()) {
+        //
+        // TODO:
+        //
     }
 }
 
