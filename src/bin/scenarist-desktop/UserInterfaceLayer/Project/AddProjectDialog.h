@@ -7,6 +7,8 @@ namespace Ui {
     class AddProjectDialog;
 }
 
+class QPushButton;
+
 
 namespace UserInterface
 {
@@ -87,6 +89,11 @@ namespace UserInterface
          * @brief Есть ли подключение к облачному сервису
          */
         bool m_hasInternetConnection = false;
+
+        /**
+         * @brief КНопка создания проекта
+         */
+        QPushButton* m_createProjectButton = nullptr;
     };
 }
 

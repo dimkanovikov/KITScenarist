@@ -8,6 +8,7 @@
 
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QPushButton>
 #include <QStandardPaths>
 
 using UserInterface::AddProjectDialog;
@@ -160,7 +161,7 @@ void AddProjectDialog::initView()
 
     m_ui->existsLabel->hide();
 
-    m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
+    m_createProjectButton = m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
 
     //
     // Предустановить название проекта по-умолчанию
@@ -196,10 +197,19 @@ void AddProjectDialog::initConnections()
     });
 
     //
-    // Проверим не существует ли уже такого файла
+    // Проверим не существует ли уже такого файла и заблокируем/разблокируем возможность создания
     //
     connect(m_ui->projectName, &QLineEdit::textChanged, [=] {
-        m_ui->existsLabel->setVisible(QFile::exists(projectFilePath()));
+        //
+        // ... если имя проекта пустое запретим создавать его
+        //
+        m_createProjectButton->setEnabled(!m_ui->projectName->text().isEmpty());
+        //
+        // ... если проект локальный, проверяем на существование
+        //
+        if (isLocal()) {
+            m_ui->existsLabel->setVisible(QFile::exists(projectFilePath()));
+        }
     });
 
     connect(m_ui->advanced, &QCheckBox::toggled, m_ui->advancedPanel, &QFrame::setVisible);
