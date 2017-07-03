@@ -105,6 +105,20 @@ int SettingsView::chronometryCurrentType() const
     return type;
 }
 
+void SettingsView::disableTwoPanelsMode()
+{
+    m_ui->applicationTwoPanelMode->setChecked(false);
+    m_ui->applicationTwoPanelMode->setEnabled(false);
+    m_ui->applicationTwoPanelMode->setVisible(false);
+}
+
+void SettingsView::disableCompactMode()
+{
+    m_ui->applicationCompactMode->setChecked(true);
+    m_ui->applicationCompactMode->setEnabled(false);
+    m_ui->applicationCompactMode->setVisible(false);
+}
+
 void SettingsView::setApplicationLanguage(int _value)
 {
     m_appLanguage = _value;

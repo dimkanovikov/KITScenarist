@@ -120,7 +120,17 @@ QWidget* SettingsManager::view() const
 
 void SettingsManager::setUseTwoPanelMode(bool _use)
 {
-	m_view->setApplicationTwoPanelMode(_use);
+    m_view->setApplicationTwoPanelMode(_use);
+}
+
+void SettingsManager::disableTwoPanelsMode()
+{
+    m_view->disableTwoPanelsMode();
+}
+
+void SettingsManager::disableCompactMode()
+{
+    m_view->disableCompactMode();
 }
 
 void SettingsManager::aboutResetSettings()

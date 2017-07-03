@@ -45,6 +45,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QProcess>
+#include <QScreen>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QStandardItemModel>
@@ -1701,6 +1702,18 @@ void ApplicationManager::initView()
     // Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
     //
     ::disableActionsOnStart();
+
+    //
+    // Отключим на маленьких экранах некоторые возможности
+    //
+    QScreen* screen = QApplication::primaryScreen();
+    if (screen->availableSize().width() < 1360) {
+        m_menu->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
+        m_settingsManager->disableTwoPanelsMode();
+        if (screen->availableSize().width() < 1024) {
+            m_settingsManager->disableCompactMode();
+        }
+    }
 }
 
 QMenu* ApplicationManager::createMenu()
@@ -1992,6 +2005,7 @@ void ApplicationManager::reloadApplicationSettings()
         //
         // Настроим боковую панель в зависимости от необходимости быть компактным
         //
+        m_menu->setIcons(QIcon(useCompactMode ? ":/Graphics/Icons/Mobile/menu.png" : ""));
         m_tabs->setCompactMode(useCompactMode);
     }
 
@@ -2088,6 +2102,19 @@ void ApplicationManager::reloadApplicationSettings()
             .toInt();
     m_tabs->tab(STATISTICS_TAB_INDEX)->setVisible(showStatisticsModule);
     m_tabsSecondary->tab(STATISTICS_TAB_INDEX)->setVisible(showStatisticsModule);
+
+    //
+    // Отключим на маленьких экранах некоторые возможности
+    //
+    QScreen* screen = QApplication::primaryScreen();
+    if (screen->availableSize().width() < 1360) {
+        m_menu->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
+        m_menu->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setVisible(false);
+        m_settingsManager->disableTwoPanelsMode();
+        if (screen->availableSize().width() < 1024) {
+            m_settingsManager->disableCompactMode();
+        }
+    }
 }
 
 void ApplicationManager::updateWindowTitle()

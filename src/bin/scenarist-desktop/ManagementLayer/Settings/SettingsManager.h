@@ -27,6 +27,16 @@ namespace ManagementLayer
 		 */
 		void setUseTwoPanelMode(bool _use);
 
+        /**
+         * @brief Отключить возможность переходить в двухпанельный режим
+         */
+        void disableTwoPanelsMode();
+
+        /**
+         * @brief Отключить возможность использовать просторный режим
+         */
+        void disableCompactMode();
+
 	signals:
 		/**
 		 * @brief Обновления настроек

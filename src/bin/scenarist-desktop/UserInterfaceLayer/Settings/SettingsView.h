@@ -43,6 +43,17 @@ namespace UserInterface
 		 */
 		int chronometryCurrentType() const;
 
+        /**
+         * @brief Отключить возможность переходить в двухпанельный режим
+         */
+        void disableTwoPanelsMode();
+
+        /**
+         * @brief Отключить возможность использовать просторный режим
+         *        и принудительно использовать компактный режим
+         */
+        void disableCompactMode();
+
 		/**
 		 * @brief Установка параметров
 		 */
