@@ -135,7 +135,7 @@ namespace {
                     "application/project-files",
                     DataStorageLayer::SettingsStorage::ApplicationSettings);
         if (projectsFolderPath.isEmpty()) {
-            projectsFolderPath = QDir::homePath();
+            projectsFolderPath = ProjectsManager::defaultLocation();
         }
         return projectsFolderPath;
     }

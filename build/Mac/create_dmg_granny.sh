@@ -3,7 +3,7 @@
 #
 # сформировать app-файл
 #
-~/Qt/5.9/clang_64/bin/macdeployqt ../Release/bin/scenarist-desktop/Scenarist.app
+~/Qt/5.6/clang_64/bin/macdeployqt ../Release/bin/scenarist-desktop/Scenarist.app
 
 #
 # скопировать в него библиотеки
@@ -25,14 +25,14 @@ cp -H ../Release/libs/webloader/libwebloader.1.dylib ../Release/bin/scenarist-de
 #
 # для fileformats
 #
-install_name_tool -change /Users/macuser/Qt/5.9/clang_64/lib/QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libfileformats.1.dylib 
-install_name_tool -change /Users/macuser/Qt/5.9/clang_64/lib/QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libfileformats.1.dylib 
+install_name_tool -change /Users/macuser/Qt/5.6/clang_64/lib/QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libfileformats.1.dylib 
+install_name_tool -change /Users/macuser/Qt/5.6/clang_64/lib/QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libfileformats.1.dylib 
 #
 # для webloader
 #
-install_name_tool -change /Users/macuser/Qt/5.9/clang_64/lib/QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libwebloader.1.dylib 
-install_name_tool -change /Users/macuser/Qt/5.9/clang_64/lib/QtNetwork.framework/Versions/5/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libwebloader.1.dylib 
-install_name_tool -change /Users/macuser/Qt/5.9/clang_64/lib/QtXml.framework/Versions/5/QtXml @executable_path/../Frameworks/QtXml.framework/Versions/5/QtXml ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libwebloader.1.dylib 
+install_name_tool -change /Users/macuser/Qt/5.6/clang_64/lib/QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libwebloader.1.dylib 
+install_name_tool -change /Users/macuser/Qt/5.6/clang_64/lib/QtNetwork.framework/Versions/5/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libwebloader.1.dylib 
+install_name_tool -change /Users/macuser/Qt/5.6/clang_64/lib/QtXml.framework/Versions/5/QtXml @executable_path/../Frameworks/QtXml.framework/Versions/5/QtXml ../Release/bin/scenarist-desktop/Scenarist.app/Contents/Frameworks/libwebloader.1.dylib 
 #
 # … для самого исполняемого файла
 #
