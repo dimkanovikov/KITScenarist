@@ -844,7 +844,7 @@ void ApplicationManager::editRemoteProjectName(const QModelIndex& _index)
         //
         // ... и обновим список проектов
         //
-        m_projectsPageManager->setRemoteProjects(m_projectsManager->remoteProjects());
+        m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
     }
 }
 
