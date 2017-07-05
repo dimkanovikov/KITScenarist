@@ -821,13 +821,30 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 void ApplicationManager::editRemoteProjectName(const QModelIndex& _index)
 {
     const bool IS_REMOTE = false;
-    const Project project = m_projectsManager->project(_index, IS_REMOTE);
+    Project& project = m_projectsManager->project(_index, IS_REMOTE);
     const QString newName =
             QLightBoxInputDialog::getText(m_view, tr("Change project name"),
                 tr("Enter new name for project"), project.name());
+    //
+    // Если пользователь действительно хочет переименовать проект
+    //
     if (!newName.isEmpty()) {
+        //
+        // ... если проект, который нужно переименовать сейчас открыт, то закроем его
+        //
+        if (project == m_projectsManager->currentProject()) {
+            closeCurrentProject();
+        }
+        //
+        // ... переименуем
+        //
         m_synchronizationManager->updateProjectName(project.id(), newName);
         m_projectsManager->setCurrentProjectName(newName);
+        project.setName(newName);
+        //
+        // ... и обновим список проектов
+        //
+        m_projectsPageManager->setRemoteProjects(m_projectsManager->remoteProjects());
     }
 }
 
