@@ -517,7 +517,7 @@ void StartUpManager::showUpdateDialog()
 #ifdef Q_OS_LINUX
     isSupported = false;
     QString distroName = QSysInfo::prettyProductName().toLower();
-    QStringList supportedDistros({"ubuntu", "mint", "elementary", "debian"});
+    QStringList supportedDistros({"ubuntu", "mint"});
     for(const QString &supportedDistro : supportedDistros) {
         if (distroName.contains(supportedDistro)) {
             isSupported = true;
@@ -525,6 +525,13 @@ void StartUpManager::showUpdateDialog()
         }
     }
 #endif
+
+    //
+    // Для версий основанных на старых сборках отключаем автоматическую установку обновлений
+    //
+    if (QApplication::applicationVersion().contains("granny")) {
+        isSupported = false;
+    }
 
     //
     // Покажем окно с обновлением
