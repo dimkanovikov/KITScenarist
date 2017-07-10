@@ -11,10 +11,9 @@ class QTreeView;
 
 namespace UserInterface
 {
-	class ScenarioNavigatorItemDelegate;
+    class ScenarioNavigatorItemDelegate;
 
-
-	/**
+    /**
 	 * @brief Навигатор по сценарию
 	 */
 	class ScenarioNavigator : public QWidget

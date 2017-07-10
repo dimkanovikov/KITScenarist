@@ -35,7 +35,7 @@
 #include <UserInterfaceLayer/ApplicationView.h>
 #include <UserInterfaceLayer/Project/AddProjectDialog.h>
 #include <UserInterfaceLayer/Project/ShareDialog.h>
-#include <UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
+#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <QApplication>
 #include <QComboBox>
