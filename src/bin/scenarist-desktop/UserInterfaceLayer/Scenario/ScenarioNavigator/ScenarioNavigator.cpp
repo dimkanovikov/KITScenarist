@@ -1,13 +1,14 @@
 #include "ScenarioNavigator.h"
 
-#include "ScenarioNavigatorProxyStyle.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 
-#include <3rd_party/Delegates/ScenarioNavigatorItemDelegate/ScenarioNavigatorItemDelegate.h>
 #include <3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
+
+#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
+#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h>
 
 #include <QAction>
 #include <QHBoxLayout>
@@ -19,6 +20,7 @@
 #include <QWidgetAction>
 
 using UserInterface::ScenarioNavigator;
+using UserInterface::ScenarioNavigatorItemDelegate;
 using UserInterface::ScenarioNavigatorProxyStyle;
 
 

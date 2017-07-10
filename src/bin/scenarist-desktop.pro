@@ -143,7 +143,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
-    scenarist-core/3rd_party/Delegates/ScenarioNavigatorItemDelegate/ScenarioNavigatorItemDelegate.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     scenarist-core/3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
     scenarist-core/BusinessLayer/Export/PdfExporter.cpp \
     scenarist-core/BusinessLayer/Export/FountainExporter.cpp \
@@ -167,7 +167,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
     scenarist-desktop/ManagementLayer/Export/ExportManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.cpp \
     scenarist-core/Domain/CharacterState.cpp \
@@ -367,7 +367,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
-    scenarist-core/3rd_party/Delegates/ScenarioNavigatorItemDelegate/ScenarioNavigatorItemDelegate.h \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
     scenarist-core/3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
     scenarist-core/BusinessLayer/Export/AbstractExporter.h \
     scenarist-core/BusinessLayer/Export/PdfExporter.h \
@@ -393,7 +393,7 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
     scenarist-core/3rd_party/Helpers/TextEditHelper.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
     scenarist-desktop/ManagementLayer/Export/ExportManager.h \
     scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.h \
     scenarist-core/Domain/CharacterState.h \

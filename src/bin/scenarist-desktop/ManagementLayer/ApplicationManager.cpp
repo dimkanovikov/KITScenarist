@@ -26,7 +26,6 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
-#include <3rd_party/Delegates/ScenarioNavigatorItemDelegate/ScenarioNavigatorItemDelegate.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
@@ -36,6 +35,7 @@
 #include <UserInterfaceLayer/ApplicationView.h>
 #include <UserInterfaceLayer/Project/AddProjectDialog.h>
 #include <UserInterfaceLayer/Project/ShareDialog.h>
+#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <QApplication>
 #include <QComboBox>
