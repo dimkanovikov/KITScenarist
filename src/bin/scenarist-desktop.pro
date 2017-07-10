@@ -143,7 +143,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
+    scenarist-core/3rd_party/Delegates/ScenarioNavigatorItemDelegate/ScenarioNavigatorItemDelegate.cpp \
     scenarist-core/3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
     scenarist-core/BusinessLayer/Export/PdfExporter.cpp \
     scenarist-core/BusinessLayer/Export/FountainExporter.cpp \
@@ -367,7 +367,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
+    scenarist-core/3rd_party/Delegates/ScenarioNavigatorItemDelegate/ScenarioNavigatorItemDelegate.h \
     scenarist-core/3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
     scenarist-core/BusinessLayer/Export/AbstractExporter.h \
     scenarist-core/BusinessLayer/Export/PdfExporter.h \

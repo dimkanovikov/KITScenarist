@@ -9,11 +9,10 @@ class QAbstractItemModel;
 class QLabel;
 class QTreeView;
 
+class ScenarioNavigatorItemDelegate;
+
 namespace UserInterface
 {
-	class ScenarioNavigatorItemDelegate;
-
-
 	/**
 	 * @brief Навигатор по сценарию
 	 */
