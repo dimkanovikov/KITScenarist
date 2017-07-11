@@ -40,7 +40,7 @@ namespace UserInterface
 		/**
 		 * @brief Интерфейс
 		 */
-		Ui::LanguageDialog *ui;
+		Ui::LanguageDialog *m_ui;
 	};
 }
 

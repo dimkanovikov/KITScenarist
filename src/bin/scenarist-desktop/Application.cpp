@@ -192,7 +192,12 @@ void Application::initTranslation()
         currentLanguage = QLocale::Portuguese;
     } else if (language == 8) {
         translationSuffix = "fa";
+        qtTranslationSuffix = "fa";
         currentLanguage = QLocale::Persian;
+    } else if (language == 9) {
+        translationSuffix = "zn";
+        qtTranslationSuffix = "zn";
+        currentLanguage = QLocale::Chinese;
     }
 
     QLocale::setDefault(QLocale(currentLanguage));

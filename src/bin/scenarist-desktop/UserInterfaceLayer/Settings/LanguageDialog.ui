@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>497</width>
-    <height>317</height>
+    <height>302</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -133,6 +133,13 @@
      </property>
      <property name="openExternalLinks">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QRadioButton" name="chinese">
+     <property name="text">
+      <string>汉语</string>
      </property>
     </widget>
    </item>

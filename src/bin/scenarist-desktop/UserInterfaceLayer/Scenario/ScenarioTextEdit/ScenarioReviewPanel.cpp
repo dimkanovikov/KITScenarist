@@ -238,21 +238,21 @@ void ScenarioReviewPanel::updateContextMenuActions()
     // Создаём новые действия
     //
     if (m_activateButton->isChecked()) {
-        QAction* textColorAction = new QAction(m_textColor->icon(), m_textColor->toolTip());
+        QAction* textColorAction = new QAction(m_textColor->icon(), m_textColor->toolTip(), nullptr);
         connect(textColorAction, &QAction::triggered, m_textColor, &ColoredToolButton::click);
         m_contextMenuActions.append(textColorAction);
         //
         if (m_textBgColor->isVisible()) {
-            QAction* textBgColorAction = new QAction(m_textBgColor->icon(), m_textBgColor->toolTip());
+            QAction* textBgColorAction = new QAction(m_textBgColor->icon(), m_textBgColor->toolTip(), nullptr);
             connect(textBgColorAction, &QAction::triggered, m_textBgColor, &ColoredToolButton::click);
             m_contextMenuActions.append(textBgColorAction);
         } else {
-            QAction* textHighlightAction = new QAction(m_textHighlight->icon(), m_textHighlight->toolTip());
+            QAction* textHighlightAction = new QAction(m_textHighlight->icon(), m_textHighlight->toolTip(), nullptr);
             connect(textHighlightAction, &QAction::triggered, m_textHighlight, &ColoredToolButton::click);
             m_contextMenuActions.append(textHighlightAction);
         }
         //
-        QAction* commentAction = new QAction(m_comment->icon(), m_comment->toolTip());
+        QAction* commentAction = new QAction(m_comment->icon(), m_comment->toolTip(), nullptr);
         connect(commentAction, &QAction::triggered, m_comment, &ColoredToolButton::click);
         m_contextMenuActions.append(commentAction);
     }
