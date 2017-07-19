@@ -122,7 +122,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         // Персонажи
         //
         {
-            QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
+            const QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
 
             //
             // Определить персонажи, которых нет в тексте
@@ -161,14 +161,14 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         // Локации
         //
         {
-            QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
+            const QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
 
             //
             // Определить локации, которых нет в тексте
             //
             QSet<QString> locationsToDelete;
             foreach (DomainObject* domainObject,
-                     DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
+                     DataStorageLayer::StorageFacade::researchStorage()->locations()->toList()) {
                 Research* location = dynamic_cast<Research*>(domainObject);
                 if (!locations.contains(location->name())) {
                     locationsToDelete.insert(location->name());
