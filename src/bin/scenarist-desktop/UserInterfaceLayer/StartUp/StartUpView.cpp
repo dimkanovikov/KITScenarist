@@ -50,19 +50,8 @@ bool StartUpView::isOnLocalProjectsTab() const
 void StartUpView::setRecentProjects(QAbstractItemModel* _recentProjectsModel)
 {
     //
-    // Если в списке была установлена модель, удалим её
-    //
-    if (m_ui->recentFiles->model() != 0) {
-        QAbstractItemModel* oldModel = m_ui->recentFiles->model();
-        m_ui->recentFiles->setModel(0, PROJECTS_IS_LOCAL);
-        delete oldModel;
-        oldModel = 0;
-    }
-
-    //
     // Установим новую модель
     //
-    _recentProjectsModel->setParent(m_ui->recentFiles);
     m_ui->recentFiles->setModel(_recentProjectsModel, PROJECTS_IS_LOCAL);
 }
 
@@ -122,19 +111,8 @@ void StartUpView::setSubscriptionInfo(bool _isActive, const QString &_expDate, q
 void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 {
     //
-    // Если в списке была установлена модель, удалим её
-    //
-    if (m_ui->remoteFiles->model() != 0) {
-        QAbstractItemModel* oldModel = m_ui->remoteFiles->model();
-        m_ui->remoteFiles->setModel(0, PROJECTS_IS_REMOTE);
-        delete oldModel;
-        oldModel = 0;
-    }
-
-    //
     // Установим новую модель
     //
-    _remoteProjectsModel->setParent(m_ui->remoteFiles);
     m_ui->remoteFiles->setModel(_remoteProjectsModel, PROJECTS_IS_REMOTE);
 }
 
