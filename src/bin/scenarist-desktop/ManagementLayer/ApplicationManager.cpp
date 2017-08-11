@@ -69,6 +69,7 @@ namespace {
      * @brief Номера пунктов меню
      */
     /** @{ */
+    const int IMPORT_MENU_INDEX = 5;
     const int PRINT_PREVIEW_MENU_INDEX = 7;
     const int TWO_PANEL_MODE_MENU_INDEX = 9;
     /** @} */
@@ -1485,16 +1486,17 @@ void ApplicationManager::goToEditCurrentProject()
     updateWindowTitle();
 
     //
-    // Настроим режим работы со сценарием
-    //
-    const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-    m_researchManager->setCommentOnly(isCommentOnly);
-    m_scenarioManager->setCommentOnly(isCommentOnly);
-
-    //
     // Активируем вкладки
     //
     ::enableActionsOnProjectOpen();
+
+    //
+    // Настроим режим работы со сценарием
+    //
+    const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+    m_menu->menu()->actions()[IMPORT_MENU_INDEX]->setEnabled(!isCommentOnly);
+    m_researchManager->setCommentOnly(isCommentOnly);
+    m_scenarioManager->setCommentOnly(isCommentOnly);
 
     //
     // Настроим индикатор
