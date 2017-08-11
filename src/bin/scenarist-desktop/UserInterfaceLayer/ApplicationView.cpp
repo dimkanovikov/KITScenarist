@@ -100,8 +100,8 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
                 QString styleSheet = styleSheetTemplate.arg(_frame);
                 if (_frame == lastFrame) {
                     styleSheet.append(
-                        QString("QScrollBar::add-line:vertical { image: url(:/Interface/UI/downarrow%1.png); }"
-                                "QScrollBar::sub-line:vertical { image: url(:/Interface/UI/uparrow%1.png) };")
+                        QString("QScrollBar::add-line:vertical { padding: 0px 5px 0px 5px; image: url(:/Interface/UI/downarrow%1.png); }"
+                                "QScrollBar::sub-line:vertical { padding: 0px 5px 0px 5px; image: url(:/Interface/UI/uparrow%1.png) };")
                                 .arg(m_useDarkTheme ? "-dark" : ""));
                 }
                 scrollBar->setStyleSheet(styleSheet);
