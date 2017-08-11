@@ -559,11 +559,13 @@ void ResearchView::initView()
                 .arg(m_ui->addRootNode->toolTip())
                 .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
     m_ui->addNode->setIcons(m_ui->addNode->icon());
+    m_ui->addNode->setShortcut(QKeySequence("Ctrl+Return"));
     m_ui->addNode->setToolTip(
             QString("%1 (%2)")
                 .arg(m_ui->addNode->toolTip())
                 .arg(m_ui->addNode->shortcut().toString(QKeySequence::NativeText)));
     m_ui->addSiblingNode->setIcons(m_ui->addSiblingNode->icon());
+    m_ui->addSiblingNode->setShortcut(QKeySequence("Shift+Return"));
     m_ui->addSiblingNode->setToolTip(
             QString("%1 (%2)")
                 .arg(m_ui->addSiblingNode->toolTip())

@@ -137,7 +137,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>12</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -1138,9 +1138,6 @@
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-child.png</normaloff>:/Graphics/Icons/MindMap/add-child.png</iconset>
                   </property>
-                  <property name="shortcut">
-                   <string>Ctrl+Return</string>
-                  </property>
                  </widget>
                 </item>
                 <item>
@@ -1154,9 +1151,6 @@
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-sibling.png</normaloff>:/Graphics/Icons/MindMap/add-sibling.png</iconset>
-                  </property>
-                  <property name="shortcut">
-                   <string>Shift+Return</string>
                   </property>
                  </widget>
                 </item>
