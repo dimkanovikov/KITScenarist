@@ -22,6 +22,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QApplication>
+#include <QFile>
 #include <QSet>
 
 using ManagementLayer::ImportManager;
@@ -64,7 +65,7 @@ ImportManager::ImportManager(QObject* _parent, QWidget* _parentWidget) :
     initConnections();
 }
 
-void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition,
+bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition,
     const BusinessLogic::ImportParameters& _importParameters)
 {
     //
@@ -84,6 +85,13 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         importer.reset(new BusinessLogic::DocumentImporter);
     }
     const QString importScenarioXml = importer->importScenario(_importParameters);
+
+    //
+    // Если нету текста, прерываем выполнение
+    //
+    if (importScenarioXml.isEmpty()) {
+        return false;
+    }
 
     //
     // Загрузим импортируемый текст в сценарий
@@ -207,6 +215,8 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         // TODO:
         //
     }
+
+    return false;
 }
 
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, const QString& _importFilePath)
@@ -220,31 +230,49 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 {
     if (m_importDialog->exec() == QLightBoxDialog::Accepted) {
         BusinessLogic::ImportParameters importParameters = m_importDialog->importParameters();
-        if (!importParameters.filePath.toLower().endsWith(MS_DOC_EXTENSION)) {
-            //
-            // Покажем уведомление пользователю
-            //
-            QLightBoxProgress progress(m_importDialog->parentWidget());
-            progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
 
-            //
-            // Импортируем
-            //
-            importScenario(_scenario, _cursorPosition, importParameters);
-
-            //
-            // Закроем уведомление
-            //
-            progress.finish();
-        }
         //
         // Формат MS DOC не поддерживается, он отображается только для того, чтобы пользователи
         // не теряли свои файлы
         //
-        else {
-            QLightBoxMessage::information(m_importDialog, tr("File format not supported"),
+        if (importParameters.filePath.toLower().endsWith(MS_DOC_EXTENSION)) {
+            QLightBoxMessage::critical(m_importDialog, tr("File format not supported"),
                 tr("Microsoft <b>DOC</b> files are not supported. You need save it to <b>DOCX</b> file and reimport."));
+            return;
         }
+
+        //
+        // Если файла не существует, уведомим об этом
+        //
+        if (!QFile::exists(importParameters.filePath)) {
+            QLightBoxMessage::critical(m_importDialog, tr("File isn't exists"),
+                tr("Please choose existed file and retry import."));
+            return;
+        }
+
+        //
+        // Покажем уведомление пользователю
+        //
+        QLightBoxProgress progress(m_importDialog->parentWidget());
+        progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
+
+        //
+        // Импортируем
+        //
+        const bool isImportSucceed = importScenario(_scenario, _cursorPosition, importParameters);
+
+        //
+        // Если импорт не удался, уведомим об этом пользователя
+        //
+        if (!isImportSucceed) {
+            QLightBoxMessage::critical(m_importDialog->parentWidget(), tr("Import aborted"),
+                tr("File to import is empty. Please check that you select correct file and retry import."));
+        }
+
+        //
+        // Закроем уведомление
+        //
+        progress.finish();
     }
 }
 
