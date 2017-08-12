@@ -467,6 +467,13 @@ void ScenarioTextEditWidget::removeText(int _from, int _to)
         }
     }
 
+    //
+    // Если в сценарии больше не осталось текста, сделаем его единственный блок заголовком сцены
+    //
+    if (scenarioDocument()->isEmpty()) {
+        m_editor->changeScenarioBlockType(ScenarioBlockStyle::SceneHeading, true);
+    }
+
     cursor.endEditBlock();
 }
 

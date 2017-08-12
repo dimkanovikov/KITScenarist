@@ -256,7 +256,6 @@ void ScenarioCardsManager::addCard()
             // Определим карточку, после которой нужно добавить элемент
             //
             QModelIndex index;
-//            const QString lastItemUuid = m_view->lastItemUuid();
             const QString lastItemUuid = m_view->beforeNewItemUuid();
             if (!lastItemUuid.isEmpty()) {
                 index = m_model->indexForUuid(lastItemUuid);
