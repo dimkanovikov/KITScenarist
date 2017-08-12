@@ -3,6 +3,8 @@
 
 #include <Domain/Research.h>
 
+#include <QPushButton>
+
 using UserInterface::ResearchItemDialog;
 
 
@@ -11,6 +13,7 @@ ResearchItemDialog::ResearchItemDialog(QWidget* _parent) :
     m_ui(new Ui::ResearchItemDialog)
 {
     m_ui->setupUi(this);
+    m_saveButton = m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
 }
 
 ResearchItemDialog::~ResearchItemDialog()
@@ -21,6 +24,7 @@ ResearchItemDialog::~ResearchItemDialog()
 void ResearchItemDialog::clear()
 {
     m_ui->name->clear();
+    m_saveButton->setEnabled(false);
 }
 
 void ResearchItemDialog::setInsertParent(const QString& _parentName)
@@ -217,10 +221,9 @@ void ResearchItemDialog::initConnections()
 {
     connect(m_ui->other, &QRadioButton::toggled, m_ui->otherType, &QComboBox::setEnabled);
 
-    connect(m_ui->buttons, &QDialogButtonBox::accepted, [=](){
-        if (!m_ui->name->text().isEmpty()) {
-            accept();
-        }
+    connect(m_ui->name, &QLineEdit::textChanged, [=] (const QString& _text) {
+        m_saveButton->setEnabled(!_text.isEmpty());
     });
+    connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &QLightBoxDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &QLightBoxDialog::reject);
 }

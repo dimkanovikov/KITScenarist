@@ -28,6 +28,7 @@ void ScenarioSchemeItemDialog::clear()
     m_ui->cardTitle->clear();
     m_ui->cardDescription->clear();
     m_saveButton->setText(tr("Add"));
+    m_saveButton->setEnabled(false);
 }
 
 BusinessLogic::ScenarioModelItem::Type ScenarioSchemeItemDialog::cardType() const
@@ -107,6 +108,9 @@ void ScenarioSchemeItemDialog::initView()
 
 void ScenarioSchemeItemDialog::initConnections()
 {
+    connect(m_ui->cardTitle, &QLineEdit::textChanged, [=] (const QString& _text) {
+        m_saveButton->setEnabled(!_text.isEmpty());
+    });
     connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &ScenarioSchemeItemDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &ScenarioSchemeItemDialog::reject);
 }

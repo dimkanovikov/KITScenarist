@@ -3,6 +3,8 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
+class QPushButton;
+
 namespace Ui {
     class ResearchItemDialog;
 }
@@ -75,7 +77,15 @@ namespace UserInterface
         void initConnections() override;
 
     private:
-        Ui::ResearchItemDialog* m_ui;
+        /**
+         * @brief Интерфейс
+         */
+        Ui::ResearchItemDialog* m_ui = nullptr;
+
+        /**
+         * @brief Кнопка сохранения
+         */
+        QPushButton* m_saveButton = nullptr;
     };
 }
 
