@@ -123,7 +123,10 @@ namespace ManagementLayer
         /**
          * @brief Удалить разработку
          */
+        /** @{ */
         void removeResearch(const QModelIndex& _index);
+        void removeResearchItem(BusinessLogic::ResearchModelItem* _item);
+        /** @} */
 
         /**
          * @brief Обновить поддерево разработки

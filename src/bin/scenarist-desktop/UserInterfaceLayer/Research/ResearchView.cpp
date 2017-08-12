@@ -219,17 +219,12 @@ void ResearchView::editCharactersRoot()
     setSearchVisible(false);
 }
 
-void ResearchView::editCharacter(const QString& _name, const QString& _description)
+void ResearchView::editCharacter(const QString& _name, const QString& _realName, const QString& _description)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->characterEdit);
     m_ui->characterName->setAcceptedText(_name);
-    QDomDocument xmlDocument;
-    xmlDocument.setContent(_description);
-    QDomNode characterNode = xmlDocument.namedItem("character");
-    QDomNode realNameNode = characterNode.namedItem("real_name");
-    m_ui->characterRealName->setText(realNameNode.toElement().text());
-    QDomNode descriptionNode = characterNode.namedItem("description");
-    m_ui->characterDescription->setHtml(TextEditHelper::fromHtmlEscaped(descriptionNode.toElement().text()));
+    m_ui->characterRealName->setText(_realName);
+    m_ui->characterDescription->setHtml(_description);
 
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
@@ -749,28 +744,10 @@ void ResearchView::initConnections()
     // ... персонаж
     //
     connect(m_ui->characterName, &AcceptebleLineEdit::textAccepted, this, &ResearchView::characterNameChanged);
-    auto emitCharacterDescriptionChanged = [=] {
-        QString description;
-        QXmlStreamWriter writer(&description);
-        writer.writeStartDocument();
-        writer.writeStartElement("character");
-        writer.writeTextElement("real_name", m_ui->characterRealName->text());
-        writer.writeStartElement("description");
-        writer.writeCDATA(
-                    TextEditHelper::toHtmlEscaped(
-                        TextEditHelper::removeDocumentTags(
-                            m_ui->characterDescription->toHtml()
-                            )
-                        )
-                    );
-        writer.writeEndElement();
-        writer.writeEndElement();
-        writer.writeEndDocument();
-
-        emit characterDescriptionChanged(description);
-    };
-    connect(m_ui->characterRealName, &QLineEdit::textChanged, emitCharacterDescriptionChanged);
-    connect(m_ui->characterDescription, &SimpleTextEditorWidget::textChanged, emitCharacterDescriptionChanged);
+    connect(m_ui->characterRealName, &QLineEdit::textChanged, this, &ResearchView::characterRealNameChanged);
+    connect(m_ui->characterDescription, &SimpleTextEditorWidget::textChanged, [=] {
+        emit characterDescriptionChanged(m_ui->characterDescription->toHtml());
+    });
     //
     // ... локация
     //

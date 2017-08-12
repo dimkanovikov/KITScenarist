@@ -356,7 +356,9 @@ void ResearchManager::editResearch(const QModelIndex& _index)
                 }
 
                 case Research::Character: {
-                    m_view->editCharacter(research->name(), research->description());
+                    auto* researchCharacter = dynamic_cast<Domain::ResearchCharacter*>(research);
+                    m_view->editCharacter(researchCharacter->name(), researchCharacter->realName(),
+                                          researchCharacter->descriptionText());
                     break;
                 }
 
@@ -428,31 +430,39 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
             QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes)
         == QDialogButtonBox::Yes) {
         //
-        // ... удалим
+        // Удалим и оповестим о смене данных в разработке
         //
-        DataStorageLayer::StorageFacade::researchStorage()->removeResearch(research);
-
-        const QModelIndex parentIndex = _index.parent();
-        //
-        // Пробуем выделить следующий за удалённым
-        //
-        QModelIndex itemForSelect = m_model->index(_index.row(), 0, parentIndex);
-        //
-        // Если нет, то перед удалённым
-        //
-        if (!itemForSelect.isValid()) {
-            itemForSelect = m_model->index(_index.row() - 1, 0, parentIndex);
-        }
-        //
-        // Или же родителя
-        //
-        if (!itemForSelect.isValid()) {
-            itemForSelect = parentIndex;
-        }
-        m_view->selectItem(itemForSelect);
-
+        removeResearchItem(researchItem);
         emit researchChanged();
     }
+}
+
+void ResearchManager::removeResearchItem(BusinessLogic::ResearchModelItem* _item)
+{
+    const QModelIndex index = m_model->indexForItem(_item);
+    const QModelIndex parentIndex = index.parent();
+    //
+    // Пробуем выделить следующий за удалённым
+    //
+    QModelIndex itemForSelect = m_model->index(index.row(), 0, parentIndex);
+    //
+    // Если нет, то перед удалённым
+    //
+    if (!itemForSelect.isValid()) {
+        itemForSelect = m_model->index(index.row() - 1, 0, parentIndex);
+    }
+    //
+    // Или же родителя
+    //
+    if (!itemForSelect.isValid()) {
+        itemForSelect = parentIndex;
+    }
+    m_view->selectItem(itemForSelect);
+
+    //
+    // Удалим
+    //
+    DataStorageLayer::StorageFacade::researchStorage()->removeResearch(_item->research());
 }
 
 void ResearchManager::refreshResearchSubtree(const QModelIndex& _index)
@@ -596,17 +606,38 @@ void ResearchManager::initConnections()
             && m_currentResearch->type() == Research::Character
             && m_currentResearch->name() != newName) {
             const QString oldName = m_currentResearch->name();
-            m_currentResearch->setName(newName);
-            m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+            //
+            // Если такой персонаж уже существует, переместим описание к нему, а текущего удалим
+            //
+            if (StorageFacade::researchStorage()->hasCharacter(_name)) {
+                Research* mainCharacter = StorageFacade::researchStorage()->character(_name);
+                mainCharacter->addDescription(m_currentResearch->description());
+                removeResearchItem(m_currentResearchItem);
+            }
+            //
+            // В противном случае просто меняем имя персонажа
+            //
+            else {
+                m_currentResearch->setName(newName);
+                m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+            }
             emit researchChanged();
             emit characterNameChanged(oldName, newName);
         }
     });
+    connect(m_view, &ResearchView::characterRealNameChanged, [=] (const QString& _name) {
+        if (m_currentResearch != 0
+            && m_currentResearch->type() == Research::Character) {
+            auto* researchCharacter = dynamic_cast<ResearchCharacter*>(m_currentResearch);
+            researchCharacter->setRealName(_name);
+            emit researchChanged();
+        }
+    });
     connect(m_view, &ResearchView::characterDescriptionChanged, [=] (const QString& _description) {
         if (m_currentResearch != 0
-            && m_currentResearch->type() == Research::Character
-            && m_currentResearch->description() != _description) {
-            m_currentResearch->setDescription(_description);
+            && m_currentResearch->type() == Research::Character) {
+            auto* researchCharacter = dynamic_cast<ResearchCharacter*>(m_currentResearch);
+            researchCharacter->setDescriptionText(_description);
             emit researchChanged();
         }
     });
@@ -619,8 +650,21 @@ void ResearchManager::initConnections()
             && m_currentResearch->type() == Research::Location
             && m_currentResearch->name() != newName) {
             const QString oldName = m_currentResearch->name();
-            m_currentResearch->setName(newName);
-            m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+            //
+            // Если такая локация уже существует, переместим описание к ней, а текущую удалим
+            //
+            if (StorageFacade::researchStorage()->hasLocation(_name)) {
+                Research* mainLocation = StorageFacade::researchStorage()->location(_name);
+                mainLocation->addDescription(m_currentResearch->description());
+                removeResearchItem(m_currentResearchItem);
+            }
+            //
+            // В противном случае просто меняем название
+            //
+            else {
+                m_currentResearch->setName(newName);
+                m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+            }
             emit researchChanged();
             emit locationNameChanged(oldName, newName);
         }

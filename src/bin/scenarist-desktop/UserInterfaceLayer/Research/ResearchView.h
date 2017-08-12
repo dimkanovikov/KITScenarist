@@ -69,7 +69,7 @@ namespace UserInterface
         /**
          * @brief Включить режим редактирования персонажа
          */
-        void editCharacter(const QString& _name, const QString& _description);
+        void editCharacter(const QString& _name, const QString& _realName, const QString& _description);
 
         /**
          * @brief Включить режим редактирования корня списка локаций
@@ -165,6 +165,7 @@ namespace UserInterface
         void titlePageYearChanged(const QString& _year);
         void synopsisTextChanged(const QString& _synopsis);
         void characterNameChanged(const QString& _name);
+        void characterRealNameChanged(const QString& _name);
         void characterDescriptionChanged(const QString& _description);
         void locationNameChanged(const QString& _name);
         void locationDescriptionChanged(const QString& _description);
