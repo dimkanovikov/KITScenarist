@@ -303,11 +303,18 @@ void ExportManager::initView()
     //
     // Загрузить настройки
     //
-    m_exportDialog->setCurrentStyle(
-                StorageFacade::settingsStorage()->value(
-                    "export/style",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                );
+    QString exportTemplate = StorageFacade::settingsStorage()->value(
+                                 "export/style",
+                                 DataStorageLayer::SettingsStorage::ApplicationSettings);
+    if (exportTemplate.isEmpty()) {
+        exportTemplate = StorageFacade::settingsStorage()->value(
+                             "scenario-editor/current-style",
+                             DataStorageLayer::SettingsStorage::ApplicationSettings);
+    }
+    if (exportTemplate == "default") {
+        exportTemplate = BusinessLogic::ScenarioTemplate::defaultTemplateName();
+    }
+    m_exportDialog->setCurrentStyle(exportTemplate);
 }
 
 void ExportManager::initConnections()
