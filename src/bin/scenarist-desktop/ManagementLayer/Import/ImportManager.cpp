@@ -216,7 +216,7 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         //
     }
 
-    return false;
+    return true;
 }
 
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, const QString& _importFilePath)
