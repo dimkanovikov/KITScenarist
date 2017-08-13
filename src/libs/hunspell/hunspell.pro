@@ -5,6 +5,7 @@ TEMPLATE = lib
 # Build configuration
 #
 CONFIG += qt thread warn_on
+mac:CONFIG += staticlib
 QT -= core gui
 
 QMAKE_MAC_SDK = macosx10.12

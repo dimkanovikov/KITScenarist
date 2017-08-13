@@ -13,6 +13,7 @@ class QSplitter;
 class QStackedWidget;
 class QToolButton;
 class QMenu;
+class QMenuBar;
 
 namespace UserInterface {
     class ApplicationView;
@@ -289,6 +290,13 @@ namespace ManagementLayer
          * @brief Меню приложения
          */
         FlatButton* m_menu;
+
+#ifdef Q_OS_MAC
+        /**
+         * @brief Меню в Mac'е наверху
+         */
+        QMenuBar* m_menuBar = nullptr;
+#endif
 
         /**
          * @brief Заглушка для верха правой панели

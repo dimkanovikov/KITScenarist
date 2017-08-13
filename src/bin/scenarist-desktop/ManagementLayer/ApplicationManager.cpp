@@ -1741,8 +1741,8 @@ QMenu* ApplicationManager::createMenu()
     // Сформируем меню
     //
 #ifdef Q_OS_MAC
-    QMenuBar *menuBar = new QMenuBar(0);
-    QMenu* menu = menuBar->addMenu(tr("File"));
+    m_menuBar = new QMenuBar(nullptr);
+    QMenu* menu = m_menuBar->addMenu(tr("File"));
 #else
     QMenu* menu = new QMenu(m_menu);
 #endif

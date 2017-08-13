@@ -4,6 +4,7 @@ DEPENDPATH += src
 INCLUDEPATH += src
 
 CONFIG += c++11
+mac:CONFIG += staticlib
 
 QT += network xml
 QT -= gui

@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-        <key>NSPrincipalClass</key>
+    <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>CFBundleDisplyName</key>
     <string>KIT Scenarist</string>
@@ -19,7 +19,7 @@
     <key>CFBundleExecutable</key>
     <string>Scenarist</string>
     <key>CFBundleIdentifier</key>
-    <string>com.dimkanovikov.Scenarist</string>
+    <string>com.dimkanovikov.kit.scenarist.macosx</string>
     <key>CFBundleDocumentTypes</key>
     <array>
             <dict>

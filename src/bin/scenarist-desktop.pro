@@ -79,6 +79,18 @@ DEPENDPATH += $$PWD/../libs/webloader/src
 #
 
 #
+# В маке собираем библиотеки статически, чтобы было удобней подписывать приложение
+#
+mac {
+PRE_TARGETDEPS += $$DESTDIR/../../libs/hunspell/libhunspell.a
+PRE_TARGETDEPS += $$DESTDIR/../../libs/fileformats/libfileformats.a
+PRE_TARGETDEPS += $$DESTDIR/../../libs/webloader/libwebloader.a
+
+LIBS += -lz
+}
+#
+
+#
 # Подключаем библиотеку qBreakpad и делаем настройки для неё
 #
 win32-msvc* {

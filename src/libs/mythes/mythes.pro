@@ -6,6 +6,8 @@
 
 QT       -= gui
 
+mac:CONFIG += staticlib
+
 QMAKE_MAC_SDK = macosx10.12
 
 TARGET = mythes
