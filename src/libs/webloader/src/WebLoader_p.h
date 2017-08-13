@@ -143,6 +143,11 @@ private:
 
 // Данные класса
 private:
+    /**
+     * @brief Необходимо ли остановить выполненеие процесса
+     */
+    bool m_isNeedStop = false;
+
     QNetworkAccessManager* m_networkManager;
     QNetworkCookieJar* m_cookieJar;
     WebRequest* m_request;

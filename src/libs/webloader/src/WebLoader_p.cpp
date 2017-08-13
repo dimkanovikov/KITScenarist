@@ -86,7 +86,7 @@ namespace {
 
 WebLoader::WebLoader(QObject* _parent, QNetworkCookieJar* _jar) :
     QThread(_parent),
-    m_networkManager(0),
+    m_networkManager(nullptr),
     m_cookieJar(_jar),
     m_request(new WebRequest),
     m_requestMethod(NetworkRequest::Undefined),
@@ -97,6 +97,7 @@ WebLoader::WebLoader(QObject* _parent, QNetworkCookieJar* _jar) :
 
 WebLoader::~WebLoader()
 {
+    stop();
     if (m_networkManager)
         m_networkManager->deleteLater();//delete m_networkManager;//
 }
@@ -126,13 +127,26 @@ void WebLoader::setWebRequest(WebRequest* _request) {
 
 void WebLoader::loadAsync(const QUrl& _urlToLoad, const QUrl& _referer)
 {
+    //
+    // Останавливаем, если выполняется в данный момент
+    //
     stop();
 
+    //
+    // Сбрасываем переменные времени выполненеия
+    //
+    m_isNeedStop = false;
     m_downloadedData.clear();
 
+    //
+    // Настраиваем запрос
+    //
     m_request->setUrlToLoad(_urlToLoad);
     m_request->setUrlReferer(_referer);
 
+    //
+    // Запускаем загрузку
+    //
     start();
 }
 
@@ -148,6 +162,10 @@ void WebLoader::run()
 
     do
     {
+        if (m_isNeedStop) {
+            return;
+        }
+
         //! Начало загрузки страницы m_request->url()
         emit uploadProgress(0, m_initUrl);
         emit downloadProgress(0, m_initUrl);
@@ -224,6 +242,7 @@ void WebLoader::run()
 
 void WebLoader::stop()
 {
+    m_isNeedStop = true;
     if (isRunning()) {
         quit();
         wait(1000);
@@ -322,7 +341,7 @@ void WebLoader::initNetworkManager()
     //
     // Создаём загрузчика, если нужно
     //
-    if (m_networkManager == 0) {
+    if (m_networkManager == nullptr) {
         m_networkManager = new QNetworkAccessManager;
     }
 
