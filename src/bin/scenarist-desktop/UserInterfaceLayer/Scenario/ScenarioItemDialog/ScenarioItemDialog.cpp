@@ -1,7 +1,5 @@
 #include "ScenarioItemDialog.h"
 
-#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.h>
-
 #include <3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
@@ -9,11 +7,12 @@
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 #include <QRadioButton>
 #include <QVBoxLayout>
 
 using UserInterface::ScenarioItemDialog;
-using UserInterface::ScenarioLineEdit;
 using BusinessLogic::ScenarioBlockStyle;
 
 
@@ -21,24 +20,21 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
     QLightBoxDialog(_parent),
     m_folder(new QRadioButton(this)),
     m_scene(new QRadioButton(this)),
-    m_header(new ScenarioLineEdit(this)),
+    m_header(new QLineEdit(this)),
     m_color(new ColoredToolButton(QIcon(":/Graphics/Icons/Editing/rect.png"), this)),
     m_description(new SimpleTextEditorWidget(this)),
-    m_buttons(new QDialogButtonBox(this))
+    m_buttons(new QDialogButtonBox(this)),
+    m_saveButton(m_buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole))
 {
     initStyleSheet();
 }
 
 void ScenarioItemDialog::clear()
 {
-    QTextCursor cursor(m_header->document());
-    cursor.select(QTextCursor::Document);
-    cursor.removeSelectedText();
-
+    m_header->clear();
     m_color->setColor(QColor());
     m_description->clear();
-
-    aboutUpdateCurrentTextStyle();
+    m_saveButton->setEnabled(false);
 }
 
 ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
@@ -56,7 +52,7 @@ ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 
 QString ScenarioItemDialog::header() const
 {
-    return m_header->toPlainText();
+    return m_header->text();
 }
 
 QColor ScenarioItemDialog::color() const
@@ -69,25 +65,9 @@ QString ScenarioItemDialog::description() const
     return m_description->toPlainText();
 }
 
-void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
+QWidget*ScenarioItemDialog::focusedOnExec() const
 {
-    //
-    // Определим выбранный стиль
-    //
-    // Для папок и групп сцен используется стиль примечания чтобы не смешивать стиль отображения
-    // и избежать возни с концами групп
-    //
-    ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::Undefined;
-    if (m_folder->isChecked()) {
-        currentType = ScenarioBlockStyle::Note;
-    } else {
-        currentType = ScenarioBlockStyle::SceneHeading;
-    }
-
-    //
-    // Обновим стиль текущего параграфа для редактора
-    //
-    m_header->changeScenarioBlockType(currentType);
+    return m_header;
 }
 
 void ScenarioItemDialog::initView()
@@ -98,13 +78,14 @@ void ScenarioItemDialog::initView()
 
     m_scene->setText(tr("Scene"));
     m_scene->setChecked(true);
+    m_scene->setFocusPolicy(Qt::NoFocus);
     m_folder->setText(tr("Folder"));
+    m_folder->setFocusPolicy(Qt::NoFocus);
 
     m_color->setColorsPane(ColoredToolButton::Google);
 
     m_description->setToolbarVisible(false);
 
-    m_buttons->addButton(QDialogButtonBox::Ok);
     m_buttons->addButton(QDialogButtonBox::Cancel);
 
     QHBoxLayout* topLayout = new QHBoxLayout;
@@ -128,17 +109,11 @@ void ScenarioItemDialog::initView()
 
 void ScenarioItemDialog::initConnections()
 {
-    connect(m_folder, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
-    connect(m_scene, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
-
-    connect(m_buttons, &QDialogButtonBox::accepted, [=] {
-        if (m_header->toPlainText().isEmpty()) {
-            m_header->setFocus();
-        } else {
-            accept();
-        }
+    connect(m_header, &QLineEdit::textChanged, [=] (const QString& _text) {
+        m_saveButton->setEnabled(!_text.isEmpty());
     });
-    connect(m_buttons, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_saveButton, &QPushButton::clicked, this, &ScenarioItemDialog::accept);
+    connect(m_buttons, &QDialogButtonBox::rejected, this, &ScenarioItemDialog::reject);
 }
 
 void ScenarioItemDialog::initStyleSheet()

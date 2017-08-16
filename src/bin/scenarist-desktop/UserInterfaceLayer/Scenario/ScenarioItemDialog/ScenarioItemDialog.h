@@ -7,14 +7,13 @@
 
 class ColoredToolButton;
 class QDialogButtonBox;
+class QLineEdit;
+class QPushButton;
 class QRadioButton;
 class SimpleTextEditorWidget;
 
 namespace UserInterface
 {
-	class ScenarioLineEdit;
-
-
 	/**
 	 * @brief Диалог добавления элемента сценария
 	 */
@@ -48,13 +47,13 @@ namespace UserInterface
 		/**
 		 * @brief Получить описание
 		 */
-		QString description() const;
+        QString description() const;
 
-	private slots:
-		/**
-		 * @brief Обновить текущий стиль текста в редакторе
-		 */
-		void aboutUpdateCurrentTextStyle();
+    protected:
+        /**
+         * @brief Переопределяем для фокусировки на виджете вводе заголовка при отображении
+         */
+        QWidget* focusedOnExec() const;
 
 	private:
 		/**
@@ -84,7 +83,7 @@ namespace UserInterface
 		/**
 		 * @brief Редактор заголовка элемента
 		 */
-		ScenarioLineEdit* m_header;
+        QLineEdit* m_header;
 
 		/**
 		 * @brief Цвет сцены
@@ -100,6 +99,11 @@ namespace UserInterface
 		 * @brief Кнопки диалога
 		 */
 		QDialogButtonBox* m_buttons;
+
+        /**
+         * @brief Кнопка сохранения
+         */
+        QPushButton* m_saveButton = nullptr;
 	};
 }
 

@@ -24,6 +24,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QRadioButton" name="character">
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
        <property name="text">
         <string>Character</string>
        </property>
@@ -37,6 +40,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="location">
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
        <property name="text">
         <string>Location</string>
        </property>
@@ -50,6 +56,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="folder">
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
        <property name="text">
         <string>Folder</string>
        </property>
@@ -63,6 +72,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="text">
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
        <property name="text">
         <string>Text</string>
        </property>
@@ -73,6 +85,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="other">
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -85,6 +100,9 @@
       <widget class="QComboBox" name="otherType">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::TabFocus</enum>
        </property>
        <item>
         <property name="text">
