@@ -715,12 +715,20 @@ void ApplicationManager::loadCurrentProjectSettings(const QString& _projectPath)
     // Восстановим используемые модули
     //
 
-    const int lastModuleLeft =
+    int lastModuleLeft =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
                 QString("projects/%1/last-active-module_left").arg(_projectPath),
                 DataStorageLayer::SettingsStorage::ApplicationSettings,
                 QString::number(RESEARCH_TAB_INDEX)
                 ).toInt();
+    //
+    // ... если последней используемой была стартовая страница или настройки,
+    //     покажем разработку
+    //
+    if (lastModuleLeft == STARTUP_TAB_INDEX
+        || lastModuleLeft == SETTINGS_TAB_INDEX) {
+        lastModuleLeft = RESEARCH_TAB_INDEX;
+    }
     m_tabs->setCurrentTab(lastModuleLeft);
 
     const int lastModuleRight =
