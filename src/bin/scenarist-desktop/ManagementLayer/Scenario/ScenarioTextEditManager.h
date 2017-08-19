@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class QMenu;
 class QTextCursor;
 
 
@@ -78,6 +79,13 @@ namespace ManagementLayer
          * @brief Пролистать сценарий, чтобы был виден заданный курсор
          */
         void scrollToPosition(int _position);
+
+#ifdef Q_OS_MAC
+        /**
+         * @brief Сформировать меню "Правка"
+         */
+        void buildEditMenu(QMenu* _menu);
+#endif
 
     public slots:
         /**

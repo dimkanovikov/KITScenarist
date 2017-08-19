@@ -178,6 +178,13 @@ void ScenarioTextEditManager::scrollToPosition(int _position)
     m_view->setCursorPosition(_position, false, false);
 }
 
+#ifdef Q_OS_MAC
+void ScenarioTextEditManager::buildEditMenu(QMenu* _menu)
+{
+    m_view->buildEditMenu(_menu);
+}
+#endif
+
 void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,
     const QString& _title, const QColor& _color, const QString& _description)
 {

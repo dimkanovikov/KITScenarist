@@ -27,6 +27,7 @@
 #include <QHeaderView>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QMenu>
 #include <QScrollBar>
 #include <QShortcut>
 #include <QSplitter>
@@ -523,6 +524,64 @@ void ScenarioTextEditWidget::scrollToAdditionalCursor(int _additionalCursorIndex
 {
     m_editor->scrollToAdditionalCursor(_additionalCursorIndex);
 }
+
+#ifdef Q_OS_MAC
+void ScenarioTextEditWidget::buildEditMenu(QMenu* _menu)
+{
+    //
+    // При переходе в режим битов и обратно, нужно обновить меню
+    //
+    static bool s_isConnectedToOutlineToggled = false;
+    if (!s_isConnectedToOutlineToggled) {
+        connect(m_outline, &FlatButton::toggled, [=] {
+            _menu->clear();
+            buildEditMenu(_menu);
+        });
+        s_isConnectedToOutlineToggled = true;
+    }
+
+    //
+    // Добавляем стандартные пункты меню
+    //
+    _menu->addAction(tr("Undo"), this, &ScenarioTextEditWidget::undoRequest, QKeySequence::Undo);
+    _menu->addAction(tr("Redo"), this, &ScenarioTextEditWidget::redoRequest, QKeySequence::Redo);
+    _menu->addSeparator();
+    _menu->addAction(tr("Find and replace"), m_search, &FlatButton::click, QKeySequence::Find);
+    _menu->addSeparator();
+
+    //
+    // Добавим пункты меню про формат блоков
+    //
+    ScenarioTemplate usedTemplate = ScenarioTemplateFacade::getTemplate();
+    const bool BEAUTIFY_NAME = true;
+
+    static QList<ScenarioBlockStyle::Type> s_types =
+        QList<ScenarioBlockStyle::Type>()
+            << ScenarioBlockStyle::SceneHeading
+            << ScenarioBlockStyle::SceneCharacters
+            << ScenarioBlockStyle::Action
+            << ScenarioBlockStyle::Character
+            << ScenarioBlockStyle::Dialogue
+            << ScenarioBlockStyle::Parenthetical
+            << ScenarioBlockStyle::Title
+            << ScenarioBlockStyle::Note
+            << ScenarioBlockStyle::Transition
+            << ScenarioBlockStyle::NoprintableText
+            << ScenarioBlockStyle::FolderHeader
+            << ScenarioBlockStyle::SceneDescription;
+
+    foreach (ScenarioBlockStyle::Type type, s_types) {
+        if (usedTemplate.blockStyle(type).isActive()
+            && m_editor->visibleBlocksTypes().contains(type)) {
+            _menu->addAction(
+                        ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME),
+                        [=] { m_editor->changeScenarioBlockType(type); },
+                        QKeySequence(m_editor->shortcut(type))
+            );
+        }
+    }
+}
+#endif
 
 void ScenarioTextEditWidget::aboutShowSearch()
 {

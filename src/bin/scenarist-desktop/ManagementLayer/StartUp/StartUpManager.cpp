@@ -41,9 +41,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QMenu>
 #include <QMutableMapIterator>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QProcess>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
@@ -430,6 +429,18 @@ void StartUpManager::retryLastAction(const QString &_error)
         m_changePasswordDialog->showUnprepared();
     }
 }
+
+#ifdef Q_OS_MAC
+void StartUpManager::buildEditMenu(QMenu* _menu)
+{
+    auto* undo = _menu->addAction(tr("Undo"));
+    undo->setShortcut(QKeySequence::Undo);
+    undo->setEnabled(false);
+    auto* redo = _menu->addAction(tr("Redo"));
+    redo->setShortcut(QKeySequence::Redo);
+    redo->setEnabled(false);
+}
+#endif
 
 void StartUpManager::downloadUpdate(const QString &_fileTemplate)
 {

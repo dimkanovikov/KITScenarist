@@ -30,7 +30,7 @@ namespace UserInterface {
 }
 
 class QAbstractItemModel;
-class QNetworkReply;
+class QMenu;
 
 namespace ManagementLayer
 {
@@ -143,6 +143,13 @@ namespace ManagementLayer
          * @brief Возникла неизвестная ошибка. Покажем на последнем окне
          */
         void retryLastAction(const QString& _error);
+
+#ifdef Q_OS_MAC
+        /**
+         * @brief Сформировать меню "Правка" с фиктивным содержанием
+         */
+        void buildEditMenu(QMenu* _menu);
+#endif
 
     signals:
         /**

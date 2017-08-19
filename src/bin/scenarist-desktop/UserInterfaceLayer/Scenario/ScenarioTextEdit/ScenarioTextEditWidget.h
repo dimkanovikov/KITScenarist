@@ -6,6 +6,7 @@
 class FlatButton;
 class QComboBox;
 class QLabel;
+class QMenu;
 class QTextCursor;
 class ScalableWrapper;
 class SearchWidget;
@@ -159,6 +160,13 @@ namespace UserInterface
          * @brief Пролистать сценарий, чтобы был виден заданный курсор соавтора
          */
         void scrollToAdditionalCursor(int _additionalCursorIndex);
+
+#ifdef Q_OS_MAC
+        /**
+         * @brief Сформировать меню "Правка"
+         */
+        void buildEditMenu(QMenu* _menu);
+#endif
 
     public slots:
         /**

@@ -6,9 +6,10 @@
 #include <QModelIndex>
 
 class FlatButton;
-class QSplitter;
 class QComboBox;
 class QLabel;
+class QMenu;
+class QSplitter;
 class QStackedWidget;
 class TabBar;
 
@@ -97,6 +98,13 @@ namespace ManagementLayer
          * @brief Узнать текущий режим
          */
         bool workModeIsDraft() const;
+
+#ifdef Q_OS_MAC
+        /**
+         * @brief Сформировать меню "Правка" для редактора сценария
+         */
+        void buildScriptEditMenu(QMenu* _menu);
+#endif
 
     public slots:
         /**

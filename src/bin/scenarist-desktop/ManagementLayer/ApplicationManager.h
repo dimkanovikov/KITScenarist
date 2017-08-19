@@ -296,6 +296,11 @@ namespace ManagementLayer
          * @brief Меню в Mac'е наверху
          */
         QMenuBar* m_menuBar = nullptr;
+
+        /**
+         * @brief Пункт меню "Правка", зависит от открытой в данный момент вкладки
+         */
+        QMenu* m_editMenu = nullptr;
 #endif
 
         /**

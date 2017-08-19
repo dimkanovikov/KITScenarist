@@ -1424,6 +1424,21 @@ void ApplicationManager::currentTabIndexChanged()
                 QWidget* widget = widgetForTab(m_tabs->currentTab());
                 m_tabsWidgets->addWidget(widget);
                 m_tabsWidgets->setCurrentWidget(widget);
+
+#ifdef Q_OS_MAC
+                m_editMenu->clear();
+                switch (m_tabs->currentTab()) {
+                    case SCENARIO_TAB_INDEX: {
+                        m_scenarioManager->buildScriptEditMenu(m_editMenu);
+                        break;
+                    }
+
+                    default: {
+                        m_startUpManager->buildEditMenu(m_editMenu);
+                        break;
+                    }
+                }
+#endif
             }
             //
             if (m_tabsSecondary->isVisible()) {
@@ -1751,6 +1766,8 @@ QMenu* ApplicationManager::createMenu()
 #ifdef Q_OS_MAC
     m_menuBar = new QMenuBar(nullptr);
     QMenu* menu = m_menuBar->addMenu(tr("File"));
+    m_editMenu = m_menuBar->addMenu(tr("Edit"));
+    m_startUpManager->buildEditMenu(m_editMenu);
 #else
     QMenu* menu = new QMenu(m_menu);
 #endif

@@ -35,11 +35,11 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QSplitter>
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTimer>
 #include <QSet>
+#include <QSplitter>
 #include <QStackedWidget>
 #include <QWidget>
 
@@ -421,6 +421,13 @@ bool ScenarioManager::workModeIsDraft() const
 {
     return m_workModeIsDraft;
 }
+
+#ifdef Q_OS_MAC
+void ScenarioManager::buildScriptEditMenu(QMenu* _menu)
+{
+    m_textEditManager->buildEditMenu(_menu);
+}
+#endif
 
 void ScenarioManager::aboutCardsSettingsUpdated()
 {
