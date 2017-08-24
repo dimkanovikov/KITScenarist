@@ -748,6 +748,14 @@ void ApplicationManager::aboutShowHelp()
 void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
 {
     //
+    // Если индекс поломан, ничего не делаем
+    // Так может случиться, если в момент открытия проекта список проектов перезагрузился
+    //
+    if (!_projectIndex.isValid()) {
+        return;
+    }
+
+    //
     // Если нужно сохранить проект
     //
     if (saveIfNeeded()) {
@@ -796,6 +804,14 @@ void ApplicationManager::hideLocalProject(const QModelIndex& _index)
 
 void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 {
+    //
+    // Если индекс поломан, ничего не делаем
+    // Так может случиться, если в момент открытия проекта список проектов перезагрузился
+    //
+    if (!_projectIndex.isValid()) {
+        return;
+    }
+
     //
     // Если нужно сохранить проект
     //
