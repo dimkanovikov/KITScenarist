@@ -616,15 +616,20 @@ void ScenarioTextEditWidget::updateTextMode(bool _outlineMode)
     initStylesCombo();
 
     //
-    // Включаем/выключаем доступ к панели быстрого форматирования
+    // Если возможно редактирование, то отобразим/скроем кнопку панели быстрого редактирования
     //
-    if (_outlineMode) {
-        m_fastFormat->hide();
-        m_fastFormatWidget->hide();
-    } else {
-        m_fastFormat->show();
-        if (m_fastFormat->isChecked()) {
-            m_fastFormatWidget->show();
+    if (!m_editor->isReadOnly()) {
+        //
+        // Включаем/выключаем доступ к панели быстрого форматирования
+        //
+        if (_outlineMode) {
+            m_fastFormat->hide();
+            m_fastFormatWidget->hide();
+        } else {
+            m_fastFormat->show();
+            if (m_fastFormat->isChecked()) {
+                m_fastFormatWidget->show();
+            }
         }
     }
 

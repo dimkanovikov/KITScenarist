@@ -65,6 +65,11 @@ namespace ManagementLayer
         void loadCurrentProject();
 
         /**
+         * @brief Сформировать карточки из сценария
+         */
+        void rebuildCardsFromScript();
+
+        /**
          * @brief Запустить таймер сохранения изменений
          */
         void startChangesHandling();

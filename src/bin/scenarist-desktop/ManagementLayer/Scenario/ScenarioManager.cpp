@@ -314,6 +314,14 @@ void ScenarioManager::loadCurrentProject()
     QTimer::singleShot(100, this, &ScenarioManager::aboutUpdateCounters);
 }
 
+void ScenarioManager::rebuildCardsFromScript()
+{
+    //
+    // Передаём пустую строку вместо схемы, чтобы карточки построились из текста сценария
+    //
+    m_cardsManager->load(m_scenario->model(), QString());
+}
+
 void ScenarioManager::startChangesHandling()
 {
     //
