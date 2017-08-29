@@ -1559,17 +1559,15 @@ void ApplicationManager::goToEditCurrentProject()
     //
     if (m_projectsManager->currentProject().isRemote()) {
         progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
-        const bool scriptWasChanged = m_synchronizationManager->aboutFullSyncScenario();
+        m_synchronizationManager->aboutFullSyncScenario();
         m_synchronizationManager->aboutFullSyncData();
-
-        //
-        // FIXME: Если были изменения связанные с текстом сценария перестраиваем карточки
-        //        т.к. там нет пока синхронизации
-        //
-        if (scriptWasChanged) {
-            m_scenarioManager->rebuildCardsFromScript();
-        }
     }
+
+    //
+    // FIXME: Если были изменения связанные с текстом сценария перестраиваем карточки
+    //        т.к. там нет пока синхронизации
+    //
+    m_scenarioManager->rebuildCardsFromScript();
 
     //
     // Загрузить данные из файла

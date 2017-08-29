@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-	Application application(argc, argv);
+    Application application(argc, argv);
 
 #ifdef Q_OS_WIN
 	//
