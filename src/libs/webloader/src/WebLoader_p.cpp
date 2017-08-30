@@ -243,9 +243,19 @@ void WebLoader::run()
 void WebLoader::stop()
 {
     m_isNeedStop = true;
+    //
+    // Сперва пробуем остановить аккуратно
+    //
     if (isRunning()) {
         quit();
         wait(1000);
+    }
+    //
+    // Если не удалось, прерываем жёстко
+    //
+    if (isRunning()) {
+        terminate();
+        wait();
     }
 }
 

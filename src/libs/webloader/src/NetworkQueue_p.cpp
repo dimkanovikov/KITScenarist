@@ -193,7 +193,7 @@ void NetworkQueue::downloadComplete()
     m_freeLoaders.push_back(loader);
 
     //
-    //Смотрим, надо ли что еще выполнить из очереди
+    // Смотрим, надо ли что еще выполнить из очереди
     //
     if (!m_queue.empty()) {
         pop();

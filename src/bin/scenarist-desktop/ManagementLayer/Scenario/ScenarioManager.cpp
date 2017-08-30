@@ -846,6 +846,17 @@ void ScenarioManager::aboutSetItemColors(const QModelIndex& _itemIndex, const QS
     emit scenarioChanged();
 }
 
+void ScenarioManager::aboutSetItemStamp(const QModelIndex& _itemIndex, const QString& _stamp)
+{
+    setWorkingMode(sender());
+
+    const int position = workingScenario()->itemStartPosition(_itemIndex);
+    workingScenario()->setItemStampAtPosition(position, _stamp);
+    m_textEditManager->view()->update();
+
+    emit scenarioChanged();
+}
+
 void ScenarioManager::aboutChangeItemType(const QModelIndex& _index, int _type)
 {
     setWorkingMode(sender());
@@ -1027,6 +1038,7 @@ void ScenarioManager::initConnections()
     connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+    connect(m_cardsManager, &ScenarioCardsManager::cardStampChanged, this, &ScenarioManager::aboutSetItemStamp);
     connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
     connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
     connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);

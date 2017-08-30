@@ -32,6 +32,9 @@ namespace ManagementLayer
     public:
         explicit ScenarioCardsManager(QObject* _parent, QWidget* _parentWidget);
 
+        /**
+         * @brief Получить представление
+         */
         QWidget* view() const;
 
         /**
@@ -118,6 +121,11 @@ namespace ManagementLayer
         void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
 
         /**
+         * @brief Изменился штамп карточки
+         */
+        void cardStampChanged(const QModelIndex& _index, const QString& _stamp);
+
+        /**
          * @brief Запрос на изменение типа карточки
          */
         void cardTypeChanged(const QModelIndex& _index, int _cardType);
@@ -158,6 +166,11 @@ namespace ManagementLayer
          * @brief Изменить цвета карточки
          */
         void changeCardColors(const QString& _uuid, const QString& _colors);
+
+        /**
+         * @brief Изменить штамп карточки
+         */
+        void changeCardStamp(const QString& _uuid, const QString& _stamp);
 
         /**
          * @brief Изменить тип карточки

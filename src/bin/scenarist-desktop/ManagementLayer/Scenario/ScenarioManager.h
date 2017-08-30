@@ -292,6 +292,11 @@ namespace ManagementLayer
         void aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors);
 
         /**
+         * @brief Установить штамп элемента
+         */
+        void aboutSetItemStamp(const QModelIndex& _itemIndex, const QString& _stamp);
+
+        /**
          * @brief Сменить тип элемента
          */
         void aboutChangeItemType(const QModelIndex& _index, int _type);

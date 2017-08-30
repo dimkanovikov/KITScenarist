@@ -134,7 +134,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                     item->sceneNumber(),
                     item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
                     item->description().isEmpty() ? item->fullText() : item->description(),
-                    QString::null,
+                    item->stamp(),
                     item->colors(),
                     isEmbedded,
                     currentCard->uuid());
@@ -179,7 +179,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                         item->sceneNumber(),
                         item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
                         item->description().isEmpty() ? item->fullText() : item->description(),
-                        QString::null,
+                        item->stamp(),
                         item->colors(),
                         isEmbedded,
                         isAct);
@@ -350,6 +350,14 @@ void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString&
     if (!_uuid.isEmpty()) {
         const QModelIndex index = m_model->indexForUuid(_uuid);
         emit cardColorsChanged(index, _colors);
+    }
+}
+
+void ScenarioCardsManager::changeCardStamp(const QString& _uuid, const QString& _stamp)
+{
+    if (!_uuid.isEmpty()) {
+        const QModelIndex index = m_model->indexForUuid(_uuid);
+        emit cardStampChanged(index, _stamp);
     }
 }
 
@@ -670,6 +678,7 @@ void ScenarioCardsManager::initConnections()
     connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
     connect(m_view, &ScenarioCardsView::cardMovedToGroup, this, &ScenarioCardsManager::moveCardToGroup);
     connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
+    connect(m_view, &ScenarioCardsView::cardStampChanged, this, &ScenarioCardsManager::changeCardStamp);
     connect(m_view, &ScenarioCardsView::cardTypeChanged, this, &ScenarioCardsManager::changeCardType);
 
     connect(m_view, &ScenarioCardsView::printRequest, m_printDialog, &PrintCardsDialog::exec);

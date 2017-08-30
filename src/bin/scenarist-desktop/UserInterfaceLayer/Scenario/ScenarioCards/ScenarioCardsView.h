@@ -162,6 +162,11 @@ namespace UserInterface {
         void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
         /**
+         * @brief Изменился штамп карточки
+         */
+        void cardStampChanged(const QString& _uuid, const QString& _stamp);
+
+        /**
          * @brief Запрос на изменение типа карточки
          */
         void cardTypeChanged(const QString& _uuid, bool _isFolder);

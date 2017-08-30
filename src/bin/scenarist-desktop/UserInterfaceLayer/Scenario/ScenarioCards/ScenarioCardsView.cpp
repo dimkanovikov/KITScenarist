@@ -310,6 +310,7 @@ void ScenarioCardsView::initConnections()
     connect(m_cards, &CardsView::cardMovedToGroup, this, &ScenarioCardsView::cardMovedToGroup);
 
     connect(m_cards, &CardsView::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
+    connect(m_cards, &CardsView::cardStampChanged, this, &ScenarioCardsView::cardStampChanged);
     connect(m_cards, &CardsView::cardTypeChanged, this, &ScenarioCardsView::cardTypeChanged);
 
     connect(m_sort, &FlatButton::clicked, m_sort, &FlatButton::showMenu);
