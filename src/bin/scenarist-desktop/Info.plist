@@ -20,6 +20,8 @@
     <string>Scenarist</string>
     <key>CFBundleIdentifier</key>
     <string>com.dimkanovikov.kit.scenarist.macosx</string>
+    <key>NSSupportsAutomaticGraphicsSwitching</key>
+    <true/>
     <key>CFBundleDocumentTypes</key>
     <array>
             <dict>
