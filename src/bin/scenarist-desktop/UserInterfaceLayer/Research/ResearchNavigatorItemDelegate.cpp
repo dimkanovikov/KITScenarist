@@ -9,6 +9,17 @@ namespace {
     const int TOP_MARGIN = 8;
     const int BOTTOM_MARGIN = 8;
     const int ITEMS_SPACING = 8;
+
+    /**
+     * @brief Флаги для отрисовки текста в зависимости от локали
+     */
+    static int textDrawAlign() {
+        if (QLocale().textDirection() == Qt::LeftToRight) {
+            return Qt::AlignLeft;
+        } else {
+            return Qt::AlignRight;
+        }
+    }
 }
 
 using UserInterface::ResearchNavigatorItemDelegate;
@@ -115,7 +126,7 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		);
 	QString header = _index.data(Qt::DisplayRole).toString();
 	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
-    _painter->drawText(headerRect, Qt::AlignLeft | Qt::AlignVCenter, header);
+    _painter->drawText(headerRect, ::textDrawAlign() | Qt::AlignVCenter, header);
 
 	_painter->restore();
 }

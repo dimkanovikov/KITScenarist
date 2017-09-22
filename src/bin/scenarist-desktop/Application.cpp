@@ -198,6 +198,11 @@ void Application::initTranslation()
         translationSuffix = "zn";
         qtTranslationSuffix = "zn";
         currentLanguage = QLocale::Chinese;
+    } else if (language == 10) {
+        translationSuffix = "he";
+        qtTranslationSuffix = "he";
+        qtBaseTranslationSuffix = "he";
+        currentLanguage = QLocale::Hebrew;
     }
 
     QLocale::setDefault(QLocale(currentLanguage));
@@ -228,11 +233,10 @@ void Application::initTranslation()
     appTranslator->load(":/Translations/Translations/Scenarist_" + translationSuffix + ".qm");
     installTranslator(appTranslator);
 
-//    //
-//    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
-//    //
-//    if (currentLanguage == QLocale::Persian) {
-//        setLayoutDirection(Qt::RightToLeft);
-//    }
+    //
+    // Принудительно устанавливаем ориентацию слева-направо, т.к. некоторые переводы
+    // ведут к автоматической смене ориентации текста
+    //
+    setLayoutDirection(Qt::LeftToRight);
 }
 

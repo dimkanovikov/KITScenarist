@@ -32,6 +32,8 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
         m_ui->farsi->setChecked(true);
     } else if (_language == 9) {
         m_ui->chinese->setChecked(true);
+    } else if (_language == 10) {
+        m_ui->hebrew->setChecked(true);
     }
 }
 
@@ -65,6 +67,8 @@ int LanguageDialog::language() const
         result = 8;
     } else if (m_ui->chinese->isChecked()) {
         result = 9;
+    } else if (m_ui->hebrew->isChecked()) {
+        result = 10;
     }
 
     return result;
