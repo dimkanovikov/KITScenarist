@@ -234,9 +234,13 @@ void Application::initTranslation()
     installTranslator(appTranslator);
 
     //
-    // Принудительно устанавливаем ориентацию слева-направо, т.к. некоторые переводы
-    // ведут к автоматической смене ориентации текста
+    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
     //
-    setLayoutDirection(Qt::LeftToRight);
+    if (currentLanguage == QLocale::Persian
+        || currentLanguage == QLocale::Hebrew) {
+        setLayoutDirection(Qt::RightToLeft);
+    } else {
+        setLayoutDirection(Qt::LeftToRight);
+    }
 }
 

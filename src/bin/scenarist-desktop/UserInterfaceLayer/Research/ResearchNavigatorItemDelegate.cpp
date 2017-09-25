@@ -9,17 +9,6 @@ namespace {
     const int TOP_MARGIN = 8;
     const int BOTTOM_MARGIN = 8;
     const int ITEMS_SPACING = 8;
-
-    /**
-     * @brief Флаги для отрисовки текста в зависимости от локали
-     */
-    static int textDrawAlign() {
-        if (QLocale().textDirection() == Qt::LeftToRight) {
-            return Qt::AlignLeft;
-        } else {
-            return Qt::AlignRight;
-        }
-    }
 }
 
 using UserInterface::ResearchNavigatorItemDelegate;
@@ -84,14 +73,14 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		}
 	}
 
-	//
-	// Рисуем
     //
-    const int RIGHT_MARGIN = 12;
-	//
-	// ... фон
-	//
-	_painter->fillRect(opt.rect, backgroundBrush);
+    // Рисуем
+    //
+    const int HEADER_MARGIN = 12;
+    //
+    // ... фон
+    //
+    _painter->fillRect(opt.rect, backgroundBrush);
     //
     // ... разделитель
     //
@@ -99,34 +88,36 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
     left.setX(0);
     _painter->setPen(QPen(opt.palette.dark(), 0.5));
     _painter->drawLine(left, opt.rect.bottomRight());
-	//
-	// Меняем координаты, чтобы рисовать было удобнее
-	//
-	_painter->translate(opt.rect.topLeft());
-	//
-	// ... иконка
     //
-    const QRect iconRect(0, TOP_MARGIN, ICON_SIZE, ICON_SIZE);
-	QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
-	QIcon iconColorized(icon);
-	QColor iconColor = textBrush.color();
-	ImageHelper::setIconColor(iconColorized, iconRect.size(), iconColor);
-	icon = iconColorized.pixmap(iconRect.size());
-	_painter->drawPixmap(iconRect, icon);
-	//
-	// ... заголовок
-	//
-	_painter->setPen(textBrush.color());
-	_painter->setFont(headerFont);
-	const QRect headerRect(
-		iconRect.right() + ITEMS_SPACING,
-        TOP_MARGIN,
-		opt.rect.width() - iconRect.right() - ITEMS_SPACING - RIGHT_MARGIN,
-        ICON_SIZE
-		);
-	QString header = _index.data(Qt::DisplayRole).toString();
-	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
-    _painter->drawText(headerRect, ::textDrawAlign() | Qt::AlignVCenter, header);
+    // Меняем координаты, чтобы рисовать было удобнее
+    //
+    _painter->translate(opt.rect.topLeft());
+    //
+    // ... иконка
+    //
+    const int iconXPos = QLocale().textDirection() == Qt::LeftToRight ? 0 : opt.rect.right() - ICON_SIZE;
+    const QRect iconRect(iconXPos, TOP_MARGIN, ICON_SIZE, ICON_SIZE);
+    QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
+    QIcon iconColorized(icon);
+    QColor iconColor = textBrush.color();
+    ImageHelper::setIconColor(iconColorized, iconRect.size(), iconColor);
+    icon = iconColorized.pixmap(iconRect.size());
+    _painter->drawPixmap(iconRect, icon);
+    //
+    // ... заголовок
+    //
+    _painter->setPen(textBrush.color());
+    _painter->setFont(headerFont);
+    const int headerXPos = QLocale().textDirection() == Qt::LeftToRight ? iconRect.right() + ITEMS_SPACING : 0;
+    const QRect headerRect(
+                headerXPos,
+                TOP_MARGIN,
+                opt.rect.width() - iconRect.width() - ITEMS_SPACING - HEADER_MARGIN,
+                ICON_SIZE
+                );
+    QString header = _index.data(Qt::DisplayRole).toString();
+    header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
+    _painter->drawText(headerRect, Qt::AlignLeft | Qt::AlignVCenter, header);
 
 	_painter->restore();
 }
