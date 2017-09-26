@@ -16,8 +16,8 @@ namespace UserInterface
 	public:
 		explicit ResearchNavigatorProxyStyle(QStyle* _style = 0);
 
-		void drawPrimitive(PrimitiveElement element, const QStyleOption *option,
-						   QPainter *painter, const QWidget *widget) const;
+        void drawPrimitive(PrimitiveElement _element, const QStyleOption* _option,
+                           QPainter* _painter, const QWidget* _widget) const;
 	};
 }
 

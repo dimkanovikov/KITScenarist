@@ -48,7 +48,7 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... для выделенных элементов
 	//
-	if(opt.state.testFlag(QStyle::State_Selected))
+    if (opt.state.testFlag(QStyle::State_Selected))
 	{
 		backgroundBrush = opt.palette.highlight();
 		textBrush = opt.palette.highlightedText();
@@ -61,7 +61,7 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		//
 		// Реализация альтернативных цветов в представлении
 		//
-        if(opt.features.testFlag(QStyleOptionViewItem::Alternate))
+        if (opt.features.testFlag(QStyleOptionViewItem::Alternate))
 		{
 			backgroundBrush = opt.palette.alternateBase();
 			textBrush = opt.palette.windowText();

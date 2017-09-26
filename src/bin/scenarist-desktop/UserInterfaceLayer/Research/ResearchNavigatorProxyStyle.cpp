@@ -1,5 +1,7 @@
 #include "ResearchNavigatorProxyStyle.h"
 
+#include <3rd_party/Helpers/StyleSheetHelper.h>
+
 #include <QApplication>
 #include <QPainter>
 #include <QStyleOption>
@@ -12,11 +14,11 @@ ResearchNavigatorProxyStyle::ResearchNavigatorProxyStyle(QStyle* _style)
 {
 }
 
-void ResearchNavigatorProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
+void ResearchNavigatorProxyStyle::drawPrimitive(QStyle::PrimitiveElement _element, const QStyleOption* _option, QPainter* _painter, const QWidget* _widget) const
 {
-	if(element == QStyle::PE_IndicatorItemViewItemDrop)
+    if(_element == QStyle::PE_IndicatorItemViewItemDrop)
 	{
-		painter->setRenderHint(QPainter::Antialiasing, true);
+        _painter->setRenderHint(QPainter::Antialiasing, true);
 
 		QPalette palette(QApplication::palette());
 		QColor indicatorColor(palette.text().color());
@@ -31,13 +33,13 @@ void ResearchNavigatorProxyStyle::drawPrimitive(QStyle::PrimitiveElement element
 		//
 		// Настраиваем рисовальщика
 		//
-		painter->setPen(pen);
-		painter->setBrush(brush);
+        _painter->setPen(pen);
+        _painter->setBrush(brush);
 
 		//
 		// Элемент вставляется в конец списка
 		//
-		if (option->rect.topLeft().isNull() && option->rect.size().isEmpty()) {
+        if (_option->rect.topLeft().isNull() && _option->rect.size().isEmpty()) {
             //
             // Ничего не рисуем, т.к. для модели разработки такой операции нет
             //
@@ -45,21 +47,21 @@ void ResearchNavigatorProxyStyle::drawPrimitive(QStyle::PrimitiveElement element
 		//
 		// Элемент вставляется между двух соседних
 		//
-		else if (!option->rect.topLeft().isNull() && option->rect.size().isEmpty()) {
+        else if (!_option->rect.topLeft().isNull() && _option->rect.size().isEmpty()) {
 			//
 			// Рисуем линию между элементов
 			//
-			painter->drawLine(QPoint(option->rect.topLeft().x() - 10,
-									 option->rect.topLeft().y()),
-							  option->rect.topRight());
+            _painter->drawLine(QPoint(_option->rect.topLeft().x() - 10,
+                                     _option->rect.topLeft().y()),
+                              _option->rect.topRight());
 			//
 			// Вспомогательный треугольник
 			//
 			QPolygonF treangle;
-			treangle <<	QPointF(option->rect.topLeft().x() - 10, option->rect.topLeft().y() - 4)
-					 << QPointF(option->rect.topLeft().x() - 5,  option->rect.topLeft().y())
-					 << QPointF(option->rect.topLeft().x() - 10, option->rect.topLeft().y() + 4);
-			painter->drawPolygon(treangle);
+            treangle <<	QPointF(_option->rect.topLeft().x() - 10, _option->rect.topLeft().y() - 4)
+                     << QPointF(_option->rect.topLeft().x() - 5,  _option->rect.topLeft().y())
+                     << QPointF(_option->rect.topLeft().x() - 10, _option->rect.topLeft().y() + 4);
+            _painter->drawPolygon(treangle);
 		}
 		//
 		// Элемент вставляется в группирующий
@@ -70,16 +72,80 @@ void ResearchNavigatorProxyStyle::drawPrimitive(QStyle::PrimitiveElement element
 			//
 			indicatorColor.setAlpha(50);
 			QBrush brush(indicatorColor);
-			painter->setBrush(brush);
+            _painter->setBrush(brush);
 
 			//
 			// Расширим немного область, чтобы не перекрывать иконку
 			//
-			QRect rect = option->rect;
+            QRect rect = _option->rect;
 			rect.setX(rect.topLeft().x() - 4);
-			painter->drawRoundedRect(rect, 2, 2);
+            _painter->drawRoundedRect(rect, 2, 2);
 		}
-	} else {
-		QProxyStyle::drawPrimitive(element, option, painter, widget);
+    }
+
+    //
+    // Рисуем индикатор элемента, если у него есть дети
+    //
+    else if (_element == QStyle::PE_IndicatorBranch
+               && _option->state & QStyle::State_Children) {
+        _painter->setRenderHint(QPainter::Antialiasing, true);
+
+        QPalette palette(QApplication::palette());
+        QColor indicatorColor(palette.text().color());
+
+        //
+        // Кисть для рисования линий
+        //
+        QPen pen(indicatorColor);
+        pen.setWidth(1);
+        pen.setJoinStyle(Qt::MiterJoin);
+        QBrush brush(indicatorColor);
+
+        //
+        // Настраиваем рисовальщика
+        //
+        _painter->setPen(pen);
+        _painter->setBrush(brush);
+
+#ifdef MOBILE_OS
+        const qreal arrowHeight = StyleSheetHelper::dpToPx(8.);
+        const qreal arrowHalfWidth = StyleSheetHelper::dpToPx(7.);
+#else
+        const qreal arrowHeight = StyleSheetHelper::dpToPx(5.5);
+        const qreal arrowHalfWidth = StyleSheetHelper::dpToPx(4.);
+#endif
+        //
+        // ... открытый
+        //
+        if (_option->state & QStyle::State_Open) {
+            int x = _option->rect.center().x();
+            int y = _option->rect.center().y() + arrowHeight/2;
+            QPolygonF treangle;
+            treangle <<  QPointF(x, y)
+                     << QPointF(x - arrowHalfWidth,  y - arrowHeight)
+                     << QPointF(x + arrowHalfWidth,  y - arrowHeight);
+            _painter->drawPolygon(treangle);
+        }
+        //
+        // ... закрытый
+        //
+        else {
+            int x = _option->rect.center().x() + arrowHeight/2;
+            int y = _option->rect.center().y();
+            QPolygonF treangle;
+            if (QLocale().textDirection() == Qt::LeftToRight) {
+                treangle << QPointF(x, y)
+                         << QPointF(x - arrowHeight,  y - arrowHalfWidth)
+                         << QPointF(x - arrowHeight,  y + arrowHalfWidth);
+            } else {
+                treangle << QPointF(x,  y - arrowHalfWidth)
+                         << QPointF(x, y + arrowHalfWidth)
+                         << QPointF(x - arrowHeight,  y);
+            }
+            _painter->drawPolygon(treangle);
+        }
+    }
+    else {
+        QProxyStyle::drawPrimitive(_element, _option, _painter, _widget);
 	}
 }
