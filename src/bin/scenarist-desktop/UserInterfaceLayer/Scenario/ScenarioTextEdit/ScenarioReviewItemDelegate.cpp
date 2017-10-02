@@ -183,7 +183,8 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		// ... цвет заметки
 		//
 		const QColor color = _index.data(Qt::DecorationRole).value<QColor>();
-        const QRect colorRect(0, lastTop, COLOR_MARK_WIDTH, height);
+        const int colorRectX = QLocale().textDirection() == Qt::LeftToRight ? 0 : width - COLOR_MARK_WIDTH;
+        const QRect colorRect(colorRectX, lastTop, COLOR_MARK_WIDTH, height);
 		_painter->fillRect(colorRect, commentIndex == 0 ? color : replyBackgroundColor);
 
         //
@@ -200,12 +201,16 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		_painter->setPen(commentIndex == 0 ? textColor : replyColor);
 		_painter->setFont(headerFont);
 		const QRect headerRect(
-			colorRect.right() + SPACING,
+            QLocale().textDirection() == Qt::LeftToRight
+                    ? colorRect.right() + SPACING
+                    : RIGHT_MARGIN,
 			lastTop + TOP_MARGIN,
-			width - colorRect.right() - SPACING - RIGHT_MARGIN,
+            QLocale().textDirection() == Qt::LeftToRight
+                    ? width - colorRect.right() - SPACING - RIGHT_MARGIN
+                    : colorRect.left() - SPACING,
 			HEADER_LINE_HEIGHT
 			);
-		_painter->drawText(headerRect, authors.value(commentIndex));
+        _painter->drawText(headerRect, Qt::AlignLeft | Qt::AlignVCenter, authors.value(commentIndex));
 
 		//
 		// ... дата
@@ -213,13 +218,17 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		_painter->setPen(dateColor);
 		_painter->setFont(dateFont);
 		const QRect dateRect(
-			colorRect.right() + SPACING,
+            QLocale().textDirection() == Qt::LeftToRight
+                    ? colorRect.right() + SPACING
+                    : RIGHT_MARGIN,
             headerRect.bottom() + 2,
-            width - colorRect.right() - SPACING - RIGHT_MARGIN,
+            QLocale().textDirection() == Qt::LeftToRight
+                    ? width - colorRect.right() - SPACING - RIGHT_MARGIN
+                    : colorRect.left() - SPACING,
 			DATE_LINE_HEIGHT
 			);
 		const QString date = QDateTime::fromString(dates.value(commentIndex), Qt::ISODate).toString("dd.MM.yyyy hh:mm");
-		_painter->drawText(dateRect, date);
+        _painter->drawText(dateRect, Qt::AlignLeft | Qt::AlignVCenter, date);
 
 		//
 		// ... если комментарий исправлен на этом месте завершаем рисование
@@ -234,9 +243,13 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		_painter->setPen(commentIndex == 0 ? textColor : replyColor);
 		_painter->setFont(textFont);
 		const QRect commentRect(
-			colorRect.right() + SPACING,
+            QLocale().textDirection() == Qt::LeftToRight
+                    ? colorRect.right() + SPACING
+                    : RIGHT_MARGIN,
 			dateRect.bottom() + SPACING,
-			width - colorRect.right() - SPACING - RIGHT_MARGIN,
+            QLocale().textDirection() == Qt::LeftToRight
+                    ? width - colorRect.right() - SPACING - RIGHT_MARGIN
+                    : colorRect.left() - SPACING,
 			height - headerHeight - SPACING
 			);
         _painter->drawText(commentRect, Qt::TextWordWrap, comments.value(commentIndex));
