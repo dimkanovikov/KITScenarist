@@ -326,6 +326,7 @@ void ScenarioNavigator::initView()
     m_scenesCountTitle->setText(tr("Scenes:"));
     m_scenesCount->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_scenesCount->setToolTip(tr("Scenes Count"));
+    m_scenesCount->setAlignment((QLocale().textDirection() == Qt::LeftToRight ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignVCenter);
 
     m_addItem->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
     m_addItem->setToolTip(tr("Add Scenario Item After Selected"));
