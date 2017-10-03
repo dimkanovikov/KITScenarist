@@ -1959,7 +1959,9 @@ void ApplicationManager::initStyleSheet()
     //
     // Загрузим стиль
     //
-    QFile styleSheetFile(":/Interface/UI/style-desktop-compact.qss");
+    QFile styleSheetFile(
+                QString(":/Interface/UI/style-desktop%2.qss")
+                .arg(QLocale().textDirection() == Qt::RightToLeft ? "-rtl" : ""));
     styleSheetFile.open(QIODevice::ReadOnly);
     QString styleSheet = styleSheetFile.readAll();
     styleSheetFile.close();
@@ -2059,9 +2061,10 @@ void ApplicationManager::reloadApplicationSettings()
                     "application/compact-mode",
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt();
-        QFile styleSheetFile(useCompactMode
-                             ? ":/Interface/UI/style-desktop-compact.qss"
-                             : ":/Interface/UI/style-desktop.qss");
+        QFile styleSheetFile(
+                    QString(":/Interface/UI/style-desktop%1%2.qss")
+                    .arg(useCompactMode ? "-compact" : "")
+                    .arg(QLocale().textDirection() == Qt::RightToLeft ? "-rtl" : ""));
         styleSheetFile.open(QIODevice::ReadOnly);
         QString styleSheet = styleSheetFile.readAll();
         styleSheetFile.close();
