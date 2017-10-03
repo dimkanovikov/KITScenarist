@@ -8,13 +8,12 @@
 
 #include <BusinessLayer/Research/ResearchModel.h>
 
+#include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
 #include <3rd_party/Helpers/ImageHelper.h>
 #include <3rd_party/Helpers/TextEditHelper.h>
+#include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
-
-#include "ResearchNavigatorItemDelegate.h"
-#include "ResearchNavigatorProxyStyle.h"
 
 #include <QDomDocument>
 #include <QFileDialog>
@@ -26,8 +25,6 @@
 #include <QXmlStreamReader>
 
 using UserInterface::ResearchView;
-using UserInterface::ResearchNavigatorItemDelegate;
-using UserInterface::ResearchNavigatorProxyStyle;
 
 namespace {
     /**
@@ -515,14 +512,14 @@ void ResearchView::initView()
     m_ui->removeResearchItem->setIcons(m_ui->removeResearchItem->icon());
     m_ui->refreshResearchSubtree->setIcons(m_ui->refreshResearchSubtree->icon());
 
-    m_ui->researchNavigator->setItemDelegate(new ResearchNavigatorItemDelegate(m_ui->researchNavigator));
+    m_ui->researchNavigator->setItemDelegate(new TreeViewItemDelegate(m_ui->researchNavigator));
     m_ui->researchNavigator->setDragDropMode(QAbstractItemView::DragDrop);
     m_ui->researchNavigator->setDragEnabled(true);
     m_ui->researchNavigator->setDropIndicatorShown(true);
     m_ui->researchNavigator->setHeaderHidden(true);
     m_ui->researchNavigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_ui->researchNavigator->setSelectionMode(QAbstractItemView::SingleSelection);
-    m_ui->researchNavigator->setStyle(new ResearchNavigatorProxyStyle(m_ui->researchNavigator->style()));
+    m_ui->researchNavigator->setStyle(new TreeViewProxyStyle(m_ui->researchNavigator->style()));
     m_ui->researchNavigator->installEventFilter(this);
 
     m_ui->researchSplitter->setObjectName("researchSplitter");

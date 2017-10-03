@@ -8,6 +8,8 @@
 
 #include <BusinessLayer/Statistics/Plots/AbstractPlot.h>
 
+#include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
+#include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
 #include <3rd_party/Widgets/Ctk/ctkCollapsibleButton.h>
 #include <3rd_party/Widgets/Ctk/ctkPopupWidget.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -272,8 +274,7 @@ void StatisticsView::aboutSaveReport()
         }
     }
 }
-#include <UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h>
-#include <UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h>
+
 void StatisticsView::initView()
 {
     //
@@ -305,41 +306,49 @@ void StatisticsView::initView()
     // Настраиваем панель со списком отчётов
     //
     QTreeWidgetItem* reports = new QTreeWidgetItem(m_statisticTypes, { tr("Reports") });
-    reports->setIcon(0, QIcon(":/Graphics/Icons/report.png"));
+    reports->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report-multiple.png"));
     QTreeWidgetItem* summaryStatisticsReport = new QTreeWidgetItem(reports, { tr("Summary statistics") });
     summaryStatisticsReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     summaryStatisticsReport->setData(0, Qt::UserRole + 1, StatisticsParameters::SummaryReport);
+    summaryStatisticsReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
     QTreeWidgetItem* sceneReport = new QTreeWidgetItem(reports, { tr("Scene report") });
     sceneReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     sceneReport->setData(0, Qt::UserRole + 1, StatisticsParameters::SceneReport);
+    sceneReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
     QTreeWidgetItem* locationReport = new QTreeWidgetItem(reports, { tr("Location report") });
     locationReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     locationReport->setData(0, Qt::UserRole + 1, StatisticsParameters::LocationReport);
+    locationReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
     QTreeWidgetItem* castReport = new QTreeWidgetItem(reports, { tr("Cast report") });
     castReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     castReport->setData(0, Qt::UserRole + 1, StatisticsParameters::CastReport);
+    castReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
     QTreeWidgetItem* charactersDialoguesReport = new QTreeWidgetItem(reports, { tr("Characters dialogues") });
     charactersDialoguesReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     charactersDialoguesReport->setData(0, Qt::UserRole + 1, StatisticsParameters::CharacterReport);
+    charactersDialoguesReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
     m_statisticTypes->addTopLevelItem(reports);
 
     //
     // Настраиваем панель со списком графиков
     //
     QTreeWidgetItem* plots = new QTreeWidgetItem(m_statisticTypes, { tr("Plots") });
-    plots->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot.png"));
+    plots->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot-multiple.png"));
     QTreeWidgetItem* storyStructureAnalisysPlot = new QTreeWidgetItem(plots, { tr("Story structure analysis") });
     storyStructureAnalisysPlot->setData(0, Qt::UserRole, StatisticsParameters::Plot);
     storyStructureAnalisysPlot->setData(0, Qt::UserRole + 1, StatisticsParameters::StoryStructureAnalisysPlot);
+    storyStructureAnalisysPlot->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot.png"));
     QTreeWidgetItem* charactersActivityPlot = new QTreeWidgetItem(plots, { tr("Characters activity") });
     charactersActivityPlot->setData(0, Qt::UserRole, StatisticsParameters::Plot);
     charactersActivityPlot->setData(0, Qt::UserRole + 1, StatisticsParameters::CharactersActivityPlot);
+    charactersActivityPlot->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot.png"));
     m_statisticTypes->addTopLevelItem(plots);
 
+    m_statisticTypes->setObjectName("StatisticsTypesTree");
     m_statisticTypes->expandAll();
     m_statisticTypes->setHeaderHidden(true);
-    m_statisticTypes->setItemDelegate(new UserInterface::ResearchNavigatorItemDelegate(m_statisticTypes));
-    m_statisticTypes->setStyle(new UserInterface::ResearchNavigatorProxyStyle(m_statisticTypes->style()));
+    m_statisticTypes->setItemDelegate(new TreeViewItemDelegate(m_statisticTypes));
+    m_statisticTypes->setStyle(new TreeViewProxyStyle(m_statisticTypes->style()));
 
     //
     // Настраиваем общую панель с группами отчётов

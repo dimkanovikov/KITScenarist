@@ -250,8 +250,6 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp \
     scenarist-core/BusinessLayer/Research/ResearchModel.cpp \
     scenarist-core/BusinessLayer/Research/ResearchModelItem.cpp \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.cpp \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.cpp \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
@@ -337,7 +335,9 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.cpp \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.cpp \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectsList.cpp \
-    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.cpp
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.cpp \
+    scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.cpp \
+    scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -488,8 +488,6 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Research/ResearchManager.h \
     scenarist-core/BusinessLayer/Research/ResearchModel.h \
     scenarist-core/BusinessLayer/Research/ResearchModelItem.h \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h \
     scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
@@ -591,7 +589,9 @@ HEADERS += \
     scenarist-core/3rd_party/Helpers/StyleHelper.h \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.h \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectsList.h \
-    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.h
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.h \
+    scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h \
+    scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
