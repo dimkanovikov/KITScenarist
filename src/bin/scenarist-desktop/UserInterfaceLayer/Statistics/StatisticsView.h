@@ -6,12 +6,12 @@
 class FlatButton;
 class QAbstractItemModel;
 class QCustomPlotExtended;
-class QFrame;
 class QLabel;
 class QLightBoxProgress;
 class QPrinter;
 class QStackedWidget;
 class QTextBrowser;
+class QTreeWidget;
 
 namespace BusinessLogic {
 	class StatisticsParameters;
@@ -145,7 +145,7 @@ namespace UserInterface
 		/**
 		 * @brief Панель с видами отчётов
 		 */
-		QFrame* m_statisticTypes;
+        QTreeWidget* m_statisticTypes;
 
 		/**
 		 * @brief Панель с параметрами отчётов
@@ -155,12 +155,7 @@ namespace UserInterface
 		/**
 		 * @brief Панель с данными отчёта
 		 */
-		QStackedWidget* m_statisticData;
-
-		/**
-		 * @brief Кнопки отчётов
-		 */
-		QList<ReportButton*> m_reports;
+        QStackedWidget* m_statisticData;
 
 		/**
 		 * @brief Данные отчёта

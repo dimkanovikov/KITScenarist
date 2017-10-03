@@ -27,6 +27,7 @@
 #include <QStackedWidget>
 #include <QStandardPaths>
 #include <QTextBrowser>
+#include <QTreeWidget>
 #include <QVariant>
 #include <QVBoxLayout>
 
@@ -78,7 +79,7 @@ StatisticsView::StatisticsView(QWidget* _parent) :
     m_print(new FlatButton(this)),
     m_save(new FlatButton(this)),
     m_update(new FlatButton(this)),
-    m_statisticTypes(new QFrame(this)),
+    m_statisticTypes(new QTreeWidget(this)),
     m_statisticSettings(new StatisticsSettings(this)),
     m_statisticData(new QStackedWidget(this)),
     m_reportData(new QTextBrowser(this)),
@@ -170,36 +171,49 @@ void StatisticsView::hideProgress()
 
 void StatisticsView::aboutInitDataPanel()
 {
-    if (ReportButton* button = qobject_cast<ReportButton*>(sender())) {
-        if (button->type() == BusinessLogic::StatisticsParameters::Report) {
-            m_print->show();
-            m_statisticData->setCurrentWidget(m_reportData);
-        } else {
-            m_print->hide();
-            m_statisticData->setCurrentWidget(m_plotData);
-        }
+    if (m_statisticTypes->currentItem() == nullptr) {
+        return;
+    }
 
-        m_statisticSettings->setCurrentIndex(button->group()->checkedId());
+    const QTreeWidgetItem* item = m_statisticTypes->currentItem();
+    if (!item->data(0, Qt::UserRole).isValid()
+        || !item->data(0, Qt::UserRole + 1).isValid()) {
+        return;
+    }
 
-        if (ctkPopupWidget* settingsPanel = m_settings->findChild<ctkPopupWidget*>()) {
-            settingsPanel->setFixedSize(m_statisticSettings->currentWidget()->sizeHint());
-        }
+    const int type = item->data(0, Qt::UserRole).toInt();
+    if (type == BusinessLogic::StatisticsParameters::Report) {
+        m_print->show();
+        m_statisticData->setCurrentWidget(m_reportData);
+    } else {
+        m_print->hide();
+        m_statisticData->setCurrentWidget(m_plotData);
     }
 }
 
 void StatisticsView::aboutMakeReport()
 {
-    if (ReportButton* button = qobject_cast<ReportButton*>(m_reports.first()->group()->checkedButton())) {
-        BusinessLogic::StatisticsParameters parameters = m_statisticSettings->settings();
-        parameters.type = button->type();
-        if (parameters.type == BusinessLogic::StatisticsParameters::Report) {
-            parameters.reportType = (BusinessLogic::StatisticsParameters::ReportType)button->subtype();
-        } else {
-            parameters.plotType = (BusinessLogic::StatisticsParameters::PlotType)button->subtype();
-        }
-
-        emit makeReport(parameters);
+    if (m_statisticTypes->currentItem() == nullptr) {
+        return;
     }
+
+    const QTreeWidgetItem* item = m_statisticTypes->currentItem();
+    if (!item->data(0, Qt::UserRole).isValid()
+        || !item->data(0, Qt::UserRole + 1).isValid()) {
+        return;
+    }
+
+    const int type = item->data(0, Qt::UserRole).toInt();
+    const int subtype = item->data(0, Qt::UserRole + 1).toInt();
+    BusinessLogic::StatisticsParameters parameters = m_statisticSettings->settings();
+    parameters.type = static_cast<BusinessLogic::StatisticsParameters::Type>(type);
+    if (parameters.type == BusinessLogic::StatisticsParameters::Report) {
+        parameters.reportType = static_cast<BusinessLogic::StatisticsParameters::ReportType>(subtype);
+    } else {
+        parameters.plotType = static_cast<BusinessLogic::StatisticsParameters::PlotType>(subtype);
+    }
+
+    emit makeReport(parameters);
 }
 
 void StatisticsView::aboutPrintReport()
@@ -258,7 +272,8 @@ void StatisticsView::aboutSaveReport()
         }
     }
 }
-
+#include <UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h>
+#include <UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h>
 void StatisticsView::initView()
 {
     //
@@ -289,68 +304,46 @@ void StatisticsView::initView()
     //
     // Настраиваем панель со списком отчётов
     //
-    ctkCollapsibleButton* reports = new ctkCollapsibleButton(tr("Reports"), this);
-    reports->setIndicatorAlignment(Qt::AlignRight);
-    reports->setProperty("reportButton", true);
-
-    const int REPORTS_MIN = m_reports.size();
-    m_reports << new ReportButton(tr("Summary statistics"), StatisticsParameters::Report, StatisticsParameters::SummaryReport, reports);
-    m_reports << new ReportButton(tr("Scene report"), StatisticsParameters::Report, StatisticsParameters::SceneReport, reports);
-    m_reports << new ReportButton(tr("Location report"), StatisticsParameters::Report, StatisticsParameters::LocationReport, reports);
-    m_reports << new ReportButton(tr("Cast report"), StatisticsParameters::Report, StatisticsParameters::CastReport, reports);
-    m_reports << new ReportButton(tr("Characters dialogues"), StatisticsParameters::Report, StatisticsParameters::CharacterReport, reports);
-    const int REPORTS_MAX = m_reports.size();
-
-    QVBoxLayout* reportsLayout = new QVBoxLayout;
-    reportsLayout->setContentsMargins(QMargins());
-    reportsLayout->setSpacing(0);
-    for (int reportIndex = REPORTS_MIN; reportIndex < REPORTS_MAX; ++reportIndex) {
-        reportsLayout->addWidget(m_reports.at(reportIndex));
-    }
-    reports->setLayout(reportsLayout);
+    QTreeWidgetItem* reports = new QTreeWidgetItem(m_statisticTypes, { tr("Reports") });
+    reports->setIcon(0, QIcon(":/Graphics/Icons/report.png"));
+    QTreeWidgetItem* summaryStatisticsReport = new QTreeWidgetItem(reports, { tr("Summary statistics") });
+    summaryStatisticsReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
+    summaryStatisticsReport->setData(0, Qt::UserRole + 1, StatisticsParameters::SummaryReport);
+    QTreeWidgetItem* sceneReport = new QTreeWidgetItem(reports, { tr("Scene report") });
+    sceneReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
+    sceneReport->setData(0, Qt::UserRole + 1, StatisticsParameters::SceneReport);
+    QTreeWidgetItem* locationReport = new QTreeWidgetItem(reports, { tr("Location report") });
+    locationReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
+    locationReport->setData(0, Qt::UserRole + 1, StatisticsParameters::LocationReport);
+    QTreeWidgetItem* castReport = new QTreeWidgetItem(reports, { tr("Cast report") });
+    castReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
+    castReport->setData(0, Qt::UserRole + 1, StatisticsParameters::CastReport);
+    QTreeWidgetItem* charactersDialoguesReport = new QTreeWidgetItem(reports, { tr("Characters dialogues") });
+    charactersDialoguesReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
+    charactersDialoguesReport->setData(0, Qt::UserRole + 1, StatisticsParameters::CharacterReport);
+    m_statisticTypes->addTopLevelItem(reports);
 
     //
     // Настраиваем панель со списком графиков
     //
-    ctkCollapsibleButton* plots = new ctkCollapsibleButton(tr("Plots"), this);
-    plots->setIndicatorAlignment(Qt::AlignRight);
-    plots->setProperty("reportButton", true);
+    QTreeWidgetItem* plots = new QTreeWidgetItem(m_statisticTypes, { tr("Plots") });
+    plots->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot.png"));
+    QTreeWidgetItem* storyStructureAnalisysPlot = new QTreeWidgetItem(plots, { tr("Story structure analysis") });
+    storyStructureAnalisysPlot->setData(0, Qt::UserRole, StatisticsParameters::Plot);
+    storyStructureAnalisysPlot->setData(0, Qt::UserRole + 1, StatisticsParameters::StoryStructureAnalisysPlot);
+    QTreeWidgetItem* charactersActivityPlot = new QTreeWidgetItem(plots, { tr("Characters activity") });
+    charactersActivityPlot->setData(0, Qt::UserRole, StatisticsParameters::Plot);
+    charactersActivityPlot->setData(0, Qt::UserRole + 1, StatisticsParameters::CharactersActivityPlot);
+    m_statisticTypes->addTopLevelItem(plots);
 
-    const int PLOTS_MIN = m_reports.size();
-    m_reports << new ReportButton(tr("Story structure analysis"), StatisticsParameters::Plot, StatisticsParameters::StoryStructureAnalisysPlot, plots);
-    m_reports << new ReportButton(tr("Characters activity"), StatisticsParameters::Plot, StatisticsParameters::CharactersActivityPlot, plots);
-    const int PLOTS_MAX = m_reports.size();
-
-    QVBoxLayout* plotsLayout = new QVBoxLayout;
-    plotsLayout->setContentsMargins(QMargins());
-    plotsLayout->setSpacing(0);
-    for (int plotIndex = PLOTS_MIN; plotIndex < PLOTS_MAX; ++plotIndex) {
-        plotsLayout->addWidget(m_reports.at(plotIndex));
-    }
-    plots->setLayout(plotsLayout);
-
-    //
-    // Помещаем всех отчёты и графики в группу
-    //
-    QButtonGroup* reportsGroup = new QButtonGroup(reports);
-    {
-        int reportId = 1;
-        for (int reportIndex = 0; reportIndex < m_reports.size(); ++reportIndex) {
-            reportsGroup->addButton(m_reports.at(reportIndex), reportId++);
-        }
-    }
+    m_statisticTypes->expandAll();
+    m_statisticTypes->setHeaderHidden(true);
+    m_statisticTypes->setItemDelegate(new UserInterface::ResearchNavigatorItemDelegate(m_statisticTypes));
+    m_statisticTypes->setStyle(new UserInterface::ResearchNavigatorProxyStyle(m_statisticTypes->style()));
 
     //
     // Настраиваем общую панель с группами отчётов
     //
-    QVBoxLayout* statisticTypesLayout = new QVBoxLayout;
-    statisticTypesLayout->setContentsMargins(QMargins());
-    statisticTypesLayout->setSpacing(0);
-    statisticTypesLayout->addWidget(reports);
-    statisticTypesLayout->addWidget(plots);
-    statisticTypesLayout->addStretch();
-    m_statisticTypes->setLayout(statisticTypesLayout);
-
     QVBoxLayout* statisticTypesMainLayout = new QVBoxLayout;
     statisticTypesMainLayout->setContentsMargins(QMargins());
     statisticTypesMainLayout->setSpacing(0);
@@ -464,15 +457,13 @@ void StatisticsView::initPlot()
 
 void StatisticsView::initConnections()
 {
-    foreach (ReportButton* button, m_reports) {
-        connect(button, SIGNAL(clicked(bool)), this, SLOT(aboutInitDataPanel()));
-        connect(button, SIGNAL(clicked(bool)), this, SLOT(aboutMakeReport()));
-    }
+    connect(m_statisticTypes, &QTreeWidget::currentItemChanged, this, &StatisticsView::aboutInitDataPanel);
+    connect(m_statisticTypes, &QTreeWidget::currentItemChanged, this, &StatisticsView::aboutMakeReport);
 
-    connect(m_statisticSettings, SIGNAL(settingsChanged()), this, SLOT(aboutMakeReport()));
+    connect(m_statisticSettings, &StatisticsSettings::settingsChanged, this, &StatisticsView::aboutMakeReport);
 
-    connect(m_print, SIGNAL(clicked(bool)), this, SLOT(aboutPrintReport()));
-    connect(m_save, SIGNAL(clicked(bool)), this, SLOT(aboutSaveReport()));
+    connect(m_print, &FlatButton::clicked, this, &StatisticsView::aboutPrintReport);
+    connect(m_save, &FlatButton::clicked, this, &StatisticsView::aboutSaveReport);
     connect(m_update, &FlatButton::clicked, [=] {
         //
         // Запоминаем последнюю позицию в отчёте
