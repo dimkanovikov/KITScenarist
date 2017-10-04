@@ -337,7 +337,8 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectsList.cpp \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.cpp \
     scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.cpp \
-    scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.cpp
+    scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.cpp \
+    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -591,7 +592,8 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectsList.h \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.h \
     scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h \
-    scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h
+    scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h \
+    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -615,7 +617,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.ui \
-    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui
+    scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui \
+    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui
 
 
 RESOURCES += \
