@@ -507,5 +507,6 @@ void StatisticsView::initStyleSheet()
 
     m_statisticTypes->setProperty("mainContainer", true);
     m_statisticData->setProperty("mainContainer", true);
+    m_reportData->setProperty("nobordersContainer", true);
 }
 

@@ -61,6 +61,18 @@ namespace {
      * @brief Был ли показан редактор текста хоть раз
      */
     bool g_isBeforeFirstShow = true;
+
+    /**
+     * @brief Сформировать метку для разделения элементов в тулбаре
+     */
+    static QLabel* makeToolbarDivider(QWidget* _parent) {
+        QLabel* divider = new QLabel(_parent);
+        divider->setFixedWidth(1);
+        divider->setProperty("inTopPanel", true);
+        divider->setProperty("topPanelTopBordered", true);
+        divider->setProperty("topPanelRightBordered", true);
+        return divider;
+    }
 }
 
 
@@ -734,11 +746,13 @@ void ScenarioTextEditWidget::initView()
     topLayout->setContentsMargins(QMargins());
     topLayout->setSpacing(0);
     topLayout->addWidget(m_outline);
+    topLayout->addWidget(::makeToolbarDivider(this));
     topLayout->addWidget(m_undo);
     topLayout->addWidget(m_redo);
     topLayout->addWidget(m_textStyles);
     topLayout->addWidget(m_fastFormat);
     topLayout->addWidget(m_search);
+    topLayout->addWidget(::makeToolbarDivider(this));
     topLayout->addWidget(m_review);
     topLayout->addWidget(m_duration);
     topLayout->addWidget(m_countersInfo);
@@ -889,11 +903,9 @@ void ScenarioTextEditWidget::initStyleSheet()
     m_textStyles->setProperty("topPanelRightBordered", true);
 
     m_undo->setProperty("inTopPanel", true);
-    m_undo->setStyleSheet("border-left: 1px solid palette(dark);");
     m_redo->setProperty("inTopPanel", true);
     m_fastFormat->setProperty("inTopPanel", true);
     m_search->setProperty("inTopPanel", true);
-    m_review->setStyleSheet("#scenarioReview { border: none; border-left: 1px solid palette(dark); }");
 
     m_duration->setProperty("inTopPanel", true);
     m_duration->setProperty("topPanelTopBordered", true);
