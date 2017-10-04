@@ -7,16 +7,38 @@ namespace Ui {
     class OnboardingView;
 }
 
-class OnboardingView : public QWidget
+
+namespace UserInterface
 {
-    Q_OBJECT
+    /**
+     * @brief Представление диалога первоначальной настройки приложения
+     */
+    class OnboardingView : public QWidget
+    {
+        Q_OBJECT
 
-public:
-    explicit OnboardingView(QWidget *parent = 0);
-    ~OnboardingView();
+    public:
+        explicit OnboardingView(QWidget *parent = 0);
+        ~OnboardingView();
 
-private:
-    Ui::OnboardingView *ui;
-};
+    signals:
+        /**
+         * @brief Нажата кнопка завершения
+         */
+        void finishClicked();
+
+    private:
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
+
+    private:
+        /**
+         * @brief Интерфейс представления
+         */
+        Ui::OnboardingView* m_ui = nullptr;
+    };
+}
 
 #endif // ONBOARDINGVIEW_H

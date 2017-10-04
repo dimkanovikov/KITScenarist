@@ -18,13 +18,12 @@ class Application : public QApplication
 
 public:
 	explicit Application(int& _argc, char** _argv);
-
     ~Application();
 
-	/**
-	 * @brief Запуск приложения
-	 */
-	void setupManager(ManagementLayer::ApplicationManager* _manager);
+    /**
+     * @brief Запустить приложение
+     */
+    void startApp();
 
 	/**
 	 * @brief Переопределяется для определения события простоя приложения (idle)
@@ -47,7 +46,7 @@ private:
 	/**
 	 * @brief Управляющий приложением
 	 */
-	ManagementLayer::ApplicationManager* m_applicationManager;
+    ManagementLayer::ApplicationManager* m_applicationManager = nullptr;
 
 	/**
 	 * @brief Таймер для определения события простоя

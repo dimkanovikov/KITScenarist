@@ -85,12 +85,21 @@ Application::~Application()
     NetworkRequest::stopAllConnections();
 }
 
-void Application::setupManager(ManagementLayer::ApplicationManager *_manager)
+void Application::startApp()
 {
-    m_applicationManager = _manager;
-    if (!m_fileToOpen.isEmpty()) {
-        m_applicationManager->openFile(m_fileToOpen);
+    //
+    // Получим имя файла, который пользователь возможно хочет открыть
+    //
+    if (m_fileToOpen.isEmpty()) {
+        m_fileToOpen = arguments().value(1, QString::null);
     }
+    m_applicationManager = new ManagementLayer::ApplicationManager(this);
+    m_applicationManager->exec(m_fileToOpen);
+
+    //
+    // Запускаем остальную работу приложения
+    //
+    m_applicationManager->makeStartUpChecks();
 }
 
 bool Application::notify(QObject* _object, QEvent* _event)

@@ -7,6 +7,7 @@
 #endif
 
 #include <ManagementLayer/ApplicationManager.h>
+#include <ManagementLayer/Onboarding/OnboardingManager.h>
 
 
 int main(int argc, char *argv[])
@@ -22,22 +23,16 @@ int main(int argc, char *argv[])
 	QBreakpadInstance.setDumpPath(crashReportsFolderPath);
 #endif
 
-	//
-	// Получим имя файла, который пользователь возможно хочет открыть
-	//
-    const QString fileToOpen = application.arguments().value(1, QString::null);
-	ManagementLayer::ApplicationManager applicationManager;
-	applicationManager.exec(fileToOpen);
-
-	//
-	// Установим управляющего в приложение, для возможности открытия файлов
-	//
-	application.setupManager(&applicationManager);
-
     //
-    // Запускаем остальную работу приложения
+    // Запускаем диалог стартовой настройки приложения
     //
-    applicationManager.makeStartUpChecks();
+    ManagementLayer::OnboardingManager onboardingManager;
+    if (onboardingManager.needConfigureApp()) {
+        onboardingManager.exec();
+        QObject::connect(&onboardingManager, &ManagementLayer::OnboardingManager::finished, &application, &Application::startApp);
+    } else {
+        application.startApp();
+    }
 
 	return application.exec();
 }

@@ -338,7 +338,8 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.cpp \
     scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.cpp \
     scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.cpp \
-    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.cpp
+    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.cpp \
+    scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -593,7 +594,8 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.h \
     scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h \
     scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h \
-    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.h
+    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.h \
+    scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

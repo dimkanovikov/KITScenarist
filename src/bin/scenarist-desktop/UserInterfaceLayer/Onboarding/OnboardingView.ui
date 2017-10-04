@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>606</width>
-    <height>471</height>
+    <width>600</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,11 +81,11 @@
    <item row="0" column="0" colspan="7">
     <widget class="QStackedWidget" name="content">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="languagePage">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="10" column="0" colspan="2">
+       <item row="11" column="0" colspan="2">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
@@ -203,19 +203,6 @@ padding-bottom: 20px;</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>45</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="3" column="2">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
@@ -225,6 +212,19 @@ padding-bottom: 20px;</string>
           <size>
            <width>40</width>
            <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="10" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>45</height>
           </size>
          </property>
         </spacer>
@@ -473,8 +473,8 @@ padding-bottom: 20px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>558</width>
-            <height>299</height>
+            <width>564</width>
+            <height>254</height>
            </rect>
           </property>
          </widget>
