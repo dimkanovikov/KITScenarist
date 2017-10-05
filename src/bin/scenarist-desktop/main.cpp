@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
     //
     // Запускаем диалог стартовой настройки приложения
     //
-    ManagementLayer::OnboardingManager onboardingManager;
-    if (onboardingManager.needConfigureApp()) {
-        onboardingManager.exec();
-        QObject::connect(&onboardingManager, &ManagementLayer::OnboardingManager::finished, &application, &Application::startApp);
-    } else {
+//    ManagementLayer::OnboardingManager onboardingManager;
+//    if (onboardingManager.needConfigureApp()) {
+//        onboardingManager.exec();
+//        QObject::connect(&onboardingManager, &ManagementLayer::OnboardingManager::finished, &application, &Application::startApp);
+//    } else {
         application.startApp();
-    }
+//    }
 
 	return application.exec();
 }

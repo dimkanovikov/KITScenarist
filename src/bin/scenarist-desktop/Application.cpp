@@ -43,7 +43,7 @@ Application::Application(int& _argc, char** _argv) :
     setOrganizationName("DimkaNovikov labs.");
     setOrganizationDomain("dimkanovikov.pro");
     setApplicationName("Scenarist");
-    setApplicationVersion("0.7.1 rc 9");
+    setApplicationVersion("0.7.1 rc 10");
 
     //
     // Настроим стиль отображения внешнего вида приложения
@@ -79,6 +79,8 @@ Application::Application(int& _argc, char** _argv) :
 
 Application::~Application()
 {
+    m_applicationManager->deleteLater();
+
     //
     // Остановим все текущие соединения
     //
@@ -93,7 +95,7 @@ void Application::startApp()
     if (m_fileToOpen.isEmpty()) {
         m_fileToOpen = arguments().value(1, QString::null);
     }
-    m_applicationManager = new ManagementLayer::ApplicationManager(this);
+    m_applicationManager = new ManagementLayer::ApplicationManager;
     m_applicationManager->exec(m_fileToOpen);
 
     //

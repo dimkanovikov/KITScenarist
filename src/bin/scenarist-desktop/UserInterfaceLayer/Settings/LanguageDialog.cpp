@@ -76,6 +76,7 @@ int LanguageDialog::language() const
 
 void LanguageDialog::initView()
 {
+    m_ui->hebrew->hide();
 }
 
 void LanguageDialog::initConnections()
