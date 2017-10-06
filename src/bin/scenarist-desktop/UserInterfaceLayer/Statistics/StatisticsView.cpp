@@ -22,6 +22,7 @@
 #include <QFileDialog>
 #include <QFrame>
 #include <QLabel>
+#include <QModelIndex>
 #include <QPageLayout>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
@@ -190,6 +191,17 @@ void StatisticsView::aboutInitDataPanel()
     } else {
         m_print->hide();
         m_statisticData->setCurrentWidget(m_plotData);
+    }
+
+    //
+    // TODO: переделать по феншую через тип отчёта/графика
+    //
+    const QModelIndex itemIndex = m_statisticTypes->currentIndex();
+    const QModelIndex parentIndex = itemIndex.parent();
+    const int settingsIndex = parentIndex.row() * 5 + itemIndex.row() + 1;
+    m_statisticSettings->setCurrentIndex(settingsIndex);
+    if (ctkPopupWidget* settingsPanel = m_settings->findChild<ctkPopupWidget*>()) {
+        settingsPanel->setFixedSize(m_statisticSettings->currentWidget()->sizeHint());
     }
 }
 
