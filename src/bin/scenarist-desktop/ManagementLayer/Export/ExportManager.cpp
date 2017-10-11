@@ -311,9 +311,6 @@ void ExportManager::initView()
                              "scenario-editor/current-style",
                              DataStorageLayer::SettingsStorage::ApplicationSettings);
     }
-    if (exportTemplate == "default") {
-        exportTemplate = BusinessLogic::ScenarioTemplate::defaultTemplateName();
-    }
     m_exportDialog->setCurrentStyle(exportTemplate);
 }
 

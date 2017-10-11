@@ -941,12 +941,9 @@ void SettingsManager::initView()
                     )
                 );
     // ... текущий шаблон
-    QString templateName = DataStorageLayer::StorageFacade::settingsStorage()->value(
+    const QString templateName = DataStorageLayer::StorageFacade::settingsStorage()->value(
                                "scenario-editor/current-style",
                                DataStorageLayer::SettingsStorage::ApplicationSettings);
-    if (templateName == "default") {
-        templateName = ScenarioTemplate::defaultTemplateName();
-    }
     m_view->setScenarioEditCurrentTemplate(templateName);
     // ... автоматический переход к следующему блоку
     m_view->setScenarioEditAutoJumpToNextBlock(

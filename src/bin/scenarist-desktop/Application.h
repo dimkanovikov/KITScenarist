@@ -21,6 +21,11 @@ public:
     ~Application();
 
     /**
+     * @brief Настроить перевод приложения
+     */
+    void updateTranslation();
+
+    /**
      * @brief Запустить приложение
      */
     void startApp();
@@ -37,10 +42,6 @@ protected:
 	bool event(QEvent* _event);
 
 private:
-	/**
-	 * @brief Настроить перевод приложения
-	 */
-	void initTranslation();
 
 private:
 	/**

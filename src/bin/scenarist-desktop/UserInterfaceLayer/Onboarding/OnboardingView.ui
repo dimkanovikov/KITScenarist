@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>KIT Scenarist. Setup of basic features.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="2">
@@ -37,13 +37,6 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="5">
-    <widget class="QPushButton" name="next">
-     <property name="text">
-      <string>Next</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -56,13 +49,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="2" column="6">
-    <widget class="QPushButton" name="finish">
-     <property name="text">
-      <string>Finish</string>
-     </property>
-    </widget>
    </item>
    <item row="2" column="0">
     <widget class="QPushButton" name="skip">
@@ -81,11 +67,11 @@
    <item row="0" column="0" colspan="7">
     <widget class="QStackedWidget" name="content">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="languagePage">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="11" column="0" colspan="2">
+       <item row="12" column="0" colspan="2">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
@@ -95,7 +81,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QRadioButton" name="english">
          <property name="text">
           <string>English</string>
@@ -105,7 +91,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="8" column="0">
         <widget class="QRadioButton" name="portugues">
          <property name="text">
           <string>Português</string>
@@ -115,21 +101,21 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QRadioButton" name="spanish">
          <property name="text">
           <string>Español</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QRadioButton" name="french">
          <property name="text">
           <string>Français</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="3">
         <widget class="QRadioButton" name="system">
          <property name="text">
           <string>Detect language from system locale</string>
@@ -139,35 +125,35 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QRadioButton" name="ukrainian">
          <property name="text">
           <string>Українська мова</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QRadioButton" name="chinese">
          <property name="text">
           <string>汉语</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QRadioButton" name="farsi">
          <property name="text">
           <string>فارْسِى</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QRadioButton" name="german">
          <property name="text">
           <string>Deutsch</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QRadioButton" name="russian">
          <property name="text">
           <string>Русский</string>
@@ -181,29 +167,28 @@
         <widget class="QLabel" name="label">
          <property name="styleSheet">
           <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+font-weight: 600;</string>
          </property>
          <property name="text">
           <string>Choose language</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QRadioButton" name="kazakh">
          <property name="text">
           <string>Қазақ</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QRadioButton" name="hebrew">
          <property name="text">
           <string>עִבְרִית</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="4" column="2">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -216,7 +201,7 @@ padding-bottom: 20px;</string>
          </property>
         </spacer>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -229,24 +214,82 @@ padding-bottom: 20px;</string>
          </property>
         </spacer>
        </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="themePage">
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="styleSheet">
-          <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+       <item row="3" column="0">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>12</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QRadioButton" name="lightTheme">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="text">
-          <string>Choose application theme</string>
+          <string>Light theme</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QRadioButton" name="radioButton">
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_13">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Theme is more suitable for work in dimly lit rooms, and also in the evening or at night.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QRadioButton" name="darkTheme">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Dark theme</string>
          </property>
@@ -255,14 +298,7 @@ padding-bottom: 20px;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QRadioButton" name="radioButton_2">
-         <property name="text">
-          <string>Light theme</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
+       <item row="6" column="0" colspan="2">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -270,7 +306,54 @@ padding-bottom: 20px;</string>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>253</height>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true">font-size: 24px;
+font-weight: 600;
+</string>
+         </property>
+         <property name="text">
+          <string>Choose application theme</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_14">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Theme is convenient for work with sufficient light.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
           </size>
          </property>
         </spacer>
@@ -279,8 +362,8 @@ padding-bottom: 20px;</string>
      </widget>
      <widget class="QWidget" name="researchPage">
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="useResearch">
          <property name="text">
           <string>Use research module</string>
          </property>
@@ -289,7 +372,7 @@ padding-bottom: 20px;</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>You can collect all the necessary materials for the project in one place. In it, you can save basic information about the script, such as its name, logline, synopsis, and also fill in the title page of the script.
@@ -310,18 +393,33 @@ Also, in research tab you can store a variety of materials (text documents, imag
         <widget class="QLabel" name="label_4">
          <property name="styleSheet">
           <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+font-weight: 600;</string>
          </property>
          <property name="text">
           <string>Research</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -339,15 +437,14 @@ padding-bottom: 20px;</string>
         <widget class="QLabel" name="label_6">
          <property name="styleSheet">
           <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+font-weight: 600;</string>
          </property>
          <property name="text">
           <string>Cards</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>Cards module allows you to see the script in the form of cards placed on the corkboard, thus providing a visual way to work with structure.
@@ -362,7 +459,7 @@ You can add colors and stamp to cards, move, and group them, and all changes mad
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -375,8 +472,8 @@ You can add colors and stamp to cards, move, and group them, and all changes mad
          </property>
         </spacer>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox_2">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="useCards">
          <property name="text">
           <string>Use cards module</string>
          </property>
@@ -384,6 +481,22 @@ You can add colors and stamp to cards, move, and group them, and all changes mad
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -393,15 +506,14 @@ You can add colors and stamp to cards, move, and group them, and all changes mad
         <widget class="QLabel" name="label_8">
          <property name="styleSheet">
           <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+font-weight: 600;</string>
          </property>
          <property name="text">
           <string>Script</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Script module allow you to work with screenplay.
@@ -418,7 +530,7 @@ And the text editor of the script. The editor has many auxiliary functions that 
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <spacer name="verticalSpacer_6">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -431,8 +543,8 @@ And the text editor of the script. The editor has many auxiliary functions that 
          </property>
         </spacer>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox_3">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="useScript">
          <property name="text">
           <string>Use script module</string>
          </property>
@@ -440,6 +552,22 @@ And the text editor of the script. The editor has many auxiliary functions that 
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_13">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -449,15 +577,14 @@ And the text editor of the script. The editor has many auxiliary functions that 
         <widget class="QLabel" name="label_12">
          <property name="styleSheet">
           <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+font-weight: 600;</string>
          </property>
          <property name="text">
           <string>Choose script template</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QScrollArea" name="templates">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -473,12 +600,285 @@ padding-bottom: 20px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>564</width>
-            <height>254</height>
+            <width>547</width>
+            <height>309</height>
            </rect>
           </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="2" column="0" colspan="2">
+            <widget class="QRadioButton" name="finalDraftScreenplayLetter">
+             <property name="text">
+              <string>Final Draft screenplay (Letter)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>12</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QRadioButton" name="russianScreenplay">
+             <property name="text">
+              <string>Russian screenplay</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_15">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>International screenplay standard template for A4 page size.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QRadioButton" name="finalDraftScreenplayA4">
+             <property name="text">
+              <string>Final Draft screenplay (A4)</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>International screenplay standard template for Letter page size.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="QRadioButton" name="russianScreenplayCourierPrime">
+             <property name="text">
+              <string>Russian screenplay with Courier Prime</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_17">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Russian and CIS screenplay standard template.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="2">
+            <widget class="QRadioButton" name="chineseScreenplay">
+             <property name="text">
+              <string>Chinese screenplay</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QLabel" name="label_21">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Chinese screenplay standard template.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0" colspan="2">
+            <widget class="QRadioButton" name="hebrewScreenplay">
+             <property name="text">
+              <string>Hebrew screenplay</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_19">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Russian and CIS screenplay standard template with Courier Prime font instead of Courier New.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QLabel" name="label_20">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Hebrew screenplay standard template.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>12</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="0">
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>12</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="7" column="0">
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>12</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="9" column="0">
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>12</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="11" column="0">
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>12</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </widget>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_14">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -488,15 +888,14 @@ padding-bottom: 20px;</string>
         <widget class="QLabel" name="label_10">
          <property name="styleSheet">
           <string notr="true">font-size: 24px;
-font-weight: 600;
-padding-bottom: 20px;</string>
+font-weight: 600;</string>
          </property>
          <property name="text">
           <string>Statistics</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>The statistics module allows you to get detailed production reports on the script, as well as look at the graphs of the characters' activity throughout the script and the dynamics of the scenes.</string>
@@ -509,7 +908,7 @@ padding-bottom: 20px;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <spacer name="verticalSpacer_7">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -522,16 +921,34 @@ padding-bottom: 20px;</string>
          </property>
         </spacer>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox_4">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="useStatistics">
          <property name="text">
           <string>Use statistics module</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_10">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="finishPage"/>
     </widget>
    </item>
    <item row="1" column="0">
@@ -549,6 +966,13 @@ padding-bottom: 20px;</string>
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="2" column="5" colspan="2">
+    <widget class="QPushButton" name="next">
+     <property name="text">
+      <string>Next</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

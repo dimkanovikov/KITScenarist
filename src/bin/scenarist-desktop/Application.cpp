@@ -63,7 +63,7 @@ Application::Application(int& _argc, char** _argv) :
     //
     // Настроим перевод приложения
     //
-    initTranslation();
+    updateTranslation();
 
     //
     // Настроим таймер определения простоя приложения
@@ -85,6 +85,121 @@ Application::~Application()
     // Остановим все текущие соединения
     //
     NetworkRequest::stopAllConnections();
+}
+
+void Application::updateTranslation()
+{
+    //
+    // Определим язык перевода
+    //
+    const int language =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/language",
+                DataStorageLayer::SettingsStorage::ApplicationSettings)
+            .toInt();
+    QString translationSuffix = QLocale::system().name();
+    translationSuffix.truncate(translationSuffix.lastIndexOf('_'));
+    QString qtTranslationSuffix = translationSuffix;
+    QString qtBaseTranslationSuffix = translationSuffix;
+    //
+    // ... если не удалось определить локаль, используем англоязычный перевод
+    //
+    QLocale::Language currentLanguage = QLocale::AnyLanguage;
+    if (translationSuffix.isEmpty()) {
+        translationSuffix = "en";
+        currentLanguage = QLocale::English;
+    }
+
+    if (language == 0) {
+        translationSuffix = "ru";
+        qtTranslationSuffix = "ru";
+        qtBaseTranslationSuffix = "ru";
+        currentLanguage = QLocale::Russian;
+    } else if (language == 1) {
+        translationSuffix = "es";
+        qtTranslationSuffix = "es";
+        qtBaseTranslationSuffix = "es";
+        currentLanguage = QLocale::Spanish;
+    } else if (language == 2) {
+        translationSuffix = "en";
+        qtTranslationSuffix = "en";
+        qtBaseTranslationSuffix = "en";
+        currentLanguage = QLocale::English;
+    } else if (language == 3) {
+        translationSuffix = "fr";
+        qtTranslationSuffix = "fr";
+        qtBaseTranslationSuffix = "fr";
+        currentLanguage = QLocale::French;
+    } else if (language == 4) {
+        translationSuffix = "kz";
+        qtTranslationSuffix = "kz";
+        qtBaseTranslationSuffix = "ru";
+        currentLanguage = QLocale::Kazakh;
+    } else if (language == 5) {
+        translationSuffix = "ua";
+        qtTranslationSuffix = "ru";
+        qtBaseTranslationSuffix = "ru";
+        currentLanguage = QLocale::Ukrainian;
+    } else if (language == 6) {
+        translationSuffix = "de";
+        qtTranslationSuffix = "de";
+        qtBaseTranslationSuffix = "de";
+        currentLanguage = QLocale::German;
+    } else if (language == 7) {
+        translationSuffix = "pt";
+        qtTranslationSuffix = "pt";
+        qtBaseTranslationSuffix = "pt";
+        currentLanguage = QLocale::Portuguese;
+    } else if (language == 8) {
+        translationSuffix = "fa";
+        qtTranslationSuffix = "fa";
+        currentLanguage = QLocale::Persian;
+    } else if (language == 9) {
+        translationSuffix = "zn";
+        qtTranslationSuffix = "zn";
+        currentLanguage = QLocale::Chinese;
+    } else if (language == 10) {
+        translationSuffix = "he";
+        qtTranslationSuffix = "he";
+        qtBaseTranslationSuffix = "he";
+        currentLanguage = QLocale::Hebrew;
+    }
+
+    QLocale::setDefault(QLocale(currentLanguage));
+
+    //
+    // Подключим файл переводов Qt
+    //
+    static QTranslator* qtTranslator = new QTranslator;
+    removeTranslator(qtTranslator);
+    qtTranslator->load(":/Translations/Translations/qt_" + qtTranslationSuffix + ".qm");
+    installTranslator(qtTranslator);
+
+    //
+    // Подключим дополнительный файл переводов Qt
+    //
+    static QTranslator* qtBaseTranslator = new QTranslator;
+    removeTranslator(qtBaseTranslator);
+    qtBaseTranslator->load(":/Translations/Translations/qtbase_" + qtBaseTranslationSuffix + ".qm");
+    installTranslator(qtBaseTranslator);
+
+    //
+    // Подключим файл переводов программы
+    //
+    static QTranslator* appTranslator = new QTranslator;
+    removeTranslator(appTranslator);
+    appTranslator->load(":/Translations/Translations/Scenarist_" + translationSuffix + ".qm");
+    installTranslator(appTranslator);
+
+    //
+    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
+    //
+    if (currentLanguage == QLocale::Persian
+        || currentLanguage == QLocale::Hebrew) {
+        setLayoutDirection(Qt::RightToLeft);
+    } else {
+        setLayoutDirection(Qt::LeftToRight);
+    }
 }
 
 void Application::startApp()
@@ -138,120 +253,5 @@ bool Application::event(QEvent* _event)
     }
 
     return result;
-}
-
-void Application::initTranslation()
-{
-    //
-    // Определим язык перевода
-    //
-    const int language =
-            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                "application/language",
-                DataStorageLayer::SettingsStorage::ApplicationSettings)
-            .toInt();
-    QString translationSuffix = QLocale::system().name();
-    translationSuffix.truncate(translationSuffix.lastIndexOf('_'));
-    QString qtTranslationSuffix = translationSuffix;
-    QString qtBaseTranslationSuffix = translationSuffix;
-    //
-    // ... если не удалось определить локаль, используем англоязычный перевод
-    //
-    QLocale::Language currentLanguage = QLocale::AnyLanguage;
-    if (translationSuffix.isEmpty()) {
-        translationSuffix = "en";
-        currentLanguage = QLocale::English;
-    }
-
-    if (language == 0) {
-        translationSuffix = "ru";
-        qtTranslationSuffix = "ru";
-        qtBaseTranslationSuffix = "ru";
-        currentLanguage = QLocale::Russian;
-    } else if (language == 1) {
-        translationSuffix = "es";
-        qtTranslationSuffix = "es";
-        qtBaseTranslationSuffix = "es";
-        currentLanguage = QLocale::Spanish;
-    } else if (language == 2) {
-        translationSuffix = "en";
-        currentLanguage = QLocale::English;
-    } else if (language == 3) {
-        translationSuffix = "fr";
-        qtTranslationSuffix = "fr";
-        qtBaseTranslationSuffix = "fr";
-        currentLanguage = QLocale::French;
-    } else if (language == 4) {
-        translationSuffix = "kz";
-        qtTranslationSuffix = "kz";
-        qtBaseTranslationSuffix = "ru";
-        currentLanguage = QLocale::Kazakh;
-    } else if (language == 5) {
-        translationSuffix = "ua";
-        qtTranslationSuffix = "ru";
-        qtBaseTranslationSuffix = "ru";
-        currentLanguage = QLocale::Ukrainian;
-    } else if (language == 6) {
-        translationSuffix = "de";
-        qtTranslationSuffix = "de";
-        qtBaseTranslationSuffix = "de";
-        currentLanguage = QLocale::German;
-    } else if (language == 7) {
-        translationSuffix = "pt";
-        qtTranslationSuffix = "pt";
-        qtBaseTranslationSuffix = "pt";
-        currentLanguage = QLocale::Portuguese;
-    } else if (language == 8) {
-        translationSuffix = "fa";
-        qtTranslationSuffix = "fa";
-        currentLanguage = QLocale::Persian;
-    } else if (language == 9) {
-        translationSuffix = "zn";
-        qtTranslationSuffix = "zn";
-        currentLanguage = QLocale::Chinese;
-    } else if (language == 10) {
-        translationSuffix = "he";
-        qtTranslationSuffix = "he";
-        qtBaseTranslationSuffix = "he";
-        currentLanguage = QLocale::Hebrew;
-    }
-
-    QLocale::setDefault(QLocale(currentLanguage));
-
-    //
-    // Для отличных от английского, подключаем переводы самой Qt
-    //
-    if (translationSuffix != "en") {
-        //
-        // Подключим файл переводов Qt
-        //
-        QTranslator* qtTranslator = new QTranslator;
-        qtTranslator->load(":/Translations/Translations/qt_" + qtTranslationSuffix + ".qm");
-        installTranslator(qtTranslator);
-
-        //
-        // Подключим дополнительный файл переводов Qt
-        //
-        QTranslator* qtBaseTranslator = new QTranslator;
-        qtBaseTranslator->load(":/Translations/Translations/qtbase_" + qtBaseTranslationSuffix + ".qm");
-        installTranslator(qtBaseTranslator);
-    }
-
-    //
-    // Подключим файл переводов программы
-    //
-    QTranslator* appTranslator = new QTranslator;
-    appTranslator->load(":/Translations/Translations/Scenarist_" + translationSuffix + ".qm");
-    installTranslator(appTranslator);
-
-    //
-    // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
-    //
-    if (currentLanguage == QLocale::Persian
-        || currentLanguage == QLocale::Hebrew) {
-        setLayoutDirection(Qt::RightToLeft);
-    } else {
-        setLayoutDirection(Qt::LeftToRight);
-    }
 }
 

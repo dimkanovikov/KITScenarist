@@ -24,7 +24,7 @@ bool SettingsTemplatesManager::newTemplate()
     // Настраиваем диалог настройки шаблона в стандартные значения
     //
     bool isNew = true;
-    m_view->setScenarioTemplate(ScenarioTemplateFacade::getTemplate(ScenarioTemplate::defaultTemplateName()), isNew);
+    m_view->setScenarioTemplate(ScenarioTemplateFacade::getTemplate(ScenarioTemplate::finalDraftA4TemplateName()), isNew);
 
     //
     // Отображаем диалог пользователю
