@@ -64,14 +64,7 @@ void ResearchManager::loadCurrentProject()
     //
     // Загрузим данные сценария
     //
-    m_scenarioData.insert(ScenarioData::NAME_KEY, StorageFacade::scenarioDataStorage()->name());
-    m_scenarioData.insert(ScenarioData::LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
-    m_scenarioData.insert(ScenarioData::ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
-    m_scenarioData.insert(ScenarioData::GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
-    m_scenarioData.insert(ScenarioData::AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
-    m_scenarioData.insert(ScenarioData::CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
-    m_scenarioData.insert(ScenarioData::YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
-    m_scenarioData.insert(ScenarioData::SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
+    loadScenarioData();
 
     //
     // Загрузим модель разработки
@@ -85,6 +78,22 @@ void ResearchManager::loadCurrentProject()
     editResearch(m_model->index(0, 0));
 
     g_isProjectLoading = false;
+}
+
+void ResearchManager::loadScenarioData()
+{
+    m_scenarioData.insert(ScenarioData::NAME_KEY, StorageFacade::scenarioDataStorage()->name());
+    m_scenarioData.insert(ScenarioData::LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
+    m_scenarioData.insert(ScenarioData::ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
+    m_scenarioData.insert(ScenarioData::GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
+    m_scenarioData.insert(ScenarioData::AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
+    m_scenarioData.insert(ScenarioData::CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
+    m_scenarioData.insert(ScenarioData::YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
+    m_scenarioData.insert(ScenarioData::SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
+
+    if (m_view->currentResearchIndex().isValid()) {
+        editResearch(m_view->currentResearchIndex());
+    }
 }
 
 void ResearchManager::loadCurrentProjectSettings(const QString& _projectPath)

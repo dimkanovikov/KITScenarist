@@ -39,6 +39,11 @@ namespace ManagementLayer
         void loadCurrentProject();
 
         /**
+         * @brief Загрузить данные о сценарии из хранилища
+         */
+        void loadScenarioData();
+
+        /**
          * @brief Загрузить настройки текущего проекта
          */
         void loadCurrentProjectSettings(const QString& _projectPath);

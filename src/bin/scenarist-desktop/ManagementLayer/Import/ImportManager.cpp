@@ -13,11 +13,13 @@
 
 #include <DataLayer/Database/Database.h>
 
+#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
 #include <UserInterfaceLayer/Import/ImportDialog.h>
 
+#include <3rd_party/Helpers/ImageHelper.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
@@ -54,6 +56,81 @@ namespace {
      * @brief Формат файлов Fountain
      */
     const QString FOUNTAIN_EXTENSION = ".fountain";
+
+    /**
+     * @brief Сохранить импортированный документ разработки со вложенными документами
+     */
+    static void storeResearchDocument(const QVariantMap& _documentData, Domain::Research* _parent) {
+        //
+        // Т.к. разработка может быть довольно большой, то нужно давать выполняться гуи-потоку,
+        // чтобы не было ощущения зависания
+        //
+        QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
+        //
+        // Загружаем базовые поля
+        //
+        const int type = _documentData["type"].toInt();
+        const int sortOrder = _documentData["sort_order"].toInt();
+        const QString name = _documentData["name"].toString();
+        auto* document = DataStorageLayer::StorageFacade::researchStorage()->storeResearch(_parent, type, sortOrder, name);
+        //
+        // Установим описание
+        //
+        document->setDescription(_documentData["description"].toString());
+        //
+        // Установим ссылку, если есть
+        //
+        if (_documentData.contains("url")) {
+            document->setUrl(_documentData["url"].toString());
+        }
+        //
+        // Установим картинку, если есть
+        //
+        if (_documentData.contains("image")) {
+            document->setImage(ImageHelper::imageFromBytes(_documentData["image"].toByteArray()));
+        }
+        //
+        // Загрузим дочерние элементы, если есть
+        //
+        if (_documentData.contains("childs")) {
+            for (const QVariant& childDocumentData : _documentData["childs"].toList()) {
+                storeResearchDocument(childDocumentData.toMap(), document);
+            }
+        }
+    }
+
+    /**
+     * @brief Сохранить импортированного персонажа
+     */
+    static void storeCharacter(const QVariantMap& _characterData) {
+        const QString name = _characterData["name"].toString();
+        auto* character = DataStorageLayer::StorageFacade::researchStorage()->character(name);
+        if (character == nullptr) {
+            character = DataStorageLayer::StorageFacade::researchStorage()->storeCharacter(name);
+        }
+        character->addDescription(_characterData["description"].toString());
+
+        for (const QVariant& childDocumentData : _characterData["childs"].toList()) {
+            storeResearchDocument(childDocumentData.toMap(), character);
+        }
+    }
+
+    /**
+     * @brief Сохранить импортированную локацию
+     */
+    static void storeLocation(const QVariantMap& _locationData) {
+        const QString name = _locationData["name"].toString();
+        auto* location = DataStorageLayer::StorageFacade::researchStorage()->location(name);
+        if (location == nullptr) {
+            location = DataStorageLayer::StorageFacade::researchStorage()->storeLocation(name);
+        }
+        location->addDescription(_locationData["description"].toString());
+
+        for (const QVariant& childDocumentData : _locationData["childs"].toList()) {
+            storeResearchDocument(childDocumentData.toMap(), location);
+        }
+    }
 }
 
 
@@ -212,8 +289,52 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
     const QVariantMap research = importer->importResearch(_importParameters);
     if (!research.isEmpty()) {
         //
-        // TODO:
+        // Данные сценария
         //
+        {
+            const QVariantMap script = research["script"].toMap();
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setName(script["name"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setLogline(script["logline"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setAdditionalInfo(script["additional_info"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setGenre(script["genre"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setAuthor(script["author"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setContacts(script["contacts"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setYear(script["year"].toString());
+            DataStorageLayer::StorageFacade::scenarioDataStorage()->setSynopsis(script["synopsis"].toString());
+        }
+
+        //
+        // Персонажи
+        //
+        {
+            QLightBoxProgress::setProgressText(tr("Characters import"), QString());
+            const QVariantList characters = research["characters"].toList();
+            for (const QVariant& character : characters) {
+                ::storeCharacter(character.toMap());
+            }
+        }
+
+        //
+        // Локации
+        //
+        {
+            QLightBoxProgress::setProgressText(tr("Locations import"), QString());
+            const QVariantList locations = research["locations"].toList();
+            for (const QVariant& location : locations) {
+                ::storeLocation(location.toMap());
+            }
+        }
+
+        //
+        // Документы
+        //
+        {
+            QLightBoxProgress::setProgressText(tr("Documents import"), QString());
+            const QVariantList documents = research["documents"].toList();
+            for (const QVariant& document : documents) {
+                ::storeResearchDocument(document.toMap(), nullptr);
+            }
+        }
     }
 
     return true;

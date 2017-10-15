@@ -1219,6 +1219,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 void ApplicationManager::aboutImport()
 {
     m_importManager->importScenario(m_scenarioManager->scenario(), m_scenarioManager->cursorPosition());
+    m_researchManager->loadScenarioData();
 }
 
 void ApplicationManager::aboutExport()
