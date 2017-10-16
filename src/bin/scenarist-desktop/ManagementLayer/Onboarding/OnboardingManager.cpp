@@ -30,7 +30,11 @@ OnboardingManager::~OnboardingManager()
 
 bool OnboardingManager::needConfigureApp() const
 {
-    return true;
+    const bool isAppConfigured =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/app-was-configured",
+                DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
+    return !isAppConfigured;
 }
 
 void OnboardingManager::exec()
@@ -174,12 +178,29 @@ void OnboardingManager::setUseDarkTheme(bool _useDarkTheme)
 
 void OnboardingManager::skip()
 {
+    //
+    // Запоминаем, что первоначальная настройка была выполнена
+    //
+    DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+                "application/app-was-configured", "1",
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
+
+    //
+    // И просто перейдём к приложению, не применяя настройки
+    //
     m_view->close();
     emit finished();
 }
 
 void OnboardingManager::finalize()
 {
+    //
+    // Запоминаем, что первоначальная настройка была выполнена
+    //
+    DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+                "application/app-was-configured", "1",
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
+
     //
     // Язык сохранился и применился в момент выбора, поэтому сохраняем все остальные парматеры
     //
