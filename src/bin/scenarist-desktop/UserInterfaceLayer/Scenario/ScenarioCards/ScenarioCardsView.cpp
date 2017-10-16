@@ -24,36 +24,9 @@ using UserInterface::CardsResizer;
 
 namespace {
     /**
-     * @brief Получить путь к последней используемой папке
+     * @brief Ключ настроек для доступа к папке сохранения картинки карточек
      */
-    static QString cardsFolderPath() {
-        QString cardsFolderPath =
-                DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "cards/save-folder",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings);
-        if (cardsFolderPath.isEmpty()) {
-            cardsFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-        }
-        return cardsFolderPath;
-    }
-
-    /**
-     * @brief Получить путь к сохраняемому файлу
-     */
-    static QString cardsFilePath(const QString& _fileName) {
-        QString filePath = cardsFolderPath() + QDir::separator() + _fileName;
-        return QDir::toNativeSeparators(filePath);
-    }
-
-    /**
-     * @brief Сохранить путь к последней используемой папке
-     */
-    static void saveCardsFolderPath(const QString& _path) {
-        DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-                    "cards/save-folder",
-                    QFileInfo(_path).absoluteDir().absolutePath(),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings);
-    }
+    const QString CARDS_FOLDER_KEY = "cards/save-folder";
 }
 
 
@@ -117,15 +90,15 @@ QString ScenarioCardsView::save() const
 
 void ScenarioCardsView::saveToImage()
 {
-    const QString saveFileName = ::cardsFilePath(tr("Cards.png"));
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save cards"), saveFileName, tr("PNG files (*.png)"));
-    if (!fileName.isEmpty()) {
-        if (!fileName.endsWith(".png")) {
-            fileName.append(".png");
+    const QString saveFilePath = DataStorageLayer::StorageFacade::settingsStorage()->documentFilePath(CARDS_FOLDER_KEY, tr("Cards.png"));
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save cards"), saveFilePath, tr("PNG files (*.png)"));
+    if (!filePath.isEmpty()) {
+        if (!filePath.endsWith(".png")) {
+            filePath.append(".png");
         }
-        m_cards->saveToImage(fileName);
+        m_cards->saveToImage(filePath);
 
-        ::saveCardsFolderPath(fileName);
+        DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(CARDS_FOLDER_KEY, filePath);
     }
 }
 

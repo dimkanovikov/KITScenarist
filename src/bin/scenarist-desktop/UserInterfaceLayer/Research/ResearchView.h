@@ -210,6 +210,11 @@ namespace UserInterface
          */
         void currentResearchChanged();
 
+        /**
+         * @brief Сохранить ментальную карту в файл как изображением
+         */
+        void saveMindMapAsImageFile();
+
     private:
         /**
          * @brief Настроить представление

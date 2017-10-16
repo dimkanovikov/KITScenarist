@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
+    <width>641</width>
     <height>587</height>
    </rect>
   </property>
@@ -1267,6 +1267,20 @@
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/remove-edge.png</normaloff>:/Graphics/Icons/MindMap/remove-edge.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="mindMapSaveToFile">
+                  <property name="toolTip">
+                   <string>Save mind map as image file</string>
+                  </property>
+                  <property name="text">
+                   <string>Save mind map as image file</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/Editing/download.png</normaloff>:/Graphics/Icons/Editing/download.png</iconset>
                   </property>
                  </widget>
                 </item>

@@ -28,30 +28,14 @@ using UserInterface::ResearchView;
 
 namespace {
     /**
-     * @brief Получить путь к последней используемой папке с изображениями
+     * @brief Ключ для доступа к папке с загружаемыми картинками
      */
-    static QString imagesFolderPath() {
-        QString imagesFolderPath =
-                DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "research/images-folder",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings);
-        if (imagesFolderPath.isEmpty()) {
-            imagesFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-        }
-        return imagesFolderPath;
-    }
+    const QString IMAGES_FOLDER_KEY = "research/images-folder";
 
     /**
-     * @brief Сохранить путь к последней используемой папке с изображениями
+     * @brief Ключ для доступа к папке с сохраняемыми картинками ментальных карт
      */
-    static void saveImagesFolderPath(const QString& _path) {
-        QFileInfo info(_path);
-
-        DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-                    "research/images-folder",
-                    info.isFile() ? info.absoluteDir().absolutePath() : _path,
-                    DataStorageLayer::SettingsStorage::ApplicationSettings);
-    }
+    const QString MINDMAPS_FOLDER_KEY = "research/mindmaps-folder";
 
     /**
      * @brief Обновить текст в редакторе
@@ -501,6 +485,21 @@ void ResearchView::currentResearchChanged()
     }
 }
 
+void ResearchView::saveMindMapAsImageFile()
+{
+    const QString saveFilePath = DataStorageLayer::StorageFacade::settingsStorage()->documentFilePath(MINDMAPS_FOLDER_KEY, m_ui->mindMapName->text());
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save mind map"), saveFilePath, tr("PNG files (*.png)"));
+    if (!filePath.isEmpty()) {
+        if (!filePath.endsWith(".png")) {
+            filePath.append(".png");
+        }
+
+        m_ui->mindMap->saveToImage(filePath);
+
+        DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(MINDMAPS_FOLDER_KEY, filePath);
+    }
+}
+
 void ResearchView::initView()
 {
     m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
@@ -540,7 +539,8 @@ void ResearchView::initView()
     m_ui->locationName->setFont(nameFont);
     m_ui->locationName->setQuestionPrefix(tr("Location name"));
 
-    m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
+    const QString imagesFolderPath = DataStorageLayer::StorageFacade::settingsStorage()->documentFolderPath(IMAGES_FOLDER_KEY);
+    m_ui->imagesGalleryPane->setLastSelectedImagePath(imagesFolderPath);
 
     m_ui->imagePreview->setReadOnly(true);
 
@@ -569,6 +569,7 @@ void ResearchView::initView()
     m_ui->nodeBackgroundColor->setColorsPane(ColoredToolButton::Google);
     m_ui->addEdge->setIcons(m_ui->addEdge->icon());
     m_ui->deleteEdge->setIcons(m_ui->deleteEdge->icon());
+    m_ui->mindMapSaveToFile->setIcons(m_ui->mindMapSaveToFile->icon());
 
     m_ui->searchWidget->setEditor(m_ui->textDescription->editor());
     m_ui->searchWidget->hide();
@@ -694,14 +695,12 @@ void ResearchView::initConnections()
     // ... смена изображения
     //
     connect(m_ui->imageChange, &QPushButton::clicked, [=]{
+        const QString imagesFolderPath = DataStorageLayer::StorageFacade::settingsStorage()->documentFolderPath(IMAGES_FOLDER_KEY);
         QString imagePath =
-                QFileDialog::getOpenFileName(
-                    this,
-                    tr("Choose image"),
-                    ::imagesFolderPath(),
-                    tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
+                QFileDialog::getOpenFileName(this, tr("Choose image"), imagesFolderPath,
+                                             tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
         if (!imagePath.isEmpty()) {
-            ::saveImagesFolderPath(imagePath);
+            DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(IMAGES_FOLDER_KEY, imagePath);
             m_ui->imagesGalleryPane->setLastSelectedImagePath(imagePath);
 
             QPixmap newImage(imagePath);
@@ -787,7 +786,8 @@ void ResearchView::initConnections()
     //
     connect(m_ui->imagesGalleryName, &QLineEdit::textChanged, this, &ResearchView::imagesGalleryNameChanged);
     connect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, [=]{
-        ::saveImagesFolderPath(m_ui->imagesGalleryPane->lastSelectedImagePath());
+        DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(
+                    IMAGES_FOLDER_KEY, m_ui->imagesGalleryPane->lastSelectedImagePath());
     });
     //
     // ... изображение
@@ -834,6 +834,7 @@ void ResearchView::initConnections()
     connect(m_ui->deleteEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::removeEdge));
     connect(m_ui->nodeTextColor, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::setNodeTextColor);
     connect(m_ui->nodeBackgroundColor, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::setNodeColor);
+    connect(m_ui->mindMapSaveToFile, &FlatButton::clicked, this, &ResearchView::saveMindMapAsImageFile);
 }
 
 void ResearchView::initStyleSheet()
@@ -870,6 +871,7 @@ void ResearchView::initStyleSheet()
     m_ui->deleteEdge->setProperty("inTopPanel", true);
     m_ui->nodeTextColor->setProperty("inTopPanel", true);
     m_ui->nodeBackgroundColor->setProperty("inTopPanel", true);
+    m_ui->mindMapSaveToFile->setProperty("inTopPanel", true);
 
     m_ui->researchNavigator->setProperty("mainContainer", true);
     m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
