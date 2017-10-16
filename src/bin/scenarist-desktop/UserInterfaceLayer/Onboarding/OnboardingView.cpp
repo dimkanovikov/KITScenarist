@@ -3,6 +3,9 @@
 
 #include <3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h>
 
+#include <QDesktopWidget>
+#include <QScreen>
+
 using UserInterface::OnboardingView;
 
 
@@ -68,8 +71,22 @@ void OnboardingView::changeEvent(QEvent* _event)
 
 void OnboardingView::initView()
 {
+    //
+    // Оставим только возможность закрытия окна
+    //
     setWindowFlags(windowFlags() ^ Qt::WindowMinimizeButtonHint ^ Qt::WindowMaximizeButtonHint);
 
+    //
+    // Подвинем окно на центр экрана
+    //
+    const QRect screenRect = QApplication::desktop()->availableGeometry();
+    const QPoint positionForShow((screenRect.width() - width()) / 2,
+                     (screenRect.height() - height()) / 2);
+    move(positionForShow);
+
+    //
+    // Настроим виджеты формы
+    //
     m_ui->content->setCurrentWidget(m_ui->languagePage);
     m_ui->back->setEnabled(false);
 }
