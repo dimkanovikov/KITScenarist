@@ -199,8 +199,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 ApplicationManager::~ApplicationManager()
 {
-    delete m_view;
-    m_view = 0;
+    m_view->deleteLater();
 }
 
 void ApplicationManager::exec(const QString& _fileToOpen)
@@ -242,7 +241,17 @@ void ApplicationManager::makeStartUpChecks()
 
 void ApplicationManager::aboutUpdateProjectsLists()
 {
+    updateRecentProjectsList();
+    updateRemoteProjectsList();
+}
+
+void ApplicationManager::updateRecentProjectsList()
+{
     m_startUpManager->setRecentProjects(m_projectsManager->recentProjects());
+}
+
+void ApplicationManager::updateRemoteProjectsList()
+{
     m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
 }
 
@@ -1858,8 +1867,10 @@ void ApplicationManager::initConnections()
     });
     connect(m_tabs, &SideTabBar::indicatorMenuClicked, m_scenarioManager, &ScenarioManager::scrollToAdditionalCursor);
 
-    connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsLists()));
-    connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsLists()));
+    connect(m_projectsManager, &ProjectsManager::recentProjectsUpdated, this, &ApplicationManager::updateRecentProjectsList);
+    connect(m_projectsManager, &ProjectsManager::remoteProjectsUpdated, this, &ApplicationManager::updateRemoteProjectsList);
+    connect(m_projectsManager, &ProjectsManager::recentProjectNameChanged, m_startUpManager, &StartUpManager::setRecentProjectName);
+    connect(m_projectsManager, &ProjectsManager::remoteProjectNameChanged, m_startUpManager, &StartUpManager::setRemoteProjectName);
 
     connect(m_startUpManager, &StartUpManager::loginRequested, m_synchronizationManager, &SynchronizationManager::login);
     connect(m_startUpManager, &StartUpManager::signUpRequested, m_synchronizationManager, &SynchronizationManager::signUp);
