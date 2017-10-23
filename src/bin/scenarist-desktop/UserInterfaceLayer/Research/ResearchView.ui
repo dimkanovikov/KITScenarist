@@ -137,7 +137,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>11</number>
+          <number>12</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">

@@ -113,26 +113,49 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
         connect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &ResearchView::currentResearchChanged);
         //
-        // TODO: тут должен быть НОРМАЛЬНЫЙ код, который обновляет текущий редактор, если данные сменились
+        // Обновляет текущий редактор, если данные сменились соавтором
         //
-//        connect(_model, &QAbstractItemModel::dataChanged, [=] (const QModelIndex& _index) {
-//            if (_index == currentResearchIndex()) {
-//                //
-//                // Сохраняем последнюю позицию редактирования
-//                //
-//                int lastCursorPos = m_ui->textDescription->editor()->textCursor().position();
-//                //
-//                // Обновляем элемент
-//                //
-//                currentResearchChanged();
-//                //
-//                // Восстанавливаем позицию редактирования
-//                //
-//                QTextCursor cursor = m_ui->textDescription->editor()->textCursor();
-//                cursor.setPosition(lastCursorPos);
-//                m_ui->textDescription->editor()->setTextCursor(cursor);
-//            }
-//        });
+        connect(_model, &QAbstractItemModel::dataChanged, [=] (const QModelIndex& _index) {
+            if (_index == currentResearchIndex()) {
+                //
+                // Сохраняем позицию области прокрутки текущего редактора
+                //
+                QAbstractScrollArea* scrollArea = nullptr;
+                if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->synopsisEdit) {
+                    scrollArea = m_ui->synopsisText->editor();
+                } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->characterEdit) {
+                    scrollArea = m_ui->characterDescription->editor();
+                } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->locationEdit) {
+                    scrollArea = m_ui->locationDescription->editor();
+                } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->textDataEdit) {
+                    scrollArea = m_ui->textDescription->editor();
+                } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->imagesGalleryEdit) {
+                    scrollArea = m_ui->imagesGalleryPane;
+                } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->mindMapEdit) {
+                    scrollArea = m_ui->mindMap;
+                }
+                //
+                int horizontalScroll = 0;
+                int verticalScroll = 0;
+                if (scrollArea != nullptr) {
+                    horizontalScroll = scrollArea->horizontalScrollBar()->value();
+                    verticalScroll = scrollArea->verticalScrollBar()->value();
+                }
+
+                //
+                // Обновляем элемент
+                //
+                currentResearchChanged();
+
+                //
+                // Восстанавливаем позицию редактирования
+                //
+                if (scrollArea != nullptr) {
+                    scrollArea->horizontalScrollBar()->setValue(horizontalScroll);
+                    scrollArea->verticalScrollBar()->setValue(verticalScroll);
+                }
+            }
+        });
     }
 }
 
