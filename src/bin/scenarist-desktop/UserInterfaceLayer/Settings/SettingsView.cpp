@@ -5,14 +5,17 @@
 
 #include <QColorDialog>
 #include <QFileDialog>
+#include <QFontDatabase>
 #include <QSignalMapper>
+#include <QStringListModel>
+
+#include <3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.h>
+#include <3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h>
+#include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
 
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
-
-#include <3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h>
-#include <3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.h>
 
 using UserInterface::SettingsView;
 
@@ -676,6 +679,16 @@ void SettingsView::setColorFor(QWidget* _colorPicker, const QColor& _newColor)
 
 void SettingsView::initData()
 {
+    //
+    // Сформируем модель из списка шрифтов системы
+    //
+    QStringListModel* fontsModel = new QStringListModel(m_ui->researchDefaultFont);
+    fontsModel->setStringList(QFontDatabase().families());
+    m_ui->researchDefaultFont->setModel(fontsModel);
+
+    //
+    // Добавим словари проверки орфографии
+    //
     m_ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
     m_ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
     m_ui->spellCheckingLanguage->addItem(tr("Armenian (Eastern)"), SpellChecker::ArmenianEastern);
@@ -696,7 +709,8 @@ void SettingsView::initData()
 
 void SettingsView::initView()
 {
-    m_ui->categories->setCurrentRow(0);
+    m_ui->categories->setCurrentIndex(m_ui->categories->model()->index(0, 0));
+    m_ui->categories->setItemDelegate(new TreeViewItemDelegate(m_ui->categories));
     m_ui->categoriesWidgets->setCurrentIndex(0);
 
     m_ui->settingsSplitter->setHandleWidth(1);
@@ -740,7 +754,9 @@ void SettingsView::initConnections()
     //
     // Настроим соединения формы
     //
-    connect(m_ui->categories, SIGNAL(currentRowChanged(int)), m_ui->categoriesWidgets, SLOT(setCurrentIndex(int)));
+    connect(m_ui->categories, &QTreeWidget::currentItemChanged, [this] (QTreeWidgetItem* _item) {
+        m_ui->categoriesWidgets->setCurrentIndex(m_ui->categories->indexOfTopLevelItem(_item));
+    });
     // ... смена вкладок страницы настроек приложения
     connect(m_applicationTabs, &TabBar::currentChanged, m_ui->applicationPageStack, &QStackedWidget::setCurrentIndex);
     // ... активация автосохранения
@@ -878,7 +894,8 @@ void SettingsView::initStyleSheet()
                  << m_ui->topRightEmptyLabel_5
                  << m_ui->topRightEmptyLabel_7
                  << m_ui->topRightEmptyLabel_8
-                 << m_ui->topRightEmptyLabel_9;
+                 << m_ui->topRightEmptyLabel_9
+                 << m_ui->topRightEmptyLabel_10;
 
     foreach (QWidget* topEmpty, topEmptyList) {
         topEmpty->setProperty("inTopPanel", true);
@@ -891,6 +908,7 @@ void SettingsView::initStyleSheet()
     QList<QWidget*> mainList;
     mainList << m_ui->categories
              << m_ui->applicationPageStack
+             << m_ui->researchPageWidget
              << m_ui->cardsPageWidget
              << m_ui->scenarioEditPageStack
              << m_ui->navigatorPageWidget
