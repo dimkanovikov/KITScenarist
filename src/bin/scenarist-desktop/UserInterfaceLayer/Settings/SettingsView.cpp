@@ -244,6 +244,12 @@ void SettingsView::setApplicationModuleStatistics(bool _use)
     m_ui->applicationModuleStatistics->setChecked(_use);
 }
 
+void SettingsView::setResearchDefaultFont(const QString& _family, int _size)
+{
+    m_ui->researchDefaultFont->setCurrentText(_family);
+    m_ui->researchDefaultFontSize->setValue(_size);
+}
+
 void SettingsView::setCardsUseCorkboardBackground(bool _use)
 {
     if (_use) {
@@ -815,6 +821,12 @@ void SettingsView::initConnections()
     connect(m_ui->applicationModuleCards, &QCheckBox::toggled, this, &SettingsView::applicationModuleCardsChanged);
     connect(m_ui->applicationModuleScenario, &QCheckBox::toggled, this, &SettingsView::applicationModuleScenarioChanged);
     connect(m_ui->applicationModuleStatistics, &QCheckBox::toggled, this, &SettingsView::applicationModuleStatisticsChanged);
+    // ... разработка
+    auto notifyResearchDefaultFontChanged = [this] {
+        emit researchDefaultFontChanged(m_ui->researchDefaultFont->currentText(), m_ui->researchDefaultFontSize->value());
+    };
+    connect(m_ui->researchDefaultFont, &QComboBox::currentTextChanged, notifyResearchDefaultFontChanged);
+    connect(m_ui->researchDefaultFontSize, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), notifyResearchDefaultFontChanged);
     // ... карточки
     connect(m_ui->cardsUseCorkboardBackground, &QRadioButton::toggled, this, &SettingsView::cardsUseCorkboardBackgroundChanged);
     // ... текстовый редактор

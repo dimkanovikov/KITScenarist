@@ -144,7 +144,13 @@ void ResearchManager::updateSettings()
     // Обновим настройку используемого шаблона для синопсиса
     //
     BusinessLogic::ScenarioTemplate scenarioTemplate = BusinessLogic::ScenarioTemplateFacade::getTemplate();
-    const QFont defaultFont = scenarioTemplate.blockStyle(BusinessLogic::ScenarioBlockStyle::Action).font();
+    const QFont defaultFont(DataStorageLayer::StorageFacade::settingsStorage()->value(
+                                "research/default-font/family",
+                                DataStorageLayer::SettingsStorage::ApplicationSettings),
+                            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                                "research/default-font/size",
+                                DataStorageLayer::SettingsStorage::ApplicationSettings)
+                            .toInt());
     m_view->setTextSettings(scenarioTemplate.pageSizeId(), scenarioTemplate.pageMargins(), scenarioTemplate.numberingAlignment(), defaultFont);
 }
 

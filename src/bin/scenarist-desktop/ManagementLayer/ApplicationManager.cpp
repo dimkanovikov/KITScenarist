@@ -1911,8 +1911,10 @@ void ApplicationManager::initConnections()
     connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
     connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
 
-    connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
-            this, SLOT(aboutApplicationSettingsUpdated()));
+    connect(m_settingsManager, &SettingsManager::applicationSettingsUpdated,
+            this, &ApplicationManager::aboutApplicationSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::researchSettingsUpdated,
+            m_researchManager, &ResearchManager::updateSettings);
     connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
             m_researchManager, &ResearchManager::updateSettings);
     connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,

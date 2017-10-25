@@ -219,6 +219,12 @@ void SettingsManager::applicationModuleStatisticsChanged(bool _value)
     storeValue("application/modules/statistics", _value);
 }
 
+void SettingsManager::researchDefaultFontChanged(const QString& _family, int _size)
+{
+    storeValue("research/default-font/family", _family);
+    storeValue("research/default-font/size", _size);
+}
+
 void SettingsManager::cardsUseCorkboardBackgroundChanged(bool _value)
 {
     storeValue("cards/use-corkboard", _value);
@@ -789,6 +795,19 @@ void SettingsManager::initView()
                 );
 
     //
+    // Настройки разработки
+    //
+    m_view->setResearchDefaultFont(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "research/default-font/family",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings),
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "research/default-font/size",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
+
+    //
     // Настройки карточек
     //
     m_view->setCardsUseCorkboardBackground(
@@ -1173,6 +1192,8 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationModuleScenarioChanged);
     connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationModuleStatisticsChanged);
 
+    connect(m_view, &SettingsView::researchDefaultFontChanged, this, &SettingsManager::researchDefaultFontChanged);
+
     connect(m_view, &SettingsView::cardsUseCorkboardBackgroundChanged, this, &SettingsManager::cardsUseCorkboardBackgroundChanged);
     connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsBackgroundColorChanged);
     connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsBackgroundColorDarkChanged);
@@ -1249,6 +1270,8 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationSettingsUpdated);
     connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationSettingsUpdated);
     connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationSettingsUpdated);
+
+    connect(m_view, &SettingsView::researchDefaultFontChanged, this, &SettingsManager::researchSettingsUpdated);
 
     connect(m_view, &SettingsView::applicationUseDarkThemeChanged, this, &SettingsManager::cardsSettingsUpdated);
     connect(m_view, &SettingsView::cardsUseCorkboardBackgroundChanged, this, &SettingsManager::cardsSettingsUpdated);
