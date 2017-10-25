@@ -120,9 +120,19 @@ namespace ManagementLayer
         void setRecentProjects(QAbstractItemModel* _model);
 
         /**
+         * @brief Установить имя проекта из списка недавних
+         */
+        void setRecentProjectName(int _index, const QString& _name);
+
+        /**
          * @brief Установить список проектов из облака
          */
         void setRemoteProjects(QAbstractItemModel* _model);
+
+        /**
+         * @brief Установить имя проекта из списка облачных
+         */
+        void setRemoteProjectName(int _index, const QString& _name);
 
         /**
          * @brief Попробовать повторно авторизоваться, после неудачной попытки

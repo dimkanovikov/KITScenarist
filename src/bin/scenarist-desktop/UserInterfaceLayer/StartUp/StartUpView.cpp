@@ -55,6 +55,11 @@ void StartUpView::setRecentProjects(QAbstractItemModel* _recentProjectsModel)
     m_ui->recentFiles->setModel(_recentProjectsModel, PROJECTS_IS_LOCAL);
 }
 
+void StartUpView::setRecentProjectName(int _index, const QString& _name)
+{
+    m_ui->recentFiles->setProjectName(_index, _name);
+}
+
 void StartUpView::setUpdateInfo(const QString& _updateInfo)
 {
     m_ui->updateInfo->setText(_updateInfo);
@@ -114,6 +119,11 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
     // Установим новую модель
     //
     m_ui->remoteFiles->setModel(_remoteProjectsModel, PROJECTS_IS_REMOTE);
+}
+
+void StartUpView::setRemoteProjectName(int _index, const QString& _name)
+{
+    m_ui->remoteFiles->setProjectName(_index, _name);
 }
 
 void StartUpView::enableProgressLoginLabel(int _dots, bool _firstUpdate)

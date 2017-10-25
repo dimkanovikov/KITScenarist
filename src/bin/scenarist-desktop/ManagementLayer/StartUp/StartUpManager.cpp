@@ -389,9 +389,19 @@ void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
     m_view->setRecentProjects(_model);
 }
 
+void StartUpManager::setRecentProjectName(int _index, const QString& _name)
+{
+    m_view->setRecentProjectName(_index, _name);
+}
+
 void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 {
     m_view->setRemoteProjects(_model);
+}
+
+void StartUpManager::setRemoteProjectName(int _index, const QString& _name)
+{
+    m_view->setRemoteProjectName(_index, _name);
 }
 
 void StartUpManager::retryLogin(const QString& _error)

@@ -34,8 +34,7 @@ namespace {
 
 
 Application::Application(int& _argc, char** _argv) :
-    QApplication(_argc, _argv),
-    m_applicationManager(0)
+    QApplication(_argc, _argv)
 {
     //
     // Настроим информацию о приложении
@@ -79,8 +78,6 @@ Application::Application(int& _argc, char** _argv) :
 
 Application::~Application()
 {
-    m_applicationManager->deleteLater();
-
     //
     // Остановим все текущие соединения
     //
@@ -210,7 +207,7 @@ void Application::startApp()
     if (m_fileToOpen.isEmpty()) {
         m_fileToOpen = arguments().value(1, QString::null);
     }
-    m_applicationManager = new ManagementLayer::ApplicationManager;
+    m_applicationManager = new ManagementLayer::ApplicationManager(this);
     m_applicationManager->exec(m_fileToOpen);
 
     //
