@@ -251,6 +251,11 @@ namespace ManagementLayer
 
     private:
         /**
+         * @brief Настроить контроллеры
+         */
+        void initControllers();
+
+        /**
          * @brief Настроить представление
          */
         void initView();

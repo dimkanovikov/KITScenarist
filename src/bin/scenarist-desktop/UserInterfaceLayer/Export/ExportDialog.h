@@ -87,6 +87,11 @@ namespace UserInterface
          */
         QString exportFormat() const;
 
+        /**
+         * @brief Установить модель документов для экспорта
+         */
+        void setResearchModel(QAbstractItemModel* _model);
+
     signals:
         /**
          * @brief Сменился стиль
@@ -130,6 +135,11 @@ namespace UserInterface
          * @brief Настроить внешний вид
          */
         void initStyleSheet();
+
+        /**
+         * @brief Переопределяем, чтобы возвратить таббар для заголовка
+         */
+        QWidget* titleWidget() const override;
 
     private:
         /**

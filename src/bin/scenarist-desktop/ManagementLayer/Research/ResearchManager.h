@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMap>
 
+class QAbstractItemModel;
+
 namespace UserInterface {
     class ResearchView;
     class ResearchItemDialog;
@@ -31,7 +33,15 @@ namespace ManagementLayer
     public:
         explicit ResearchManager(QObject* _parent, QWidget* _parentWidget);
 
+        /**
+         * @brief Получить представление контроллера
+         */
         QWidget* view() const;
+
+        /**
+         * @brief Получить модель разработки
+         */
+        QAbstractItemModel* model() const;
 
         /**
          * @brief Загрузить данные текущего проекта

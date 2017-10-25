@@ -339,7 +339,8 @@ SOURCES += \
     scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.cpp \
     scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.cpp \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.cpp \
-    scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.cpp
+    scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.cpp \
+    scenarist-core/3rd_party/Helpers/RunOnce.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -595,7 +596,8 @@ HEADERS += \
     scenarist-core/3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h \
     scenarist-core/3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.h \
-    scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.h
+    scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.h \
+    scenarist-core/3rd_party/Helpers/RunOnce.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

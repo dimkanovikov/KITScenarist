@@ -5,8 +5,11 @@
 
 #include <QTextDocument>
 
+class QAbstractItemModel;
+
 namespace BusinessLogic {
-	class ScenarioDocument;
+    class ScenarioDocument;
+    class ResearchModelCheckableProxy;
 }
 
 namespace UserInterface {
@@ -25,6 +28,11 @@ namespace ManagementLayer
 
 	public:
 		explicit ExportManager(QObject* _parent, QWidget* _parentWidget);
+
+        /**
+         * @brief Установить модель разработки
+         */
+        void setResearchModel(QAbstractItemModel* _model);
 
 		/**
 		 * @brief Экспортировать документ
@@ -88,17 +96,22 @@ namespace ManagementLayer
 		/**
 		 * @brief Текущий экспортируемый сценарий
 		 */
-		BusinessLogic::ScenarioDocument* m_currentScenario;
+        BusinessLogic::ScenarioDocument* m_currentScenario = nullptr;
 
 		/**
 		 * @brief Диалог экспорта
 		 */
-		UserInterface::ExportDialog* m_exportDialog;
+        UserInterface::ExportDialog* m_exportDialog = nullptr;
 
 		/**
 		 * @brief Данные о сценарии, используются для печати титульной страницы
 		 */
-		QMap<QString, QString> m_scenarioData;
+        QMap<QString, QString> m_scenarioData;
+
+        /**
+         * @brief Прокси модель для возможности выбора элементов разработки
+         */
+        BusinessLogic::ResearchModelCheckableProxy* m_modelProxy = nullptr;
 	};
 }
 

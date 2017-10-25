@@ -7,6 +7,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/FileHelper.h>
+#include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -16,36 +17,18 @@ using UserInterface::ExportDialog;
 
 namespace {
     /**
-     * @brief Получить путь к папке экспортируемых файлов
+     * @brief Ключ для доступа к папке с экспортируемыми документами
      */
-    static QString exportFolderPath() {
-        QString exportFolderPath =
-                DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "export/file-path",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings);
-        if (exportFolderPath.isEmpty()) {
-            exportFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-        }
-        return exportFolderPath;
-    }
+    const QString EXPORT_FOLDER_KEY = "export/file-path";
 
     /**
-     * @brief Получить путь к экспортируемому файлу
+     * @brief Индексы вкладок табов для экспорта
      */
-    static QString exportFilePath(const QString& _fileName) {
-        QString filePath = exportFolderPath() + QDir::separator() + _fileName;
-        return QDir::toNativeSeparators(filePath);
-    }
-
-    /**
-     * @brief Сохранить путь к папке экспортируемых файлов
-     */
-    static void saveExportFolderPath(const QString& _path) {
-        DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-                    "export/file-path",
-                    QFileInfo(_path).absoluteDir().absolutePath(),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings);
-    }
+    /** @{ */
+    const int RESEARCH_TAB_INDEX = 0;
+    const int OUTLINE_TAB_INDEX = 1;
+    const int SCRIPT_TAB_INDEX = 1;
+    /** @} */
 }
 
 
@@ -83,7 +66,9 @@ void ExportDialog::setExportFileName(const QString& _fileName)
     if (m_ui->file->text().isEmpty()
         && m_exportFileName != _fileName) {
         m_exportFileName = _fileName;
-        m_ui->file->setText(::exportFilePath(_fileName));
+        const QString exportFilePath =
+                DataStorageLayer::StorageFacade::settingsStorage()->documentFilePath(EXPORT_FOLDER_KEY, _fileName);
+        m_ui->file->setText(exportFilePath);
         aboutFormatChanged();
     }
 
@@ -133,7 +118,7 @@ void ExportDialog::setPrintTitle(bool _isChecked)
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
     BusinessLogic::ExportParameters exportParameters;
-    exportParameters.outline = m_ui->outline->isChecked();
+    exportParameters.outline = m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX;
     exportParameters.filePath = m_ui->file->text();
     exportParameters.checkPageBreaks = m_ui->checkPageBreaks->isChecked();
     exportParameters.style = m_ui->styles->currentText();
@@ -159,6 +144,11 @@ QString ExportDialog::exportFormat() const
         format = "fountain";
     }
     return format;
+}
+
+void ExportDialog::setResearchModel(QAbstractItemModel* _model)
+{
+    m_ui->researchExportTree->setModel(_model);
 }
 
 void ExportDialog::aboutFormatChanged()
@@ -197,9 +187,11 @@ void ExportDialog::aboutChooseFile()
     } else {
         format = "fountain";
     }
+    const QString exportFolderPath =
+            DataStorageLayer::StorageFacade::settingsStorage()->documentFolderPath(EXPORT_FOLDER_KEY);
     QString filePath =
             QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
-                (!m_ui->file->text().isEmpty() ? m_ui->file->text() : ::exportFolderPath()),
+                (!m_ui->file->text().isEmpty() ? m_ui->file->text() : exportFolderPath),
                 tr("%1 files (*%2)").arg(format.toUpper()).arg(format));
 
     if (!filePath.isEmpty()) {
@@ -207,7 +199,7 @@ void ExportDialog::aboutChooseFile()
         // Сохраним путь к файлу
         //
         m_ui->file->setText(filePath);
-        ::saveExportFolderPath(filePath);
+        DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(EXPORT_FOLDER_KEY, filePath);
 
         //
         // Обновим расширение файла
@@ -228,15 +220,40 @@ void ExportDialog::aboutFileNameChanged()
 
 void ExportDialog::initView()
 {
-    m_ui->browseFile->updateIcons();
+    m_ui->exportParameters->setCurrentWidget(m_ui->researchExportPage);
 
+    m_ui->exportTypes->addTab(tr("Export research"));
+    m_ui->exportTypes->addTab(tr("Export outline"));
+    m_ui->exportTypes->addTab(tr("Export script"));
+
+    m_ui->researchExportTree->setItemDelegate(new TreeViewItemDelegate(m_ui->researchExportTree));
+
+    m_ui->browseFile->updateIcons();
+    QButtonGroup* scriptFormatTypeGroup = new QButtonGroup(this);
+    scriptFormatTypeGroup->addButton(m_ui->docx);
+    scriptFormatTypeGroup->addButton(m_ui->pdf);
+    scriptFormatTypeGroup->addButton(m_ui->fdx);
+    scriptFormatTypeGroup->addButton(m_ui->fountain);
     m_ui->additionalSettings->setVisible(m_ui->showAdditional->isChecked());
+
+    m_ui->researchBrowseFile->updateIcons();
 
     resize(width(), sizeHint().height());
 }
 
 void ExportDialog::initConnections()
 {
+    //
+    // Покажем страницу параметров экспорта в зависимости от выбранной вкладки
+    //
+    connect(m_ui->exportTypes, &TabBarExpanded::currentChanged, [this] (int _index) {
+        if (_index == RESEARCH_TAB_INDEX) {
+            m_ui->exportParameters->setCurrentWidget(m_ui->researchExportPage);
+        } else {
+            m_ui->exportParameters->setCurrentWidget(m_ui->scriptExportPage);
+        }
+    });
+
     connect(m_ui->showAdditional, SIGNAL(toggled(bool)), m_ui->additionalSettings, SLOT(setVisible(bool)));
 
     connect(m_ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
@@ -253,5 +270,18 @@ void ExportDialog::initConnections()
 
 void ExportDialog::initStyleSheet()
 {
+    m_ui->toolbarLeftEmptyLabel->setProperty("inTopPanel", true);
+    m_ui->toolbarLeftEmptyLabel->setProperty("topPanelTopBordered", true);
+    m_ui->toolbarLeftEmptyLabel->setProperty("topPanelLeftBordered", true);
+    m_ui->exportTypes->setProperty("inTopPanel", true);
+    m_ui->toolbarRightEmptyLabel->setProperty("inTopPanel", true);
+    m_ui->toolbarRightEmptyLabel->setProperty("topPanelTopBordered", true);
+    m_ui->toolbarRightEmptyLabel->setProperty("topPanelRightBordered", true);
     m_ui->browseFile->setProperty("isBrowseButton", true);
+    m_ui->researchBrowseFile->setProperty("isBrowseButton", true);
+}
+
+QWidget* ExportDialog::titleWidget() const
+{
+    return m_ui->toolbar;
 }

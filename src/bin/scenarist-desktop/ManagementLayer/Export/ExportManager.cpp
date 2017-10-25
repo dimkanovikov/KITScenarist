@@ -2,6 +2,7 @@
 
 #include <ManagementLayer/Project/ProjectsManager.h>
 
+#include <BusinessLayer/Research/ResearchModel.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/Export/DocxExporter.h>
@@ -11,10 +12,12 @@
 
 #include <DataLayer/Database/Database.h>
 
-#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
 
+#include <Domain/Research.h>
 #include <Domain/Scenario.h>
 #include <Domain/ScenarioData.h>
 
@@ -44,10 +47,16 @@ namespace {
 ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
     QObject(_parent),
     m_currentScenario(0),
-    m_exportDialog(new ExportDialog(_parentWidget))
+    m_exportDialog(new ExportDialog(_parentWidget)),
+    m_modelProxy(new BusinessLogic::ResearchModelCheckableProxy(this))
 {
     initView();
     initConnections();
+}
+
+void ExportManager::setResearchModel(QAbstractItemModel* _model)
+{
+    m_modelProxy->setSourceModel(_model);
 }
 
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
@@ -332,4 +341,9 @@ void ExportManager::initExportDialog()
         exportFileName = fileInfo.completeBaseName();
     }
     m_exportDialog->setExportFileName(exportFileName);
+
+    //
+    // Загрузим и установим модель документов разработки
+    //
+    m_exportDialog->setResearchModel(m_modelProxy);
 }

@@ -57,6 +57,11 @@ QWidget* ResearchManager::view() const
     return m_view;
 }
 
+QAbstractItemModel* ResearchManager::model() const
+{
+    return m_model;
+}
+
 void ResearchManager::loadCurrentProject()
 {
     g_isProjectLoading = true;

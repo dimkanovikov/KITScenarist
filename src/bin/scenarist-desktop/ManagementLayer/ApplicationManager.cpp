@@ -190,6 +190,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     m_exportManager(new ExportManager(this, m_view)),
     m_synchronizationManager(new SynchronizationManager(this, m_view))
 {
+    initControllers();
     initView();
     initConnections();
     initStyleSheet();
@@ -1664,6 +1665,11 @@ void ApplicationManager::closeCurrentProject()
 bool ApplicationManager::isProjectLoaded() const
 {
     return m_projectsManager->isCurrentProjectValid();
+}
+
+void ApplicationManager::initControllers()
+{
+    m_exportManager->setResearchModel(m_researchManager->model());
 }
 
 void ApplicationManager::initView()
