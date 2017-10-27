@@ -46,7 +46,33 @@ ExportDialog::~ExportDialog()
     delete m_ui;
 }
 
-void ExportDialog::setExportFilePath(const QString& _filePath)
+void ExportDialog::setResearchExportFilePath(const QString& _filePath)
+{
+    m_ui->researchFile->setText(_filePath);
+
+    checkResearchExportAvailability();
+}
+
+void ExportDialog::setResearchExportFileName(const QString& _fileName)
+{
+    if (m_ui->researchFile->text().isEmpty()
+        && m_researchExportFileName != _fileName) {
+        m_researchExportFileName = _fileName;
+        const QString exportFilePath =
+                DataStorageLayer::StorageFacade::settingsStorage()->documentFilePath(EXPORT_FOLDER_KEY, _fileName + ".pdf");
+        m_ui->researchFile->setText(exportFilePath);
+        updateScriptFileFormat();
+    }
+
+    checkResearchExportAvailability();
+}
+
+void ExportDialog::setResearchModel(QAbstractItemModel* _model)
+{
+    m_ui->researchExportTree->setModel(_model);
+}
+
+void ExportDialog::setScriptExportFilePath(const QString& _filePath)
 {
     m_ui->file->setText(_filePath);
     QFileInfo fileInfo(_filePath);
@@ -58,21 +84,21 @@ void ExportDialog::setExportFilePath(const QString& _filePath)
         m_ui->fdx->setChecked(true);
     }
 
-    aboutFileNameChanged();
+    checkScriptExportAvailability();
 }
 
-void ExportDialog::setExportFileName(const QString& _fileName)
+void ExportDialog::setScriptExportFileName(const QString& _fileName)
 {
     if (m_ui->file->text().isEmpty()
-        && m_exportFileName != _fileName) {
-        m_exportFileName = _fileName;
+        && m_scriptExportFileName != _fileName) {
+        m_scriptExportFileName = _fileName;
         const QString exportFilePath =
                 DataStorageLayer::StorageFacade::settingsStorage()->documentFilePath(EXPORT_FOLDER_KEY, _fileName);
         m_ui->file->setText(exportFilePath);
-        aboutFormatChanged();
+        updateScriptFileFormat();
     }
 
-    aboutFileNameChanged();
+    checkScriptExportAvailability();
 }
 
 void ExportDialog::setCheckPageBreaks(bool _check)
@@ -118,8 +144,13 @@ void ExportDialog::setPrintTitle(bool _isChecked)
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
     BusinessLogic::ExportParameters exportParameters;
-    exportParameters.outline = m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX;
-    exportParameters.filePath = m_ui->file->text();
+    exportParameters.isResearch = m_ui->exportTypes->currentIndex() == RESEARCH_TAB_INDEX;
+    exportParameters.isOutline = m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX;
+    if (exportParameters.isResearch) {
+        exportParameters.filePath = m_ui->researchFile->text();
+    } else {
+        exportParameters.filePath = m_ui->file->text();
+    }
     exportParameters.checkPageBreaks = m_ui->checkPageBreaks->isChecked();
     exportParameters.style = m_ui->styles->currentText();
     exportParameters.printTilte = m_ui->printTitle->isChecked();
@@ -131,27 +162,62 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
     return exportParameters;
 }
 
+QString ExportDialog::researchFilePath() const
+{
+    return m_ui->researchFile->text();
+}
+
+QString ExportDialog::scriptFilePath() const
+{
+    return m_ui->file->text();
+}
+
 QString ExportDialog::exportFormat() const
 {
     QString format;
-    if (m_ui->docx->isChecked()) {
-        format = "docx";
-    } else if (m_ui->pdf->isChecked()) {
+    if (m_ui->exportTypes->currentIndex() == RESEARCH_TAB_INDEX) {
         format = "pdf";
-    } else if (m_ui->fdx->isChecked()) {
-        format = "fdx";
     } else {
-        format = "fountain";
+        if (m_ui->docx->isChecked()) {
+            format = "docx";
+        } else if (m_ui->pdf->isChecked()) {
+            format = "pdf";
+        } else if (m_ui->fdx->isChecked()) {
+            format = "fdx";
+        } else {
+            format = "fountain";
+        }
     }
     return format;
 }
 
-void ExportDialog::setResearchModel(QAbstractItemModel* _model)
+void ExportDialog::chooseResearchFile()
 {
-    m_ui->researchExportTree->setModel(_model);
+    const QString format = "pdf";
+    const QString exportFolderPath =
+            DataStorageLayer::StorageFacade::settingsStorage()->documentFolderPath(EXPORT_FOLDER_KEY);
+    QString filePath =
+            QFileDialog::getSaveFileName(this, tr("Choose file to export research"),
+                (!m_ui->researchFile->text().isEmpty() ? m_ui->researchFile->text() : exportFolderPath),
+                tr("%1 files (*%2)").arg(format.toUpper()).arg(format));
+
+    if (!filePath.isEmpty()) {
+        //
+        // Обновить имя файла, если не задано расширение
+        //
+        if (!filePath.endsWith(format)) {
+            filePath.append("." + format);
+        }
+
+        //
+        // Сохраним путь к файлу
+        //
+        m_ui->researchFile->setText(filePath);
+        DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(EXPORT_FOLDER_KEY, filePath);
+    }
 }
 
-void ExportDialog::aboutFormatChanged()
+void ExportDialog::updateScriptFileFormat()
 {
     const QString format = exportFormat();
     QString filePath = m_ui->file->text();
@@ -175,7 +241,7 @@ void ExportDialog::aboutFormatChanged()
     }
 }
 
-void ExportDialog::aboutChooseFile()
+void ExportDialog::chooseScriptFile()
 {
     QString format;
     if (m_ui->docx->isChecked()) {
@@ -204,18 +270,41 @@ void ExportDialog::aboutChooseFile()
         //
         // Обновим расширение файла
         //
-        aboutFormatChanged();
+        updateScriptFileFormat();
     }
 }
 
-void ExportDialog::aboutFileNameChanged()
+void ExportDialog::checkResearchExportAvailability()
 {
-    int lastCursorPosition = m_ui->file->cursorPosition();
-    m_ui->file->setText(FileHelper::systemSavebleFileName(m_ui->file->text()));
-    m_ui->file->setCursorPosition(lastCursorPosition);
+    checkExportAvailability(RESEARCH_TAB_INDEX);
+}
 
-    m_ui->exportTo->setEnabled(!m_ui->file->text().isEmpty());
-    m_ui->existsLabel->setVisible(QFile::exists(m_ui->file->text()));
+void ExportDialog::checkScriptExportAvailability()
+{
+    checkExportAvailability(SCRIPT_TAB_INDEX);
+}
+
+void ExportDialog::checkExportAvailability(int _index)
+{
+    //
+    // Проверяем в зависимости от того, какая вкладка активна в данный момент
+    //
+    QLineEdit* filePath = nullptr;
+    QLabel* fileExists = nullptr;
+    if (_index == RESEARCH_TAB_INDEX) {
+        filePath = m_ui->researchFile;
+        fileExists = m_ui->researchExistsLabel;
+    } else {
+        filePath = m_ui->file;
+        fileExists = m_ui->existsLabel;
+    }
+
+    int lastCursorPosition = filePath->cursorPosition();
+    filePath->setText(FileHelper::systemSavebleFileName(filePath->text()));
+    filePath->setCursorPosition(lastCursorPosition);
+    fileExists->setVisible(QFile::exists(filePath->text()));
+
+    m_ui->exportTo->setEnabled(!filePath->text().isEmpty());
 }
 
 void ExportDialog::initView()
@@ -243,6 +332,9 @@ void ExportDialog::initView()
 
 void ExportDialog::initConnections()
 {
+    connect(m_ui->researchBrowseFile, &FlatButton::clicked, this, &ExportDialog::chooseResearchFile);
+    connect(m_ui->researchFile, &QLineEdit::textChanged, this, &ExportDialog::checkResearchExportAvailability);
+
     //
     // Покажем страницу параметров экспорта в зависимости от выбранной вкладки
     //
@@ -252,20 +344,21 @@ void ExportDialog::initConnections()
         } else {
             m_ui->exportParameters->setCurrentWidget(m_ui->scriptExportPage);
         }
+        checkExportAvailability(_index);
     });
 
-    connect(m_ui->showAdditional, SIGNAL(toggled(bool)), m_ui->additionalSettings, SLOT(setVisible(bool)));
+    connect(m_ui->showAdditional, &QCheckBox::toggled, m_ui->additionalSettings, &QFrame::setVisible);
 
-    connect(m_ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
-    connect(m_ui->docx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
-    connect(m_ui->pdf, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
-    connect(m_ui->fdx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
-    connect(m_ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
-    connect(m_ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
+    connect(m_ui->styles, &QComboBox::currentTextChanged, this, &ExportDialog::currentStyleChanged);
+    connect(m_ui->docx, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);
+    connect(m_ui->pdf, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);
+    connect(m_ui->fdx, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);
+    connect(m_ui->browseFile, &FlatButton::clicked, this, &ExportDialog::chooseScriptFile);
+    connect(m_ui->file, &QLineEdit::textChanged, this, &ExportDialog::checkScriptExportAvailability);
 
-    connect(m_ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
-    connect(m_ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
-    connect(m_ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(m_ui->cancel, &FlatButton::clicked, this, &ExportDialog::reject);
+    connect(m_ui->printPreview, &FlatButton::clicked, this, &ExportDialog::printPreview);
+    connect(m_ui->exportTo, &FlatButton::clicked, this, &ExportDialog::accept);
 }
 
 void ExportDialog::initStyleSheet()

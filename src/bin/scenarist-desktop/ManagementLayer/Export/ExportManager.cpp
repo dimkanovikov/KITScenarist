@@ -193,16 +193,26 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
 
 void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
 {
-    const QString projectKey = QString("projects/%1/export").arg(_projectPath);
+    //
+    // Очистим галочки модели разработки
+    //
+    m_modelProxy->clearCheckStates();
 
     //
     // Загрузим параметры экспорта
     //
-    m_exportDialog->setExportFilePath(
+    const QString projectKey = QString("projects/%1/export").arg(_projectPath);
+    m_exportDialog->setResearchExportFilePath(
+                StorageFacade::settingsStorage()->value(
+                    QString("%1/research-file-path").arg(projectKey),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                );
+    m_exportDialog->setScriptExportFilePath(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/file-path").arg(projectKey),
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 );
+
     m_exportDialog->setCheckPageBreaks(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/check-page-breaks").arg(projectKey),
@@ -251,11 +261,16 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
     //
     // Сохраним параметры экспорта
     //
-    BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
+    StorageFacade::settingsStorage()->setValue(
+                QString("%1/research-file-path").arg(projectKey),
+                m_exportDialog->researchFilePath(),
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/file-path").arg(projectKey),
-                exportParameters.filePath,
+                m_exportDialog->scriptFilePath(),
                 DataStorageLayer::SettingsStorage::ApplicationSettings);
+
+    BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/check-page-breaks").arg(projectKey),
                 exportParameters.checkPageBreaks ? "1" : "0",
@@ -340,7 +355,8 @@ void ExportManager::initExportDialog()
         QFileInfo fileInfo(ProjectsManager::currentProject().path());
         exportFileName = fileInfo.completeBaseName();
     }
-    m_exportDialog->setExportFileName(exportFileName);
+    m_exportDialog->setResearchExportFileName(exportFileName);
+    m_exportDialog->setScriptExportFileName(exportFileName);
 
     //
     // Загрузим и установим модель документов разработки

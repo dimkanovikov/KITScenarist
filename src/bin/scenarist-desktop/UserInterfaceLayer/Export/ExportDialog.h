@@ -28,14 +28,29 @@ namespace UserInterface
         ~ExportDialog();
 
         /**
-         * @brief Установить путь экспортируемого файла
+         * @brief Установить путь экспортируемого файла разработки
          */
-        void setExportFilePath(const QString& _filePath);
+        void setResearchExportFilePath(const QString& _filePath);
 
         /**
-         * @brief Установить имя экспортируемого файла
+         * @brief Установить имя экспортируемого файла разработки
          */
-        void setExportFileName(const QString& _fileName);
+        void setResearchExportFileName(const QString& _fileName);
+
+        /**
+         * @brief Установить модель документов для экспорта
+         */
+        void setResearchModel(QAbstractItemModel* _model);
+
+        /**
+         * @brief Установить путь экспортируемого файла скрипта
+         */
+        void setScriptExportFilePath(const QString& _filePath);
+
+        /**
+         * @brief Установить имя экспортируемого файла скрипта
+         */
+        void setScriptExportFileName(const QString& _fileName);
 
         /**
          * @brief Установить необходимость проверять переносы страниц
@@ -83,14 +98,19 @@ namespace UserInterface
         BusinessLogic::ExportParameters exportParameters() const;
 
         /**
+         * @brief Получить путь к экспортируемому файлу разработки
+         */
+        QString researchFilePath() const;
+
+        /**
+         * @brief Получить путь к экспортируемому файлу текста
+         */
+        QString scriptFilePath() const;
+
+        /**
          * @brief Формат экспорта
          */
         QString exportFormat() const;
-
-        /**
-         * @brief Установить модель документов для экспорта
-         */
-        void setResearchModel(QAbstractItemModel* _model);
 
     signals:
         /**
@@ -103,22 +123,31 @@ namespace UserInterface
          */
         void printPreview();
 
-    private slots:
+    private:
+        /**
+         * @brief Выбрать файл для экспорта разработки
+         */
+        void chooseResearchFile();
+
         /**
          * @brief Сменился формат
          */
-        void aboutFormatChanged();
+        void updateScriptFileFormat();
 
         /**
-         * @brief Выбрать файл
+         * @brief Выбрать файл для экспорта текста
          */
-        void aboutChooseFile();
+        void chooseScriptFile();
 
         /**
          * @brief При смене имени файла, обновить доступность кнопки экспорта,
          *		  а также проверить не будет ли произведено пересохранение
          */
-        void aboutFileNameChanged();
+        /** @{ */
+        void checkResearchExportAvailability();
+        void checkScriptExportAvailability();
+        void checkExportAvailability(int _index);
+        /** @} */
 
     private:
         /**
@@ -150,7 +179,10 @@ namespace UserInterface
         /**
          * @brief Имя файла для экспорта
          */
-        QString m_exportFileName;
+        /** @{ */
+        QString m_researchExportFileName;
+        QString m_scriptExportFileName;
+        /** @} */
     };
 }
 
