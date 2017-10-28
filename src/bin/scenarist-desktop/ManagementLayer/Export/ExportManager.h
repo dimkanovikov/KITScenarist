@@ -111,7 +111,7 @@ namespace ManagementLayer
         /**
          * @brief Прокси модель для возможности выбора элементов разработки
          */
-        BusinessLogic::ResearchModelCheckableProxy* m_modelProxy = nullptr;
+        BusinessLogic::ResearchModelCheckableProxy* m_researchModelProxy = nullptr;
 	};
 }
 

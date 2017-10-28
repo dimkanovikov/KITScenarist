@@ -527,7 +527,7 @@ void ResearchView::saveMindMapAsImageFile()
             filePath.append(".png");
         }
 
-        m_ui->mindMap->saveToImage(filePath);
+        m_ui->mindMap->saveToImageFile(filePath);
 
         DataStorageLayer::StorageFacade::settingsStorage()->saveDocumentFolderPath(MINDMAPS_FOLDER_KEY, filePath);
     }
