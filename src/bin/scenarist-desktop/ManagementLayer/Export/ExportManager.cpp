@@ -48,7 +48,7 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
     QObject(_parent),
     m_currentScenario(0),
     m_exportDialog(new ExportDialog(_parentWidget)),
-    m_modelProxy(new BusinessLogic::ResearchModelCheckableProxy(this))
+    m_researchModelProxy(new BusinessLogic::ResearchModelCheckableProxy(this))
 {
     initView();
     initConnections();
@@ -56,7 +56,7 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 
 void ExportManager::setResearchModel(QAbstractItemModel* _model)
 {
-    m_modelProxy->setSourceModel(_model);
+    m_researchModelProxy->setSourceModel(_model);
 }
 
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
@@ -77,12 +77,14 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
         // Настроим параметры экспорта
         //
         BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
-        exportParameters.scenarioName = _scenarioData.value(ScenarioData::NAME_KEY);
-        exportParameters.scenarioAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
-        exportParameters.scenarioGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
-        exportParameters.scenarioAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
-        exportParameters.scenarioContacts = _scenarioData.value(ScenarioData::CONTACTS_KEY);
-        exportParameters.scenarioYear = _scenarioData.value(ScenarioData::YEAR_KEY);
+        exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+        exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
+        exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
+        exportParameters.scriptAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
+        exportParameters.scriptContacts = _scenarioData.value(ScenarioData::CONTACTS_KEY);
+        exportParameters.scriptYear = _scenarioData.value(ScenarioData::YEAR_KEY);
+        exportParameters.logline = _scenarioData.value(ScenarioData::LOGLINE_KEY);
+        exportParameters.synopsis = _scenarioData.value(ScenarioData::SYNOPSIS_KEY);
 
         const QString filePath = exportParameters.filePath;
         if (!filePath.isEmpty()) {
@@ -116,7 +118,11 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                 //
                 // Экспортируем документ
                 //
-                exporter->exportTo(_scenario, exportParameters);
+                if (exportParameters.isResearch) {
+                    exporter->exportTo(m_researchModelProxy, exportParameters);
+                } else {
+                    exporter->exportTo(_scenario, exportParameters);
+                }
                 delete exporter;
                 exporter = nullptr;
             }
@@ -172,18 +178,24 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
     // Настроим параметры экспорта
     //
     BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
-    exportParameters.scenarioName = _scenarioData.value(ScenarioData::NAME_KEY);
-    exportParameters.scenarioAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
-    exportParameters.scenarioGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
-    exportParameters.scenarioAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
-    exportParameters.scenarioContacts = _scenarioData.value(ScenarioData::CONTACTS_KEY);
-    exportParameters.scenarioYear = _scenarioData.value(ScenarioData::YEAR_KEY);
+    exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+    exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
+    exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
+    exportParameters.scriptAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
+    exportParameters.scriptContacts = _scenarioData.value(ScenarioData::CONTACTS_KEY);
+    exportParameters.scriptYear = _scenarioData.value(ScenarioData::YEAR_KEY);
+    exportParameters.logline = _scenarioData.value(ScenarioData::LOGLINE_KEY);
+    exportParameters.synopsis = _scenarioData.value(ScenarioData::SYNOPSIS_KEY);
 
     //
     // Формируем предварительный просмот
     //
     BusinessLogic::PdfExporter exporter;
-    exporter.printPreview(_scenario, exportParameters);
+    if (exportParameters.isResearch) {
+        exporter.printPreview(m_researchModelProxy, exportParameters);
+    } else {
+        exporter.printPreview(_scenario, exportParameters);
+    }
 
     //
     // Закроем уведомление
@@ -196,7 +208,7 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
     //
     // Очистим галочки модели разработки
     //
-    m_modelProxy->clearCheckStates();
+    m_researchModelProxy->clearCheckStates();
 
     //
     // Загрузим параметры экспорта
@@ -361,5 +373,5 @@ void ExportManager::initExportDialog()
     //
     // Загрузим и установим модель документов разработки
     //
-    m_exportDialog->setResearchModel(m_modelProxy);
+    m_exportDialog->setResearchModel(m_researchModelProxy);
 }
