@@ -45,6 +45,11 @@ void OnboardingManager::exec()
     m_view->show();
 }
 
+void OnboardingManager::close()
+{
+    m_view->close();
+}
+
 void OnboardingManager::initConnections()
 {
     connect(m_view, &OnboardingView::languageChanged, this, &OnboardingManager::setLanguage);
@@ -74,7 +79,7 @@ void OnboardingManager::updateUsedTemplates()
     };
 
     //
-    // FIXME: заменяем имена старых стилей на новые
+    // Заменяем имена старых стилей на новые
     //
     const QString editorTemplate =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -188,7 +193,6 @@ void OnboardingManager::skip()
     //
     // И просто перейдём к приложению, не применяя настройки
     //
-    m_view->close();
     emit finished();
 }
 
@@ -241,6 +245,5 @@ void OnboardingManager::finalize()
                 m_view->scriptTemplate(),
                 DataStorageLayer::SettingsStorage::ApplicationSettings);
 
-    m_view->close();
     emit finished();
 }

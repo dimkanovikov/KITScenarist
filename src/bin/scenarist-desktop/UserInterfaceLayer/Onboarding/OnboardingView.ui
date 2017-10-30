@@ -14,13 +14,10 @@
    <string>KIT Scenarist. Setup of basic features.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="2">
-    <widget class="QWidget" name="stepper" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="skip">
+     <property name="text">
+      <string>Skip</string>
      </property>
     </widget>
    </item>
@@ -37,26 +34,6 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>109</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="skip">
-     <property name="text">
-      <string>Skip</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="4">
     <widget class="QPushButton" name="back">
      <property name="text">
@@ -64,10 +41,33 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="5" colspan="2">
+    <widget class="QPushButton" name="next">
+     <property name="text">
+      <string>Next</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="7">
     <widget class="QStackedWidget" name="content">
      <property name="currentIndex">
-      <number>5</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="languagePage">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -601,7 +601,7 @@ font-weight: 600;</string>
             <x>0</x>
             <y>0</y>
             <width>547</width>
-            <height>309</height>
+            <height>306</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
@@ -884,53 +884,6 @@ font-weight: 600;</string>
      </widget>
      <widget class="QWidget" name="statisticsPage">
       <layout class="QGridLayout" name="gridLayout_7">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_10">
-         <property name="styleSheet">
-          <string notr="true">font-size: 24px;
-font-weight: 600;</string>
-         </property>
-         <property name="text">
-          <string>Statistics</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>The statistics module allows you to get detailed production reports on the script, as well as look at the graphs of the characters' activity throughout the script and the dynamics of the scenes.</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>217</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="useStatistics">
-         <property name="text">
-          <string>Use statistics module</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <spacer name="verticalSpacer_10">
          <property name="orientation">
@@ -947,35 +900,178 @@ font-weight: 600;</string>
          </property>
         </spacer>
        </item>
+       <item row="3" column="0">
+        <spacer name="verticalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>217</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>The statistics module allows you to get detailed production reports on the script, as well as look at the graphs of the characters' activity throughout the script and the dynamics of the scenes.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="styleSheet">
+          <string notr="true">font-size: 24px;
+font-weight: 600;</string>
+         </property>
+         <property name="text">
+          <string>Statistics</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="useStatistics">
+         <property name="text">
+          <string>Use statistics module</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="finalPage">
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="1" column="0" colspan="2">
+        <spacer name="verticalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>523</width>
+           <height>17</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="finalPageInfo">
+         <property name="text">
+          <string>Thank you. The most common application settings were configured.
+
+The application will start in few seconds.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="styleSheet">
+          <string notr="true">font-size: 24px;
+font-weight: 600;</string>
+         </property>
+         <property name="text">
+          <string>Starting application</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <spacer name="verticalSpacer_15">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>523</width>
+           <height>200</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2" rowspan="2" alignment="Qt::AlignTop">
+        <widget class="QProgressIndicator" name="finalProgress" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
    </item>
-   <item row="1" column="0">
-    <spacer name="verticalSpacer_4">
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
+       <width>109</width>
        <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="2" column="5" colspan="2">
-    <widget class="QPushButton" name="next">
-     <property name="text">
-      <string>Next</string>
+   <item row="2" column="2">
+    <widget class="QWidget" name="stepper" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>0</height>
+      </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QProgressIndicator</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/QProgressIndicator/QProgressIndicator.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

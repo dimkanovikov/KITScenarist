@@ -209,6 +209,7 @@ void Application::startApp()
     }
     m_applicationManager = new ManagementLayer::ApplicationManager(this);
     m_applicationManager->exec(m_fileToOpen);
+    emit started();
 
     //
     // Запускаем остальную работу приложения

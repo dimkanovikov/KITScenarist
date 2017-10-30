@@ -35,13 +35,17 @@ public:
 	 */
     bool notify(QObject* _object, QEvent* _event);
 
+signals:
+    /**
+     * @brief Приложение запущено
+     */
+    void started();
+
 protected:
 	/**
 	 * @brief Переопределяется для обработки события открытия файла в Mac OS
 	 */
-	bool event(QEvent* _event);
-
-private:
+    bool event(QEvent* _event);
 
 private:
 	/**

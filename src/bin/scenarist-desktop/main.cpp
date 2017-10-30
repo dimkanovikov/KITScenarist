@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
         onboardingManager.exec();
         QObject::connect(&onboardingManager, &ManagementLayer::OnboardingManager::translationUpdateRequested, &application, &Application::updateTranslation);
         QObject::connect(&onboardingManager, &ManagementLayer::OnboardingManager::finished, &application, &Application::startApp);
+        QObject::connect(&application, &Application::started, &onboardingManager, &ManagementLayer::OnboardingManager::close);
     } else {
         application.startApp();
     }

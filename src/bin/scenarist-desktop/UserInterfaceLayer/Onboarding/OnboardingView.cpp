@@ -5,6 +5,7 @@
 
 #include <QDesktopWidget>
 #include <QScreen>
+#include <QTimer>
 
 using UserInterface::OnboardingView;
 
@@ -109,7 +110,9 @@ void OnboardingView::initConnections()
     connect(languagesGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &OnboardingView::notifyLanguageChange);
     connect(m_ui->darkTheme, &QRadioButton::toggled, this, &OnboardingView::useDarkThemeToggled);
 
-    connect(m_ui->skip, &QPushButton::clicked, this, &OnboardingView::skipClicked);
+    connect(m_ui->skip, &QPushButton::clicked, [this] {
+        showFinalPage(true);
+    });
     connect(m_ui->back, &QPushButton::clicked, this, &OnboardingView::goToPreviousPage);
     connect(m_ui->next, &QPushButton::clicked, this, &OnboardingView::goToNextPage);
 }
@@ -184,7 +187,7 @@ void OnboardingView::goToNextPage()
         && m_ui->useScript->isChecked() == false) {
         ++nextPageIndex;
     }
-    if (nextPageIndex < m_ui->content->count()) {
+    if (nextPageIndex < m_ui->content->count() - 1) {
         //
         // Конфигурирем кнопки
         //
@@ -192,14 +195,49 @@ void OnboardingView::goToNextPage()
         //
         // Если дошли до конца, покажем кнопку завершения мастера и скроем переход к следующему шагу
         //
-        if ((nextPageIndex + 1) == m_ui->content->count()) {
+        if ((nextPageIndex + 2) == m_ui->content->count()) {
             m_ui->next->setText(tr("Finish"));
         }
         //
         // И перелистываем вперёд
         //
-        WAF::StackedWidgetAnimation::slide(m_ui->content, m_ui->content->widget(nextPageIndex), WAF::FromRightToLeft);
+        const int duration =
+                WAF::StackedWidgetAnimation::slide(m_ui->content, m_ui->content->widget(nextPageIndex), WAF::FromRightToLeft);
     } else {
-        emit finishClicked();
+        showFinalPage(false);
     }
+}
+
+void OnboardingView::showFinalPage(bool _isSkipped)
+{
+    if (_isSkipped) {
+        //
+        // Корректируем сообщение последней страницы
+        //
+        m_ui->finalPageInfo->setText(tr("Will be used default settings.\n\nThe application will start in few seconds."));
+    }
+
+    //
+    // Запускаем анимацию ожидания
+    //
+    m_ui->finalProgress->setColor(palette().text().color());
+    m_ui->finalProgress->startAnimation();
+
+    //
+    // Перелистываем на последнюю страницу
+    //
+    const int duration =
+            WAF::StackedWidgetAnimation::slide(m_ui->content, m_ui->finalPage, WAF::FromRightToLeft);
+
+    m_ui->skip->hide();
+    m_ui->back->hide();
+    m_ui->next->hide();
+    m_ui->stepper->hide();
+    QTimer::singleShot(duration, [this, _isSkipped] {
+        if (_isSkipped) {
+            emit skipClicked();
+        } else {
+            emit finishClicked();
+        }
+    });
 }

@@ -31,6 +31,11 @@ namespace ManagementLayer
          */
         void exec();
 
+        /**
+         * @brief Закрыть окно предварительной настройки
+         */
+        void close();
+
     signals:
         /**
          * @brief Пользователь сменил язык

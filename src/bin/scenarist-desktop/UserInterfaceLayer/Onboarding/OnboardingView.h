@@ -104,6 +104,11 @@ namespace UserInterface
          */
         void goToNextPage();
 
+        /**
+         * @brief Показать последнюю страницу
+         */
+        void showFinalPage(bool _isSkipped);
+
     private:
         /**
          * @brief Интерфейс представления
