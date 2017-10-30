@@ -289,7 +289,11 @@ void ResearchView::editText(const QString& _name, const QString& _description)
     // Загружаем новые данные
     //
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->textDataEdit);
-    m_ui->textName->setText(_name);
+
+    if (m_ui->textName->text() != _name) {
+        m_ui->textName->setText(_name);
+    }
+
     m_ui->textDescription->setHtml(_description);
 
     //
@@ -312,7 +316,11 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 void ResearchView::editUrl(const QString& _name, const QString& _url, const QString& _cachedContent)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->urlEdit);
-    m_ui->urlName->setText(_name);
+
+    if (m_ui->urlName->text() != _name) {
+        m_ui->urlName->setText(_name);
+    }
+
     m_ui->urlLink->setText(_url);
     if (m_ui->urlContent->url().toString() != _url) {
         m_ui->urlContent->load(QUrl(_url));
@@ -326,7 +334,10 @@ void ResearchView::editUrl(const QString& _name, const QString& _url, const QStr
 void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>& _images)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->imagesGalleryEdit);
-    m_ui->imagesGalleryName->setText(_name);
+
+    if (m_ui->imagesGalleryName->text() != _name) {
+        m_ui->imagesGalleryName->setText(_name);
+    }
 
     //
     // Загружаем изображения и для этого сначала отключаем уведомления о изменении галереи,
@@ -348,7 +359,11 @@ void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>&
 void ResearchView::editImage(const QString& _name, const QPixmap& _image)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->imageEdit);
-    m_ui->imageName->setText(_name);
+
+    if (m_ui->imageName->text() != _name) {
+        m_ui->imageName->setText(_name);
+    }
+
     m_ui->imagePreview->setImage(_image);
 
     setResearchManageButtonsVisible(true);
@@ -358,7 +373,10 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
 void ResearchView::editMindMap(const QString &_name, const QString &_xml)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->mindMapEdit);
-    m_ui->mindMapName->setText(_name);
+
+    if (m_ui->mindMapName->text() != _name) {
+        m_ui->mindMapName->setText(_name);
+    }
 
     m_ui->mindMap->closeScene();
     if (_xml.isEmpty()) {
