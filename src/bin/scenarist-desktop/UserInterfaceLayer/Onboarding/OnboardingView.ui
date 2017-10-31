@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>597</width>
     <height>400</height>
    </rect>
   </property>
@@ -600,8 +600,8 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>547</width>
-            <height>306</height>
+            <width>223</width>
+            <height>349</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
@@ -1046,14 +1046,20 @@ font-weight: 600;</string>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>109</width>
+       <width>20</width>
        <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
    <item row="2" column="2">
-    <widget class="QWidget" name="stepper" native="true">
+    <widget class="Stepper" name="stepper" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>40</width>
@@ -1069,6 +1075,12 @@ font-weight: 600;</string>
    <class>QProgressIndicator</class>
    <extends>QWidget</extends>
    <header location="global">3rd_party/Widgets/QProgressIndicator/QProgressIndicator.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Stepper</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/Stepper/Stepper.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

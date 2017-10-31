@@ -89,11 +89,14 @@ void OnboardingView::initView()
     // Настроим виджеты формы
     //
     m_ui->content->setCurrentWidget(m_ui->languagePage);
+    m_ui->stepper->setStepsCount(m_ui->content->count() - 1);
     m_ui->back->setEnabled(false);
 }
 
 void OnboardingView::initConnections()
 {
+    connect(m_ui->content, &QStackedWidget::currentChanged, m_ui->stepper, &Stepper::setCurrentStep);
+
     QButtonGroup* languagesGroup = new QButtonGroup(this);
     languagesGroup->addButton(m_ui->system);
     languagesGroup->addButton(m_ui->russian);

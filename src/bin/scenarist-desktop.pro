@@ -341,7 +341,8 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.cpp \
     scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.cpp \
     scenarist-core/3rd_party/Helpers/RunOnce.cpp \
-    scenarist-core/3rd_party/Widgets/QProgressIndicator/QProgressIndicator.cpp
+    scenarist-core/3rd_party/Widgets/QProgressIndicator/QProgressIndicator.cpp \
+    scenarist-core/3rd_party/Widgets/Stepper/Stepper.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -599,7 +600,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.h \
     scenarist-desktop/ManagementLayer/Onboarding/OnboardingManager.h \
     scenarist-core/3rd_party/Helpers/RunOnce.h \
-    scenarist-core/3rd_party/Widgets/QProgressIndicator/QProgressIndicator.h
+    scenarist-core/3rd_party/Widgets/QProgressIndicator/QProgressIndicator.h \
+    scenarist-core/3rd_party/Widgets/Stepper/Stepper.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
