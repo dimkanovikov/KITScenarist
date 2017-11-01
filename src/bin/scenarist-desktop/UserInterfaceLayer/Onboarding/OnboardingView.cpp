@@ -95,8 +95,6 @@ void OnboardingView::initView()
 
 void OnboardingView::initConnections()
 {
-    connect(m_ui->content, &QStackedWidget::currentChanged, m_ui->stepper, &Stepper::setCurrentStep);
-
     QButtonGroup* languagesGroup = new QButtonGroup(this);
     languagesGroup->addButton(m_ui->system);
     languagesGroup->addButton(m_ui->russian);
@@ -177,6 +175,7 @@ void OnboardingView::goToPreviousPage()
         // и перелистываем назад
         //
         WAF::StackedWidgetAnimation::slide(m_ui->content, m_ui->content->widget(previousPageIndex), WAF::FromLeftToRight);
+        m_ui->stepper->setCurrentStep(previousPageIndex);
     }
 }
 
@@ -204,8 +203,8 @@ void OnboardingView::goToNextPage()
         //
         // И перелистываем вперёд
         //
-        const int duration =
-                WAF::StackedWidgetAnimation::slide(m_ui->content, m_ui->content->widget(nextPageIndex), WAF::FromRightToLeft);
+        WAF::StackedWidgetAnimation::slide(m_ui->content, m_ui->content->widget(nextPageIndex), WAF::FromRightToLeft);
+        m_ui->stepper->setCurrentStep(nextPageIndex);
     } else {
         showFinalPage(false);
     }
