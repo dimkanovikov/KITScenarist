@@ -631,8 +631,7 @@ void SettingsView::aboutEditTemplatePressed()
         //
         // Если индекс корректен и его можно изменять
         //
-        if (selected.isValid()
-            && selected.data(Qt::UserRole).toBool()) {
+        if (selected.isValid()) {
             emit templateLibraryEditPressed(selected);
         }
     }

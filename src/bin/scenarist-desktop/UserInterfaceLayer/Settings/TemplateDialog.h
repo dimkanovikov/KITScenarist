@@ -67,6 +67,11 @@ namespace UserInterface
          */
         void initStyleSheet();
 
+        /**
+         * @brief Установить режим только на чтение
+         */
+        void setReadOnly(bool _isReadOnly);
+
     private:
         /**
          * @brief Интерфейс

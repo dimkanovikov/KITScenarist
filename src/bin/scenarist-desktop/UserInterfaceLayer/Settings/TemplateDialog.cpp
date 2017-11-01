@@ -2,6 +2,7 @@
 #include "ui_TemplateDialog.h"
 
 #include <QFontDatabase>
+#include <QPushButton>
 #include <QStringListModel>
 
 using BusinessLogic::ScenarioBlockStyle;
@@ -78,6 +79,11 @@ void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& 
     // Очистим последний выбранный стиль блока
     //
     m_blockStyle = m_template.blockStyle(ScenarioBlockStyle::Undefined);
+
+    //
+    // Установим доступный режим работы с шаблоном
+    //
+    setReadOnly(m_template.isDefault());
 }
 
 BusinessLogic::ScenarioTemplate TemplateDialog::scenarioTemplate()
@@ -373,4 +379,9 @@ void TemplateDialog::initStyleSheet()
 {
     m_ui->blockStyles->setProperty("nobordersContainer", true);
     m_ui->scrollArea->setProperty("nobordersContainer", true);
+}
+
+void TemplateDialog::setReadOnly(bool _isReadOnly)
+{
+    m_ui->buttons->button(QDialogButtonBox::Save)->setEnabled(!_isReadOnly);
 }
