@@ -11,6 +11,7 @@
 #include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
 #include <3rd_party/Helpers/ImageHelper.h>
 #include <3rd_party/Helpers/TextEditHelper.h>
+#include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
@@ -49,9 +50,9 @@ namespace {
             if (comboBox->currentText() != _text) {
                 comboBox->setEditText(_text);
             }
-        } else if (QPlainTextEdit* plainTextEdit = qobject_cast<QPlainTextEdit*>(_edit)) {
-            if (plainTextEdit->toPlainText() != _text) {
-                plainTextEdit->setPlainText(_text);
+        } else if (QTextEdit* textEdit = qobject_cast<QTextEdit*>(_edit)) {
+            if (textEdit->toPlainText() != _text) {
+                textEdit->setPlainText(_text);
             }
         } else if (SimpleTextEditorWidget* simpleTextEdit = qobject_cast<SimpleTextEditorWidget*>(_edit)) {
             simpleTextEdit->setHtml(_text);
@@ -554,10 +555,8 @@ void ResearchView::saveMindMapAsImageFile()
 void ResearchView::initView()
 {
     m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
-    m_ui->addResearchItem->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addResearchItem->toolTip())
-                .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
+    m_ui->addResearchItem->setToolTip(ShortcutHelper::makeToolTip(m_ui->addResearchItem->toolTip(),
+                                                                  QKeySequence(QKeySequence::New)));
 
     m_ui->removeResearchItem->setIcons(m_ui->removeResearchItem->icon());
     m_ui->refreshResearchSubtree->setIcons(m_ui->refreshResearchSubtree->icon());
@@ -597,22 +596,16 @@ void ResearchView::initView()
 
     m_ui->addRootNode->setColorsPane(ColoredToolButton::Google);
     m_ui->addRootNode->setColor(Node::defaultBackgroundColor);
-    m_ui->addRootNode->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addRootNode->toolTip())
-                .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
+    m_ui->addRootNode->setToolTip(ShortcutHelper::makeToolTip(m_ui->addRootNode->toolTip(),
+                                                              QKeySequence(QKeySequence::New)));
     m_ui->addNode->setIcons(m_ui->addNode->icon());
     m_ui->addNode->setShortcut(QKeySequence("Ctrl+Return"));
-    m_ui->addNode->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addNode->toolTip())
-                .arg(m_ui->addNode->shortcut().toString(QKeySequence::NativeText)));
+    m_ui->addNode->setToolTip(ShortcutHelper::makeToolTip(m_ui->addNode->toolTip(),
+                                                          m_ui->addNode->shortcut()));
     m_ui->addSiblingNode->setIcons(m_ui->addSiblingNode->icon());
     m_ui->addSiblingNode->setShortcut(QKeySequence("Shift+Return"));
-    m_ui->addSiblingNode->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addSiblingNode->toolTip())
-                .arg(m_ui->addSiblingNode->shortcut().toString(QKeySequence::NativeText)));
+    m_ui->addSiblingNode->setToolTip(ShortcutHelper::makeToolTip(m_ui->addSiblingNode->toolTip(),
+                                                                  m_ui->addSiblingNode->shortcut()));
     m_ui->deleteNode->setIcons(m_ui->deleteNode->icon());
     m_ui->biggerNode->setIcons(m_ui->biggerNode->icon());
     m_ui->smallerNode->setIcons(m_ui->smallerNode->icon());
@@ -777,7 +770,7 @@ void ResearchView::initConnections()
     connect(m_ui->titlePageAdditionalInfo, &QComboBox::editTextChanged, this, &ResearchView::titlePageAdditionalInfoChanged);
     connect(m_ui->titlePageGenre, &QLineEdit::textChanged, this, &ResearchView::titlePageGenreChanged);
     connect(m_ui->titlePageAuthor, &QLineEdit::textChanged, this, &ResearchView::titlePageAuthorChanged);
-    connect(m_ui->titlePageContacts, &QPlainTextEdit::textChanged, [=]{
+    connect(m_ui->titlePageContacts, &QTextEdit::textChanged, [=]{
         emit titlePageContactsChanged(m_ui->titlePageContacts->toPlainText());
     });
     connect(m_ui->titlePageYear, &QLineEdit::textChanged, this, &ResearchView::titlePageYearChanged);

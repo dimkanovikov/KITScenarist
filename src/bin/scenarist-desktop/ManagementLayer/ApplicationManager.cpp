@@ -26,6 +26,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
+#include <3rd_party/Helpers/TextUtils.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
@@ -2216,9 +2217,12 @@ void ApplicationManager::updateWindowTitle()
     }
 
     const QString projectFileName =
-            QString("%1 [%2]")
+            QString("%1 %2")
             .arg(ProjectsManager::currentProject().name())
-            .arg(m_projectsManager->currentProject().isLocal() ? tr("on local computer") : tr("in cloud"));
+            .arg(TextUtils::directedText((m_projectsManager->currentProject().isLocal()
+                                          ? tr("on local computer")
+                                          : tr("in cloud")),
+                                         '[', ']'));
 #ifdef Q_OS_MAC
     m_view->setWindowTitle(projectFileName);
 #else

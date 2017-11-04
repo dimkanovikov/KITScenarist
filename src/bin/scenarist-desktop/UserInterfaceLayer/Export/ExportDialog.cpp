@@ -6,8 +6,9 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
-#include <3rd_party/Helpers/FileHelper.h>
 #include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
+#include <3rd_party/Helpers/FileHelper.h>
+#include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -316,6 +317,7 @@ void ExportDialog::initView()
     m_ui->exportTypes->addTab(tr("Export script"));
 
     m_ui->researchExportTree->setItemDelegate(new TreeViewItemDelegate(m_ui->researchExportTree));
+    m_ui->researchExportTree->setStyle(new TreeViewProxyStyle(m_ui->researchExportTree->style()));
 
     m_ui->browseFile->updateIcons();
     QButtonGroup* scriptFormatTypeGroup = new QButtonGroup(this);

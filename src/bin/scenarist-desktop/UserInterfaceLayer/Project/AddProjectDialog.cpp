@@ -6,6 +6,8 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Helpers/TextUtils.h>
+
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QPushButton>
