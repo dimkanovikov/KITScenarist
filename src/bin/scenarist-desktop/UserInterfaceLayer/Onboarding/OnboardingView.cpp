@@ -65,6 +65,19 @@ void OnboardingView::changeEvent(QEvent* _event)
 {
     if (_event->type() == QEvent::LanguageChange) {
         m_ui->retranslateUi(this);
+        auto updateAlignment = [this] (QLabel* _label) {
+            if (isRightToLeft() && !_label->text().isRightToLeft()) {
+                _label->setAlignment(Qt::AlignTop | Qt::AlignRight);
+            } else {
+                _label->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+            }
+        };
+        updateAlignment(m_ui->finalDraftScreenplayA4Info);
+        updateAlignment(m_ui->finalDraftScreenplayLetterInfo);
+        updateAlignment(m_ui->russianScreenplayInfo);
+        updateAlignment(m_ui->russianScreenplayCourierPrimeInfo);
+        updateAlignment(m_ui->chineseScreenplayInfo);
+        updateAlignment(m_ui->hebrewScreenplayInfo);
     } else {
         QWidget::changeEvent(_event);
     }

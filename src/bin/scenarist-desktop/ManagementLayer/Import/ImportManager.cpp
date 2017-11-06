@@ -366,8 +366,8 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         // Если файла не существует, уведомим об этом
         //
         if (!QFile::exists(importParameters.filePath)) {
-            QLightBoxMessage::critical(m_importDialog, tr("File isn't exists"),
-                tr("Please choose existed file and retry import."));
+            QLightBoxMessage::critical(m_importDialog, tr("File doesn't exists"),
+                tr("Please choose existing file and retry import."));
             return;
         }
 
