@@ -79,6 +79,7 @@ void ResearchManager::loadCurrentProject()
     //
     // Откроем первый элемент на редактирование
     //
+    m_view->clear();
     m_view->selectItem(m_model->index(0, 0));
     editResearch(m_model->index(0, 0));
 

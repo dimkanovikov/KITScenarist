@@ -30,7 +30,6 @@ OnboardingManager::~OnboardingManager()
 
 bool OnboardingManager::needConfigureApp() const
 {
-    return true;
     const bool isAppConfigured =
             DataStorageLayer::StorageFacade::settingsStorage()->value(
                 "application/app-was-configured",

@@ -9,6 +9,7 @@ namespace Ui {
 }
 
 class QAbstractItemModel;
+class QItemSelection;
 
 
 namespace UserInterface
@@ -21,8 +22,13 @@ namespace UserInterface
         Q_OBJECT
 
     public:
-        explicit ResearchView(QWidget *parent = 0);
+        explicit ResearchView(QWidget* _parent = nullptr);
         ~ResearchView();
+
+        /**
+         * @brief Очистить сохранённые данные представления
+         */
+        void clear();
 
         /**
          * @brief Установить параметры текста
@@ -208,7 +214,7 @@ namespace UserInterface
         /**
          * @brief Изменён текущий объект разработки
          */
-        void currentResearchChanged();
+        void currentResearchChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
         /**
          * @brief Сохранить ментальную карту в файл как изображением
@@ -242,7 +248,10 @@ namespace UserInterface
         void initIconsColor();
 
     private:
-        Ui::ResearchView* m_ui;
+        /**
+         * @brief Интерфейс представления
+         */
+        Ui::ResearchView* m_ui = nullptr;
 
         /**
          * @brief Находится ли текстовый редактор в режиме обновления панели инструментов с форматом
@@ -258,7 +267,7 @@ namespace UserInterface
          * @brief Карта прокруток текстовых документов
          * @note Используется для восстановления положения прокрутки при возвращении к заданному тексту
          */
-        QHash<QString, int> m_textScrollingMap;
+        QHash<QModelIndex, int> m_scrollingMap;
     };
 }
 

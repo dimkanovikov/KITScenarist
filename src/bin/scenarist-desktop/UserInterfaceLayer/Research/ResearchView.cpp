@@ -61,8 +61,8 @@ namespace {
 }
 
 
-ResearchView::ResearchView(QWidget *parent) :
-    QWidget(parent),
+ResearchView::ResearchView(QWidget *_parent) :
+    QWidget(_parent),
     m_ui(new Ui::ResearchView),
     m_isInTextFormatUpdate(false)
 {
@@ -77,6 +77,11 @@ ResearchView::ResearchView(QWidget *parent) :
 ResearchView::~ResearchView()
 {
     delete m_ui;
+}
+
+void ResearchView::clear()
+{
+    m_scrollingMap.clear();
 }
 
 void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font)
@@ -156,7 +161,7 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
                 //
                 // Обновляем элемент
                 //
-                currentResearchChanged();
+                currentResearchChanged(QItemSelection(), QItemSelection());
 
                 //
                 // Восстанавливаем позицию редактирования
@@ -220,6 +225,15 @@ void ResearchView::editSynopsis(const QString& _synopsis)
 
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+
+    //
+    // ... восстанавливаем позицию прокрутки текста, если это возможно
+    //
+    const QModelIndex selectedResearchIndex = currentResearchIndex();
+    if (selectedResearchIndex.isValid()
+        && m_scrollingMap.contains(selectedResearchIndex)) {
+        m_ui->synopsisText->editor()->verticalScrollBar()->setValue(m_scrollingMap[selectedResearchIndex]);
+    }
 }
 
 void ResearchView::editCharactersRoot()
@@ -243,6 +257,15 @@ void ResearchView::editCharacter(const QString& _name, const QString& _realName,
 
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+
+    //
+    // ... восстанавливаем позицию прокрутки текста, если это возможно
+    //
+    const QModelIndex selectedResearchIndex = currentResearchIndex();
+    if (selectedResearchIndex.isValid()
+        && m_scrollingMap.contains(selectedResearchIndex)) {
+        m_ui->characterDescription->editor()->verticalScrollBar()->setValue(m_scrollingMap[selectedResearchIndex]);
+    }
 }
 
 void ResearchView::editLocationsRoot()
@@ -265,6 +288,15 @@ void ResearchView::editLocation(const QString& _name, const QString& _descriptio
 
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+
+    //
+    // ... восстанавливаем позицию прокрутки текста, если это возможно
+    //
+    const QModelIndex selectedResearchIndex = currentResearchIndex();
+    if (selectedResearchIndex.isValid()
+        && m_scrollingMap.contains(selectedResearchIndex)) {
+        m_ui->locationDescription->editor()->verticalScrollBar()->setValue(m_scrollingMap[selectedResearchIndex]);
+    }
 }
 
 void ResearchView::editResearchRoot()
@@ -280,12 +312,6 @@ void ResearchView::editResearchRoot()
 
 void ResearchView::editText(const QString& _name, const QString& _description)
 {
-    //
-    // Сохраняем позицию предыдущего текста
-    //
-    const QString oldText = TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml());
-    m_textScrollingMap[oldText] = m_ui->textDescription->editor()->verticalScrollBar()->value();
-
     //
     // Загружаем новые данные
     //
@@ -305,12 +331,10 @@ void ResearchView::editText(const QString& _name, const QString& _description)
     //
     // ... восстанавливаем позицию прокрутки текста, если это возможно
     //
-    if (m_textScrollingMap.contains(_description)) {
-        m_ui->textDescription->editor()->verticalScrollBar()->setValue(m_textScrollingMap[_description]);
-        //
-        // Удаляем себя из карты, чтобы не засорять память, т.к. текст может быть изменён
-        //
-        m_textScrollingMap.remove(_description);
+    const QModelIndex selectedResearchIndex = currentResearchIndex();
+    if (selectedResearchIndex.isValid()
+        && m_scrollingMap.contains(currentResearchIndex())) {
+        m_ui->textDescription->editor()->verticalScrollBar()->setValue(m_scrollingMap[selectedResearchIndex]);
     }
 }
 
@@ -525,13 +549,32 @@ void ResearchView::setSearchVisible(bool _isVisible)
     m_ui->searchWidget->setVisible(m_ui->search->isVisible() && m_ui->search->isChecked());
 }
 
-void ResearchView::currentResearchChanged()
+void ResearchView::currentResearchChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
-    QModelIndex selectedResearchIndex = currentResearchIndex();
+    Q_UNUSED(selected)
+
+    if (!deselected.isEmpty()) {
+        const QModelIndex deselectedResearchIndex = deselected.indexes().first();
+        //
+        // Если текущим элементом является текстовый редактор, запомним позицию прокрутки
+        //
+        int scrollValue = 0;
+        if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->synopsisEdit) {
+            scrollValue = m_ui->synopsisText->editor()->verticalScrollBar()->value();
+        } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->characterEdit) {
+            scrollValue = m_ui->characterDescription->editor()->verticalScrollBar()->value();
+        } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->locationEdit) {
+            scrollValue = m_ui->locationDescription->editor()->verticalScrollBar()->value();
+        } else if (m_ui->researchDataEditsContainer->currentWidget() == m_ui->textDataEdit) {
+            scrollValue = m_ui->textDescription->editor()->verticalScrollBar()->value();
+        }
+        m_scrollingMap[deselectedResearchIndex] = scrollValue;
+    }
 
     //
     // Испускаем сигнал о намерении изменить элемент разработки, только если он выделен
     //
+    const QModelIndex selectedResearchIndex = currentResearchIndex();
     if (selectedResearchIndex.isValid()) {
         emit editResearchRequested(selectedResearchIndex);
     }
