@@ -303,8 +303,13 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     //
     cursor = m_editor->textCursor();
     QTextBlockUserData* textBlockData = cursor.block().userData();
+    //
+    // ... если были данные, то у них нужно сменить идентификатор, т.к. это копия оставшаяся от предыдущего блока
+    //
     ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
-    if (info == 0) {
+    if (info != nullptr) {
+        info->rebuildUuid();
+    } else {
         info = new ScenarioTextBlockInfo;
     }
     info->setTitle(!_title.isEmpty() ? _title : _header);
