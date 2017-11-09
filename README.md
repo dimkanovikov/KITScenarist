@@ -1,14 +1,14 @@
 Scenarist
 ============
 
-Application to write scenarios.
+Application to write screenplays.
 
-Website: http://kitscenarist.ru
+Website: https://kitscenarist.ru/en/
 
 Build info:
 ------------
 
-Qt 5.3 or later.
+Qt 5.6.3 or later.
 
 qmake
 make
