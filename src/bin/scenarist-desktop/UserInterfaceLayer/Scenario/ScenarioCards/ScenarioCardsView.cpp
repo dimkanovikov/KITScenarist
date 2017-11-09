@@ -111,7 +111,11 @@ void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, int _nu
     const QString& _title, const QString& _description, const QString& _stamp,
     const QString& _colors, bool _isEmbedded, const QString& _previousCardUuid)
 {
-    m_cards->insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
+    if (_isFolder && !_isEmbedded) {
+        m_cards->insertAct(_uuid, _title, _description, _colors, _previousCardUuid);
+    } else {
+        m_cards->insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
+    }
 }
 
 void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, int _number,
