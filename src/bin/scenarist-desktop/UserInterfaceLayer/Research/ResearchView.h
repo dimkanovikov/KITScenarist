@@ -10,6 +10,7 @@ namespace Ui {
 
 class QAbstractItemModel;
 class QItemSelection;
+class SimpleTextEditor;
 
 
 namespace UserInterface
@@ -116,6 +117,11 @@ namespace UserInterface
          * @brief Включить режим редактирования ментальной карты
          */
         void editMindMap(const QString& _name, const QString& _xml);
+
+        /**
+         * @brief Обновить текст и параметры редактирования текущего элемента разработки, если необходимо
+         */
+        void updateTextEditorText(const QString& _text, SimpleTextEditor* _editor);
 
         /**
          * @brief Установить режим работы со сценарием
@@ -264,10 +270,26 @@ namespace UserInterface
         QString m_cachedUrlContent;
 
         /**
-         * @brief Карта прокруток текстовых документов
+         * @brief Параметры текстового редактора
+         */
+        struct TextDocumentParameters
+        {
+            /**
+             * @brief Позиция курсора
+             */
+            int cursorPosition;
+
+            /**
+             * @brief Положение вертикальной прокрутки
+             */
+            int verticalScroll;
+        };
+
+        /**
+         * @brief Карта параметров текстовых документов
          * @note Используется для восстановления положения прокрутки при возвращении к заданному тексту
          */
-        QHash<QModelIndex, int> m_scrollingMap;
+        QHash<QModelIndex, TextDocumentParameters> m_textDocumentsParameters;
     };
 }
 
