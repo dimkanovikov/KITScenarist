@@ -81,40 +81,45 @@ bool ApplicationView::eventFilter(QObject* _object, QEvent* _event)
             }
         }
     } else if (QScrollBar* scrollBar = qobject_cast<QScrollBar*>(_object)) {
-        static QTimeLine* timeline = nullptr;
-        const int startFrame = 10;
-        const int lastFrame = 20;
-        if (timeline == nullptr) {
-            timeline = new QTimeLine(60, this);
-            timeline->setFrameRange(startFrame, lastFrame);
-            timeline->setCurveShape(QTimeLine::LinearCurve);
-        }
+        //
+        // Анимируем ширину полосы прокрутки, если есть возможность скроллинга
+        //
+        if (scrollBar->minimum() < scrollBar->maximum()) {
+            static QTimeLine* timeline = nullptr;
+            const int startFrame = 10;
+            const int lastFrame = 20;
+            if (timeline == nullptr) {
+                timeline = new QTimeLine(60, this);
+                timeline->setFrameRange(startFrame, lastFrame);
+                timeline->setCurveShape(QTimeLine::LinearCurve);
+            }
 
-        if (_event->type() == QEvent::Enter) {
-            timeline->stop();
-            timeline->setDirection(QTimeLine::Forward);
-            timeline->disconnect();
-            const QString scaleProperty = scrollBar->orientation() == Qt::Vertical ? "width" : "height";
-            const QString styleSheetTemplate ="QScrollBar { " + scaleProperty + ": %1px; }";
-            connect(timeline, &QTimeLine::frameChanged, [=] (int _frame) {
-                QString styleSheet = styleSheetTemplate.arg(_frame);
-                if (_frame == lastFrame) {
-                    styleSheet.append(
-                        QString("QScrollBar::add-line:vertical { padding: 0px 5px 0px 5px; image: url(:/Interface/UI/downarrow%1.png); }"
-                                "QScrollBar::sub-line:vertical { padding: 0px 5px 0px 5px; image: url(:/Interface/UI/uparrow%1.png) };")
-                                .arg(m_useDarkTheme ? "-dark" : ""));
-                }
-                scrollBar->setStyleSheet(styleSheet);
-            });
-            timeline->start();
-        } else if (_event->type() == QEvent::Leave) {
-            const bool resume = timeline->state() == QTimeLine::Running;
-            timeline->stop();
-            timeline->setDirection(QTimeLine::Backward);
-            if (resume) {
-                timeline->resume();
-            } else {
+            if (_event->type() == QEvent::Enter) {
+                timeline->stop();
+                timeline->setDirection(QTimeLine::Forward);
+                timeline->disconnect();
+                const QString scaleProperty = scrollBar->orientation() == Qt::Vertical ? "width" : "height";
+                const QString styleSheetTemplate ="QScrollBar { " + scaleProperty + ": %1px; }";
+                connect(timeline, &QTimeLine::frameChanged, [=] (int _frame) {
+                    QString styleSheet = styleSheetTemplate.arg(_frame);
+                    if (_frame == lastFrame) {
+                        styleSheet.append(
+                                    QString("QScrollBar::add-line:vertical { padding: 0px 5px 0px 5px; image: url(:/Interface/UI/downarrow%1.png); }"
+                                            "QScrollBar::sub-line:vertical { padding: 0px 5px 0px 5px; image: url(:/Interface/UI/uparrow%1.png) };")
+                                    .arg(m_useDarkTheme ? "-dark" : ""));
+                    }
+                    scrollBar->setStyleSheet(styleSheet);
+                });
                 timeline->start();
+            } else if (_event->type() == QEvent::Leave) {
+                const bool resume = timeline->state() == QTimeLine::Running;
+                timeline->stop();
+                timeline->setDirection(QTimeLine::Backward);
+                if (resume) {
+                    timeline->resume();
+                } else {
+                    timeline->start();
+                }
             }
         }
     }

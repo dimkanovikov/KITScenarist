@@ -179,6 +179,11 @@ void ScenarioCardsView::resortCards()
     m_cards->setCardsDistance(m_resizer->distance());
 
     //
+    // Использовать компановку по строкам
+    //
+    m_cards->setOrderByRows(m_resizer->useRowsLayout());
+
+    //
     // Количество карточек в строке
     //
     m_cards->setCardsInRow(m_resizer->cardsInRow());
