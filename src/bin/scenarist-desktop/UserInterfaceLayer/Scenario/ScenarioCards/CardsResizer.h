@@ -36,6 +36,11 @@ namespace UserInterface {
         int distance() const;
 
         /**
+         * @brief Использовать компановку колонками
+         */
+        bool useRowsLayout() const;
+
+        /**
          * @brief Количество карточек в ряду
          */
         int cardsInRow() const;

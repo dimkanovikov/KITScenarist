@@ -34,6 +34,11 @@ int CardsResizer::distance() const
     return m_ui->distance->value();
 }
 
+bool CardsResizer::useRowsLayout() const
+{
+    return m_ui->rowsLayout->isChecked();
+}
+
 int CardsResizer::cardsInRow() const
 {
     if (m_ui->arrangeCards->isChecked())
@@ -52,12 +57,14 @@ void CardsResizer::initView()
 
 void CardsResizer::initConnections()
 {
+    connect(m_ui->rowsLayout, &QRadioButton::toggled, m_ui->arrangeFrame, &QWidget::setEnabled);
     connect(m_ui->arrangeCards, &QCheckBox::toggled, m_ui->cardsInLine, &QSpinBox::setEnabled);
     connect(m_ui->arrangeCards, &QCheckBox::toggled, m_ui->cardsInLineLabel, &QSpinBox::setEnabled);
 
     connect(m_ui->cardSize, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
     connect(m_ui->cardRatio, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
     connect(m_ui->distance, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
+    connect(m_ui->rowsLayout, &QRadioButton::toggled, this, &CardsResizer::parametersChanged);
     connect(m_ui->arrangeCards, &QCheckBox::toggled, this, &CardsResizer::parametersChanged);
     connect(m_ui->cardsInLine, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &CardsResizer::parametersChanged);
 }
