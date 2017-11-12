@@ -3,7 +3,7 @@
 #
 # сформировать app-файл
 #
-~/Qt/5.6/clang_64/bin/macdeployqt ../Release/bin/scenarist-desktop/Scenarist.app
+~/Qt/5.6.3/clang_64/bin/macdeployqt ../Release/bin/scenarist-desktop/Scenarist.app
 
 #
 # Скопируем в него системные файлы
