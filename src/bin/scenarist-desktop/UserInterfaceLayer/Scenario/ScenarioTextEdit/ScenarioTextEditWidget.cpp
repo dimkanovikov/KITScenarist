@@ -808,7 +808,8 @@ void ScenarioTextEditWidget::initStylesCombo()
             << ScenarioBlockStyle::Transition
             << ScenarioBlockStyle::NoprintableText
             << ScenarioBlockStyle::FolderHeader
-            << ScenarioBlockStyle::SceneDescription;
+            << ScenarioBlockStyle::SceneDescription
+            << ScenarioBlockStyle::Lyrics;
 
     foreach (ScenarioBlockStyle::Type type, s_types) {
         if (usedTemplate.blockStyle(type).isActive()

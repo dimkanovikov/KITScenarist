@@ -100,6 +100,7 @@ namespace {
         blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Title));
         blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::NoprintableText));
         blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::FolderHeader));
+        blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Lyrics));
 
         return blocksJumpsModel;
     }
@@ -1020,7 +1021,8 @@ void SettingsManager::initView()
                       << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Note, BEAUTIFY_NAME)
                       << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Title, BEAUTIFY_NAME)
                       << ScenarioBlockStyle::typeName(ScenarioBlockStyle::NoprintableText, BEAUTIFY_NAME)
-                      << ScenarioBlockStyle::typeName(ScenarioBlockStyle::FolderHeader, BEAUTIFY_NAME);
+                      << ScenarioBlockStyle::typeName(ScenarioBlockStyle::FolderHeader, BEAUTIFY_NAME)
+                      << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Lyrics, BEAUTIFY_NAME);
     }
     m_view->setBlocksSettingsModel(blocksJumpsModel, new QStringListModel(delegateModel, this));
 
