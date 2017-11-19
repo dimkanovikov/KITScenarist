@@ -410,7 +410,9 @@ void ResearchView::updateTextEditorText(const QString& _text, SimpleTextEditor* 
     //
     // Если пришёл новый текст
     //
-    const QString text = TextEditHelper::removeDocumentTags(_editor->toHtml());
+    const QString text = TextEditHelper::fromHtmlEscaped(
+                             TextEditHelper::removeDocumentTags(
+                                 _editor->toHtml()));
     if (text != _text) {
         //
         // ... установим его
