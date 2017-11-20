@@ -57,8 +57,7 @@ namespace {
     /**
      * @brief Ключ для хранения атрибута последнего размера сплитера
      */
-    const char* SPLITTER_DRAFT_LAST_SIZES = "last_sizes_draft";
-    const char* SPLITTER_SCENE_DESCRIPTION_LAST_SIZES = "last_sizes_scene_description";
+    const char* SPLITTER_LAST_SIZES = "last_sizes";
 
     /**
      * @brief Ключ для доступа к черновику сценария
@@ -689,25 +688,7 @@ void ScenarioManager::setZenMode(bool _isZen)
     //
     // И навигатора
     //
-    // ... показать навигатор
-    //
-    if (!_isZen) {
-        if (!m_mainViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
-            m_mainViewSplitter->setSizes(m_mainViewSplitter->property(SPLITTER_LAST_SIZES).value<QList<int> >());
-        }
-    }
-    //
-    // ... скрыть навигатор
-    //
-    else {
-        m_mainViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_mainViewSplitter->sizes()));
-        const int navigatorIndex = m_mainViewSplitter->indexOf(m_noteViewSplitter);
-        if (navigatorIndex == 1) {
-            m_mainViewSplitter->setSizes(QList<int>() << 1 << 0);
-        } else {
-            m_mainViewSplitter->setSizes(QList<int>() << 0 << 1);
-        }
-    }
+    m_navigatorSplitter->setVisible(!_isZen);
 
     //
     // Переводим редактор сценария в джен режим
