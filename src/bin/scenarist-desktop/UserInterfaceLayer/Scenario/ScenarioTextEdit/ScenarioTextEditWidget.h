@@ -21,6 +21,7 @@ namespace UserInterface
     class ScenarioFastFormatWidget;
     class ScenarioReviewPanel;
     class ScenarioReviewView;
+    class ScriptZenModeControls;
 
 
     /**
@@ -179,6 +180,11 @@ namespace UserInterface
          */
         void aboutShowFastFormat();
 
+        /**
+         * @brief Включить/выключить дзен режим
+         */
+        void setZenMode(bool _isZen);
+
     signals:
         /**
          * @brief Запрос на отмену последнего действия
@@ -209,6 +215,11 @@ namespace UserInterface
          * @brief Изменился коэффициент масштабирования текстового редактора
          */
         void zoomRangeChanged(qreal _zoomRange);
+
+        /**
+         * @brief Выйти из дзен режима
+         */
+        void quitFromZenMode();
 
     private slots:
         /**
@@ -340,6 +351,11 @@ namespace UserInterface
          * @brief Панель со списком комментариев
          */
         ScenarioReviewView* m_reviewView;
+
+        /**
+         * @brief Виджет управления дзен режимом
+         */
+        ScriptZenModeControls* m_zenControls = nullptr;
     };
 }
 

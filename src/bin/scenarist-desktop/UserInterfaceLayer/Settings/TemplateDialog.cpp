@@ -349,6 +349,7 @@ void TemplateDialog::initView()
     m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
     m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::FolderHeader));
     m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneDescription));
+    m_ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Lyrics));
     m_ui->blockStyles->setAutoFillBackground(true);
 
     //

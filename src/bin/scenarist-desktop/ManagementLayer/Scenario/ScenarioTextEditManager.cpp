@@ -226,6 +226,11 @@ void ScenarioTextEditManager::changeItemType(int _position, int _type)
     m_view->setCurrentBlockType(mappedType);
 }
 
+void ScenarioTextEditManager::setZenMode(bool _isZen)
+{
+    m_view->setZenMode(_isZen);
+}
+
 void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(qreal _zoomRange)
 {
     DataStorageLayer::StorageFacade::settingsStorage()->setValue(
@@ -247,4 +252,5 @@ void ScenarioTextEditManager::initConnections()
     connect(m_view, &ScenarioTextEditWidget::textChanged, this, &ScenarioTextEditManager::textChanged);
     connect(m_view, &ScenarioTextEditWidget::cursorPositionChanged, this, &ScenarioTextEditManager::cursorPositionChanged);
     connect(m_view, &ScenarioTextEditWidget::zoomRangeChanged, this, &ScenarioTextEditManager::aboutTextEditZoomRangeChanged);
+    connect(m_view, &ScenarioTextEditWidget::quitFromZenMode, this, &ScenarioTextEditManager::quitFromZenMode);
 }

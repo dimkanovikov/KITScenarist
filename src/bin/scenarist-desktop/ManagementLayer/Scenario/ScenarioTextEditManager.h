@@ -114,6 +114,11 @@ namespace ManagementLayer
          */
         void changeItemType(int _position, int _type);
 
+        /**
+         * @brief Включить/выключить дзен режим
+         */
+        void setZenMode(bool _isZen);
+
     signals:
         /**
          * @brief Изменился текст сценария
@@ -139,6 +144,11 @@ namespace ManagementLayer
          * @brief Изменился режим отображения сценария
          */
         void textModeChanged();
+
+        /**
+         * @brief Выйти из дзен режима
+         */
+        void quitFromZenMode();
 
     private slots:
         /**

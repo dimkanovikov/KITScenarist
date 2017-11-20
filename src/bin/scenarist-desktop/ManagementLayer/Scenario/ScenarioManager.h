@@ -180,6 +180,11 @@ namespace ManagementLayer
          */
         void scrollToAdditionalCursor(int _additionalCursorIndex);
 
+        /**
+         * @brief Включить/выключить дзен режим
+         */
+        void setZenMode(bool _isZen);
+
     signals:
         /**
          * @brief Сценарий изменён
