@@ -159,7 +159,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>1</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -218,6 +218,13 @@
                  <layout class="QGridLayout" name="gridLayout_18">
                   <item row="8" column="0">
                    <widget class="QWidget" name="widget" native="true"/>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QCheckBox" name="applicationTwoPanelMode">
+                    <property name="text">
+                     <string>Two Panel Mode (F2)</string>
+                    </property>
+                   </widget>
                   </item>
                   <item row="5" column="0">
                    <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -293,13 +300,6 @@
                      </widget>
                     </item>
                    </layout>
-                  </item>
-                  <item row="7" column="0">
-                   <widget class="QCheckBox" name="applicationTwoPanelMode">
-                    <property name="text">
-                     <string>Two Panel Mode (F2)</string>
-                    </property>
-                   </widget>
                   </item>
                   <item row="2" column="0">
                    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -862,7 +862,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="scenarioEditPageStack">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -898,14 +898,14 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="0">
+                  <item row="3" column="0">
                    <widget class="QCheckBox" name="highlightCurrentLine">
                     <property name="text">
                      <string>Highlight Current Line</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="3" column="0">
+                  <item row="4" column="0">
                    <widget class="QGroupBox" name="groupBox">
                     <property name="title">
                      <string>Themes colors</string>
@@ -1466,7 +1466,7 @@
                     </layout>
                    </widget>
                   </item>
-                  <item row="4" column="0">
+                  <item row="5" column="0">
                    <spacer name="verticalSpacer">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -1479,7 +1479,7 @@
                     </property>
                    </spacer>
                   </item>
-                  <item row="0" column="1" rowspan="4">
+                  <item row="0" column="1" rowspan="5">
                    <spacer name="horizontalSpacer_9">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -1491,6 +1491,16 @@
                      </size>
                     </property>
                    </spacer>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QCheckBox" name="scriptHidePanelsInFullscreen">
+                    <property name="text">
+                     <string>Hide all panels in fullscreen mode</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -2680,8 +2690,8 @@ Paragraph</string>
   <tabstop>saveBackups</tabstop>
   <tabstop>saveBackupsFolder</tabstop>
   <tabstop>browseBackupFolder</tabstop>
-  <tabstop>showScenesNumbersInEditor</tabstop>
-  <tabstop>highlightCurrentLine</tabstop>
+  <tabstop>spellCheckingLanguage</tabstop>
+  <tabstop>currentScenarioTemplate</tabstop>
   <tabstop>chronometryGroup</tabstop>
   <tabstop>pagesChronometry</tabstop>
   <tabstop>pagesChronometrySeconds</tabstop>
@@ -2719,19 +2729,19 @@ Paragraph</string>
   <tabstop>applicationModuleScenario</tabstop>
   <tabstop>applicationModuleStatistics</tabstop>
   <tabstop>pageView</tabstop>
+  <tabstop>showScenesNumbersInEditor</tabstop>
+  <tabstop>scriptHidePanelsInFullscreen</tabstop>
+  <tabstop>highlightCurrentLine</tabstop>
   <tabstop>textColor</tabstop>
-  <tabstop>textColorDark</tabstop>
   <tabstop>backgroundColor</tabstop>
-  <tabstop>backgroundColorDark</tabstop>
   <tabstop>folderTextColor</tabstop>
-  <tabstop>folderTextColorDark</tabstop>
   <tabstop>folderBackgroundColor</tabstop>
-  <tabstop>folderBackgroundColorDark</tabstop>
   <tabstop>nonprintableTextColor</tabstop>
+  <tabstop>textColorDark</tabstop>
+  <tabstop>backgroundColorDark</tabstop>
+  <tabstop>folderTextColorDark</tabstop>
+  <tabstop>folderBackgroundColorDark</tabstop>
   <tabstop>nonprintableTextColorDark</tabstop>
-  <tabstop>currentScenarioTemplate</tabstop>
-  <tabstop>spellChecking</tabstop>
-  <tabstop>spellCheckingLanguage</tabstop>
   <tabstop>capitalizeFirstWord</tabstop>
   <tabstop>correctDoubleCapitals</tabstop>
   <tabstop>replaceThreeDots</tabstop>
@@ -2740,6 +2750,16 @@ Paragraph</string>
   <tabstop>showSuggestionsInEmptyBlocks</tabstop>
   <tabstop>reviewUseWordHighlight</tabstop>
   <tabstop>wordsCounter</tabstop>
+  <tabstop>applicationCompactMode</tabstop>
+  <tabstop>applicationModuleCards</tabstop>
+  <tabstop>researchDefaultFont</tabstop>
+  <tabstop>researchDefaultFontSize</tabstop>
+  <tabstop>cardsUseCorkboardBackground</tabstop>
+  <tabstop>cardsUseColorsBackground</tabstop>
+  <tabstop>cardsBackgroundColor</tabstop>
+  <tabstop>cardsBackgroundColorDark</tabstop>
+  <tabstop>showSceneTitle</tabstop>
+  <tabstop>spellChecking</tabstop>
  </tabstops>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>

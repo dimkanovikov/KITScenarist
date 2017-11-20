@@ -3,6 +3,7 @@
 #include "ScenarioFastFormatWidget.h"
 #include "ScenarioReviewPanel.h"
 #include "ScenarioReviewView.h"
+#include "ScriptZenModeControls.h"
 
 #include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
 #include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.h>
@@ -41,6 +42,7 @@ using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioReviewPanel;
 using UserInterface::ScenarioReviewView;
 using UserInterface::ScenarioTextEdit;
+using UserInterface::ScriptZenModeControls;
 using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
@@ -92,7 +94,8 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
     m_countersInfo(new QLabel(this)),
     m_searchLine(new SearchWidget(this, true)),
     m_fastFormatWidget(new ScenarioFastFormatWidget(this)),
-    m_reviewView(new ScenarioReviewView(this))
+    m_reviewView(new ScenarioReviewView(this)),
+    m_zenControls(new ScriptZenModeControls(this))
 {
     initView();
     initConnections();
@@ -505,6 +508,7 @@ void ScenarioTextEditWidget::updateStylesElements()
     // Обновить виджет быстрого форматирования
     //
     m_fastFormatWidget->reinitBlockStyles();
+    m_zenControls->reinitBlockStyles();
 }
 
 void ScenarioTextEditWidget::updateShortcuts()
@@ -622,6 +626,19 @@ void ScenarioTextEditWidget::aboutShowFastFormat()
     if (m_fastFormatWidget->isVisible()) {
         m_fastFormatWidget->setFocus();
         m_fastFormatWidget->selectCurrentBlock();
+    }
+}
+
+void ScenarioTextEditWidget::setZenMode(bool _isZen)
+{
+    m_editor->setKeyboardSoundEnabled(_isZen);
+    m_zenControls->activate(_isZen);
+
+    //
+    // При выходе из дзен режима отключаем звуки клавиатуры
+    //
+    if (!_isZen) {
+        m_editor->setKeyboardSoundEnabled(false);
     }
 }
 
@@ -747,6 +764,9 @@ void ScenarioTextEditWidget::initView()
     m_reviewView->setEditor(m_editor);
     m_reviewView->hide();
 
+    m_zenControls->setEditor(m_editor);
+    m_zenControls->hide();
+
     QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
     topLayout->setContentsMargins(QMargins());
     topLayout->setSpacing(0);
@@ -863,6 +883,7 @@ void ScenarioTextEditWidget::initConnections()
     connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
     connect(m_reviewView, &ScenarioReviewView::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
     connect(m_reviewView, &ScenarioReviewView::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
+    connect(m_zenControls, &ScriptZenModeControls::quitPressed, this, &ScenarioTextEditWidget::quitFromZenMode);
 
     initEditorConnections();
 }

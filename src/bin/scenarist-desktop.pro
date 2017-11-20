@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent
+QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent multimedia
 !win32-g++: QT += webengine webenginewidgets
 
 TARGET = Scenarist
@@ -346,7 +346,8 @@ SOURCES += \
     scenarist-core/Domain/Transition.cpp \
     scenarist-core/DataLayer/DataMappingLayer/TransitionMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/TransitionStorage.cpp \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/LyricsHandler.cpp
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/LyricsHandler.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScriptZenModeControls.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -609,7 +610,8 @@ HEADERS += \
     scenarist-core/Domain/Transition.h \
     scenarist-core/DataLayer/DataMappingLayer/TransitionMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/TransitionStorage.h \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/LyricsHandler.h
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/LyricsHandler.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScriptZenModeControls.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

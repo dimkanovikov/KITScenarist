@@ -663,6 +663,44 @@ void ScenarioManager::scrollToAdditionalCursor(int _additionalCursorIndex)
     m_textEditManager->scrollToAdditionalCursor(_additionalCursorIndex);
 }
 
+void ScenarioManager::setZenMode(bool _isZen)
+{
+    //
+    // Настраиваем видимость тулбаров
+    //
+    m_viewEditorsToolbars->setVisible(!_isZen);
+    m_showFullscreen->setVisible(!_isZen);
+    m_showFullscreen->setChecked(false);
+
+    //
+    // И навигатора
+    //
+    // ... показать навигатор
+    //
+    if (!_isZen) {
+        if (!m_mainViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
+            m_mainViewSplitter->setSizes(m_mainViewSplitter->property(SPLITTER_LAST_SIZES).value<QList<int> >());
+        }
+    }
+    //
+    // ... скрыть навигатор
+    //
+    else {
+        m_mainViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_mainViewSplitter->sizes()));
+        const int navigatorIndex = m_mainViewSplitter->indexOf(m_noteViewSplitter);
+        if (navigatorIndex == 1) {
+            m_mainViewSplitter->setSizes(QList<int>() << 1 << 0);
+        } else {
+            m_mainViewSplitter->setSizes(QList<int>() << 0 << 1);
+        }
+    }
+
+    //
+    // Переводим редактор сценария в джен режим
+    //
+    m_textEditManager->setZenMode(_isZen);
+}
+
 void ScenarioManager::aboutUndo()
 {
     aboutSaveScenarioChanges();
@@ -1074,6 +1112,7 @@ void ScenarioManager::initConnections()
     connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
     connect(m_textEditManager, &ScenarioTextEditManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_textEditManager, &ScenarioTextEditManager::redoRequest, this, &ScenarioManager::aboutRedo);
+    connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
 
     connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 

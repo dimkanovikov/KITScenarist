@@ -79,6 +79,7 @@ namespace UserInterface
 
         void setScenarioEditPageView(bool _value);
         void setScenarioEditShowScenesNumbers(bool _value);
+        void setScenarioEditHidePanelsInFullscreen(bool _value);
         void setScenarioEditHighlightCurrentLine(bool _value);
         void setScenarioEditCapitalizeFirstWord(bool _value);
         void setScenarioEditCorrectDoubleCapitals(bool _value);
@@ -158,6 +159,7 @@ namespace UserInterface
 
         void scenarioEditPageViewChanged(bool);
         void scenarioEditShowScenesNumbersChanged(bool);
+        void scenarioEditHidePanelsInFullscreenChanged(bool);
         void scenarioEditHighlightCurrentLineChanged(bool);
         void scenarioEditCapitalizeFirstWordChanged(bool);
         void scenarioEditCorrectDoubleCapitalsChanged(bool);

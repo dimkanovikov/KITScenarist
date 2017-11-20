@@ -279,6 +279,11 @@ void SettingsView::setScenarioEditShowScenesNumbers(bool _value)
     m_ui->showScenesNumbersInEditor->setChecked(_value);
 }
 
+void SettingsView::setScenarioEditHidePanelsInFullscreen(bool _value)
+{
+    m_ui->scriptHidePanelsInFullscreen->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditHighlightCurrentLine(bool _value)
 {
     m_ui->highlightCurrentLine->setChecked(_value);
@@ -830,9 +835,10 @@ void SettingsView::initConnections()
     // ... карточки
     connect(m_ui->cardsUseCorkboardBackground, &QRadioButton::toggled, this, &SettingsView::cardsUseCorkboardBackgroundChanged);
     // ... текстовый редактор
-    connect(m_ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
-    connect(m_ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
-    connect(m_ui->highlightCurrentLine, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)));
+    connect(m_ui->pageView, &QCheckBox::toggled, this, &SettingsView::scenarioEditPageViewChanged);
+    connect(m_ui->showScenesNumbersInEditor, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowScenesNumbersChanged);
+    connect(m_ui->scriptHidePanelsInFullscreen, &QCheckBox::toggled, this, &SettingsView::scenarioEditHidePanelsInFullscreenChanged);
+    connect(m_ui->highlightCurrentLine, &QCheckBox::toggled, this, &SettingsView::scenarioEditHighlightCurrentLineChanged);
     connect(m_ui->capitalizeFirstWord, &QCheckBox::toggled, this, &SettingsView::scenarioEditCapitalizeFirstWordChanged);
     connect(m_ui->correctDoubleCapitals, &QCheckBox::toggled, this, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged);
     connect(m_ui->replaceThreeDots, &QCheckBox::toggled, this, &SettingsView::scenarioEditReplaceThreeDotsChanged);

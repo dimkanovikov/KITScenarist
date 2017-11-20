@@ -251,6 +251,11 @@ void SettingsManager::scenarioEditShowScenesNumbersChanged(bool _value)
     storeValue("scenario-editor/show-scenes-numbers", _value);
 }
 
+void SettingsManager::scenarioEditHidePanelsInFullscreenChanged(bool _value)
+{
+    storeValue("scenario-editor/hide-panels-in-fullscreen", _value);
+}
+
 void SettingsManager::scenarioEditHighlightCurrentLineChanged(bool _value)
 {
     storeValue("scenario-editor/highlight-current-line", _value);
@@ -847,6 +852,12 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    m_view->setScenarioEditHidePanelsInFullscreen(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/hide-panels-in-fullscreen",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
     m_view->setScenarioEditHighlightCurrentLine(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/highlight-current-line",
@@ -1200,9 +1211,10 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsBackgroundColorChanged);
     connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsBackgroundColorDarkChanged);
 
-    connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
-    connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
-    connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SLOT(scenarioEditHighlightCurrentLineChanged(bool)));
+    connect(m_view, &SettingsView::scenarioEditPageViewChanged, this, &SettingsManager::scenarioEditPageViewChanged);
+    connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditShowScenesNumbersChanged);
+    connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditHidePanelsInFullscreenChanged);
+    connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditHighlightCurrentLineChanged);
     connect(m_view, &SettingsView::scenarioEditCapitalizeFirstWordChanged, this, &SettingsManager::scenarioEditCapitalizeFirstWordChanged);
     connect(m_view, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged, this, &SettingsManager::scenarioEditCorrectDoubleCapitalsChanged);
     connect(m_view, &SettingsView::scenarioEditReplaceThreeDotsChanged, this, &SettingsManager::scenarioEditReplaceThreeDotsChanged);
@@ -1280,10 +1292,11 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsSettingsUpdated);
     connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsSettingsUpdated);
 
-    connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-    connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-    connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-    connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+    connect(m_view, &SettingsView::applicationUseDarkThemeChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditPageViewChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditCapitalizeFirstWordChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditReplaceThreeDotsChanged, this, &SettingsManager::scenarioEditSettingsUpdated);

@@ -1305,12 +1305,23 @@ void ApplicationManager::aboutShowFullscreen()
 {
     const char* IS_MAXIMIZED_PROPERTY = "isMaximized";
 
+    const bool useZenMode =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "scenario-editor/hide-panels-in-fullscreen",
+                DataStorageLayer::SettingsStorage::ApplicationSettings)
+            .toInt();
+
     if (m_view->isFullScreen()) {
         //
         // Возвращаемся в состояние предшествовавшее полноэкранному режиму
         //
         m_menu->show();
         m_tabs->show();
+        //
+        if (useZenMode) {
+            m_scenarioManager->setZenMode(false);
+        }
+        //
         if (m_view->property(IS_MAXIMIZED_PROPERTY).toBool()) {
             m_view->showMaximized();
         } else {
@@ -1327,6 +1338,11 @@ void ApplicationManager::aboutShowFullscreen()
         //
         m_menu->hide();
         m_tabs->hide();
+        //
+        if (useZenMode) {
+            m_scenarioManager->setZenMode(true);
+        }
+        //
         m_view->showFullScreen();
     }
 }
