@@ -410,6 +410,7 @@ void StatisticsView::initView()
     splitter->setObjectName("statisticsSplitter");
     splitter->setHandleWidth(1);
     splitter->setOpaqueResize(false);
+    splitter->setChildrenCollapsible(false);
     splitter->addWidget(statisticTypesPanel);
     splitter->addWidget(statisticDataPanel);
 

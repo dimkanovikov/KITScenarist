@@ -89,7 +89,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить видимость заметок
 		 */
-		void setNoteVisible(bool _visible);
+		void setSceneDescriptionVisible(bool _visible);
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -120,12 +120,12 @@ namespace UserInterface
 		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
-		void showHideDraft();
+        void draftVisibleChanged(bool _visible);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
-		void showHideNote();
+        void sceneDescriptionVisibleChanged(bool _visible);
 
 		/**
 		 * @brief Активирована сцена
@@ -211,15 +211,18 @@ namespace UserInterface
 		 */
 		QLabel* m_middleTitle;
 
-		/**
-		 * @brief Кнопка отображения/сокрытия черновика
-		 */
-		FlatButton* m_showDraft;
+        /**
+         * @brief Кнопка отображения/сокрытия дополнительных панелей
+         */
+        FlatButton* m_showAdditionalPanels = nullptr;
 
-		/**
-		 * @brief Кнопка отображения/сокрытия примечания к сцене
-		 */
-		FlatButton* m_showNote;
+        /**
+         * @brief Пункты меню для отображения/скрытия дополнительных панелей
+         */
+        /** @{ */
+        QAction* m_showDraft = nullptr;
+        QAction* m_showSceneDescription = nullptr;
+        /** @} */
 
 		/**
 		 * @brief Дерево навигации

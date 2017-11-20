@@ -58,7 +58,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить видимость заметок
 		 */
-		void setNoteVisible(bool _visible);
+        void setSceneDescriptionVisible(bool _visible);
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -90,12 +90,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
-		void showHideDraft();
+        void draftVisibleChanged(bool _visible);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
-		void showHideNote();
+        void sceneDescriptionVisibleChanged(bool _visible);
 
 		/**
 		 * @brief Активирована сцена

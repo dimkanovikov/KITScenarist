@@ -32,7 +32,7 @@ void ApplicationView::initSplittersRightClick()
     //
     foreach (QSplitter* splitter, findChildren<QSplitter*>()) {
         if (splitter->objectName() != "mainWindowSplitter"
-            && splitter->objectName() != "draftScenarioEditSplitter") {
+            && splitter->objectName() != "navigatorScriptEditSplitter") {
             splitter->handle(1)->installEventFilter(this);
         }
     }

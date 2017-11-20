@@ -50,6 +50,11 @@ namespace ManagementLayer
         BusinessLogic::ScenarioDocument* scenarioDraft() const;
 
         /**
+         * @brief Загрузить состояние представления
+         */
+        void loadViewState();
+
+        /**
          * @brief Получить текущую позицию курсора
          */
         int cursorPosition() const;
@@ -304,12 +309,12 @@ namespace ManagementLayer
         /**
          * @brief Показать/скрыть заметки к сцене
          */
-        void aboutShowHideDraft();
+        void setDraftVisible(bool _visible);
 
         /**
          * @brief Показать/скрыть заметки к сцене
          */
-        void aboutShowHideNote();
+        void setSceneDescriptionVisible(bool _visible);
 
         /**
          * @brief Сохранить изменение текста
@@ -351,15 +356,14 @@ namespace ManagementLayer
         /**
          * @brief Представление сценария
          */
-        QWidget* m_view;
+        QWidget* m_view = nullptr;
 
         /**
          * @brief Разделители представленя
          */
         /** @{ */
-        QSplitter* m_mainViewSplitter;
-        QSplitter* m_draftViewSplitter;
-        QSplitter* m_noteViewSplitter;
+        QSplitter* m_mainSplitter = nullptr;
+        QSplitter* m_navigatorSplitter = nullptr;
         /** @} */
 
         /**

@@ -32,8 +32,9 @@ ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
     m_addItem(new FlatButton(this)),
     m_removeItem(new FlatButton(this)),
     m_middleTitle(new QLabel(this)),
-    m_showDraft(new FlatButton(this)),
-    m_showNote(new FlatButton(this)),
+    m_showAdditionalPanels(new FlatButton(this)),
+    m_showDraft(new QAction(m_showAdditionalPanels)),
+    m_showSceneDescription(new QAction(m_showAdditionalPanels)),
     m_navigationTree(new QTreeView(this)),
     m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
 {
@@ -106,8 +107,7 @@ void ScenarioNavigator::setIsDraft(bool _isDraft)
     m_scenesCountTitle->setVisible(!_isDraft);
     m_scenesCount->setVisible(!_isDraft);
     m_middleTitle->setVisible(!_isDraft);
-    m_showDraft->setVisible(!_isDraft);
-    m_showNote->setVisible(!_isDraft);
+    m_showAdditionalPanels->setVisible(!_isDraft);
 }
 
 void ScenarioNavigator::clearSelection()
@@ -118,13 +118,11 @@ void ScenarioNavigator::clearSelection()
 void ScenarioNavigator::setDraftVisible(bool _visible)
 {
     m_showDraft->setChecked(_visible);
-    m_showDraft->repaint();
 }
 
-void ScenarioNavigator::setNoteVisible(bool _visible)
+void ScenarioNavigator::setSceneDescriptionVisible(bool _visible)
 {
-    m_showNote->setChecked(_visible);
-    m_showNote->repaint();
+    m_showSceneDescription->setChecked(_visible);
 }
 
 void ScenarioNavigator::setCommentOnly(bool _isCommentOnly)
@@ -336,15 +334,21 @@ void ScenarioNavigator::initView()
 
     m_middleTitle->setFixedWidth(1);
 
+    m_showAdditionalPanels->setIcons(QIcon(":/Graphics/Icons/view-panels.png"));
+    m_showAdditionalPanels->setToolTip(tr("Show/hide additional panels"));
+    m_showAdditionalPanels->setPopupMode(QToolButton::MenuButtonPopup);
+    m_showAdditionalPanels->addAction(m_showDraft);
+    m_showAdditionalPanels->addAction(m_showSceneDescription);
+
     m_showDraft->setObjectName("navigatorShowDraft");
-    m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
-    m_showDraft->setToolTip(tr("Show/hide draft"));
+    m_showDraft->setText(tr("Draft"));
+    m_showSceneDescription->setToolTip(tr("Show/hide draft"));
     m_showDraft->setCheckable(true);
 
-    m_showNote->setObjectName("navigatorShowNote");
-    m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"));
-    m_showNote->setToolTip(tr("Show/hide scene note"));
-    m_showNote->setCheckable(true);
+    m_showSceneDescription->setObjectName("navigatorShowNote");
+    m_showSceneDescription->setText(tr("Scene description"));
+    m_showSceneDescription->setToolTip(tr("Show/hide scene note"));
+    m_showSceneDescription->setCheckable(true);
 
     m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
     m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
@@ -365,8 +369,7 @@ void ScenarioNavigator::initView()
     topLayout->addWidget(m_addItem);
     topLayout->addWidget(m_removeItem);
     topLayout->addWidget(m_middleTitle);
-    topLayout->addWidget(m_showDraft);
-    topLayout->addWidget(m_showNote);
+    topLayout->addWidget(m_showAdditionalPanels);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setContentsMargins(QMargins());
@@ -383,8 +386,9 @@ void ScenarioNavigator::initConnections()
 
     connect(m_addItem, SIGNAL(clicked()), this, SLOT(aboutAddItem()));
     connect(m_removeItem, SIGNAL(clicked()), this, SLOT(aboutRemoveItem()));
-    connect(m_showDraft, SIGNAL(clicked()), this, SIGNAL(showHideDraft()));
-    connect(m_showNote, SIGNAL(clicked()), this, SIGNAL(showHideNote()));
+    connect(m_showAdditionalPanels, &FlatButton::clicked, m_showAdditionalPanels, &FlatButton::showMenu);
+    connect(m_showDraft, &QAction::toggled, this, &ScenarioNavigator::draftVisibleChanged);
+    connect(m_showSceneDescription, &QAction::toggled, this, &ScenarioNavigator::sceneDescriptionVisibleChanged);
     connect(m_navigationTree, SIGNAL(clicked(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
 }
 
@@ -406,8 +410,8 @@ void ScenarioNavigator::initStyleSheet()
     m_middleTitle->setProperty("topPanelTopBordered", true);
     m_middleTitle->setProperty("topPanelRightBordered", true);
 
-    m_showDraft->setProperty("inTopPanel", true);
-    m_showNote->setProperty("inTopPanel", true);
+    m_showAdditionalPanels->setProperty("inTopPanel", true);
+    m_showAdditionalPanels->setProperty("hasMenu", true);
 
     m_navigationTree->setProperty("mainContainer", true);
 }

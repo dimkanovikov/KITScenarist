@@ -103,9 +103,9 @@ void ScenarioNavigatorManager::setDraftVisible(bool _visible)
 	m_navigator->setDraftVisible(_visible);
 }
 
-void ScenarioNavigatorManager::setNoteVisible(bool _visible)
+void ScenarioNavigatorManager::setSceneDescriptionVisible(bool _visible)
 {
-	m_navigator->setNoteVisible(_visible);
+    m_navigator->setSceneDescriptionVisible(_visible);
 }
 
 void ScenarioNavigatorManager::setCommentOnly(bool _isCommentOnly)
@@ -178,15 +178,15 @@ void ScenarioNavigatorManager::initConnections()
 {
 	connectModel();
 
-	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
-	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
-	connect(m_navigator, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
+    connect(m_navigator, &ScenarioNavigator::addItem, this, &ScenarioNavigatorManager::aboutAddItem);
+    connect(m_navigator, &ScenarioNavigator::removeItems, this, &ScenarioNavigatorManager::aboutRemoveItems);
+    connect(m_navigator, &ScenarioNavigator::setItemColors, this, &ScenarioNavigatorManager::aboutSetItemColors);
 	connect(m_navigator, &ScenarioNavigator::changeItemTypeRequested, this, &ScenarioNavigatorManager::aboutChangeItemType);
-	connect(m_navigator, SIGNAL(showHideDraft()), this, SIGNAL(showHideDraft()));
-	connect(m_navigator, SIGNAL(showHideNote()), this, SIGNAL(showHideNote()));
-	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));
-	connect(m_navigator, SIGNAL(undoRequest()), this, SIGNAL(undoRequest()));
-	connect(m_navigator, SIGNAL(redoRequest()), this, SIGNAL(redoRequest()));
+    connect(m_navigator, &ScenarioNavigator::draftVisibleChanged, this, &ScenarioNavigatorManager::draftVisibleChanged);
+    connect(m_navigator, &ScenarioNavigator::sceneDescriptionVisibleChanged, this, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged);
+    connect(m_navigator, &ScenarioNavigator::sceneChoosed, this, &ScenarioNavigatorManager::aboutSceneChoosed);
+    connect(m_navigator, &ScenarioNavigator::undoRequest, this, &ScenarioNavigatorManager::undoRequest);
+    connect(m_navigator, &ScenarioNavigator::redoRequest, this, &ScenarioNavigatorManager::redoRequest);
 }
 
 void ScenarioNavigatorManager::connectModel()

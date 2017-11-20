@@ -1413,6 +1413,11 @@ void ApplicationManager::loadViewState()
     // Для всех полос прокрутки добавляем функциональность - при наведении они расширяются
     //
     m_view->initScrollBarsWidthChanges();
+
+    //
+    // Загружаем состояние контроллеров
+    //
+    m_scenarioManager->loadViewState();
 }
 
 void ApplicationManager::saveViewState()

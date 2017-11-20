@@ -57,7 +57,8 @@ namespace {
     /**
      * @brief Ключ для хранения атрибута последнего размера сплитера
      */
-    const char* SPLITTER_LAST_SIZES = "last_sizes";
+    const char* SPLITTER_DRAFT_LAST_SIZES = "last_sizes_draft";
+    const char* SPLITTER_SCENE_DESCRIPTION_LAST_SIZES = "last_sizes_scene_description";
 
     /**
      * @brief Ключ для доступа к черновику сценария
@@ -71,6 +72,14 @@ namespace {
     /** @{ */
     const int SLOW_SAVE_CHANGES_INTERVAL = 5000;
     const int FAST_SAVE_CHANGES_INTERVAL = 1000;
+    /** @} */
+
+    /**
+     * @brief Индексы дополнительных панелей в навигаторе
+     */
+    /** @{ */
+    const int DRAFT_PANEL_INDEX = 1;
+    const int SCENE_DESCRIPTION_PANEL_INDEX = 2;
     /** @} */
 
     /**
@@ -231,9 +240,8 @@ namespace {
 ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
     QObject(_parent),
     m_view(new QWidget(_parentWidget)),
-    m_mainViewSplitter(new QSplitter(m_view)),
-    m_draftViewSplitter(new QSplitter(m_view)),
-    m_noteViewSplitter(new QSplitter(m_view)),
+    m_mainSplitter(new QSplitter(m_view)),
+    m_navigatorSplitter(new QSplitter(m_view)),
     m_scenario(new ScenarioDocument(this)),
     m_scenarioDraft(new ScenarioDocument(this)),
     m_cardsManager(new ScenarioCardsManager(this, _parentWidget)),
@@ -264,9 +272,15 @@ BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
     return m_scenario;
 }
 
-BusinessLogic::ScenarioDocument*ScenarioManager::scenarioDraft() const
+BusinessLogic::ScenarioDocument* ScenarioManager::scenarioDraft() const
 {
     return m_scenarioDraft;
+}
+
+void ScenarioManager::loadViewState()
+{
+    m_navigatorManager->setDraftVisible(m_navigatorSplitter->sizes().at(DRAFT_PANEL_INDEX) != 0);
+    m_navigatorManager->setSceneDescriptionVisible(m_navigatorSplitter->sizes().at(SCENE_DESCRIPTION_PANEL_INDEX) != 0);
 }
 
 int ScenarioManager::cursorPosition() const
@@ -867,56 +881,20 @@ void ScenarioManager::aboutChangeItemType(const QModelIndex& _index, int _type)
     emit scenarioChanged();
 }
 
-void ScenarioManager::aboutShowHideDraft()
+void ScenarioManager::setDraftVisible(bool _visible)
 {
-    const bool draftInvisible = m_draftViewSplitter->sizes().last() == 0;
-
     //
-    // Показать примечания, если скрыты
+    // Настраиваем видимость
     //
-    if (draftInvisible) {
-        if (m_draftViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
-            int splitterHeight = m_draftViewSplitter->height();
-            m_draftViewSplitter->setSizes(QList<int>() << splitterHeight * 2/3 << splitterHeight * 1/3);
-        } else {
-            m_draftViewSplitter->setSizes(m_draftViewSplitter->property(SPLITTER_LAST_SIZES).value<QList<int> >());
-        }
-    }
-    //
-    // Скрыть примечания
-    //
-    else {
-        m_draftViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_draftViewSplitter->sizes()));
-        m_draftViewSplitter->setSizes(QList<int>() << 1 << 0);
-    }
-
-    m_navigatorManager->setDraftVisible(draftInvisible);
+    m_draftNavigatorManager->view()->setVisible(_visible);
 }
 
-void ScenarioManager::aboutShowHideNote()
+void ScenarioManager::setSceneDescriptionVisible(bool _visible)
 {
-    const bool noteInvisible = m_noteViewSplitter->sizes().last() == 0;
-
     //
-    // Показать примечания, если скрыты
+    // Настраиваем видимость
     //
-    if (noteInvisible) {
-        if (m_noteViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
-            int splitterHeight = m_noteViewSplitter->height();
-            m_noteViewSplitter->setSizes(QList<int>() << splitterHeight * 2/3 << splitterHeight * 1/3);
-        } else {
-            m_noteViewSplitter->setSizes(m_noteViewSplitter->property(SPLITTER_LAST_SIZES).value<QList<int> >());
-        }
-    }
-    //
-    // Скрыть примечания
-    //
-    else {
-        m_noteViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_noteViewSplitter->sizes()));
-        m_noteViewSplitter->setSizes(QList<int>() << 1 << 0);
-    }
-
-    m_navigatorManager->setNoteVisible(noteInvisible);
+    m_sceneDescriptionManager->view()->setVisible(_visible);
 }
 
 void ScenarioManager::aboutSaveScenarioChanges()
@@ -999,32 +977,26 @@ void ScenarioManager::initView()
     rightLayout->addLayout(topLayout);
     rightLayout->addWidget(m_viewEditors, 1);
 
-    m_draftViewSplitter->setObjectName("draftScenarioEditSplitter");
-    m_draftViewSplitter->setHandleWidth(1);
-    m_draftViewSplitter->setOrientation(Qt::Vertical);
-    m_draftViewSplitter->addWidget(m_navigatorManager->view());
-    m_draftViewSplitter->addWidget(m_draftNavigatorManager->view());
-    m_draftViewSplitter->setSizes({1, 0});
+    m_navigatorSplitter->setObjectName("navigatorScriptEditSplitter");
+    m_navigatorSplitter->setHandleWidth(1);
+    m_navigatorSplitter->setOrientation(Qt::Vertical);
+    m_navigatorSplitter->addWidget(m_navigatorManager->view());
+    m_navigatorSplitter->addWidget(m_draftNavigatorManager->view());
+    m_navigatorSplitter->addWidget(m_sceneDescriptionManager->view());
+    m_navigatorSplitter->setSizes({1, 0, 0});
 
-    m_noteViewSplitter->setObjectName("noteScenarioEditSplitter");
-    m_noteViewSplitter->setHandleWidth(1);
-    m_noteViewSplitter->setOrientation(Qt::Vertical);
-    m_noteViewSplitter->addWidget(m_draftViewSplitter);
-    m_noteViewSplitter->addWidget(m_sceneDescriptionManager->view());
-    m_noteViewSplitter->setSizes({1, 0});
-
-    m_mainViewSplitter->setObjectName("mainScenarioEditSplitter");
-    m_mainViewSplitter->setHandleWidth(1);
-    m_mainViewSplitter->setOrientation(Qt::Horizontal);
-    m_mainViewSplitter->setStretchFactor(1, 1);
-    m_mainViewSplitter->setOpaqueResize(false);
-    m_mainViewSplitter->addWidget(m_noteViewSplitter);
-    m_mainViewSplitter->addWidget(rightWidget);
+    m_mainSplitter->setObjectName("mainScenarioEditSplitter");
+    m_mainSplitter->setHandleWidth(1);
+    m_mainSplitter->setOrientation(Qt::Horizontal);
+    m_mainSplitter->setStretchFactor(1, 1);
+    m_mainSplitter->setOpaqueResize(false);
+    m_mainSplitter->addWidget(m_navigatorSplitter);
+    m_mainSplitter->addWidget(rightWidget);
 
     QHBoxLayout* layout = new QHBoxLayout;
     layout->setContentsMargins(QMargins());
     layout->setSpacing(0);
-    layout->addWidget(m_mainViewSplitter);
+    layout->addWidget(m_mainSplitter);
 
     m_view->setLayout(layout);
 }
@@ -1044,14 +1016,20 @@ void ScenarioManager::initConnections()
     connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
-    connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
-    connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
-    connect(m_navigatorManager, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
+    connect(m_navigatorManager, &ScenarioNavigatorManager::addItem, this, &ScenarioManager::aboutAddItem);
+    connect(m_navigatorManager, &ScenarioNavigatorManager::removeItems, this, &ScenarioManager::aboutRemoveItems);
+    connect(m_navigatorManager, &ScenarioNavigatorManager::setItemColors, this, &ScenarioManager::aboutSetItemColors);
     connect(m_navigatorManager, &ScenarioNavigatorManager::changeItemTypeRequested, this, &ScenarioManager::aboutChangeItemType);
-    connect(m_navigatorManager, SIGNAL(showHideDraft()), this, SLOT(aboutShowHideDraft()));
-    connect(m_navigatorManager, SIGNAL(showHideNote()), this, SLOT(aboutShowHideNote()));
-    connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
-    connect(m_navigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
+    connect(m_navigatorManager, &ScenarioNavigatorManager::draftVisibleChanged, this, &ScenarioManager::setDraftVisible);
+    connect(m_navigatorManager, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged, this, &ScenarioManager::setSceneDescriptionVisible);
+    connect(m_navigatorManager,
+            static_cast<void (ScenarioNavigatorManager::*)(const QModelIndex&)>(&ScenarioNavigatorManager::sceneChoosed),
+            this,
+            static_cast<void (ScenarioManager::*)(const QModelIndex&)>(&ScenarioManager::aboutMoveCursorToItem));
+    connect(m_navigatorManager,
+            static_cast<void (ScenarioNavigatorManager::*)(int)>(&ScenarioNavigatorManager::sceneChoosed),
+            this,
+            static_cast<void (ScenarioManager::*)(int)>(&ScenarioManager::aboutMoveCursorToItem));
     connect(m_navigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_navigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
