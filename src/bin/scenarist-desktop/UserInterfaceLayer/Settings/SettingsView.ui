@@ -865,7 +865,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="scenarioEditPageStack">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1551,6 +1551,20 @@
                   <string>Text corrections</string>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <item>
+                   <widget class="QCheckBox" name="autoContinueDialogue">
+                    <property name="text">
+                     <string>Automatically continue dialogue</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="autoCorrectionsOnPageBreaks">
+                    <property name="text">
+                     <string>Automatically corrections on page breaks</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item>
                    <widget class="QCheckBox" name="capitalizeFirstWord">
                     <property name="text">
@@ -2693,25 +2707,25 @@ Paragraph</string>
   <tabstop>saveBackups</tabstop>
   <tabstop>saveBackupsFolder</tabstop>
   <tabstop>browseBackupFolder</tabstop>
-  <tabstop>spellCheckingLanguage</tabstop>
-  <tabstop>currentScenarioTemplate</tabstop>
   <tabstop>chronometryGroup</tabstop>
-  <tabstop>pagesChronometry</tabstop>
-  <tabstop>pagesChronometrySeconds</tabstop>
   <tabstop>charactersChronometryCharacters</tabstop>
   <tabstop>charactersChronometrySeconds</tabstop>
+  <tabstop>newTemplate</tabstop>
+  <tabstop>configurableChronometrySecondsForParagraphSceneHeading</tabstop>
   <tabstop>charactersChronometryConsiderSpaces</tabstop>
   <tabstop>configurableChronometry</tabstop>
-  <tabstop>configurableChronometrySecondsForParagraphSceneHeading</tabstop>
-  <tabstop>configurableChronometrySecondsPer50CharactersSceneHeading</tabstop>
-  <tabstop>configurableChronometrySecondsForParagraphAction</tabstop>
-  <tabstop>configurableChronometrySecondsPer50CharactersAction</tabstop>
-  <tabstop>configurableChronometrySecondsForParagraphDialog</tabstop>
-  <tabstop>configurableChronometrySecondsPer50CharactersDialog</tabstop>
-  <tabstop>pagesCounter</tabstop>
-  <tabstop>simbolsCounter</tabstop>
-  <tabstop>sceneDescriptionIsSceneSynopsis</tabstop>
-  <tabstop>newTemplate</tabstop>
+  <tabstop>currentScenarioTemplate</tabstop>
+  <tabstop>spellChecking</tabstop>
+  <tabstop>spellCheckingLanguage</tabstop>
+  <tabstop>autoContinueDialogue</tabstop>
+  <tabstop>autoCorrectionsOnPageBreaks</tabstop>
+  <tabstop>capitalizeFirstWord</tabstop>
+  <tabstop>correctDoubleCapitals</tabstop>
+  <tabstop>replaceThreeDots</tabstop>
+  <tabstop>smartQuotes</tabstop>
+  <tabstop>autoJumpToNextBlock</tabstop>
+  <tabstop>showSuggestionsInEmptyBlocks</tabstop>
+  <tabstop>reviewUseWordHighlight</tabstop>
   <tabstop>loadTemplate</tabstop>
   <tabstop>removeTemplate</tabstop>
   <tabstop>saveTemplate</tabstop>
@@ -2745,13 +2759,13 @@ Paragraph</string>
   <tabstop>folderTextColorDark</tabstop>
   <tabstop>folderBackgroundColorDark</tabstop>
   <tabstop>nonprintableTextColorDark</tabstop>
-  <tabstop>capitalizeFirstWord</tabstop>
-  <tabstop>correctDoubleCapitals</tabstop>
-  <tabstop>replaceThreeDots</tabstop>
-  <tabstop>smartQuotes</tabstop>
-  <tabstop>autoJumpToNextBlock</tabstop>
-  <tabstop>showSuggestionsInEmptyBlocks</tabstop>
-  <tabstop>reviewUseWordHighlight</tabstop>
+  <tabstop>configurableChronometrySecondsForParagraphAction</tabstop>
+  <tabstop>configurableChronometrySecondsPer50CharactersAction</tabstop>
+  <tabstop>configurableChronometrySecondsForParagraphDialog</tabstop>
+  <tabstop>configurableChronometrySecondsPer50CharactersDialog</tabstop>
+  <tabstop>pagesCounter</tabstop>
+  <tabstop>simbolsCounter</tabstop>
+  <tabstop>sceneDescriptionIsSceneSynopsis</tabstop>
   <tabstop>wordsCounter</tabstop>
   <tabstop>applicationCompactMode</tabstop>
   <tabstop>applicationModuleCards</tabstop>
@@ -2762,7 +2776,9 @@ Paragraph</string>
   <tabstop>cardsBackgroundColor</tabstop>
   <tabstop>cardsBackgroundColorDark</tabstop>
   <tabstop>showSceneTitle</tabstop>
-  <tabstop>spellChecking</tabstop>
+  <tabstop>pagesChronometry</tabstop>
+  <tabstop>pagesChronometrySeconds</tabstop>
+  <tabstop>configurableChronometrySecondsPer50CharactersSceneHeading</tabstop>
  </tabstops>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>

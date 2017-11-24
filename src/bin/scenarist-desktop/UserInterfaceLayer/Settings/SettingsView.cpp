@@ -289,6 +289,16 @@ void SettingsView::setScenarioEditHighlightCurrentLine(bool _value)
     m_ui->highlightCurrentLine->setChecked(_value);
 }
 
+void SettingsView::setScenarioEditAutoContinueDialogue(bool _value)
+{
+    m_ui->autoContinueDialogue->setChecked(_value);
+}
+
+void SettingsView::setScenarioEditAutoCorrectionsOnPageBreaks(bool _value)
+{
+    m_ui->autoCorrectionsOnPageBreaks->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditCapitalizeFirstWord(bool _value)
 {
     m_ui->capitalizeFirstWord->setChecked(_value);
@@ -839,6 +849,8 @@ void SettingsView::initConnections()
     connect(m_ui->showScenesNumbersInEditor, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowScenesNumbersChanged);
     connect(m_ui->scriptHidePanelsInFullscreen, &QCheckBox::toggled, this, &SettingsView::scenarioEditHidePanelsInFullscreenChanged);
     connect(m_ui->highlightCurrentLine, &QCheckBox::toggled, this, &SettingsView::scenarioEditHighlightCurrentLineChanged);
+    connect(m_ui->autoContinueDialogue, &QCheckBox::toggled, this, &SettingsView::scenarioEditAutoContinueDialogueChanged);
+    connect(m_ui->autoCorrectionsOnPageBreaks, &QCheckBox::toggled, this, &SettingsView::scenarioEditAutoCorrectionsOnPageBreaksChanged);
     connect(m_ui->capitalizeFirstWord, &QCheckBox::toggled, this, &SettingsView::scenarioEditCapitalizeFirstWordChanged);
     connect(m_ui->correctDoubleCapitals, &QCheckBox::toggled, this, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged);
     connect(m_ui->replaceThreeDots, &QCheckBox::toggled, this, &SettingsView::scenarioEditReplaceThreeDotsChanged);

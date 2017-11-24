@@ -261,6 +261,16 @@ void SettingsManager::scenarioEditHighlightCurrentLineChanged(bool _value)
     storeValue("scenario-editor/highlight-current-line", _value);
 }
 
+void SettingsManager::scenarioEditAutoContinueDialogueChanged(bool _value)
+{
+    storeValue("scenario-editor/auto-continue-dialogue", _value);
+}
+
+void SettingsManager::scenarioEditAutoCorrectionsOnPageBreaksChanged(bool _value)
+{
+    storeValue("scenario-editor/auto-corrections-on-page-breaks", _value);
+}
+
 void SettingsManager::scenarioEditCapitalizeFirstWordChanged(bool _value)
 {
     storeValue("scenario-editor/capitalize-first-word", _value);
@@ -864,6 +874,18 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    m_view->setScenarioEditAutoContinueDialogue(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/auto-continue-dialogue",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
+    m_view->setScenarioEditAutoCorrectionsOnPageBreaks(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/auto-corrections-on-page-breaks",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
     m_view->setScenarioEditCapitalizeFirstWord(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/capitalize-first-word",
@@ -1215,6 +1237,8 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditShowScenesNumbersChanged);
     connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditHidePanelsInFullscreenChanged);
     connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditHighlightCurrentLineChanged);
+    connect(m_view, &SettingsView::scenarioEditAutoContinueDialogueChanged, this, &SettingsManager::scenarioEditAutoContinueDialogueChanged);
+    connect(m_view, &SettingsView::scenarioEditAutoCorrectionsOnPageBreaksChanged, this, &SettingsManager::scenarioEditAutoCorrectionsOnPageBreaksChanged);
     connect(m_view, &SettingsView::scenarioEditCapitalizeFirstWordChanged, this, &SettingsManager::scenarioEditCapitalizeFirstWordChanged);
     connect(m_view, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged, this, &SettingsManager::scenarioEditCorrectDoubleCapitalsChanged);
     connect(m_view, &SettingsView::scenarioEditReplaceThreeDotsChanged, this, &SettingsManager::scenarioEditReplaceThreeDotsChanged);
@@ -1297,6 +1321,8 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditAutoContinueDialogueChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditAutoCorrectionsOnPageBreaksChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditCapitalizeFirstWordChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditReplaceThreeDotsChanged, this, &SettingsManager::scenarioEditSettingsUpdated);

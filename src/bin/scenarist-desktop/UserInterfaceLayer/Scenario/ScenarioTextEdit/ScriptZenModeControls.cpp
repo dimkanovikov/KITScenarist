@@ -95,7 +95,11 @@ void ScriptZenModeControls::setEditor(UserInterface::ScenarioTextEdit* _editor)
         m_editor = _editor;
 
         if (m_editor != 0) {
-            connect(m_keyboardSound, &QCheckBox::toggled, m_editor, &ScenarioTextEdit::setKeyboardSoundEnabled);
+            connect(m_keyboardSound, &QCheckBox::toggled, [this] (bool _checked) {
+                if (m_active) {
+                    m_editor->setKeyboardSoundEnabled(_checked);
+                }
+            });
             connect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScriptZenModeControls::updateStyleButtons);
         }
     }
