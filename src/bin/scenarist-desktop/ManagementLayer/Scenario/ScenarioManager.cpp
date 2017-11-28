@@ -469,9 +469,7 @@ void ScenarioManager::aboutTextEditSettingsUpdated()
     //
     // Корректируем текст, т.к. могли измениться настройки отображения, или используемого шаблона
     //
-    const int START_POSITION = 0;
-    const bool FORCE = true;
-    ScenarioTextCorrector::correctScenarioText(m_scenario->document(), START_POSITION, FORCE);
+    m_scenario->document()->correct();
 }
 
 void ScenarioManager::aboutNavigatorSettingsUpdated()
