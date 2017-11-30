@@ -607,7 +607,9 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
                 style.char_format.setVerticalAlignment(QTextCharFormat::AlignNormal);
             }
         } else if (m_xml.qualifiedName() == "w:caps") {
-            style.char_format.setFontCapitalization(QFont::AllUppercase);
+            if (readBool(value)) {
+                style.char_format.setFontCapitalization(QFont::AllUppercase);
+            }
         } else if ((m_xml.qualifiedName() == "w:rStyle") && allowstyles) {
             Style rstyle = m_styles.value(value.toString());
             rstyle.merge(style);
