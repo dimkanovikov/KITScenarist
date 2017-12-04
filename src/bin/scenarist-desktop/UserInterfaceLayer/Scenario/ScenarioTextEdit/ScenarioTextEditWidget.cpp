@@ -625,7 +625,6 @@ void ScenarioTextEditWidget::aboutShowFastFormat()
     m_fastFormatWidget->setVisible(m_fastFormat->isChecked());
     if (m_fastFormatWidget->isVisible()) {
         m_fastFormatWidget->setFocus();
-        m_fastFormatWidget->selectCurrentBlock();
     }
 }
 
@@ -696,7 +695,7 @@ void ScenarioTextEditWidget::aboutChangeTextStyle()
     //
     // Меняем стиль блока, если это возможно
     //
-    m_editor->changeScenarioBlockType(type);
+    m_editor->changeScenarioBlockTypeForSelection(type);
     m_editorWrapper->setFocus();
 }
 

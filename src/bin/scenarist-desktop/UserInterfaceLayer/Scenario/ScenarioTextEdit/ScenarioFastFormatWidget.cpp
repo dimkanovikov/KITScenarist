@@ -46,9 +46,7 @@ namespace {
 
 
 ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
-    QFrame(parent),
-    m_editor(0),
-    m_grabFocus(new QCheckBox(this))
+    QFrame(parent)
 {
     setFrameShape(QFrame::Box);
     setProperty("fastFormatWidget", true);
@@ -81,9 +79,6 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
     QShortcut* goToNextShortcut = new QShortcut(Qt::Key_Down, this);
     connect(goToNextShortcut, SIGNAL(activated()), goToNextBlock, SLOT(click()));
 
-    m_grabFocus->setText(tr("Catch focus"));
-    connect(m_grabFocus, SIGNAL(toggled(bool)), this, SLOT(aboutGrabCursorChanged(bool)));
-
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(goToPrevBlock);
     layout->addSpacing(6);
@@ -93,7 +88,6 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
     layout->addSpacing(6);
     layout->addWidget(goToNextBlock);
     layout->addStretch();
-    layout->addWidget(m_grabFocus);
 
     setLayout(layout);
 }
@@ -106,17 +100,6 @@ void ScenarioFastFormatWidget::setEditor(ScenarioTextEdit* _editor)
         if (m_editor != 0) {
             connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutCurrentStyleChanged()));
         }
-    }
-}
-
-void ScenarioFastFormatWidget::selectCurrentBlock()
-{
-    if (m_editor != 0
-        && m_grabFocus->isChecked()) {
-        QTextCursor cursor = m_editor->textCursor();
-        cursor.movePosition(QTextCursor::StartOfBlock);
-        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        m_editor->setTextCursor(cursor);
     }
 }
 
@@ -169,7 +152,6 @@ void ScenarioFastFormatWidget::aboutGoToNextBlock()
                  && (!cursor.block().isVisible()
                      || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)));
         m_editor->setTextCursor(cursor);
-        catchFocusIfNeeded();
     }
 }
 
@@ -184,7 +166,6 @@ void ScenarioFastFormatWidget::aboutGoToPrevBlock()
                  && (!cursor.block().isVisible()
                      || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)));
         m_editor->setTextCursor(cursor);
-        catchFocusIfNeeded();
     }
 }
 
@@ -195,9 +176,7 @@ void ScenarioFastFormatWidget::aboutChangeStyle()
         ScenarioBlockStyle::Type type =
                 (ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
         if (m_editor != 0) {
-            m_editor->changeScenarioBlockType(type);
-            selectCurrentBlock();
-            catchFocusIfNeeded();
+            m_editor->changeScenarioBlockTypeForSelection(type);
         }
     }
 }
@@ -210,34 +189,3 @@ void ScenarioFastFormatWidget::aboutCurrentStyleChanged()
             (ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt() == currentType);
     }
 }
-
-void ScenarioFastFormatWidget::aboutGrabCursorChanged(bool _catch)
-{
-    if (_catch) {
-        selectCurrentBlock();
-    }
-    catchFocusIfNeeded();
-}
-
-void ScenarioFastFormatWidget::catchFocusIfNeeded()
-{
-    //
-    // Если необходимо захватим фокус
-    //
-    if (m_grabFocus->isChecked()) {
-        this->setFocus();
-    }
-    //
-    // Или снимем выделение, для продолжения редактирования текста
-    //
-    else {
-        if (m_editor != 0) {
-            QTextCursor cursor = m_editor->textCursor();
-            cursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-            m_editor->setTextCursor(cursor);
-            emit focusMovedToEditor();
-        }
-    }
-}
-
-

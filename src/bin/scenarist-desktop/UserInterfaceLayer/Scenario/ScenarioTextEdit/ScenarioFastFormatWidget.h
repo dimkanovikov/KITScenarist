@@ -9,33 +9,28 @@ class QCheckBox;
 
 namespace UserInterface
 {
-	class ScenarioTextEdit;
+    class ScenarioTextEdit;
 
 
-	/**
-	 * @brief Виджет быстрого форматирования
-	 */
-	class ScenarioFastFormatWidget : public QFrame
-	{
-		Q_OBJECT
+    /**
+     * @brief Виджет быстрого форматирования
+     */
+    class ScenarioFastFormatWidget : public QFrame
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioFastFormatWidget(QWidget *parent = 0);
+    public:
+        explicit ScenarioFastFormatWidget(QWidget *parent = 0);
 
-		/**
-		 * @brief Установить редактор
-		 */
-		void setEditor(ScenarioTextEdit* _editor);
+        /**
+         * @brief Установить редактор
+         */
+        void setEditor(ScenarioTextEdit* _editor);
 
-		/**
-		 * @brief Выделить текущий блок под курсором
-		 */
-		void selectCurrentBlock();
-
-		/**
-		 * @brief Переформировать список быстрых форматов в соответствии с текущим стилем
-		 */
-		void reinitBlockStyles();
+        /**
+         * @brief Переформировать список быстрых форматов в соответствии с текущим стилем
+         */
+        void reinitBlockStyles();
 
     signals:
         /**
@@ -43,54 +38,38 @@ namespace UserInterface
          */
         void focusMovedToEditor();
 
-	private slots:
-		/**
-		 * @brief Перейти к следующему блоку
-		 */
-		void aboutGoToNextBlock();
+    private slots:
+        /**
+         * @brief Перейти к следующему блоку
+         */
+        void aboutGoToNextBlock();
 
-		/**
-		 * @brief Перейти к предыдущему блоку
-		 */
-		void aboutGoToPrevBlock();
+        /**
+         * @brief Перейти к предыдущему блоку
+         */
+        void aboutGoToPrevBlock();
 
-		/**
-		 * @brief Сменить стиль блока
-		 */
-		void aboutChangeStyle();
+        /**
+         * @brief Сменить стиль блока
+         */
+        void aboutChangeStyle();
 
-		/**
-		 * @brief Сменилась позиция курсора
-		 */
-		void aboutCurrentStyleChanged();
+        /**
+         * @brief Сменилась позиция курсора
+         */
+        void aboutCurrentStyleChanged();
 
-		/**
-		 * @brief Сменилось значение отлавливания курсора
-		 */
-		void aboutGrabCursorChanged(bool _catch);
+    private:
+        /**
+         * @brief Редактор сценария для форматирования блоков
+         */
+        ScenarioTextEdit* m_editor = nullptr;
 
-	private:
-		/**
-		 * @brief Захватить фокус, если необходимо
-		 */
-		void catchFocusIfNeeded();
-
-	private:
-		/**
-		 * @brief Редактор сценария для форматирования блоков
-		 */
-		ScenarioTextEdit* m_editor;
-
-		/**
-		 * @brief Список кнопок
-		 */
-		QList<QPushButton*> m_buttons;
-
-		/**
-		 * @brief Переключатель захвата фокуса
-		 */
-		QCheckBox* m_grabFocus;
-	};
+        /**
+         * @brief Список кнопок
+         */
+        QList<QPushButton*> m_buttons;
+    };
 }
 
 #endif // SCENARIOFASTFORMATWIDGET_H

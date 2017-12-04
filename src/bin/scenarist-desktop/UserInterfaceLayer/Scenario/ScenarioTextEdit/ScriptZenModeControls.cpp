@@ -149,7 +149,7 @@ void ScriptZenModeControls::changeStyle()
         ScenarioBlockStyle::Type type =
                 (ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
         if (m_editor != 0) {
-            m_editor->changeScenarioBlockType(type);
+            m_editor->changeScenarioBlockTypeForSelection(type);
         }
     }
 }
