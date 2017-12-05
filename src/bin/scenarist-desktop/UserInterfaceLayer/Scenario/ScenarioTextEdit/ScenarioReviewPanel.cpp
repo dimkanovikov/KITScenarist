@@ -111,6 +111,11 @@ ScenarioReviewPanel::ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _pa
     initStyleSheet();
 }
 
+bool ScenarioReviewPanel::isChecked() const
+{
+    return m_activateButton->isChecked();
+}
+
 void ScenarioReviewPanel::aboutUpdateActionsEnable()
 {
     bool reviewDone = false;

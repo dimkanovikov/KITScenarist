@@ -26,6 +26,11 @@ namespace UserInterface
     public:
         explicit ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _parent = 0);
 
+        /**
+         * @brief Включён ли режим рецензирования
+         */
+        bool isChecked() const;
+
     signals:
         /**
          * @brief Включение/выключение режима рецензирования

@@ -630,14 +630,36 @@ void ScenarioTextEditWidget::aboutShowFastFormat()
 
 void ScenarioTextEditWidget::setZenMode(bool _isZen)
 {
-    m_editor->setKeyboardSoundEnabled(_isZen);
     m_zenControls->activate(_isZen);
 
     //
-    // При выходе из дзен режима отключаем звуки клавиатуры
+    // При входе в джен режим скрываем дополнительные панели
     //
-    if (!_isZen) {
+    if (_isZen) {
+        if (m_fastFormat->isChecked()) {
+            m_fastFormatWidget->hide();
+        }
+        if (m_review->isChecked()) {
+            m_reviewView->hide();
+        }
+        if (m_search->isChecked()) {
+            m_searchLine->hide();
+        }
+    }
+    //
+    // При выходе из дзен режима отключаем звуки клавиатуры и вновь показываем панели
+    //
+    else {
         m_editor->setKeyboardSoundEnabled(false);
+        if (m_fastFormat->isChecked()) {
+            m_fastFormatWidget->show();
+        }
+        if (m_review->isChecked()) {
+            m_reviewView->show();
+        }
+        if (m_search->isChecked()) {
+            m_searchLine->show();
+        }
     }
 }
 
