@@ -746,7 +746,7 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 
 void ScenarioManager::aboutRefreshCounters()
 {
-    m_scenario->refresh();
+    workingScenario()->refresh();
     aboutUpdateCounters();
 }
 
