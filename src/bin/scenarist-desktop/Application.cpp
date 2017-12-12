@@ -54,6 +54,9 @@ Application::Application(int& _argc, char** _argv) :
     //
     QFontDatabase fontDatabase;
     fontDatabase.addApplicationFont(":/Fonts/Courier New");
+    fontDatabase.addApplicationFont(":/Fonts/Courier New Bold");
+    fontDatabase.addApplicationFont(":/Fonts/Courier New Italic");
+    fontDatabase.addApplicationFont(":/Fonts/Courier New Bold Italic");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Italic");

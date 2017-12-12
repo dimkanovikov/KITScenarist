@@ -348,7 +348,6 @@ SOURCES += \
     scenarist-core/DataLayer/DataStorageLayer/TransitionStorage.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/LyricsHandler.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScriptZenModeControls.cpp \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCorrector.cpp
 
 HEADERS += \
@@ -372,7 +371,6 @@ HEADERS += \
     scenarist-core/DataLayer/DataMappingLayer/MapperFacade.h \
     scenarist-core/DataLayer/DataMappingLayer/PlaceMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/ScenarioDayMapper.h \
-    scenarist-core/DataLayer/DataMappingLayer/ScenarioMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/SettingsMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/TimeMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/PlaceStorage.h \
