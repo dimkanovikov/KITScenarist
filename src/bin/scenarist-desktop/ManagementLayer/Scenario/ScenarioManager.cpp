@@ -14,7 +14,6 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioTextCorrector.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
 #include <DataLayer/Database/Database.h>
@@ -52,7 +51,6 @@ using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
-using BusinessLogic::ScenarioTextCorrector;
 
 namespace {
 

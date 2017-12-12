@@ -3,7 +3,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioTextCorrector.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -12,7 +12,6 @@
 
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
-using BusinessLogic::ScenarioTextCorrector;
 using UserInterface::ScenarioTextEditWidget;
 
 namespace {
@@ -152,19 +151,23 @@ void ScenarioTextEditManager::reloadTextEditSettings()
                 .toInt());
 
     //
-    // Настраиваем корректор
+    // Настраиваем коррекции текста
     //
-    const bool continueDialogues =
-            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                "scenario-editor/auto-continue-dialogue",
-                DataStorageLayer::SettingsStorage::ApplicationSettings)
-            .toInt();
-    const bool correctTextOnPageBreaks =
-            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                "scenario-editor/auto-corrections-on-page-breaks",
-                DataStorageLayer::SettingsStorage::ApplicationSettings)
-            .toInt();
-    ScenarioTextCorrector::configure(continueDialogues, correctTextOnPageBreaks);
+    BusinessLogic::ScenarioTextDocument* script = m_view->scenarioDocument();
+    if (script != nullptr) {
+        const bool continueDialogues =
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/auto-continue-dialogue",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt();
+        const bool correctTextOnPageBreaks =
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/auto-corrections-on-page-breaks",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt();
+        script->setCorrectionOptions(continueDialogues, correctTextOnPageBreaks);
+    }
+
 
     m_view->updateStylesElements();
     m_view->updateShortcuts();
