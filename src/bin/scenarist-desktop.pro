@@ -612,8 +612,8 @@ HEADERS += \
     scenarist-core/DataLayer/DataStorageLayer/TransitionStorage.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/LyricsHandler.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScriptZenModeControls.h \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextCorrector.h \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCorrector.h
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCorrector.h \
+    scenarist-core/DataLayer/DataMappingLayer/ScenarioMapper.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
