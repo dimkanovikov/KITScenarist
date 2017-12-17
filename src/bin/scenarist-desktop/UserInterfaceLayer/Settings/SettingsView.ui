@@ -1658,7 +1658,7 @@
                  </item>
                 </layout>
                </item>
-               <item row="5" column="0" colspan="3">
+               <item row="6" column="0" colspan="3">
                 <widget class="QCheckBox" name="reviewUseWordHighlight">
                  <property name="text">
                   <string>Use MS Word like review highlighting colors</string>
@@ -1675,7 +1675,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="6" column="0" colspan="3">
+               <item row="7" column="0" colspan="3">
                 <spacer name="verticalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -1687,6 +1687,16 @@
                   </size>
                  </property>
                 </spacer>
+               </item>
+               <item row="5" column="0" colspan="3">
+                <widget class="QCheckBox" name="useOpenBracketInDialogueForParenthetical">
+                 <property name="text">
+                  <string>Use open bracket in dialogue for jump to parenthetical</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>

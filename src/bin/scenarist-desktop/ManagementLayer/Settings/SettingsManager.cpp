@@ -477,6 +477,11 @@ void SettingsManager::scenarioEditBlockSettingsChanged(const QString& _block, co
     storeValue(QString("scenario-editor/styles-changing/from-%1-by-enter").arg(ScenarioBlockStyle::typeName(block)), changeEnter);
 }
 
+void SettingsManager::scenarioEditUseOpenBracketInDialogueForParenthetical(bool _value)
+{
+    storeValue("scenario-editor/use-open-bracket-in-dialogue-for-parenthetical", _value);
+}
+
 void SettingsManager::scenarioEditReviewUseWordHighlightChanged(bool _value)
 {
     storeValue("scenario-editor/review/use-highlight", _value);
@@ -1012,6 +1017,13 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    // ... использовать ли открывающую скобку в диалогах, чтобы менять стиль блока на ремарку
+    m_view->setScenarioEditUseOpenBracketInDialogueForParenthetical(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/use-open-bracket-in-dialogue-for-parenthetical",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
     // ... рецензирование
     m_view->setScenarioEditReviewUseWordHighlight(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -1261,6 +1273,8 @@ void SettingsManager::initConnections()
             this, &SettingsManager::scenarioEditShowSuggestionsInEmptyBlocksChanged);
     connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)),
             this, SLOT(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)));
+    connect(m_view, &SettingsView::scenarioEditUseOpenBracketInDialogueForParenthetical,
+            this, &SettingsManager::scenarioEditUseOpenBracketInDialogueForParenthetical);
     connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SLOT(scenarioEditReviewUseWordHighlightChanged(bool)));
 
     connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
@@ -1343,6 +1357,7 @@ void SettingsManager::initConnections()
     connect(m_view, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
     connect(m_view, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
+    connect(m_view, &SettingsView::scenarioEditUseOpenBracketInDialogueForParenthetical, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
     connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));

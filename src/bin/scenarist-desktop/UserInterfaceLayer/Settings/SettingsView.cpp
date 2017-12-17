@@ -402,6 +402,11 @@ void SettingsView::setScenarioEditShowSuggestionsInEmptyBlocks(bool _value)
     m_ui->showSuggestionsInEmptyBlocks->setChecked(_value);
 }
 
+void SettingsView::setScenarioEditUseOpenBracketInDialogueForParenthetical(bool _value)
+{
+    m_ui->useOpenBracketInDialogueForParenthetical->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditReviewUseWordHighlight(bool _value)
 {
     m_ui->reviewUseWordHighlight->setChecked(_value);
@@ -865,6 +870,7 @@ void SettingsView::initConnections()
     connect(m_ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));
     connect(m_ui->autoJumpToNextBlock, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)));
     connect(m_ui->showSuggestionsInEmptyBlocks, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged);
+    connect(m_ui->useOpenBracketInDialogueForParenthetical, &QCheckBox::toggled, this, &SettingsView::scenarioEditUseOpenBracketInDialogueForParenthetical);
     connect(m_ui->reviewUseWordHighlight, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)));
     // ... навигатор
     connect(m_ui->showScenesNumbersInNavigator, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
