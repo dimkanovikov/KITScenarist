@@ -93,6 +93,11 @@ namespace UserInterface
          */
         void initStyleSheet();
 
+        /**
+         * @brief Проверить возможно ли сохранение
+         */
+        void checkSavingAvailable();
+
     private:
         /**
          * @brief Интерфейс

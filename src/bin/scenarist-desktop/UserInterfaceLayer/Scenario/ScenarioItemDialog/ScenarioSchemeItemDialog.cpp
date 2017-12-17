@@ -108,9 +108,8 @@ void ScenarioSchemeItemDialog::initView()
 
 void ScenarioSchemeItemDialog::initConnections()
 {
-    connect(m_ui->cardTitle, &QLineEdit::textChanged, [=] (const QString& _text) {
-        m_saveButton->setEnabled(!_text.isEmpty());
-    });
+    connect(m_ui->cardTitle, &QLineEdit::textChanged, this, &ScenarioSchemeItemDialog::checkSavingAvailable);
+    connect(m_ui->cardDescription, &SimpleTextEditorWidget::textChanged, this, &ScenarioSchemeItemDialog::checkSavingAvailable);
     connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &ScenarioSchemeItemDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &ScenarioSchemeItemDialog::reject);
 }
@@ -118,4 +117,10 @@ void ScenarioSchemeItemDialog::initConnections()
 void ScenarioSchemeItemDialog::initStyleSheet()
 {
     m_ui->cardColor->setProperty("itemDialog", true);
+}
+
+void ScenarioSchemeItemDialog::checkSavingAvailable()
+{
+    m_saveButton->setEnabled(!m_ui->cardTitle->text().isEmpty()
+                             || !m_ui->cardDescription->toPlainText().isEmpty());
 }
