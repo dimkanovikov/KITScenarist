@@ -363,6 +363,12 @@ void TemplateDialog::initView()
 
 void TemplateDialog::initConnections()
 {
+    connect(m_ui->name, &QLineEdit::textChanged, [this] (const QString& _name) {
+        if (!m_template.isDefault()) {
+            setReadOnly(_name.isEmpty());
+        }
+    });
+
     connect(m_ui->blockStyles, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
             this, SLOT(aboutBlockStyleActivated(QListWidgetItem*)));
     connect(m_ui->spacingType, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutSpacingTypeChanged()));
