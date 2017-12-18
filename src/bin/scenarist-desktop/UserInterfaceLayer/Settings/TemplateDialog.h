@@ -28,7 +28,7 @@ namespace UserInterface
         /**
          * @brief Установить шаблон в диалог
          */
-        void setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template, bool _isNew);
+        void setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template);
 
         /**
          * @brief Получить шаблон настроеный в диалоге

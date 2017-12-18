@@ -36,7 +36,7 @@ TemplateDialog::~TemplateDialog()
     delete m_ui;
 }
 
-void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template, bool _isNew)
+void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template)
 {
     //
     // Сохраним шаблон
@@ -46,13 +46,9 @@ void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& 
     //
     // Общие параметры шаблона
     //
-    if (_isNew) {
-        m_ui->name->clear();
-        m_ui->description->clear();
-    } else {
-        m_ui->name->setText(m_template.name());
-        m_ui->description->setText(m_template.description());
-    }
+    m_ui->name->setText(m_template.name());
+    m_ui->description->setText(m_template.description());
+
     if (m_template.pageSizeId() == QPageSize::A4) {
         m_ui->pageFormatA4->setChecked(true);
     } else {

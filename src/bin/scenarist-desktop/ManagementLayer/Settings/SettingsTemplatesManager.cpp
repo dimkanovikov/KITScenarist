@@ -4,6 +4,10 @@
 
 #include <UserInterfaceLayer/Settings/TemplateDialog.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+
+#include <QStandardItemModel>
+
 using ManagementLayer::SettingsTemplatesManager;
 using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioTemplate;
@@ -21,10 +25,20 @@ bool SettingsTemplatesManager::newTemplate()
     bool success = false;
 
     //
+    // Спросим у пользователя на основе какого шаблона он хочет создать новый
+    //
+    const QString baseTemplateName =
+            QLightBoxInputDialog::getItem(m_view->parentWidget(), tr("Choose base template"), ScenarioTemplateFacade::templatesList());
+    if (baseTemplateName.isEmpty()) {
+        return false;
+    }
+
+    //
     // Настраиваем диалог настройки шаблона в стандартные значения
     //
-    bool isNew = true;
-    m_view->setScenarioTemplate(ScenarioTemplateFacade::getTemplate(ScenarioTemplate::finalDraftA4TemplateName()), isNew);
+    ScenarioTemplate newTemplate = ScenarioTemplateFacade::getTemplate(baseTemplateName);
+    newTemplate.setIsNew();
+    m_view->setScenarioTemplate(newTemplate);
 
     //
     // Отображаем диалог пользователю
@@ -68,8 +82,7 @@ bool SettingsTemplatesManager::editTemplate(const QString& _templateName)
     //
     // Настраиваем диалог настройки шаблона в стандартные значения
     //
-    bool isNew = false;
-    m_view->setScenarioTemplate(ScenarioTemplateFacade::getTemplate(_templateName), isNew);
+    m_view->setScenarioTemplate(ScenarioTemplateFacade::getTemplate(_templateName));
 
     //
     // Отображаем диалог пользователю
