@@ -251,6 +251,11 @@ void SettingsManager::scenarioEditShowScenesNumbersChanged(bool _value)
     storeValue("scenario-editor/show-scenes-numbers", _value);
 }
 
+void SettingsManager::scenarioEditShowDialoguesNumbersChanged(bool _value)
+{
+    storeValue("scenario-editor/show-dialogues-numbers", _value);
+}
+
 void SettingsManager::scenarioEditHidePanelsInFullscreenChanged(bool _value)
 {
     storeValue("scenario-editor/hide-panels-in-fullscreen", _value);
@@ -867,6 +872,12 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    m_view->setScenarioEditShowDialoguesNumbers(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/show-dialogues-numbers",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
     m_view->setScenarioEditHidePanelsInFullscreen(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/hide-panels-in-fullscreen",
@@ -1247,6 +1258,7 @@ void SettingsManager::initConnections()
 
     connect(m_view, &SettingsView::scenarioEditPageViewChanged, this, &SettingsManager::scenarioEditPageViewChanged);
     connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditShowScenesNumbersChanged);
+    connect(m_view, &SettingsView::scenarioEditShowDialoguesNumbersChanged, this, &SettingsManager::scenarioEditShowDialoguesNumbersChanged);
     connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditHidePanelsInFullscreenChanged);
     connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditHighlightCurrentLineChanged);
     connect(m_view, &SettingsView::scenarioEditAutoContinueDialogueChanged, this, &SettingsManager::scenarioEditAutoContinueDialogueChanged);
@@ -1333,6 +1345,7 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::applicationUseDarkThemeChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditPageViewChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditShowDialoguesNumbersChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditAutoContinueDialogueChanged, this, &SettingsManager::scenarioEditSettingsUpdated);

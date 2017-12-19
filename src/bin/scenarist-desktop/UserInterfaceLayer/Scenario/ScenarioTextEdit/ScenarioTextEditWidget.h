@@ -65,6 +65,11 @@ namespace UserInterface
         void setShowScenesNumbers(bool _show);
 
         /**
+         * @brief Включить/выключить отображение номеров реплик
+         */
+        void setShowDialoguesNumbers(bool _show);
+
+        /**
          * @brief Установить значение необходимости подсвечивать текущую строку
          */
         void setHighlightCurrentLine(bool _highlight);

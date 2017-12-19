@@ -279,6 +279,11 @@ void SettingsView::setScenarioEditShowScenesNumbers(bool _value)
     m_ui->showScenesNumbersInEditor->setChecked(_value);
 }
 
+void SettingsView::setScenarioEditShowDialoguesNumbers(bool _value)
+{
+    m_ui->showDialoguesNumbersInEditor->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditHidePanelsInFullscreen(bool _value)
 {
     m_ui->scriptHidePanelsInFullscreen->setChecked(_value);
@@ -852,6 +857,7 @@ void SettingsView::initConnections()
     // ... текстовый редактор
     connect(m_ui->pageView, &QCheckBox::toggled, this, &SettingsView::scenarioEditPageViewChanged);
     connect(m_ui->showScenesNumbersInEditor, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowScenesNumbersChanged);
+    connect(m_ui->showDialoguesNumbersInEditor, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowDialoguesNumbersChanged);
     connect(m_ui->scriptHidePanelsInFullscreen, &QCheckBox::toggled, this, &SettingsView::scenarioEditHidePanelsInFullscreenChanged);
     connect(m_ui->highlightCurrentLine, &QCheckBox::toggled, this, &SettingsView::scenarioEditHighlightCurrentLineChanged);
     connect(m_ui->autoContinueDialogue, &QCheckBox::toggled, this, &SettingsView::scenarioEditAutoContinueDialogueChanged);

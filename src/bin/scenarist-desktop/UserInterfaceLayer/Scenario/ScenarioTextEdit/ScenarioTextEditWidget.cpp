@@ -46,7 +46,7 @@ using UserInterface::ScriptZenModeControls;
 using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
-using BusinessLogic::ScenarioTextBlockInfo;
+using BusinessLogic::SceneHeadingBlockInfo;
 
 namespace {
     /**
@@ -135,6 +135,11 @@ void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
 void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
 {
     m_editor->setShowSceneNumbers(_show);
+}
+
+void ScenarioTextEditWidget::setShowDialoguesNumbers(bool _show)
+{
+    m_editor->setShowDialoguesNumbers(_show);
 }
 
 void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
@@ -309,11 +314,11 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     //
     // ... если были данные, то у них нужно сменить идентификатор, т.к. это копия оставшаяся от предыдущего блока
     //
-    ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+    SceneHeadingBlockInfo* info = dynamic_cast<SceneHeadingBlockInfo*>(textBlockData);
     if (info != nullptr) {
         info->rebuildUuid();
     } else {
-        info = new ScenarioTextBlockInfo;
+        info = new SceneHeadingBlockInfo;
     }
     info->setTitle(!_title.isEmpty() ? _title : _header);
     if (_color.isValid()) {
@@ -400,7 +405,7 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     //
     // Устанавливаем название блока и описание
     //
-    if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
+    if (SceneHeadingBlockInfo* blockInfo = dynamic_cast<SceneHeadingBlockInfo*>(cursor.block().userData())) {
         blockInfo->setTitle(_title);
         blockInfo->setColors(_colors);
         blockInfo->setDescription(_description);

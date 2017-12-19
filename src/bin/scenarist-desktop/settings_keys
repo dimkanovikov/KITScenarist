@@ -65,6 +65,7 @@ simple-editor/zoom-range - коэффициент масштабирования
 scenario-editor/zoom-range - коэффициент масштабирования редактора сценария
 scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/show-scenes-numbers - показывать номера сцен в редакторе сценария
+scenario-editor/show-dialogues-numbers - показывать номер реплик в редакторе сценария
 scenario-editor/hide-panels-in-fullscreen - скрывать все панели в полноэкранном режиме
 scenario-editor/highlight-current-line - подсвечивать текущую строку редактора
 scenario-editor/auto-continue-dialogue - продолжать реплики персонажей в сцене
