@@ -1508,7 +1508,7 @@
                   <item row="2" column="0">
                    <widget class="QCheckBox" name="showDialoguesNumbersInEditor">
                     <property name="text">
-                     <string>Show Dialogues Numbers</string>
+                     <string>Show dialogues numbers</string>
                     </property>
                    </widget>
                   </item>
