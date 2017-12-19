@@ -1069,11 +1069,12 @@ void ScenarioManager::initConnections()
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitle);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
 
-    connect(m_textEditManager, SIGNAL(textModeChanged()), this, SLOT(aboutRefreshCounters()));
-    connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
-    connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSceneTitleAndDescription(int)));
-    connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
-    connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
+    connect(m_textEditManager, &ScenarioTextEditManager::textModeChanged, this, &ScenarioManager::aboutRefreshCounters);
+    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateDuration);
+    connect(m_textEditManager, &ScenarioTextEditManager::textChanged, [this] { aboutUpdateDuration(m_textEditManager->cursorPosition()); });
+    connect(m_textEditManager, &ScenarioTextEditManager::textChanged, this, &ScenarioManager::aboutUpdateCounters);
+    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitleAndDescription);
+    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutSelectItemInNavigator, Qt::QueuedConnection);
     connect(m_textEditManager, &ScenarioTextEditManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_textEditManager, &ScenarioTextEditManager::redoRequest, this, &ScenarioManager::aboutRedo);
     connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
