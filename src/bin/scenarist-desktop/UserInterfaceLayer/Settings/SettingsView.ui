@@ -901,14 +901,14 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="0">
+                  <item row="5" column="0">
                    <widget class="QCheckBox" name="highlightCurrentLine">
                     <property name="text">
                      <string>Highlight Current Line</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="5" column="0">
+                  <item row="6" column="0">
                    <widget class="QGroupBox" name="groupBox">
                     <property name="title">
                      <string>Themes colors</string>
@@ -1469,7 +1469,7 @@
                     </layout>
                    </widget>
                   </item>
-                  <item row="6" column="0">
+                  <item row="7" column="0">
                    <spacer name="verticalSpacer">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -1482,7 +1482,7 @@
                     </property>
                    </spacer>
                   </item>
-                  <item row="0" column="1" rowspan="6">
+                  <item row="0" column="1" rowspan="7">
                    <spacer name="horizontalSpacer_9">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -1509,6 +1509,13 @@
                    <widget class="QCheckBox" name="showDialoguesNumbersInEditor">
                     <property name="text">
                      <string>Show dialogues numbers</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QCheckBox" name="highlightBlocks">
+                    <property name="text">
+                     <string>Highlight blocks</string>
                     </property>
                    </widget>
                   </item>

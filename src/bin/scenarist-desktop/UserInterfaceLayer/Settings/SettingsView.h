@@ -81,6 +81,7 @@ namespace UserInterface
         void setScenarioEditShowScenesNumbers(bool _value);
         void setScenarioEditShowDialoguesNumbers(bool _value);
         void setScenarioEditHidePanelsInFullscreen(bool _value);
+        void setScenarioEditHighlightBlocks(bool _value);
         void setScenarioEditHighlightCurrentLine(bool _value);
         void setScenarioEditAutoContinueDialogue(bool _value);
         void setScenarioEditAutoCorrectionsOnPageBreaks(bool _value);
@@ -165,6 +166,7 @@ namespace UserInterface
         void scenarioEditShowScenesNumbersChanged(bool);
         void scenarioEditShowDialoguesNumbersChanged(bool);
         void scenarioEditHidePanelsInFullscreenChanged(bool);
+        void scenarioEditHighlightBlocksChanged(bool);
         void scenarioEditHighlightCurrentLineChanged(bool);
         void scenarioEditAutoContinueDialogueChanged(bool);
         void scenarioEditAutoCorrectionsOnPageBreaksChanged(bool);

@@ -88,6 +88,11 @@ void ScenarioTextEditManager::reloadTextEditSettings()
                     "scenario-editor/show-dialogues-numbers",
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt());
+    m_view->setHighlightBlocks(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/highlight-blocks",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt());
     m_view->setHighlightCurrentLine(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/highlight-current-line",

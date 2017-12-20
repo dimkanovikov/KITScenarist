@@ -289,6 +289,11 @@ void SettingsView::setScenarioEditHidePanelsInFullscreen(bool _value)
     m_ui->scriptHidePanelsInFullscreen->setChecked(_value);
 }
 
+void SettingsView::setScenarioEditHighlightBlocks(bool _value)
+{
+    m_ui->highlightBlocks->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditHighlightCurrentLine(bool _value)
 {
     m_ui->highlightCurrentLine->setChecked(_value);
@@ -859,6 +864,7 @@ void SettingsView::initConnections()
     connect(m_ui->showScenesNumbersInEditor, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowScenesNumbersChanged);
     connect(m_ui->showDialoguesNumbersInEditor, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowDialoguesNumbersChanged);
     connect(m_ui->scriptHidePanelsInFullscreen, &QCheckBox::toggled, this, &SettingsView::scenarioEditHidePanelsInFullscreenChanged);
+    connect(m_ui->highlightBlocks, &QCheckBox::toggled, this, &SettingsView::scenarioEditHighlightBlocksChanged);
     connect(m_ui->highlightCurrentLine, &QCheckBox::toggled, this, &SettingsView::scenarioEditHighlightCurrentLineChanged);
     connect(m_ui->autoContinueDialogue, &QCheckBox::toggled, this, &SettingsView::scenarioEditAutoContinueDialogueChanged);
     connect(m_ui->autoCorrectionsOnPageBreaks, &QCheckBox::toggled, this, &SettingsView::scenarioEditAutoCorrectionsOnPageBreaksChanged);

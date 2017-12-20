@@ -70,6 +70,11 @@ namespace UserInterface
         void setShowDialoguesNumbers(bool _show);
 
         /**
+         * @brief Установить значение необходимости подсвечивать блоки
+         */
+        void setHighlightBlocks(bool _highlight);
+
+        /**
          * @brief Установить значение необходимости подсвечивать текущую строку
          */
         void setHighlightCurrentLine(bool _highlight);

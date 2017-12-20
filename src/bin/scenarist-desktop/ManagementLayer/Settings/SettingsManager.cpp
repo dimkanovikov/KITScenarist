@@ -261,6 +261,11 @@ void SettingsManager::scenarioEditHidePanelsInFullscreenChanged(bool _value)
     storeValue("scenario-editor/hide-panels-in-fullscreen", _value);
 }
 
+void SettingsManager::scenarioEditHighlightBlocksChanged(bool _value)
+{
+    storeValue("scenario-editor/highlight-blocks", _value);
+}
+
 void SettingsManager::scenarioEditHighlightCurrentLineChanged(bool _value)
 {
     storeValue("scenario-editor/highlight-current-line", _value);
@@ -884,6 +889,12 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    m_view->setScenarioEditHighlightBlocks(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/highlight-blocks",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
     m_view->setScenarioEditHighlightCurrentLine(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/highlight-current-line",
@@ -1260,6 +1271,7 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditShowScenesNumbersChanged);
     connect(m_view, &SettingsView::scenarioEditShowDialoguesNumbersChanged, this, &SettingsManager::scenarioEditShowDialoguesNumbersChanged);
     connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditHidePanelsInFullscreenChanged);
+    connect(m_view, &SettingsView::scenarioEditHighlightBlocksChanged, this, &SettingsManager::scenarioEditHighlightBlocksChanged);
     connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditHighlightCurrentLineChanged);
     connect(m_view, &SettingsView::scenarioEditAutoContinueDialogueChanged, this, &SettingsManager::scenarioEditAutoContinueDialogueChanged);
     connect(m_view, &SettingsView::scenarioEditAutoCorrectionsOnPageBreaksChanged, this, &SettingsManager::scenarioEditAutoCorrectionsOnPageBreaksChanged);
@@ -1347,6 +1359,7 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::scenarioEditShowScenesNumbersChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditShowDialoguesNumbersChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditHidePanelsInFullscreenChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditHighlightBlocksChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditHighlightCurrentLineChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditAutoContinueDialogueChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, &SettingsView::scenarioEditAutoCorrectionsOnPageBreaksChanged, this, &SettingsManager::scenarioEditSettingsUpdated);

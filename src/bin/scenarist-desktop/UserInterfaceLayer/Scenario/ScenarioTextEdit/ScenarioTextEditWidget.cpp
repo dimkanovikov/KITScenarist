@@ -142,6 +142,11 @@ void ScenarioTextEditWidget::setShowDialoguesNumbers(bool _show)
     m_editor->setShowDialoguesNumbers(_show);
 }
 
+void ScenarioTextEditWidget::setHighlightBlocks(bool _highlight)
+{
+    m_editor->setHighlightBlocks(_highlight);
+}
+
 void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
 {
     m_editor->setHighlightCurrentLine(_highlight);
