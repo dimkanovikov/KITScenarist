@@ -78,6 +78,11 @@ namespace UserInterface
         void setScenesNumbering(bool _isChecked);
 
         /**
+         * @brief Установить нумеровать ли реплики
+         */
+        void setDialoguesNumbering(bool _isChecked);
+
+        /**
          * @brief Установить приставку сцен
          */
         void setScenesPrefix(const QString& _prefix);
@@ -148,6 +153,11 @@ namespace UserInterface
         void checkScriptExportAvailability();
         void checkExportAvailability(int _index);
         /** @} */
+
+        /**
+         * @brief Обновить видимость параметров экспорта в зависимости от экспортируемого типа
+         */
+        void updateParametersVisibility();
 
     private:
         /**

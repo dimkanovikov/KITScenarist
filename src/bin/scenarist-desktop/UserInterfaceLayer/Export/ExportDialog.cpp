@@ -28,7 +28,7 @@ namespace {
     /** @{ */
     const int RESEARCH_TAB_INDEX = 0;
     const int OUTLINE_TAB_INDEX = 1;
-    const int SCRIPT_TAB_INDEX = 1;
+    const int SCRIPT_TAB_INDEX = 2;
     /** @} */
 }
 
@@ -109,12 +109,12 @@ void ExportDialog::setCheckPageBreaks(bool _check)
 
 void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 {
-    m_ui->styles->setModel(_model);
+    m_ui->templates->setModel(_model);
 }
 
 void ExportDialog::setCurrentStyle(const QString& _styleName)
 {
-    m_ui->styles->setCurrentText(_styleName);
+    m_ui->templates->setCurrentText(_styleName);
 }
 
 void ExportDialog::setPageNumbering(bool _isChecked)
@@ -125,6 +125,11 @@ void ExportDialog::setPageNumbering(bool _isChecked)
 void ExportDialog::setScenesNumbering(bool _isChecked)
 {
     m_ui->scenesNumbering->setChecked(_isChecked);
+}
+
+void ExportDialog::setDialoguesNumbering(bool _isChecked)
+{
+    m_ui->dialoguesNumbering->setChecked(_isChecked);
 }
 
 void ExportDialog::setScenesPrefix(const QString& _prefix)
@@ -153,10 +158,11 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
         exportParameters.filePath = m_ui->file->text();
     }
     exportParameters.checkPageBreaks = m_ui->checkPageBreaks->isChecked();
-    exportParameters.style = m_ui->styles->currentText();
+    exportParameters.style = m_ui->templates->currentText();
     exportParameters.printTilte = m_ui->printTitle->isChecked();
     exportParameters.printPagesNumbers = m_ui->pageNumbering->isChecked();
     exportParameters.printScenesNumbers = m_ui->scenesNumbering->isChecked();
+    exportParameters.printDialoguesNumbers = m_ui->dialoguesNumbering->isChecked();
     exportParameters.scenesPrefix = m_ui->scenesPrefix->text();
     exportParameters.saveReviewMarks = m_ui->saveReviewMarks->isChecked();
 
@@ -240,6 +246,8 @@ void ExportDialog::updateScriptFileFormat()
 
         m_ui->file->setText(filePath);
     }
+
+    updateParametersVisibility();
 }
 
 void ExportDialog::chooseScriptFile()
@@ -308,6 +316,45 @@ void ExportDialog::checkExportAvailability(int _index)
     m_ui->exportTo->setEnabled(!filePath->text().isEmpty());
 }
 
+void ExportDialog::updateParametersVisibility()
+{
+    bool showTemplates = true;
+    bool showPageNumbers = true;
+    bool showDialoguesNumbers = true;
+    bool showSaveReviewMarks = true;
+    bool showCheckPageBreak = true;
+    //
+    // Зависимость от вида
+    //
+    if (m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX) {
+        showDialoguesNumbers = false;
+    }
+    //
+    // Зависимость от типа
+    //
+    if (m_ui->fdx->isChecked()) {
+        showTemplates = false;
+        showPageNumbers = false;
+        showDialoguesNumbers = false;
+        showSaveReviewMarks = false;
+        showCheckPageBreak = false;
+    } else if (m_ui->fountain->isChecked()) {
+        showTemplates = false;
+        showPageNumbers = false;
+        showDialoguesNumbers = false;
+        showCheckPageBreak = false;
+    }
+    //
+    // Скроем/покажем параметры
+    //
+    m_ui->templateLabel->setVisible(showTemplates);
+    m_ui->templates->setVisible(showTemplates);
+    m_ui->pageNumbering->setVisible(showPageNumbers);
+    m_ui->dialoguesNumbering->setVisible(showDialoguesNumbers);
+    m_ui->saveReviewMarks->setVisible(showSaveReviewMarks);
+    m_ui->checkPageBreaks->setVisible(showCheckPageBreak);
+}
+
 void ExportDialog::initView()
 {
     m_ui->exportParameters->setCurrentWidget(m_ui->researchExportPage);
@@ -347,11 +394,12 @@ void ExportDialog::initConnections()
             m_ui->exportParameters->setCurrentWidget(m_ui->scriptExportPage);
         }
         checkExportAvailability(_index);
+        updateParametersVisibility();
     });
 
     connect(m_ui->showAdditional, &QCheckBox::toggled, m_ui->additionalSettings, &QFrame::setVisible);
 
-    connect(m_ui->styles, &QComboBox::currentTextChanged, this, &ExportDialog::currentStyleChanged);
+    connect(m_ui->templates, &QComboBox::currentTextChanged, this, &ExportDialog::currentStyleChanged);
     connect(m_ui->docx, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);
     connect(m_ui->pdf, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);
     connect(m_ui->fdx, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);

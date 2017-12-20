@@ -247,6 +247,12 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
                     DataStorageLayer::SettingsStorage::ApplicationSettings,
                     TRUE_VALUE).toInt()
                 );
+    m_exportDialog->setDialoguesNumbering(
+                StorageFacade::settingsStorage()->value(
+                    QString("%1/dialogues-numbering").arg(projectKey),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings,
+                    TRUE_VALUE).toInt()
+                );
     m_exportDialog->setScenesPrefix(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/scenes-prefix").arg(projectKey),
@@ -298,6 +304,10 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/scenes-numbering").arg(projectKey),
                 exportParameters.printScenesNumbers ? "1" : "0",
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                QString("%1/dialogues-numbering").arg(projectKey),
+                exportParameters.printDialoguesNumbers ? "1" : "0",
                 DataStorageLayer::SettingsStorage::ApplicationSettings);
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/scenes-prefix").arg(projectKey),

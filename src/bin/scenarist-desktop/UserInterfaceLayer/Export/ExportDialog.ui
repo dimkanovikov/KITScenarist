@@ -435,61 +435,21 @@ border: 1px solid palette(dark);
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="scenesNumbering">
-            <property name="text">
-             <string>Scenes Numbering</string>
+          <item row="0" column="0">
+           <widget class="QLabel" name="templateLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="checked">
-             <bool>true</bool>
+            <property name="text">
+             <string>Template:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="pageNumbering">
-            <property name="text">
-             <string>Page Numbering</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QCheckBox" name="saveReviewMarks">
-            <property name="text">
-             <string>Save Review Marks</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="scenesPrefix">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Scenes Prefix:</string>
-            </property>
-            <property name="buddy">
-             <cstring>scenesPrefix</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" rowspan="2">
-           <widget class="QComboBox" name="styles">
+          <item row="0" column="1" colspan="2">
+           <widget class="QComboBox" name="templates">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -498,20 +458,7 @@ border: 1px solid palette(dark);
             </property>
            </widget>
           </item>
-          <item row="1" column="0" rowspan="2">
-           <widget class="QLabel" name="label">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Template:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
+          <item row="1" column="0" colspan="2">
            <widget class="QCheckBox" name="printTitle">
             <property name="text">
              <string>Print Title Page</string>
@@ -521,7 +468,51 @@ border: 1px solid palette(dark);
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="2">
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="pageNumbering">
+            <property name="text">
+             <string>Print pages numbers</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="scenesNumbering">
+            <property name="text">
+             <string>Print scenes numbers with prefix</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="scenesPrefix">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="dialoguesNumbering">
+            <property name="text">
+             <string>Print dialogues numbers</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="saveReviewMarks">
+            <property name="text">
+             <string>Save Review Marks</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
            <widget class="QCheckBox" name="checkPageBreaks">
             <property name="text">
              <string>Check Page Breaks</string>
@@ -600,17 +591,26 @@ border: 1px solid palette(dark);
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>researchFile</tabstop>
+  <tabstop>researchBrowseFile</tabstop>
+  <tabstop>researchExportTree</tabstop>
+  <tabstop>file</tabstop>
+  <tabstop>browseFile</tabstop>
   <tabstop>docx</tabstop>
   <tabstop>pdf</tabstop>
   <tabstop>fdx</tabstop>
-  <tabstop>styles</tabstop>
+  <tabstop>fountain</tabstop>
+  <tabstop>showAdditional</tabstop>
+  <tabstop>templates</tabstop>
   <tabstop>printTitle</tabstop>
   <tabstop>pageNumbering</tabstop>
   <tabstop>scenesNumbering</tabstop>
-  <tabstop>scenesPrefix</tabstop>
+  <tabstop>dialoguesNumbering</tabstop>
   <tabstop>saveReviewMarks</tabstop>
   <tabstop>checkPageBreaks</tabstop>
+  <tabstop>exportTo</tabstop>
   <tabstop>printPreview</tabstop>
+  <tabstop>cancel</tabstop>
  </tabstops>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
