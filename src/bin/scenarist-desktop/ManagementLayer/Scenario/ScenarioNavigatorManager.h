@@ -7,188 +7,198 @@
 class QLabel;
 
 namespace BusinessLogic {
-	class ScenarioModel;
-	class ScenarioModelFiltered;
+    class ScenarioModel;
+    class ScenarioModelFiltered;
 }
 
 namespace UserInterface {
-	class ScenarioNavigator;
-	class ScenarioItemDialog;
+    class ScenarioNavigator;
+    class ScenarioItemDialog;
 }
 
 namespace ManagementLayer
 {
-	/**
-	 * @brief Управляющий навигацией по сценарию
-	 */
-	class ScenarioNavigatorManager : public QObject
-	{
-		Q_OBJECT
+    /**
+     * @brief Управляющий навигацией по сценарию
+     */
+    class ScenarioNavigatorManager : public QObject
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioNavigatorManager(QObject* _parent, QWidget* _parentWidget, bool _isDraft = false);
+    public:
+        explicit ScenarioNavigatorManager(QObject* _parent, QWidget* _parentWidget, bool _isDraft = false);
 
-		QWidget* view() const;
+        QWidget* view() const;
 
-		/**
-		 * @brief Установить модель документа сценария
-		 */
-		void setNavigationModel(BusinessLogic::ScenarioModel* _model);
+        /**
+         * @brief Установить модель документа сценария
+         */
+        void setNavigationModel(BusinessLogic::ScenarioModel* _model);
 
-		/**
-		 * @brief Перезагрузить настройки навигатора
-		 */
-		void reloadNavigatorSettings();
+        /**
+         * @brief Перезагрузить настройки навигатора
+         */
+        void reloadNavigatorSettings();
 
-		/**
-		 * @brief Установить текущий элемент
-		 */
-		void setCurrentIndex(const QModelIndex& _index);
+        /**
+         * @brief Установить текущий элемент
+         */
+        void setCurrentIndex(const QModelIndex& _index);
 
-		/**
-		 * @brief Снять выделение
-		 */
-		void clearSelection();
+        /**
+         * @brief Снять выделение
+         */
+        void clearSelection();
 
-		/**
-		 * @brief Установить видимость черновика
-		 */
-		void setDraftVisible(bool _visible);
+        /**
+         * @brief Установить видимость черновика
+         */
+        void setDraftVisible(bool _visible);
 
-		/**
-		 * @brief Установить видимость заметок
-		 */
+        /**
+         * @brief Установить видимость заметок
+         */
         void setSceneDescriptionVisible(bool _visible);
 
-		/**
-		 * @brief Установить режим работы со сценарием
-		 */
-		void setCommentOnly(bool _isCommentOnly);
+        /**
+         * @brief Установить видимость справочников сценария
+         */
+        void setScriptDictionariesVisible(bool _visible);
 
-	signals:
-		/**
-		 * @brief Запрос на добавление элемента
-		 */
-		void addItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
-			const QColor& _color, const QString& _description);
+        /**
+         * @brief Установить режим работы со сценарием
+         */
+        void setCommentOnly(bool _isCommentOnly);
 
-		/**
-		 * @brief Запрос на удаление элемента
-		 */
-		void removeItems(const QModelIndexList& _indexes);
+    signals:
+        /**
+         * @brief Запрос на добавление элемента
+         */
+        void addItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
+            const QColor& _color, const QString& _description);
 
-		/**
-		 * @brief Запрос на установку цвета элемента
-		 */
-		void setItemColors(const QModelIndex& _indexes, const QString& _colors);
+        /**
+         * @brief Запрос на удаление элемента
+         */
+        void removeItems(const QModelIndexList& _indexes);
 
-		/**
-		 * @brief Запрос на изменения типа текущего элемента
-		 */
-		void changeItemTypeRequested(const QModelIndex& _index, int _type);
+        /**
+         * @brief Запрос на установку цвета элемента
+         */
+        void setItemColors(const QModelIndex& _indexes, const QString& _colors);
 
-		/**
-		 * @brief Показать/скрыть заметки к сцене
-		 */
+        /**
+         * @brief Запрос на изменения типа текущего элемента
+         */
+        void changeItemTypeRequested(const QModelIndex& _index, int _type);
+
+        /**
+         * @brief Показать/скрыть заметки к сцене
+         */
         void draftVisibleChanged(bool _visible);
 
-		/**
-		 * @brief Показать/скрыть заметки к сцене
-		 */
+        /**
+         * @brief Показать/скрыть заметки к сцене
+         */
         void sceneDescriptionVisibleChanged(bool _visible);
 
-		/**
-		 * @brief Активирована сцена
-		 */
-		void sceneChoosed(const QModelIndex& _index);
-		void sceneChoosed(int atPosition);
+        /**
+         * @brief Показать/скрыть справочнии сценария
+         */
+        void scriptDictionariesVisibleChanged(bool _visible);
 
-		/**
-		 * @brief Запрос отмены действия
-		 */
-		void undoRequest();
+        /**
+         * @brief Активирована сцена
+         */
+        void sceneChoosed(const QModelIndex& _index);
+        void sceneChoosed(int atPosition);
 
-		/**
-		 * @brief Запрос повтора действия
-		 */
-		void redoRequest();
+        /**
+         * @brief Запрос отмены действия
+         */
+        void undoRequest();
 
-	private slots:
-		/**
-		 * @brief Добавить элемент после выбранного
-		 */
-		void aboutAddItem(const QModelIndex& _index);
+        /**
+         * @brief Запрос повтора действия
+         */
+        void redoRequest();
 
-		/**
-		 * @brief Удалить выбранные элементы
-		 */
-		void aboutRemoveItems(const QModelIndexList& _indexes);
+    private slots:
+        /**
+         * @brief Добавить элемент после выбранного
+         */
+        void aboutAddItem(const QModelIndex& _index);
 
-		/**
-		 * @brief Установить цвета элемента
-		 */
-		void aboutSetItemColors(const QModelIndex& _index, const QString& _colors);
+        /**
+         * @brief Удалить выбранные элементы
+         */
+        void aboutRemoveItems(const QModelIndexList& _indexes);
 
-		/**
-		 * @brief Сменить тип элемента
-		 */
-		void aboutChangeItemType(const QModelIndex& _index, int _type);
+        /**
+         * @brief Установить цвета элемента
+         */
+        void aboutSetItemColors(const QModelIndex& _index, const QString& _colors);
 
-		/**
-		 * @brief Выбрана сцена
-		 */
-		void aboutSceneChoosed(const QModelIndex& _index);
+        /**
+         * @brief Сменить тип элемента
+         */
+        void aboutChangeItemType(const QModelIndex& _index, int _type);
 
-		/**
-		 * @brief Обновить информацию о модели
-		 */
-		void aboutModelUpdated();
+        /**
+         * @brief Выбрана сцена
+         */
+        void aboutSceneChoosed(const QModelIndex& _index);
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        /**
+         * @brief Обновить информацию о модели
+         */
+        void aboutModelUpdated();
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-		/**
-		 * @brief Настроить соединения модели
-		 */
-		/** @{ */
-		void connectModel();
-		void disconnectModel();
-		/** @} */
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
 
-	private:
-		/**
-		 * @brief Модель сценария
-		 */
-		BusinessLogic::ScenarioModel* m_scenarioModel;
+        /**
+         * @brief Настроить соединения модели
+         */
+        /** @{ */
+        void connectModel();
+        void disconnectModel();
+        /** @} */
 
-		/**
-		 * @brief Прокси для модели сценирия
-		 */
-		BusinessLogic::ScenarioModelFiltered* m_scenarioModelProxy;
+    private:
+        /**
+         * @brief Модель сценария
+         */
+        BusinessLogic::ScenarioModel* m_scenarioModel;
 
-		/**
-		 * @brief Дерево навигации
-		 */
-		UserInterface::ScenarioNavigator* m_navigator;
+        /**
+         * @brief Прокси для модели сценирия
+         */
+        BusinessLogic::ScenarioModelFiltered* m_scenarioModelProxy;
 
-		/**
-		 * @brief Диалог добавления элемента
-		 */
-		UserInterface::ScenarioItemDialog* m_addItemDialog;
+        /**
+         * @brief Дерево навигации
+         */
+        UserInterface::ScenarioNavigator* m_navigator;
 
-		/**
-		 * @brief Является ли навигатором по черновику
-		 */
-		bool m_isDraft;
-	};
+        /**
+         * @brief Диалог добавления элемента
+         */
+        UserInterface::ScenarioItemDialog* m_addItemDialog;
+
+        /**
+         * @brief Является ли навигатором по черновику
+         */
+        bool m_isDraft;
+    };
 }
 
 #endif // SCENARIONAVIGATORMANAGER_H

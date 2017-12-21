@@ -4,6 +4,7 @@
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioSceneDescriptionManager.h"
 #include "ScenarioTextEditManager.h"
+#include "ScriptDictionariesManager.h"
 
 #include <Domain/Research.h>
 #include <Domain/Scenario.h>
@@ -47,8 +48,8 @@ using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioCardsManager;
 using ManagementLayer::ScenarioNavigatorManager;
 using ManagementLayer::ScenarioSceneDescriptionManager;
-using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
+using ManagementLayer::ScriptDictionariesManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
 
@@ -79,6 +80,7 @@ namespace {
     /** @{ */
     const int DRAFT_PANEL_INDEX = 1;
     const int SCENE_DESCRIPTION_PANEL_INDEX = 2;
+    const int SCRIPT_DICTIONARIES_PANEL_INDEX = 3;
     /** @} */
 
     /**
@@ -247,6 +249,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
     m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
     m_draftNavigatorManager(new ScenarioNavigatorManager(this, m_view, IS_DRAFT)),
     m_sceneDescriptionManager(new ScenarioSceneDescriptionManager(this, m_view)),
+    m_scriptDictionariesManager(new ScriptDictionariesManager(this, m_view)),
     m_textEditManager(new ScenarioTextEditManager(this, m_view)),
     m_workModeIsDraft(false)
 {
@@ -280,6 +283,7 @@ void ScenarioManager::loadViewState()
 {
     m_navigatorManager->setDraftVisible(m_navigatorSplitter->sizes().at(DRAFT_PANEL_INDEX) != 0);
     m_navigatorManager->setSceneDescriptionVisible(m_navigatorSplitter->sizes().at(SCENE_DESCRIPTION_PANEL_INDEX) != 0);
+    m_navigatorManager->setScriptDictionariesVisible(m_navigatorSplitter->sizes().at(SCRIPT_DICTIONARIES_PANEL_INDEX) != 0);
 }
 
 int ScenarioManager::cursorPosition() const
@@ -435,6 +439,7 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
     m_navigatorManager->setCommentOnly(_isCommentOnly);
     m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
     m_sceneDescriptionManager->setCommentOnly(_isCommentOnly);
+    m_scriptDictionariesManager->setCommentOnly(_isCommentOnly);
     m_textEditManager->setCommentOnly(_isCommentOnly);
 }
 
@@ -907,18 +912,28 @@ void ScenarioManager::aboutChangeItemType(const QModelIndex& _index, int _type)
 
 void ScenarioManager::setDraftVisible(bool _visible)
 {
-    //
-    // Настраиваем видимость
-    //
-    m_draftNavigatorManager->view()->setVisible(_visible);
+    setNavigatorPanelVisible(DRAFT_PANEL_INDEX, _visible);
 }
 
 void ScenarioManager::setSceneDescriptionVisible(bool _visible)
 {
-    //
-    // Настраиваем видимость
-    //
-    m_sceneDescriptionManager->view()->setVisible(_visible);
+    setNavigatorPanelVisible(SCENE_DESCRIPTION_PANEL_INDEX, _visible);
+}
+
+void ScenarioManager::setScriptDictionariesVisible(bool _visible)
+{
+    setNavigatorPanelVisible(SCRIPT_DICTIONARIES_PANEL_INDEX, _visible);
+}
+
+void ScenarioManager::setNavigatorPanelVisible(int _panelIndex, bool _visible)
+{
+    m_navigatorSplitter->widget(_panelIndex)->setVisible(_visible);
+
+    QList<int> sizes = m_navigatorSplitter->sizes();
+    if (_visible && sizes.at(_panelIndex) == 0) {
+        sizes[_panelIndex] = 100;
+        m_navigatorSplitter->setSizes(sizes);
+    }
 }
 
 void ScenarioManager::aboutSaveScenarioChanges()
@@ -1007,7 +1022,8 @@ void ScenarioManager::initView()
     m_navigatorSplitter->addWidget(m_navigatorManager->view());
     m_navigatorSplitter->addWidget(m_draftNavigatorManager->view());
     m_navigatorSplitter->addWidget(m_sceneDescriptionManager->view());
-    m_navigatorSplitter->setSizes({1, 0, 0});
+    m_navigatorSplitter->addWidget(m_scriptDictionariesManager->view());
+    m_navigatorSplitter->setSizes({1, 0, 0, 0});
 
     m_mainSplitter->setObjectName("mainScenarioEditSplitter");
     m_mainSplitter->setHandleWidth(1);
@@ -1046,6 +1062,7 @@ void ScenarioManager::initConnections()
     connect(m_navigatorManager, &ScenarioNavigatorManager::changeItemTypeRequested, this, &ScenarioManager::aboutChangeItemType);
     connect(m_navigatorManager, &ScenarioNavigatorManager::draftVisibleChanged, this, &ScenarioManager::setDraftVisible);
     connect(m_navigatorManager, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged, this, &ScenarioManager::setSceneDescriptionVisible);
+    connect(m_navigatorManager, &ScenarioNavigatorManager::scriptDictionariesVisibleChanged, this, &ScenarioManager::setScriptDictionariesVisible);
     connect(m_navigatorManager,
             static_cast<void (ScenarioNavigatorManager::*)(const QModelIndex&)>(&ScenarioNavigatorManager::sceneChoosed),
             this,

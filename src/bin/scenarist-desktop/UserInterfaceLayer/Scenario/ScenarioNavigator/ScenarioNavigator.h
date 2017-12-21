@@ -14,202 +14,212 @@ namespace UserInterface
     class ScenarioNavigatorItemDelegate;
 
     /**
-	 * @brief Навигатор по сценарию
-	 */
-	class ScenarioNavigator : public QWidget
-	{
-		Q_OBJECT
+     * @brief Навигатор по сценарию
+     */
+    class ScenarioNavigator : public QWidget
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioNavigator(QWidget *parent = 0);
+    public:
+        explicit ScenarioNavigator(QWidget *parent = 0);
 
-		/**
-		 * @brief Установить количество сцен
-		 */
-		void setScenesCount(int _scenesCount);
+        /**
+         * @brief Установить количество сцен
+         */
+        void setScenesCount(int _scenesCount);
 
-		/**
-		 * @brief Установить модель навигации
-		 */
-		void setModel(QAbstractItemModel* _model);
+        /**
+         * @brief Установить модель навигации
+         */
+        void setModel(QAbstractItemModel* _model);
 
-		/**
-		 * @brief Установить текущий элемент
-		 */
-		void setCurrentIndex(const QModelIndex& _index);
+        /**
+         * @brief Установить текущий элемент
+         */
+        void setCurrentIndex(const QModelIndex& _index);
 
-		/**
-		 * @brief Настроить отображение номеров сцен
-		 */
-		void setShowSceneNumber(bool _show);
+        /**
+         * @brief Настроить отображение номеров сцен
+         */
+        void setShowSceneNumber(bool _show);
 
-		/**
-		 * @brief Настроить отображение названий сцен
-		 */
-		void setShowSceneTitle(bool _show);
+        /**
+         * @brief Настроить отображение названий сцен
+         */
+        void setShowSceneTitle(bool _show);
 
-		/**
-		 * @brief Настроить отображение примечания сцен
-		 */
-		void setShowSceneDescription(bool _show);
+        /**
+         * @brief Настроить отображение примечания сцен
+         */
+        void setShowSceneDescription(bool _show);
 
-		/**
-		 * @brief Настроить что отображать в примечании к сцене, её текст (true) или синопсис (false)
-		 */
-		void setSceneDescriptionIsSceneText(bool _isSceneText);
+        /**
+         * @brief Настроить что отображать в примечании к сцене, её текст (true) или синопсис (false)
+         */
+        void setSceneDescriptionIsSceneText(bool _isSceneText);
 
-		/**
-		 * @brief Настроить высоту поля примечания
-		 */
-		void setSceneDescriptionHeight(int _height);
+        /**
+         * @brief Настроить высоту поля примечания
+         */
+        void setSceneDescriptionHeight(int _height);
 
-		/**
-		 * @brief Пересоздать делегат отображения элементов в навигаторе
-		 * @note Приходится именно пересоздавать навигатор, т.к. другого рабочего способа для
-		 *		 обновления делегата не нашёл. Проблемы возникают при изменении размера виджета,
-		 *		 который рисует делегат
-		 */
-		void resetView();
+        /**
+         * @brief Пересоздать делегат отображения элементов в навигаторе
+         * @note Приходится именно пересоздавать навигатор, т.к. другого рабочего способа для
+         *		 обновления делегата не нашёл. Проблемы возникают при изменении размера виджета,
+         *		 который рисует делегат
+         */
+        void resetView();
 
-		/**
-		 * @brief Установить флаг, что навигатор работает с черновиком
-		 */
-		void setIsDraft(bool _isDraft);
+        /**
+         * @brief Установить флаг, что навигатор работает с черновиком
+         */
+        void setIsDraft(bool _isDraft);
 
-		/**
-		 * @brief Убрать выделение
-		 */
-		void clearSelection();
+        /**
+         * @brief Убрать выделение
+         */
+        void clearSelection();
 
-		/**
-		 * @brief Установить видимость черновика
-		 */
-		void setDraftVisible(bool _visible);
+        /**
+         * @brief Установить видимость черновика
+         */
+        void setDraftVisible(bool _visible);
 
-		/**
-		 * @brief Установить видимость заметок
-		 */
-		void setSceneDescriptionVisible(bool _visible);
+        /**
+         * @brief Установить видимость заметок
+         */
+        void setSceneDescriptionVisible(bool _visible);
 
-		/**
-		 * @brief Установить режим работы со сценарием
-		 */
-		void setCommentOnly(bool _isCommentOnly);
+        /**
+         * @brief Установить видимость справочников сценария
+         */
+        void setScriptDictionariesVisible(bool _visible);
 
-	signals:
-		/**
-		 * @brief Запрос на добавление элемента
-		 */
-		void addItem(const QModelIndex& _itemIndex);
+        /**
+         * @brief Установить режим работы со сценарием
+         */
+        void setCommentOnly(bool _isCommentOnly);
 
-		/**
-		 * @brief Запрос на удаление элемента
-		 */
-		void removeItems(const QModelIndexList& _itemIndex);
+    signals:
+        /**
+         * @brief Запрос на добавление элемента
+         */
+        void addItem(const QModelIndex& _itemIndex);
 
-		/**
-		 * @brief Запрос на установку цветов текущего элемента
-		 */
-		void setItemColors(const QModelIndex& _index, const QString& _colors);
+        /**
+         * @brief Запрос на удаление элемента
+         */
+        void removeItems(const QModelIndexList& _itemIndex);
 
-		/**
-		 * @brief Запрос на изменения типа текущего элемента
-		 */
-		void changeItemTypeRequested(const QModelIndex& _index, int _type);
+        /**
+         * @brief Запрос на установку цветов текущего элемента
+         */
+        void setItemColors(const QModelIndex& _index, const QString& _colors);
 
-		/**
-		 * @brief Показать/скрыть заметки к сцене
-		 */
+        /**
+         * @brief Запрос на изменения типа текущего элемента
+         */
+        void changeItemTypeRequested(const QModelIndex& _index, int _type);
+
+        /**
+         * @brief Показать/скрыть заметки к сцене
+         */
         void draftVisibleChanged(bool _visible);
 
-		/**
-		 * @brief Показать/скрыть заметки к сцене
-		 */
+        /**
+         * @brief Показать/скрыть заметки к сцене
+         */
         void sceneDescriptionVisibleChanged(bool _visible);
 
-		/**
-		 * @brief Активирована сцена
-		 */
-		void sceneChoosed(const QModelIndex& _sceneIndex);
+        /**
+         * @brief Показать/скрыть справочники сценария
+         */
+        void scriptDictionariesVisibleChanged(bool _visible);
 
-		/**
-		 * @brief Запрос отмены действия
-		 */
-		void undoRequest();
+        /**
+         * @brief Активирована сцена
+         */
+        void sceneChoosed(const QModelIndex& _sceneIndex);
 
-		/**
-		 * @brief Запрос повтора действия
-		 */
-		void redoRequest();
+        /**
+         * @brief Запрос отмены действия
+         */
+        void undoRequest();
 
-	protected:
-		/**
-		 * @brief Переопределяется чтобы отлавливать нажатия Ctrl+Z и Ctrl+Shift+Z в дереве
-		 */
-		bool eventFilter(QObject* _watched, QEvent* _event);
+        /**
+         * @brief Запрос повтора действия
+         */
+        void redoRequest();
 
-	private slots:
-		/**
-		 * @brief Обработка запроса на добаление элемента
-		 */
-		void aboutAddItem();
+    protected:
+        /**
+         * @brief Переопределяется чтобы отлавливать нажатия Ctrl+Z и Ctrl+Shift+Z в дереве
+         */
+        bool eventFilter(QObject* _watched, QEvent* _event);
 
-		/**
-		 * @brief Обработка запроса на удаление элемента
-		 */
-		void aboutRemoveItem();
+    private slots:
+        /**
+         * @brief Обработка запроса на добаление элемента
+         */
+        void aboutAddItem();
 
-		/**
-		 * @brief Обработать запрос на отображение контекстного меню
-		 */
-		void aboutContextMenuRequested(const QPoint& _pos);
+        /**
+         * @brief Обработка запроса на удаление элемента
+         */
+        void aboutRemoveItem();
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        /**
+         * @brief Обработать запрос на отображение контекстного меню
+         */
+        void aboutContextMenuRequested(const QPoint& _pos);
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-		/**
-		 * @brief Настроить внешний вид
-		 */
-		void initStyleSheet();
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
 
-	private:
-		/**
-		 * @brief Заголовок корзины
-		 */
-		QLabel* m_draftTitle;
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
 
-		/**
-		 * @brief Префикс счётчика сцен
-		 */
-		QLabel* m_scenesCountTitle;
+    private:
+        /**
+         * @brief Заголовок корзины
+         */
+        QLabel* m_draftTitle;
 
-		/**
-		 * @brief Количество сцен в сценарии
-		 */
-		QLabel* m_scenesCount;
+        /**
+         * @brief Префикс счётчика сцен
+         */
+        QLabel* m_scenesCountTitle;
 
-		/**
-		 * @brief Кнопка удаления локации
-		 */
-		FlatButton* m_addItem;
+        /**
+         * @brief Количество сцен в сценарии
+         */
+        QLabel* m_scenesCount;
 
-		/**
-		 * @brief Кнопка обновления списка локаций
-		 */
-		FlatButton* m_removeItem;
+        /**
+         * @brief Кнопка удаления локации
+         */
+        FlatButton* m_addItem;
 
-		/**
-		 * @brief Разделитель панели инструментов
-		 */
-		QLabel* m_middleTitle;
+        /**
+         * @brief Кнопка обновления списка локаций
+         */
+        FlatButton* m_removeItem;
+
+        /**
+         * @brief Разделитель панели инструментов
+         */
+        QLabel* m_middleTitle;
 
         /**
          * @brief Кнопка отображения/сокрытия дополнительных панелей
@@ -222,18 +232,19 @@ namespace UserInterface
         /** @{ */
         QAction* m_showDraft = nullptr;
         QAction* m_showSceneDescription = nullptr;
+        QAction* m_showScriptDictionaries = nullptr;
         /** @} */
 
-		/**
-		 * @brief Дерево навигации
-		 */
-		QTreeView* m_navigationTree;
+        /**
+         * @brief Дерево навигации
+         */
+        QTreeView* m_navigationTree;
 
-		/**
-		 * @brief Делегат дерева
-		 */
-		ScenarioNavigatorItemDelegate* m_navigationTreeDelegate;
-	};
+        /**
+         * @brief Делегат дерева
+         */
+        ScenarioNavigatorItemDelegate* m_navigationTreeDelegate;
+    };
 }
 
 #endif // SCENARIONAVIGATOR_H

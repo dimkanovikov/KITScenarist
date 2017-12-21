@@ -22,7 +22,7 @@ namespace ManagementLayer
     class ScenarioCardsManager;
     class ScenarioNavigatorManager;
     class ScenarioSceneDescriptionManager;
-    class ScenarioDataEditManager;
+    class ScriptDictionariesManager;
     class ScenarioTextEditManager;
 
 
@@ -322,6 +322,16 @@ namespace ManagementLayer
         void setSceneDescriptionVisible(bool _visible);
 
         /**
+         * @brief Показать/скрыть справочники сценария
+         */
+        void setScriptDictionariesVisible(bool _visible);
+
+        /**
+         * @brief Показать/скрыть одну из панелей навигатора
+         */
+        void setNavigatorPanelVisible(int _panelIndex, bool _visible);
+
+        /**
          * @brief Сохранить изменение текста
          */
         void aboutSaveScenarioChanges();
@@ -415,6 +425,11 @@ namespace ManagementLayer
          * @brief Управляющий синопсисом сцены
          */
         ScenarioSceneDescriptionManager* m_sceneDescriptionManager;
+
+        /**
+         * @brief Управляющий справочниками сценария
+         */
+        ScriptDictionariesManager* m_scriptDictionariesManager = nullptr;
 
         /**
          * @brief Управляющий редактированием сценария
