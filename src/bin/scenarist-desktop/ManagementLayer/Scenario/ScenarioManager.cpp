@@ -326,6 +326,7 @@ void ScenarioManager::loadCurrentProject()
     //
     m_navigatorManager->setNavigationModel(m_scenario->model());
     m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
+    m_scriptDictionariesManager->refresh();
     m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
     m_textEditManager->setScenarioDocument(m_scenario->document());
     //
