@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+class FlatButton;
+class QComboBox;
+class QListView;
+
 
 namespace UserInterface
 {
@@ -16,9 +20,42 @@ namespace UserInterface
     public:
         explicit ScriptDictionaries(QWidget* _parent = nullptr);
 
-    signals:
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-    public slots:
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
+
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
+
+    private:
+        /**
+         * @brief Количество сцен в сценарии
+         */
+        QComboBox* m_types = nullptr;
+
+        /**
+         * @brief Кнопка добавления элемента
+         */
+        FlatButton* m_addItem = nullptr;
+
+        /**
+         * @brief Кнопка удаления выбранного элемента
+         */
+        FlatButton* m_removeItem = nullptr;
+
+        /**
+         * @brief Дерево навигации
+         */
+        QListView* m_items = nullptr;
     };
 }
 

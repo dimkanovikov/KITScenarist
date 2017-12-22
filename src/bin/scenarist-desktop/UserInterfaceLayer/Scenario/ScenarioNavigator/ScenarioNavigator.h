@@ -207,12 +207,12 @@ namespace UserInterface
         QLabel* m_scenesCount;
 
         /**
-         * @brief Кнопка удаления локации
+         * @brief Кнопка добавления элемента сценария
          */
         FlatButton* m_addItem;
 
         /**
-         * @brief Кнопка обновления списка локаций
+         * @brief Кнопка удаления элемента сценария
          */
         FlatButton* m_removeItem;
 

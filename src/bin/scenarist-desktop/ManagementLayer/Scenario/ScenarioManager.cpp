@@ -281,9 +281,17 @@ BusinessLogic::ScenarioDocument* ScenarioManager::scenarioDraft() const
 
 void ScenarioManager::loadViewState()
 {
-    m_navigatorManager->setDraftVisible(m_navigatorSplitter->sizes().at(DRAFT_PANEL_INDEX) != 0);
-    m_navigatorManager->setSceneDescriptionVisible(m_navigatorSplitter->sizes().at(SCENE_DESCRIPTION_PANEL_INDEX) != 0);
-    m_navigatorManager->setScriptDictionariesVisible(m_navigatorSplitter->sizes().at(SCRIPT_DICTIONARIES_PANEL_INDEX) != 0);
+    const bool isDraftVisible = m_navigatorSplitter->sizes().at(DRAFT_PANEL_INDEX) != 0;
+    m_navigatorManager->setDraftVisible(isDraftVisible);
+    m_draftNavigatorManager->view()->setVisible(isDraftVisible);
+
+    const bool isSceneDescriptionVisible = m_navigatorSplitter->sizes().at(SCENE_DESCRIPTION_PANEL_INDEX) != 0;
+    m_navigatorManager->setSceneDescriptionVisible(isSceneDescriptionVisible);
+    m_sceneDescriptionManager->view()->setVisible(isSceneDescriptionVisible);
+
+    const bool isScriptDictionariesVisible = m_navigatorSplitter->sizes().at(SCRIPT_DICTIONARIES_PANEL_INDEX) != 0;
+    m_navigatorManager->setScriptDictionariesVisible(isScriptDictionariesVisible);
+    m_scriptDictionariesManager->view()->setVisible(isScriptDictionariesVisible);
 }
 
 int ScenarioManager::cursorPosition() const
@@ -929,9 +937,9 @@ void ScenarioManager::setNavigatorPanelVisible(int _panelIndex, bool _visible)
 {
     m_navigatorSplitter->widget(_panelIndex)->setVisible(_visible);
 
-    QList<int> sizes = m_navigatorSplitter->sizes();
-    if (_visible && sizes.at(_panelIndex) == 0) {
-        sizes[_panelIndex] = 100;
+    if (_visible) {
+        QList<int> sizes = m_navigatorSplitter->sizes();
+        sizes[_panelIndex] = std::max(sizes.at(_panelIndex), 100);
         m_navigatorSplitter->setSizes(sizes);
     }
 }
