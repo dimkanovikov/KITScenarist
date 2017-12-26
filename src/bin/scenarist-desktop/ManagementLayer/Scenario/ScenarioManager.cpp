@@ -940,7 +940,7 @@ void ScenarioManager::setNavigatorPanelVisible(int _panelIndex, bool _visible)
 
     if (_visible) {
         QList<int> sizes = m_navigatorSplitter->sizes();
-        sizes[_panelIndex] = std::max(sizes.at(_panelIndex), 100);
+        sizes[_panelIndex] = std::max(sizes.at(_panelIndex), 260);
         m_navigatorSplitter->setSizes(sizes);
     }
 }
