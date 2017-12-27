@@ -79,8 +79,12 @@ void ScriptDictionaries::initConnections()
 void ScriptDictionaries::initStyleSheet()
 {
     m_types->setProperty("inTopPanel", true);
+    m_types->setProperty("topPanelLeftBordered", false);
+    m_types->setProperty("topPanelTopBordered", false);
     m_addItem->setProperty("inTopPanel", true);
+    m_addItem->setProperty("topPanelTopBordered", false);
     m_removeItem->setProperty("inTopPanel", true);
+    m_removeItem->setProperty("topPanelTopBordered", false);
 
     m_items->setProperty("mainContainer", true);
 }

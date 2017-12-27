@@ -787,6 +787,11 @@ void ScenarioManager::aboutUpdateCurrentSceneTitle(const QString& _title)
     workingScenario()->setItemTitleAtPosition(m_textEditManager->cursorPosition(), _title);
 }
 
+void ScenarioManager::copySceneDescriptionToScript()
+{
+    workingScenario()->copyItemDescriptionToScript(m_textEditManager->cursorPosition());
+}
+
 void ScenarioManager::aboutUpdateCurrentSceneDescription(const QString& _description)
 {
     workingScenario()->setItemDescriptionAtPosition(m_textEditManager->cursorPosition(), _description);
@@ -1093,6 +1098,7 @@ void ScenarioManager::initConnections()
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitle);
+    connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::copyDescriptionToScriptRequested, this, &ScenarioManager::copySceneDescriptionToScript);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
 
     connect(m_textEditManager, &ScenarioTextEditManager::textModeChanged, this, &ScenarioManager::aboutRefreshCounters);

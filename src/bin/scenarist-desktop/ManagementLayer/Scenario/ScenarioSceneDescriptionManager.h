@@ -43,6 +43,11 @@ namespace ManagementLayer
 		 */
 		void titleChanged(const QString& _title);
 
+        /**
+         * @brief Пользователь хочет скопировать текст описания сцены в текст
+         */
+        void copyDescriptionToScriptRequested();
+
 		/**
 		 * @brief Текст описания изменился
 		 */

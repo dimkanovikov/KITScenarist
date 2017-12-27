@@ -1,12 +1,14 @@
 #include "ScenarioSceneDescription.h"
 
-#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
-
 #include <3rd_party/Helpers/TextEditHelper.h>
+
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
 #include <QFrame>
 #include <QLabel>
 #include <QLineEdit>
+#include <QLocale>
 #include <QVBoxLayout>
 
 using namespace UserInterface;
@@ -16,6 +18,7 @@ ScenarioSceneDescription::ScenarioSceneDescription(QWidget* _parent) :
     QWidget(_parent),
     m_titleHeader(new QFrame(this)),
     m_title(new QLineEdit(this)),
+    m_copyToScript(new FlatButton(this)),
     m_description(new SimpleTextEditorWidget(this))
 {
     initView();
@@ -99,12 +102,21 @@ QString ScenarioSceneDescription::currentDescription() const
 
 void ScenarioSceneDescription::initView()
 {
+    m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    m_copyToScript->setIcons(QIcon(":/Graphics/Icons/Editing/copy-to-script.png"));
+    m_copyToScript->setToolTip(tr("Copy scene description to the script"));
+
     m_description->setToolbarVisible(false);
 
     QHBoxLayout* topLayout = new QHBoxLayout(m_titleHeader);
-    topLayout->setContentsMargins(QMargins(6, 0, 6, 0));
+    topLayout->setContentsMargins(
+                QLocale().textDirection() == Qt::LeftToRight
+                ? QMargins(6, 0, 0, 0)
+                : QMargins(0, 0, 6, 0));
     topLayout->addWidget(new QLabel(tr("Description of:"), this));
     topLayout->addWidget(m_title);
+    topLayout->addWidget(m_copyToScript);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setContentsMargins(QMargins());
@@ -118,15 +130,18 @@ void ScenarioSceneDescription::initView()
 void ScenarioSceneDescription::initConnections()
 {
     connect(m_title, &QLineEdit::textChanged, this, &ScenarioSceneDescription::aboutTitleChanged);
+    connect(m_copyToScript, &FlatButton::clicked, this, &ScenarioSceneDescription::copyDescriptionToScriptPressed);
     connect(m_description, &SimpleTextEditorWidget::textChanged, this, &ScenarioSceneDescription::aboutDescriptionChanged);
 }
 
 void ScenarioSceneDescription::initStyleSheet()
 {
-
     m_titleHeader->setProperty("inTopPanel", true);
 
     m_title->setProperty("editableLabel", true);
+
+    m_copyToScript->setProperty("inTopPanel", true);
+    m_copyToScript->setProperty("topPanelTopBordered", false);
 
     m_description->setProperty("mainContainer", true);
 }

@@ -109,6 +109,13 @@ void ScenarioNavigator::setIsDraft(bool _isDraft)
     m_scenesCount->setVisible(!_isDraft);
     m_middleTitle->setVisible(!_isDraft);
     m_showAdditionalPanels->setVisible(!_isDraft);
+
+    m_draftTitle->setProperty("topPanelTopBordered", !_isDraft);
+    m_scenesCountTitle->setProperty("topPanelTopBordered", !_isDraft);
+    m_scenesCount->setProperty("topPanelTopBordered", !_isDraft);
+    m_addItem->setProperty("topPanelTopBordered", !_isDraft);
+    m_removeItem->setProperty("topPanelTopBordered", !_isDraft);
+    m_middleTitle->setProperty("topPanelTopBordered", !_isDraft);
 }
 
 void ScenarioNavigator::clearSelection()

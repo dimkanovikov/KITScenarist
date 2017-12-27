@@ -42,5 +42,6 @@ void ScenarioSceneDescriptionManager::initView()
 void ScenarioSceneDescriptionManager::initConnections()
 {
 	connect(m_view, &ScenarioSceneDescription::titleChanged, this, &ScenarioSceneDescriptionManager::titleChanged);
+    connect(m_view, &ScenarioSceneDescription::copyDescriptionToScriptPressed, this, &ScenarioSceneDescriptionManager::copyDescriptionToScriptRequested);
 	connect(m_view, &ScenarioSceneDescription::descriptionChanged, this, &ScenarioSceneDescriptionManager::descriptionChanged);
 }

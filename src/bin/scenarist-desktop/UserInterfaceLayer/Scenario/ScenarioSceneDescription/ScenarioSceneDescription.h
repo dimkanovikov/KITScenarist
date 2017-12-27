@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class FlatButton;
 class QFrame;
 class QLineEdit;
 class SimpleTextEditorWidget;
@@ -40,6 +41,11 @@ namespace UserInterface
 		 * @brief Изменилось название сцены
 		 */
 		void titleChanged(const QString& _title);
+
+        /**
+         * @brief Нажата кнопка копирования текста описания в текст сценария
+         */
+        void copyDescriptionToScriptPressed();
 
 		/**
 		 * @brief Текст описания изменился
@@ -88,17 +94,22 @@ namespace UserInterface
 		/**
 		 * @brief Заголовок редактора
 		 */
-		QFrame* m_titleHeader;
+        QFrame* m_titleHeader = nullptr;
 
 		/**
 		 * @brief Название сцены
 		 */
-		QLineEdit* m_title;
+        QLineEdit* m_title = nullptr;
+
+        /**
+         * @brief Кнопка копирования описания сцены в текст сценария
+         */
+        FlatButton* m_copyToScript = nullptr;
 
 		/**
 		 * @brief Редактор описания
 		 */
-		SimpleTextEditorWidget* m_description;
+        SimpleTextEditorWidget* m_description = nullptr;
 
 		/**
 		 * @brief Исходный текст названия, используется для контроля изменений

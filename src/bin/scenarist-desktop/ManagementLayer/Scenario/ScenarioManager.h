@@ -250,6 +250,11 @@ namespace ManagementLayer
         void aboutUpdateCurrentSceneTitle(const QString& _title);
 
         /**
+         * @brief Скопировать описание сцены в текст сцены
+         */
+        void copySceneDescriptionToScript();
+
+        /**
          * @brief Описание текущей сцены было изменён
          */
         void aboutUpdateCurrentSceneDescription(const QString& _description);
