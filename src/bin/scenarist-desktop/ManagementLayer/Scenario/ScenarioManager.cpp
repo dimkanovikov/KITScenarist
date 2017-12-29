@@ -177,7 +177,7 @@ namespace {
                 bool replaceSelection = false;
 
                 //
-                // Если мы в блоке персонажа
+                // Если мы в блоке времени и места
                 //
                 if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneHeading) {
                     const QString location = BusinessLogic::SceneHeadingParser::locationName(cursor.block().text());

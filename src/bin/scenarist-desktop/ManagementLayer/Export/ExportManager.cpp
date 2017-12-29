@@ -41,6 +41,7 @@ namespace {
      * @brief Истинное значение для умолчальных значений, загружаемых из настроек
      */
     const QString TRUE_VALUE = "1";
+    const QString FALSE_VALUE = "0";
 }
 
 
@@ -251,7 +252,7 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
                 StorageFacade::settingsStorage()->value(
                     QString("%1/dialogues-numbering").arg(projectKey),
                     DataStorageLayer::SettingsStorage::ApplicationSettings,
-                    TRUE_VALUE).toInt()
+                    FALSE_VALUE).toInt()
                 );
     m_exportDialog->setScenesPrefix(
                 StorageFacade::settingsStorage()->value(
