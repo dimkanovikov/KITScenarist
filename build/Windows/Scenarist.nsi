@@ -27,6 +27,7 @@
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\KIT\Scenarist"
+  InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UninstallString"
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
