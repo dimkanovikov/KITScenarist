@@ -887,10 +887,9 @@ void ApplicationManager::editRemoteProjectName(const QModelIndex& _index)
         }
         //
         // ... переименуем
+        //     это действие приводит к перезагрузке списка проектов, так что более делать ничего не надо
         //
         m_synchronizationManager->updateProjectName(project.id(), newName);
-        m_projectsManager->setCurrentProjectName(newName);
-        project.setName(newName);
         //
         // ... и обновим список проектов
         //
