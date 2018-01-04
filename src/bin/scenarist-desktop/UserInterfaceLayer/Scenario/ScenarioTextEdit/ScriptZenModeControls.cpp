@@ -184,7 +184,11 @@ bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)
         if (_watched == parent()
             && _event->type() == QEvent::Resize) {
             resize(sizeHint().width(), parentWidget()->height());
-            move(parentWidget()->width() - width() - 20, 0);
+            const int margin = 20;
+            const int xCoordinate = QLocale().textDirection() == Qt::LeftToRight
+                                    ? parentWidget()->width() - width() - margin
+                                    : margin;
+            move(xCoordinate, 0);
         } else if (_event->type() == QEvent::MouseMove
                    || _event->type() == QEvent::Wheel
                    || _event->type() == QEvent::MouseButtonPress
