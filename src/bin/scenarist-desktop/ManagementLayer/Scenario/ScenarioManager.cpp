@@ -737,7 +737,7 @@ void ScenarioManager::aboutRedo()
 void ScenarioManager::aboutRefreshDuration(int _cursorPosition)
 {
     if (BusinessLogic::ChronometerFacade::chronometryUsed()) {
-        m_scenario->refresh();
+        workingScenario()->refresh();
     }
     aboutUpdateDuration(_cursorPosition);
 }

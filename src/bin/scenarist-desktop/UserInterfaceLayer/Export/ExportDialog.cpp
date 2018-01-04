@@ -152,6 +152,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
     BusinessLogic::ExportParameters exportParameters;
     exportParameters.isResearch = m_ui->exportTypes->currentIndex() == RESEARCH_TAB_INDEX;
     exportParameters.isOutline = m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX;
+    exportParameters.isScript = m_ui->exportTypes->currentIndex() == SCRIPT_TAB_INDEX;
     if (exportParameters.isResearch) {
         exportParameters.filePath = m_ui->researchFile->text();
     } else {
@@ -332,16 +333,12 @@ void ExportDialog::updateParametersVisibility()
     //
     // Зависимость от типа
     //
-    if (m_ui->fdx->isChecked()) {
+    if (m_ui->fdx->isChecked()
+        || m_ui->fountain->isChecked()) {
         showTemplates = false;
         showPageNumbers = false;
         showDialoguesNumbers = false;
         showSaveReviewMarks = false;
-        showCheckPageBreak = false;
-    } else if (m_ui->fountain->isChecked()) {
-        showTemplates = false;
-        showPageNumbers = false;
-        showDialoguesNumbers = false;
         showCheckPageBreak = false;
     }
     //
