@@ -576,7 +576,7 @@ void ScenarioTextEditWidget::buildEditMenu(QMenu* _menu)
     _menu->addAction(tr("Undo"), this, &ScenarioTextEditWidget::undoRequest, QKeySequence::Undo);
     _menu->addAction(tr("Redo"), this, &ScenarioTextEditWidget::redoRequest, QKeySequence::Redo);
     _menu->addSeparator();
-    _menu->addAction(tr("Find and replace"), m_search, &FlatButton::click, QKeySequence::Find);
+    _menu->addAction(tr("Find and replace"), this, &ScenarioTextEditWidget::prepareToSearch, QKeySequence::Find);
     _menu->addSeparator();
 
     //
@@ -612,6 +612,26 @@ void ScenarioTextEditWidget::buildEditMenu(QMenu* _menu)
     }
 }
 #endif
+
+void ScenarioTextEditWidget::prepareToSearch()
+{
+    //
+    // Если поиск виден, но в нём нет фокуса - установим фокус в него
+    // В остальных случаях просто покажем, или скроем поиск
+    //
+    if (m_search->isChecked()
+        && m_searchLine->isVisible()
+        && !m_searchLine->hasFocus()) {
+        m_searchLine->selectText();
+        m_searchLine->setFocus();
+    }
+    //
+    // В противном случае сменим видимость
+    //
+    else {
+        m_search->toggle();
+    }
+}
 
 void ScenarioTextEditWidget::aboutShowSearch()
 {
@@ -885,33 +905,17 @@ void ScenarioTextEditWidget::initConnections()
 {
     QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+F"), this);
     shortcut->setContext(Qt::WidgetWithChildrenShortcut);
-    connect(shortcut, &QShortcut::activated, [=] {
-        //
-        // Если поиск виден, но в нём нет фокуса - установим фокус в него
-        // В остальных случаях просто покажем, или скроем поиск
-        //
-        if (m_search->isChecked()
-            && m_searchLine->isVisible()
-            && !m_searchLine->hasFocus()) {
-            m_searchLine->selectText();
-            m_searchLine->setFocus();
-        }
-        //
-        // В противном случае сменим видимость
-        //
-        else {
-            m_search->toggle();
-        }
-    });
+    connect(shortcut, &QShortcut::activated, this, &ScenarioTextEditWidget::prepareToSearch);
 
-    connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
+    connect(m_textStyles, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+            this, &ScenarioTextEditWidget::aboutChangeTextStyle);
     connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
     connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
     connect(m_search, &FlatButton::toggled, this, &ScenarioTextEditWidget::aboutShowSearch);
-    connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
+    connect(m_fastFormat, &FlatButton::toggled, this, &ScenarioTextEditWidget::aboutShowFastFormat);
     connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
             [=] { m_editorWrapper->setFocus(); });
-    connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
+    connect(m_review, &ScenarioReviewPanel::toggled, m_reviewView, &ScenarioReviewView::setVisible);
     connect(m_reviewView, &ScenarioReviewView::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
     connect(m_reviewView, &ScenarioReviewView::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
     connect(m_zenControls, &ScriptZenModeControls::quitPressed, this, &ScenarioTextEditWidget::quitFromZenMode);

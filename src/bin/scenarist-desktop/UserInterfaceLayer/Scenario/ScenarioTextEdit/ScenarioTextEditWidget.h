@@ -179,7 +179,11 @@ namespace UserInterface
         void buildEditMenu(QMenu* _menu);
 #endif
 
-    public slots:
+        /**
+         * @brief Подготовить интерфейс к поиску
+         */
+        void prepareToSearch();
+
         /**
          * @brief Показать/скрыть поле поиска
          */
