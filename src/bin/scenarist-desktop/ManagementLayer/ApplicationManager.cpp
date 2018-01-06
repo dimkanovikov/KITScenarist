@@ -94,6 +94,11 @@ namespace {
     const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
 
     /**
+     * @brief Старый вордовский формат не поддерживается
+     */
+    const QString MS_DOC_EXTENSION = ".doc";
+
+    /**
      * @brief Суффикс "изменено" для заголовка окна добавляемый в маке
      */
     const char* MAC_CHANGED_SUFFIX =
@@ -279,12 +284,24 @@ void ApplicationManager::aboutCreateNew()
                 //
                 if (!dlg.projectFilePath().isEmpty()) {
                     //
-                    // Если задан, то создаём новый проект в заданном файле
+                    // Старый вордовский формат не поддерживаем
                     //
-                    const QString newProjectPath = dlg.projectFilePath();
-                    const QString importFilePath = dlg.importFilePath();
-                    createNewLocalProject(newProjectPath, importFilePath);
-                    break;
+                    if (dlg.importFilePath().toLower().endsWith(MS_DOC_EXTENSION)) {
+                        QLightBoxMessage::critical(&dlg, tr("File format not supported"),
+                            tr("Microsoft <b>DOC</b> files are not supported. You need save it to <b>DOCX</b> file and reimport."));
+                    }
+                    //
+                    // Если всё в порядке
+                    //
+                    else {
+                        //
+                        // ... то создаём новый проект в заданном файле
+                        //
+                        const QString newProjectPath = dlg.projectFilePath();
+                        const QString importFilePath = dlg.importFilePath();
+                        createNewLocalProject(newProjectPath, importFilePath);
+                        break;
+                    }
                 }
             }
             //
