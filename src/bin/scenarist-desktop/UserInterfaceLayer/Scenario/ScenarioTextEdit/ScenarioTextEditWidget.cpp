@@ -813,6 +813,7 @@ void ScenarioTextEditWidget::initView()
 
     m_reviewView->setObjectName("reviewView");
     m_reviewView->setEditor(m_editor);
+    m_reviewView->setMinimumWidth(100);
     m_reviewView->hide();
 
     m_zenControls->setEditor(m_editor);
