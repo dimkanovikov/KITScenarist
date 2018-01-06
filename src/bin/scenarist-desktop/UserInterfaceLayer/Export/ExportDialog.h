@@ -28,6 +28,11 @@ namespace UserInterface
         ~ExportDialog();
 
         /**
+         * @brief Установить тип экспорта
+         */
+        void setExportType(int _type);
+
+        /**
          * @brief Установить путь экспортируемого файла разработки
          */
         void setResearchExportFilePath(const QString& _filePath);
@@ -103,6 +108,11 @@ namespace UserInterface
         BusinessLogic::ExportParameters exportParameters() const;
 
         /**
+         * @brief Текущий тип экспорта
+         */
+        int exportType() const;
+
+        /**
          * @brief Получить путь к экспортируемому файлу разработки
          */
         QString researchFilePath() const;
@@ -116,6 +126,11 @@ namespace UserInterface
          * @brief Формат экспорта
          */
         QString exportFormat() const;
+
+        /**
+         * @brief Переопределяем, чтобы настроить тип экспорта, перед отображением
+         */
+        void setVisible(bool _visible);
 
     signals:
         /**
@@ -185,6 +200,11 @@ namespace UserInterface
          * @brief Интерфейс
          */
         Ui::ExportDialog* m_ui;
+
+        /**
+         * @brief Тип экспорта
+         */
+        int m_exportType = 0;
 
         /**
          * @brief Имя файла для экспорта

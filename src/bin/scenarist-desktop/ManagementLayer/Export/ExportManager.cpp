@@ -215,6 +215,11 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
     // Загрузим параметры экспорта
     //
     const QString projectKey = QString("projects/%1/export").arg(_projectPath);
+    m_exportDialog->setExportType(
+                StorageFacade::settingsStorage()->value(
+                    QString("%1/export-type").arg(projectKey),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+                );
     m_exportDialog->setResearchExportFilePath(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/research-file-path").arg(projectKey),
@@ -280,6 +285,10 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
     //
     // Сохраним параметры экспорта
     //
+    StorageFacade::settingsStorage()->setValue(
+                QString("%1/export-type").arg(projectKey),
+                QString::number(m_exportDialog->exportType()),
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/research-file-path").arg(projectKey),
                 m_exportDialog->researchFilePath(),

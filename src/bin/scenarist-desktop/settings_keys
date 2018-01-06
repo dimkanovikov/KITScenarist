@@ -32,6 +32,7 @@ projects/[project_name]/last-cursor-position - последняя позиция
 projects/[project_name]/last-active-module_left - последний активный модуль левой панели (или всего приложения, если не используется двухпанельный режим)
 projects/[project_name]/last-active-module_right - последний активный модуль правой панели для двухпанельного режима
 projects/[project_name]/export - настройки экспорта
+projects/[project_name]/export/export-type - тип экспорта (0 - разработка, 1 - аутлайн, 2 - сценарий)
 projects/[project_name]/export/file-path - путь к файлу экспорта
 projects/[project_name]/export/check-page-breaks - проверять ошибки разрыва страниц
 projects/[project_name]/export/style - стиль экспорта

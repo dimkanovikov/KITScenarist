@@ -47,6 +47,14 @@ ExportDialog::~ExportDialog()
     delete m_ui;
 }
 
+void ExportDialog::setExportType(int _type)
+{
+    m_exportType = _type;
+    if (m_ui->exportTypes->count() > _type) {
+        m_ui->exportTypes->setCurrentIndex(_type);
+    }
+}
+
 void ExportDialog::setResearchExportFilePath(const QString& _filePath)
 {
     m_ui->researchFile->setText(_filePath);
@@ -81,8 +89,10 @@ void ExportDialog::setScriptExportFilePath(const QString& _filePath)
         m_ui->docx->setChecked(true);
     } else if (fileInfo.suffix() == "pdf") {
         m_ui->pdf->setChecked(true);
-    } else {
+    } else if (fileInfo.suffix() == "fdx") {
         m_ui->fdx->setChecked(true);
+    } else {
+        m_ui->fountain->setChecked(true);
     }
 
     checkScriptExportAvailability();
@@ -170,6 +180,11 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
     return exportParameters;
 }
 
+int ExportDialog::exportType() const
+{
+    return m_ui->exportTypes->currentIndex();
+}
+
 QString ExportDialog::researchFilePath() const
 {
     return m_ui->researchFile->text();
@@ -197,6 +212,13 @@ QString ExportDialog::exportFormat() const
         }
     }
     return format;
+}
+
+void ExportDialog::setVisible(bool _visible)
+{
+    QLightBoxDialog::setVisible(_visible);
+
+    m_ui->exportTypes->setCurrentIndex(m_exportType);
 }
 
 void ExportDialog::chooseResearchFile()

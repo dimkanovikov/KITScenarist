@@ -161,7 +161,7 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
     } else {
         importer.reset(new BusinessLogic::DocumentImporter);
     }
-    const QString importScenarioXml = importer->importScenario(_importParameters);
+    const QString importScenarioXml = importer->importScript(_importParameters);
 
     //
     // Если нету текста, прерываем выполнение
