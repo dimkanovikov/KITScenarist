@@ -407,6 +407,7 @@ void ExportDialog::initConnections()
     // Покажем страницу параметров экспорта в зависимости от выбранной вкладки
     //
     connect(m_ui->exportTypes, &TabBarExpanded::currentChanged, [this] (int _index) {
+        m_exportType= _index;
         if (_index == RESEARCH_TAB_INDEX) {
             m_ui->exportParameters->setCurrentWidget(m_ui->researchExportPage);
         } else {
