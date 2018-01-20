@@ -110,59 +110,102 @@ void Application::updateTranslation()
         currentLanguage = QLocale::English;
     }
 
-    if (language == 0) {
-        translationSuffix = "ru";
-        qtTranslationSuffix = "ru";
-        qtBaseTranslationSuffix = "ru";
-        currentLanguage = QLocale::Russian;
-    } else if (language == 1) {
-        translationSuffix = "es";
-        qtTranslationSuffix = "es";
-        qtBaseTranslationSuffix = "es";
-        currentLanguage = QLocale::Spanish;
-    } else if (language == 2) {
-        translationSuffix = "en";
-        qtTranslationSuffix = "en";
-        qtBaseTranslationSuffix = "en";
-        currentLanguage = QLocale::English;
-    } else if (language == 3) {
-        translationSuffix = "fr";
-        qtTranslationSuffix = "fr";
-        qtBaseTranslationSuffix = "fr";
-        currentLanguage = QLocale::French;
-    } else if (language == 4) {
-        translationSuffix = "kz";
-        qtTranslationSuffix = "kz";
-        qtBaseTranslationSuffix = "ru";
-        currentLanguage = QLocale::Kazakh;
-    } else if (language == 5) {
-        translationSuffix = "ua";
-        qtTranslationSuffix = "ru";
-        qtBaseTranslationSuffix = "ru";
-        currentLanguage = QLocale::Ukrainian;
-    } else if (language == 6) {
-        translationSuffix = "de";
-        qtTranslationSuffix = "de";
-        qtBaseTranslationSuffix = "de";
-        currentLanguage = QLocale::German;
-    } else if (language == 7) {
-        translationSuffix = "pt";
-        qtTranslationSuffix = "pt";
-        qtBaseTranslationSuffix = "pt";
-        currentLanguage = QLocale::Portuguese;
-    } else if (language == 8) {
-        translationSuffix = "fa";
-        qtTranslationSuffix = "fa";
-        currentLanguage = QLocale::Persian;
-    } else if (language == 9) {
-        translationSuffix = "zn";
-        qtTranslationSuffix = "zn";
-        currentLanguage = QLocale::Chinese;
-    } else if (language == 10) {
-        translationSuffix = "he";
-        qtTranslationSuffix = "he";
-        qtBaseTranslationSuffix = "he";
-        currentLanguage = QLocale::Hebrew;
+    switch (language) {
+        case 0: {
+            translationSuffix = "ru";
+            qtTranslationSuffix = "ru";
+            qtBaseTranslationSuffix = "ru";
+            currentLanguage = QLocale::Russian;
+            break;
+        }
+
+        case 1: {
+            translationSuffix = "es";
+            qtTranslationSuffix = "es";
+            qtBaseTranslationSuffix = "es";
+            currentLanguage = QLocale::Spanish;
+            break;
+        }
+
+        case 2: {
+            translationSuffix = "en";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::English;
+            break;
+        }
+
+        case 3: {
+            translationSuffix = "fr";
+            qtTranslationSuffix = "fr";
+            qtBaseTranslationSuffix = "fr";
+            currentLanguage = QLocale::French;
+            break;
+        }
+
+        case 4: {
+            translationSuffix = "kz";
+            qtTranslationSuffix = "kz";
+            qtBaseTranslationSuffix = "ru";
+            currentLanguage = QLocale::Kazakh;
+            break;
+        }
+
+        case 5: {
+            translationSuffix = "ua";
+            qtTranslationSuffix = "ru";
+            qtBaseTranslationSuffix = "ru";
+            currentLanguage = QLocale::Ukrainian;
+            break;
+        }
+
+        case 6: {
+            translationSuffix = "de";
+            qtTranslationSuffix = "de";
+            qtBaseTranslationSuffix = "de";
+            currentLanguage = QLocale::German;
+            break;
+        }
+
+        case 7: {
+            translationSuffix = "pt";
+            qtTranslationSuffix = "pt";
+            qtBaseTranslationSuffix = "pt";
+            currentLanguage = QLocale::Portuguese;
+            break;
+        }
+
+        case 8: {
+            translationSuffix = "fa";
+            qtTranslationSuffix = "fa";
+            currentLanguage = QLocale::Persian;
+            break;
+        }
+
+        case 9: {
+            translationSuffix = "zn";
+            qtTranslationSuffix = "zn";
+            currentLanguage = QLocale::Chinese;
+            break;
+        }
+
+        case 10: {
+            translationSuffix = "he";
+            qtTranslationSuffix = "he";
+            qtBaseTranslationSuffix = "he";
+            currentLanguage = QLocale::Hebrew;
+            break;
+        }
+
+        case 11: {
+            translationSuffix = "pl";
+            qtTranslationSuffix = "pl";
+            qtBaseTranslationSuffix = "pl";
+            currentLanguage = QLocale::Polish;
+            break;
+        }
+
+        default: break;
     }
 
     QLocale::setDefault(QLocale(currentLanguage));

@@ -1248,7 +1248,7 @@ void SettingsManager::initConnections()
     //
     // Сохранение изменений параметров
     //
-    connect(m_view, SIGNAL(applicationLanguageChanged(int)), this, SLOT(applicationLanguageChanged(int)));
+    connect(m_view, &SettingsView::applicationLanguageChanged, this, &SettingsManager::applicationLanguageChanged);
     connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SLOT(applicationUseDarkThemeChanged(bool)));
     connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
     connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));

@@ -9,15 +9,12 @@ TRANSLATIONS += bin/scenarist-core/Resources/Translations/Scenarist_ru.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_en.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_kz.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_de.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_jp.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_it.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_ua.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_pt.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_zn.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_fa.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_he.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_bg.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_nl.ts
+    bin/scenarist-core/Resources/Translations/Scenarist_pl.ts
 
 RESOURCES += \
     bin/scenarist-mobile/scenarist-core/Resources/Resources.qrc

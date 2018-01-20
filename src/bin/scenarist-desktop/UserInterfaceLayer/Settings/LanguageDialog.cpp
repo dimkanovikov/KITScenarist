@@ -10,30 +10,26 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
 {
     m_ui->setupUi(this);
 
-    if (_language == -1) {
-        m_ui->system->setChecked(true);
-    } else if (_language == 0) {
-        m_ui->russian->setChecked(true);
-    } else if (_language == 1) {
-        m_ui->spanish->setChecked(true);
-    } else if (_language == 2) {
-        m_ui->english->setChecked(true);
-    } else if (_language == 3) {
-        m_ui->french->setChecked(true);
-    } else if (_language == 4) {
-        m_ui->kazakh->setChecked(true);
-    } else if (_language == 5) {
-        m_ui->ukrainian->setChecked(true);
-    } else if (_language == 6) {
-        m_ui->german->setChecked(true);
-    } else if (_language == 7) {
-        m_ui->portugues->setChecked(true);
-    } else if (_language == 8) {
-        m_ui->farsi->setChecked(true);
-    } else if (_language == 9) {
-        m_ui->chinese->setChecked(true);
-    } else if (_language == 10) {
-        m_ui->hebrew->setChecked(true);
+    QRadioButton* languageButton = nullptr;
+    switch (_language) {
+        case -1: languageButton = m_ui->system; break;
+        case 0: languageButton = m_ui->russian; break;
+        case 1: languageButton = m_ui->spanish; break;
+        case 2: languageButton = m_ui->english; break;
+        case 3: languageButton = m_ui->french; break;
+        case 4: languageButton = m_ui->kazakh; break;
+        case 5: languageButton = m_ui->ukrainian; break;
+        case 6: languageButton = m_ui->german; break;
+        case 7: languageButton = m_ui->portugues; break;
+        case 8: languageButton = m_ui->farsi; break;
+        case 9: languageButton = m_ui->chinese; break;
+        case 10: languageButton = m_ui->hebrew; break;
+        case 11: languageButton = m_ui->polish; break;
+        default: break;
+    }
+
+    if (languageButton != nullptr) {
+        languageButton->setChecked(true);
     }
 }
 
@@ -69,6 +65,8 @@ int LanguageDialog::language() const
         result = 9;
     } else if (m_ui->hebrew->isChecked()) {
         result = 10;
+    } else if (m_ui->polish->isChecked()) {
+        result = 11;
     }
 
     return result;
