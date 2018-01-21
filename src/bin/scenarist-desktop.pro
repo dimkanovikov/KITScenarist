@@ -646,7 +646,8 @@ FORMS += \
 
 
 RESOURCES += \
-    scenarist-core/Resources/Resources.qrc
+    scenarist-core/Resources/Resources.qrc \
+    scenarist-core/Resources/Translations.qrc
 
 OTHER_FILES += \
     scenarist-desktop/settings_keys \

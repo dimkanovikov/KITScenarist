@@ -90,7 +90,10 @@ void RenewSubscriptionDialog::setPaymentText()
 
 void RenewSubscriptionDialog::setWindowWaiting(bool _isWaiting)
 {
+    m_ui->durationLabel->setEnabled(!_isWaiting);
     m_ui->duration->setEnabled(!_isWaiting);
+    m_ui->payment->setEnabled(!_isWaiting);
+    m_ui->paymentTypeLabel->setEnabled(!_isWaiting);
     m_ui->paymentType->setEnabled(!_isWaiting);
     m_acceptButton->setEnabled(!_isWaiting);
 
