@@ -150,10 +150,10 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="7" column="0">
     <widget class="QRadioButton" name="polish">
      <property name="text">
-      <string>Język polski</string>
+      <string>Polski</string>
      </property>
      <property name="checked">
       <bool>false</bool>

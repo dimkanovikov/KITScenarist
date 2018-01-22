@@ -230,10 +230,10 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="9" column="0">
         <widget class="QRadioButton" name="polish">
          <property name="text">
-          <string>Język polski</string>
+          <string>Polski</string>
          </property>
          <property name="checked">
           <bool>false</bool>
@@ -644,8 +644,8 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>266</width>
-            <height>455</height>
+            <width>257</width>
+            <height>393</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
