@@ -350,7 +350,9 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScriptZenModeControls.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCorrector.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScriptDictionariesManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptDictionaries/ScriptDictionaries.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptDictionaries/ScriptDictionaries.cpp \
+    scenarist-desktop/UserInterfaceLayer/MenuView.cpp \
+    scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableLabel.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -617,7 +619,9 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCorrector.h \
     scenarist-core/DataLayer/DataMappingLayer/ScenarioMapper.h \
     scenarist-desktop/ManagementLayer/Scenario/ScriptDictionariesManager.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptDictionaries/ScriptDictionaries.h
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptDictionaries/ScriptDictionaries.h \
+    scenarist-desktop/UserInterfaceLayer/MenuView.h \
+    scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableLabel.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -642,7 +646,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.ui \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui \
-    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui
+    scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui \
+    scenarist-desktop/UserInterfaceLayer/MenuView.ui
 
 
 RESOURCES += \

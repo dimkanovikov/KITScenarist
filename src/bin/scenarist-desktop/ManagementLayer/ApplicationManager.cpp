@@ -32,8 +32,10 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+#include <3rd_party/Widgets/WAF/Animation/Animation.h>
 
 #include <UserInterfaceLayer/ApplicationView.h>
+#include <UserInterfaceLayer/MenuView.h>
 #include <UserInterfaceLayer/Project/AddProjectDialog.h>
 #include <UserInterfaceLayer/Project/ShareDialog.h>
 #include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
@@ -64,6 +66,7 @@
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
 using UserInterface::AddProjectDialog;
+using UserInterface::MenuView;
 using UserInterface::ShareDialog;
 
 namespace {
@@ -181,6 +184,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     QObject(parent),
     m_view(new ApplicationView),
     m_menu(new FlatButton(m_view)),
+    m_menuView(new MenuView(m_view)),
     m_menuSecondary(new QLabel(m_view)),
     m_tabs(new SideTabBar(m_view)),
     m_tabsSecondary(new SideTabBar(m_view)),
@@ -208,6 +212,10 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 ApplicationManager::~ApplicationManager()
 {
     m_view->deleteLater();
+
+#ifdef Q_OS_MAC
+    m_menuBar->deleteLater();
+#endif
 }
 
 void ApplicationManager::exec(const QString& _fileToOpen)
@@ -1591,12 +1599,13 @@ void ApplicationManager::goToEditCurrentProject()
     // Активируем вкладки
     //
     ::enableActionsOnProjectOpen();
+    m_menuView->enableProjectActions();
 
     //
     // Настроим режим работы со сценарием
     //
     const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-    m_menu->menu()->actions()[IMPORT_MENU_INDEX]->setEnabled(!isCommentOnly);
+    m_menuView->setMenuItemEnabled(IMPORT_MENU_INDEX, !isCommentOnly);
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
 
@@ -1715,6 +1724,7 @@ void ApplicationManager::closeCurrentProject()
         // Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
         //
         ::disableActionsOnStart();
+        m_menuView->disableProjectActions();
 
         //
         // Перейти на стартовую вкладку
@@ -1739,9 +1749,10 @@ void ApplicationManager::initView()
     // Настроим меню
     //
     m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-//    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
+    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
     m_menu->setText(tr("Menu"));
-    m_menu->setMenu(createMenu());
+    m_menuView->setMenu(createMenu());
+    m_menuView->hide();
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
 #ifdef Q_OS_MAC
@@ -1834,13 +1845,14 @@ void ApplicationManager::initView()
     // Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
     //
     ::disableActionsOnStart();
+    m_menuView->disableProjectActions();
 
     //
     // Отключим на маленьких экранах некоторые возможности
     //
     QScreen* screen = QApplication::primaryScreen();
     if (screen->availableSize().width() < 1360) {
-        m_menu->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
+        m_menuView->setMenuItemEnabled(TWO_PANEL_MODE_MENU_INDEX, false);
         m_settingsManager->disableTwoPanelsMode();
         if (screen->availableSize().width() < 1024) {
             m_settingsManager->disableCompactMode();
@@ -1859,27 +1871,22 @@ QMenu* ApplicationManager::createMenu()
     m_editMenu = m_menuBar->addMenu(tr("Edit"));
     m_startUpManager->buildEditMenu(m_editMenu);
 #else
-    QMenu* menu = new QMenu(m_menu);
+    QMenu* menu = new QMenu(m_menuView);
 #endif
     QAction* createNewProject = menu->addAction(tr("New"));
     QAction* openProject = menu->addAction(tr("Open"));
     QAction* saveProject = menu->addAction(tr("Save"));
     saveProject->setShortcut(QKeySequence::Save);
     QAction* saveProjectAs = menu->addAction(tr("Save As..."));
-    g_disableOnStartActions << saveProject;
-    g_disableOnStartActions << saveProjectAs;
 
     menu->addSeparator();
     // ... импорт
     QAction* import = menu->addAction(tr("Import..."));
-    g_disableOnStartActions << import;
     // ... экспорт
     QAction* exportTo = menu->addAction(tr("Export to..."));
-    g_disableOnStartActions << exportTo;
     // ... предварительный просмотр
     QAction* printPreview = menu->addAction(tr("Print Preview"));
     printPreview->setShortcut(QKeySequence(Qt::Key_F12));
-    g_disableOnStartActions << printPreview;
 
     menu->addSeparator();
     QAction* twoPanelMode = menu->addAction(tr("Two Panel Mode"));
@@ -1913,7 +1920,9 @@ void ApplicationManager::initConnections()
 {
     connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
 
-    connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
+    connect(m_menu, &FlatButton::clicked, [this] { WAF::Animation::sideSlideIn(m_menuView); });
+    connect(m_menuView, &MenuView::hideRequested, [this] { WAF::Animation::sideSlideOut(m_menuView); });
+
     connect(m_tabs, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
     connect(m_tabsSecondary, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
     //
@@ -2194,7 +2203,7 @@ void ApplicationManager::reloadApplicationSettings()
                 "application/two-panel-mode",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
             .toInt();
-    m_menu->menu()->actions().value(TWO_PANEL_MODE_MENU_INDEX)->setChecked(twoPanelsMode);
+    m_menuView->menu()->actions().value(TWO_PANEL_MODE_MENU_INDEX)->setChecked(twoPanelsMode);
     //
     // Если не применять этот хак, то в редакторе сценария пропадает курсор
     // Возникает, только когда редактор сценария был на экране, при отключении второй панели
@@ -2249,8 +2258,8 @@ void ApplicationManager::reloadApplicationSettings()
     //
     QScreen* screen = QApplication::primaryScreen();
     if (screen->availableSize().width() < 1360) {
-        m_menu->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
-        m_menu->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setVisible(false);
+        m_menuView->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
+        m_menuView->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setVisible(false);
         m_settingsManager->disableTwoPanelsMode();
         if (screen->availableSize().width() < 1024) {
             m_settingsManager->disableCompactMode();

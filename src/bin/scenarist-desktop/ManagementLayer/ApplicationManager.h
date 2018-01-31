@@ -17,6 +17,7 @@ class QMenuBar;
 
 namespace UserInterface {
     class ApplicationView;
+    class MenuView;
 }
 
 namespace ManagementLayer
@@ -294,12 +295,17 @@ namespace ManagementLayer
         /**
          * @brief Главное окно приложения
          */
-        UserInterface::ApplicationView* m_view;
+        UserInterface::ApplicationView* m_view = nullptr;
+
+        /**
+         * @brief Кнопка вызова меню приложения
+         */
+        FlatButton* m_menu = nullptr;
 
         /**
          * @brief Меню приложения
          */
-        FlatButton* m_menu;
+        UserInterface::MenuView* m_menuView = nullptr;
 
 #ifdef Q_OS_MAC
         /**
