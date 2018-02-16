@@ -59,6 +59,11 @@ namespace UserInterface
 
     private:
         /**
+         * @brief Обновить отображаемые опции проекта
+         */
+        void updateProjectOptions();
+
+        /**
          * @brief Настроить видимость метки с сообщением о невозможности создать проект в облаке
          */
         void setCloudCreateBlockerVisible(bool _visible);

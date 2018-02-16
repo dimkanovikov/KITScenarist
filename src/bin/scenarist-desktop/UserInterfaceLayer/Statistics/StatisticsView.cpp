@@ -16,6 +16,8 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QCutomPlot/qcustomplotextended.h>
 
+#include <math.h>
+
 #include <QApplication>
 #include <QButtonGroup>
 #include <QFileInfo>

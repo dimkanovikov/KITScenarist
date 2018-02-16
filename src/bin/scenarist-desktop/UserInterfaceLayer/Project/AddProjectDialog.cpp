@@ -107,6 +107,8 @@ void AddProjectDialog::setIsRemoteAvailable(bool _isAvailable, bool _isEnabled, 
         m_ui->isLocal->hide();
         m_ui->isRemote->hide();
     }
+
+    updateProjectOptions();
 }
 
 bool AddProjectDialog::isLocal() const
@@ -136,6 +138,20 @@ QString AddProjectDialog::importFilePath() const
 QWidget* AddProjectDialog::focusedOnExec() const
 {
     return m_ui->projectName;
+}
+
+void AddProjectDialog::updateProjectOptions()
+{
+    const bool isLocal = m_ui->isLocal->isChecked();
+    m_ui->saveDirLabel->setVisible(isLocal);
+    m_ui->saveDir->setVisible(isLocal);
+    m_ui->browseSaveDir->setVisible(isLocal);
+
+    //
+    // Покажем сообщение о невозможности создания проекта в облаке при отсутствии подключения
+    //
+    const bool cantCreateInCloud = !isLocal && !m_hasInternetConnection;
+    setCloudCreateBlockerVisible(cantCreateInCloud);
 }
 
 void AddProjectDialog::setCloudCreateBlockerVisible(bool _visible)
@@ -185,18 +201,7 @@ void AddProjectDialog::initConnections()
     //
     // Настроим видимость возможности выбора папки сохранения файла
     //
-    connect(m_ui->isLocal, &QRadioButton::toggled, [=] {
-        const bool isLocal = m_ui->isLocal->isChecked();
-        m_ui->saveDirLabel->setVisible(isLocal);
-        m_ui->saveDir->setVisible(isLocal);
-        m_ui->browseSaveDir->setVisible(isLocal);
-
-        //
-        // Покажем сообщение о невозможности создания проекта в облаке при отсутствии подключения
-        //
-        const bool cantCreateInCloud = !isLocal && !m_hasInternetConnection;
-        setCloudCreateBlockerVisible(cantCreateInCloud);
-    });
+    connect(m_ui->isLocal, &QRadioButton::toggled, this, &AddProjectDialog::updateProjectOptions);
 
     //
     // Проверим не существует ли уже такого файла и заблокируем/разблокируем возможность создания
