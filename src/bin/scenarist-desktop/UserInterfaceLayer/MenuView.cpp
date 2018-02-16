@@ -3,7 +3,9 @@
 
 #include <3rd_party/Helpers/ImageHelper.h>
 
+#include <QDesktopServices>
 #include <QMenu>
+#include <QUrl>
 
 namespace {
     /**
@@ -16,6 +18,23 @@ namespace {
     const int EXPORT_MENU_INDEX = 6;
     const int PRINT_PREVIEW_MENU_INDEX = 7;
     /** @} */
+
+    /**
+     * @brief Получить язык для подстановки в ссылки на сайте
+     */
+    static QString urlLanguage() {
+        switch (QLocale().language()) {
+            case QLocale::Russian:
+            case QLocale::Ukrainian:
+            case QLocale::Kazakh: {
+                return QString();
+            }
+
+            default: {
+                return "en/";
+            }
+        }
+    }
 }
 
 using UserInterface::MenuView;
@@ -29,6 +48,7 @@ MenuView::MenuView(QWidget* _parent) :
 
     initView();
     initMenuButtons();
+    initConnections();
     initStyleSheet();
 }
 
@@ -127,6 +147,18 @@ void MenuView::initMenuButtons()
     updateButton(m_ui->exportProject);
     updateButton(m_ui->printPreview);
     updateButton(m_ui->help);
+}
+
+void MenuView::initConnections()
+{
+    connect(m_ui->help, &QPushButton::clicked, [this] {
+        const QString url = QString("https://kitscenarist.ru/%1help/").arg(urlLanguage());
+        QDesktopServices::openUrl(QUrl(url));
+    });
+    connect(m_ui->appUrl, &ClickableLabel::clicked, [this] {
+        const QString url = QString("https://kitscenarist.ru/%1").arg(urlLanguage());
+        QDesktopServices::openUrl(QUrl(url));
+    });
 }
 
 void MenuView::initStyleSheet()

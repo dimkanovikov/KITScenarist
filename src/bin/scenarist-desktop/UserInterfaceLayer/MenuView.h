@@ -73,6 +73,11 @@ namespace UserInterface
         void initMenuButtons();
 
         /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
+
+        /**
          * @brief Настроить стили
          */
         void initStyleSheet();
