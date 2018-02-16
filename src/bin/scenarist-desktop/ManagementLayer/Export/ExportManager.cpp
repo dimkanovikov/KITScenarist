@@ -384,8 +384,20 @@ void ExportManager::initExportDialog()
     //
     QString exportFileName = StorageFacade::scenarioDataStorage()->name();
     if (exportFileName.isEmpty()) {
-        QFileInfo fileInfo(ProjectsManager::currentProject().path());
-        exportFileName = fileInfo.completeBaseName();
+        const auto& currentProject = ProjectsManager::currentProject();
+        //
+        // Для удаленных проектов используем имя проекта + id проекта
+        //
+        if (currentProject.isRemote()) {
+            exportFileName = QString("%1 [%2]").arg(currentProject.name()).arg(currentProject.id());
+        }
+        //
+        // а для локальных имя файла
+        //
+        else {
+            QFileInfo fileInfo(currentProject.path());
+            exportFileName = fileInfo.completeBaseName();
+        }
     }
     m_exportDialog->setResearchExportFileName(exportFileName);
     m_exportDialog->setScriptExportFileName(exportFileName);

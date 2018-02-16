@@ -470,7 +470,18 @@ void ApplicationManager::aboutSaveAs()
     //
     // Изначально высвечивается текущее имя проекта
     //
-    const QString projectPath = ProjectsManager::currentProject().path();
+    QString projectPath = ProjectsManager::currentProject().path();
+    const Project& currentProject = ProjectsManager::currentProject();
+    if (currentProject.isRemote()) {
+        //
+        // Для удаленных проектов используем имя проекта + id проекта
+        // и сохраняем в папку вновь создаваемых проектов
+        //
+        projectPath = projectsFolderPath() + QDir::separator()
+                      + QString("%1 [%2]%3").arg(currentProject.name())
+                                            .arg(currentProject.id())
+                                            .arg(PROJECT_FILE_EXTENSION);
+    }
 
     //
     // Получим имя файла для сохранения
@@ -596,7 +607,7 @@ void ApplicationManager::aboutSave()
             //
             // Если необходимо создадим резервную копию закрываемого файла
             //
-            QString baseBackupName = "";
+            QString baseBackupName;
             const Project& currentProject = ProjectsManager::currentProject();
             if (currentProject.isRemote()) {
                 //
