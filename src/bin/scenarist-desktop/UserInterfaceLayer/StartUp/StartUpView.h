@@ -44,15 +44,9 @@ namespace UserInterface
         void setUpdateInfo(const QString& _updateInfo);
 
         /**
-         * @brief Установить информацию о том, авторизован пользователь или нет
+         * @brief Установить видимость списка облачных проектов
          */
-        void setUserLogged(bool isLogged, const QString& _userName = QString::null,
-                           const QString& _userEmail = QString::null);
-
-        /**
-         * @brief Установить информацию о подписке
-         */
-        void setSubscriptionInfo(bool _isActive, const QString& _expDate, quint64 _usedSpace, quint64 _availableSpace);
+        void setRemoteProjectsVisible(bool _visible);
 
         /**
          * @brief Установить список доступных проектов
@@ -64,27 +58,7 @@ namespace UserInterface
          */
         void setRemoteProjectName(int _index, const QString& _name);
 
-        /**
-         * @brief Установим текст о прогресса авторизации
-         */
-        void enableProgressLoginLabel(int _dots, bool _firstUpdate = false);
-
-        /**
-         * @brief Отключить текст о прогрессе авторизации
-         */
-        void disableProgressLoginLabel();
-
     signals:
-        /**
-         * @brief Нажата кнопка войти
-         */
-        void loginClicked();
-
-        /**
-         * @brief Нажата кнопка выйти
-         */
-        void logoutClicked();
-
         /**
          * @brief Нажата кнопка создать проект
          */
@@ -99,26 +73,6 @@ namespace UserInterface
          * @brief Нажата кнопка помощь
          */
         void helpClicked();
-
-        /**
-         * @brief Пользователь решил сменить свое имя
-         */
-        void userNameChanged(const QString& _newUserName);
-
-        /**
-         * @brief Пользователь нажал кнопку смены пароля
-         */
-        void passwordChangeClicked();
-
-        /**
-         * @brief Пользователь нажал кнопку обновления информации о подписке
-         */
-        void getSubscriptionInfoClicked();
-
-        /**
-         * @brief Пользователь нажал кнопку продления подписки
-         */
-        void renewSubscriptionClicked();
 
         /**
          * @brief Выбран один из недавно используемых проектов для открытия
@@ -177,11 +131,6 @@ namespace UserInterface
          */
         void aboutFilesSourceChanged();
 
-        /**
-         * @brief Пользователь хочет отобразить/скрыть кабинет
-         */
-        void cabinetChangeVisibility();
-
     private:
         /**
          * @brief Настроить представление
@@ -208,11 +157,6 @@ namespace UserInterface
          * @brief Интерфейс
          */
         Ui::StartUpView* m_ui = nullptr;
-
-        /**
-         * @brief Находимся ли в данный момент в процессе авторизации
-         */
-        bool m_isProcessLogin = false;
     };
 }
 

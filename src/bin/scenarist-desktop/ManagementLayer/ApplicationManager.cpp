@@ -1,5 +1,5 @@
 #include "ApplicationManager.h"
-
+#include "MenuManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Research/ResearchManager.h"
 #include "Scenario/ScenarioCardsManager.h"
@@ -34,8 +34,8 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
 
-#include <UserInterfaceLayer/ApplicationView.h>
-#include <UserInterfaceLayer/MenuView.h>
+#include <UserInterfaceLayer/Application/ApplicationView.h>
+#include <UserInterfaceLayer/Application/MenuView.h>
 #include <UserInterfaceLayer/Project/AddProjectDialog.h>
 #include <UserInterfaceLayer/Project/ShareDialog.h>
 #include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
@@ -184,7 +184,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     QObject(parent),
     m_view(new ApplicationView),
     m_menu(new FlatButton(m_view)),
-    m_menuView(new MenuView(m_view)),
     m_menuSecondary(new QLabel(m_view)),
     m_tabs(new SideTabBar(m_view)),
     m_tabsSecondary(new SideTabBar(m_view)),
@@ -192,6 +191,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     m_tabsWidgetsSecondary(new QStackedWidget(m_view)),
     m_splitter(new QSplitter(m_view)),
     m_projectsManager(new ProjectsManager(this)),
+    m_menuManager(new MenuManager(this, m_view)),
     m_startUpManager(new StartUpManager(this, m_view)),
     m_researchManager(new ResearchManager(this, m_view)),
     m_scenarioManager(new ScenarioManager(this, m_view)),
@@ -249,9 +249,9 @@ void ApplicationManager::makeStartUpChecks()
     //
     // И авторизуемся
     //
-    m_startUpManager->setProgressLoginLabel(true);
+    m_menuManager->setProgressLoginLabel(true);
     if (!m_synchronizationManager->autoLogin()) {
-        m_startUpManager->setProgressLoginLabel(false);
+        m_menuManager->setProgressLoginLabel(false);
     }
 }
 
@@ -1078,8 +1078,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             //
             // Если ошибка пришла от окна акторизации или смены пароля, покажем её в нём
             //
-            if (m_startUpManager->isOnLoginDialog()) {
-                m_startUpManager->retryLastAction(_error);
+            if (m_menuManager->isOnLoginDialog()) {
+                m_menuManager->retryLastAction(_error);
             }
             //
             // А если ошибка пришла в момент работы с облаком, то покажем её в индикаторе
@@ -1092,7 +1092,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
                 //
                 // Нет интернета в момент автологина. Текст о соединении
                 //
-                m_startUpManager->setProgressLoginLabel(false);
+                m_menuManager->setProgressLoginLabel(false);
             }
             break;
         }
@@ -1103,8 +1103,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         case Sync::IncorrectLoginError:
         case Sync::IncorrectPasswordError: {
             error = tr("Incorrect username or password.");
-            m_startUpManager->setProgressLoginLabel(false);
-            m_startUpManager->retryLogin(error);
+            m_menuManager->setProgressLoginLabel(false);
+            m_menuManager->retryLogin(error);
             break;
         }
 
@@ -1194,7 +1194,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::EmailAlreadyRegisteredError: {
             error = tr("Email already exist");
-            m_startUpManager->retrySignUp(error);
+            m_menuManager->retrySignUp(error);
             break;
         }
 
@@ -1203,7 +1203,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::WeakPasswordError: {
             error = tr("Password too weak");
-            m_startUpManager->showPasswordError(error);
+            m_menuManager->showPasswordError(error);
             break;
         }
 
@@ -1212,7 +1212,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::IncorrectOldPasswordError: {
             error = tr("Invalid old password");
-            m_startUpManager->showPasswordError(error);
+            m_menuManager->showPasswordError(error);
             break;
         }
 
@@ -1221,7 +1221,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::IncorrectValidationCodeError: {
             error = tr("Wrong validation code");
-            m_startUpManager->retryVerify(error);
+            m_menuManager->retryVerify(error);
             break;
         }
 
@@ -1230,7 +1230,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::EmailNotRegisteredError: {
             error = tr("Wrong email");
-            m_startUpManager->retryLogin(error);
+            m_menuManager->retryLogin(error);
             break;
         }
 
@@ -1610,13 +1610,13 @@ void ApplicationManager::goToEditCurrentProject()
     // Активируем вкладки
     //
     ::enableActionsOnProjectOpen();
-    m_menuView->enableProjectActions();
+    m_menuManager->enableProjectActions();
 
     //
     // Настроим режим работы со сценарием
     //
     const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-    m_menuView->setMenuItemEnabled(IMPORT_MENU_INDEX, !isCommentOnly);
+    m_menuManager->setMenuItemEnabled(IMPORT_MENU_INDEX, !isCommentOnly);
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
 
@@ -1735,7 +1735,7 @@ void ApplicationManager::closeCurrentProject()
         // Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
         //
         ::disableActionsOnStart();
-        m_menuView->disableProjectActions();
+        m_menuManager->disableProjectActions();
 
         //
         // Перейти на стартовую вкладку
@@ -1762,8 +1762,7 @@ void ApplicationManager::initView()
     m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
     m_menu->setText(tr("Menu"));
-    m_menuView->setMenu(createMenu());
-    m_menuView->hide();
+    m_menuManager->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
 #ifdef Q_OS_MAC
@@ -1856,14 +1855,14 @@ void ApplicationManager::initView()
     // Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
     //
     ::disableActionsOnStart();
-    m_menuView->disableProjectActions();
+    m_menuManager->disableProjectActions();
 
     //
     // Отключим на маленьких экранах некоторые возможности
     //
     QScreen* screen = QApplication::primaryScreen();
     if (screen->availableSize().width() < 1360) {
-        m_menuView->setMenuItemEnabled(TWO_PANEL_MODE_MENU_INDEX, false);
+        m_menuManager->setMenuItemEnabled(TWO_PANEL_MODE_MENU_INDEX, false);
         m_settingsManager->disableTwoPanelsMode();
         if (screen->availableSize().width() < 1024) {
             m_settingsManager->disableCompactMode();
@@ -1931,8 +1930,7 @@ void ApplicationManager::initConnections()
 {
     connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
 
-    connect(m_menu, &FlatButton::clicked, [this] { WAF::Animation::sideSlideIn(m_menuView); });
-    connect(m_menuView, &MenuView::hideRequested, [this] { WAF::Animation::sideSlideOut(m_menuView); });
+    connect(m_menu, &FlatButton::clicked, m_menuManager, &MenuManager::showMenu);
 
     connect(m_tabs, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
     connect(m_tabsSecondary, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
@@ -1950,15 +1948,15 @@ void ApplicationManager::initConnections()
     connect(m_projectsManager, &ProjectsManager::recentProjectNameChanged, m_startUpManager, &StartUpManager::setRecentProjectName);
     connect(m_projectsManager, &ProjectsManager::remoteProjectNameChanged, m_startUpManager, &StartUpManager::setRemoteProjectName);
 
-    connect(m_startUpManager, &StartUpManager::loginRequested, m_synchronizationManager, &SynchronizationManager::login);
-    connect(m_startUpManager, &StartUpManager::signUpRequested, m_synchronizationManager, &SynchronizationManager::signUp);
-    connect(m_startUpManager, &StartUpManager::verifyRequested, m_synchronizationManager, &SynchronizationManager::verify);
-    connect(m_startUpManager, &StartUpManager::restoreRequested, m_synchronizationManager, &SynchronizationManager::restorePassword);
-    connect(m_startUpManager, &StartUpManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::logout);
-    connect(m_startUpManager, &StartUpManager::renewSubscriptionRequested, m_synchronizationManager, &SynchronizationManager::renewSubscription);
-    connect(m_startUpManager, &StartUpManager::userNameChangeRequested, m_synchronizationManager, &SynchronizationManager::changeUserName);
-    connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested, m_synchronizationManager, &SynchronizationManager::loadSubscriptionInfo);
-    connect(m_startUpManager, &StartUpManager::passwordChangeRequested, m_synchronizationManager, &SynchronizationManager::changePassword);
+    connect(m_menuManager, &MenuManager::loginRequested, m_synchronizationManager, &SynchronizationManager::login);
+    connect(m_menuManager, &MenuManager::signUpRequested, m_synchronizationManager, &SynchronizationManager::signUp);
+    connect(m_menuManager, &MenuManager::verifyRequested, m_synchronizationManager, &SynchronizationManager::verify);
+    connect(m_menuManager, &MenuManager::restoreRequested, m_synchronizationManager, &SynchronizationManager::restorePassword);
+    connect(m_menuManager, &MenuManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::logout);
+    connect(m_menuManager, &MenuManager::renewSubscriptionRequested, m_synchronizationManager, &SynchronizationManager::renewSubscription);
+    connect(m_menuManager, &MenuManager::userNameChangeRequested, m_synchronizationManager, &SynchronizationManager::changeUserName);
+    connect(m_menuManager, &MenuManager::getSubscriptionInfoRequested, m_synchronizationManager, &SynchronizationManager::loadSubscriptionInfo);
+    connect(m_menuManager, &MenuManager::passwordChangeRequested, m_synchronizationManager, &SynchronizationManager::changePassword);
 
     connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::aboutCreateNew);
     connect(m_startUpManager, &StartUpManager::openProjectRequested, [=] { aboutLoad(); });
@@ -2026,13 +2024,15 @@ void ApplicationManager::initConnections()
         }
     });
 
-    connect(m_synchronizationManager, &SynchronizationManager::loginAccepted, m_startUpManager, &StartUpManager::completeLogin);
-    connect(m_synchronizationManager, &SynchronizationManager::signUpFinished, m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManager, &SynchronizationManager::verified, m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManager, &SynchronizationManager::passwordRestored, m_startUpManager, &StartUpManager::userPassRestored);
-    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, m_startUpManager, &StartUpManager::completeLogout);
-    connect(m_synchronizationManager, &SynchronizationManager::passwordChanged, m_startUpManager, &StartUpManager::passwordChanged);
-    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded, m_startUpManager, &StartUpManager::setSubscriptionInfo);
+    connect(m_synchronizationManager, &SynchronizationManager::loginAccepted, m_menuManager, &MenuManager::completeLogin);
+    connect(m_synchronizationManager, &SynchronizationManager::loginAccepted, [this] { m_startUpManager->setRemoteProjectsVisible(true); });
+    connect(m_synchronizationManager, &SynchronizationManager::signUpFinished, m_menuManager, &MenuManager::userAfterSignUp);
+    connect(m_synchronizationManager, &SynchronizationManager::verified, m_menuManager, &MenuManager::userAfterSignUp);
+    connect(m_synchronizationManager, &SynchronizationManager::passwordRestored, m_menuManager, &MenuManager::userPassRestored);
+    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, m_menuManager, &MenuManager::completeLogout);
+    connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, [this] { m_startUpManager->setRemoteProjectsVisible(false); });
+    connect(m_synchronizationManager, &SynchronizationManager::passwordChanged, m_menuManager, &MenuManager::passwordChanged);
+    connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded, m_menuManager, &MenuManager::setSubscriptionInfo);
     connect(m_synchronizationManager, &SynchronizationManager::subscriptionInfoLoaded, m_projectsManager, &ProjectsManager::setRemoteProjectsSyncAvailable);
     connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded, m_projectsManager, &ProjectsManager::setRemoteProjects);
 
@@ -2214,7 +2214,7 @@ void ApplicationManager::reloadApplicationSettings()
                 "application/two-panel-mode",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
             .toInt();
-    m_menuView->menu()->actions().value(TWO_PANEL_MODE_MENU_INDEX)->setChecked(twoPanelsMode);
+    m_menuManager->menu()->actions().value(TWO_PANEL_MODE_MENU_INDEX)->setChecked(twoPanelsMode);
     //
     // Если не применять этот хак, то в редакторе сценария пропадает курсор
     // Возникает, только когда редактор сценария был на экране, при отключении второй панели
@@ -2269,8 +2269,8 @@ void ApplicationManager::reloadApplicationSettings()
     //
     QScreen* screen = QApplication::primaryScreen();
     if (screen->availableSize().width() < 1360) {
-        m_menuView->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
-        m_menuView->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setVisible(false);
+        m_menuManager->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
+        m_menuManager->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setVisible(false);
         m_settingsManager->disableTwoPanelsMode();
         if (screen->availableSize().width() < 1024) {
             m_settingsManager->disableCompactMode();

@@ -23,6 +23,7 @@ namespace UserInterface {
 namespace ManagementLayer
 {
     class ProjectsManager;
+    class MenuManager;
     class StartUpManager;
     class ResearchManager;
     class ScenarioManager;
@@ -302,11 +303,6 @@ namespace ManagementLayer
          */
         FlatButton* m_menu = nullptr;
 
-        /**
-         * @brief Меню приложения
-         */
-        UserInterface::MenuView* m_menuView = nullptr;
-
 #ifdef Q_OS_MAC
         /**
          * @brief Меню в Mac'е наверху
@@ -322,77 +318,82 @@ namespace ManagementLayer
         /**
          * @brief Заглушка для верха правой панели
          */
-        QLabel* m_menuSecondary;
+        QLabel* m_menuSecondary = nullptr;
 
         /**
          * @brief Панель вкладок
          */
-        SideTabBar* m_tabs;
+        SideTabBar* m_tabs = nullptr;
 
         /**
          * @brief Дополнительная панель вкладок
          */
-        SideTabBar* m_tabsSecondary;
+        SideTabBar* m_tabsSecondary = nullptr;
 
         /**
          * @brief Виджеты вкладок
          */
-        QStackedWidget* m_tabsWidgets;
+        QStackedWidget* m_tabsWidgets = nullptr;
 
         /**
          * @brief Дополнительная панель для виджетов вкладок
          */
-        QStackedWidget* m_tabsWidgetsSecondary;
+        QStackedWidget* m_tabsWidgetsSecondary = nullptr;
 
         /**
          * @brief Разделитель основных и дополнительных элементов управления
          */
-        QSplitter* m_splitter;
+        QSplitter* m_splitter = nullptr;
 
         /**
          * @brief Управляющий проектами
          */
-        ProjectsManager* m_projectsManager;
+        ProjectsManager* m_projectsManager = nullptr;
+
+        /**
+         * @brief Управляющий меню
+         */
+        MenuManager* m_menuManager = nullptr;
 
         /**
          * @brief Управляющий стартовой страницей
          */
-        StartUpManager* m_startUpManager;
+        StartUpManager* m_startUpManager = nullptr;
 
         /**
          * @brief Управляющий страницей разработки
          */
-        ResearchManager* m_researchManager;
+        ResearchManager* m_researchManager = nullptr;
 
         /**
          * @brief Управляющий сценарием
          */
-        ScenarioManager* m_scenarioManager;
+        ScenarioManager* m_scenarioManager = nullptr;
 
         /**
          * @brief Управляющий статистикой
          */
-        StatisticsManager* m_statisticsManager;
+        StatisticsManager* m_statisticsManager = nullptr;
 
         /**
          * @brief Управляющий настройками
          */
-        SettingsManager* m_settingsManager;
+        SettingsManager* m_settingsManager = nullptr;
 
         /**
          * @brief Управляющий импортом
          */
-        ImportManager* m_importManager;
+        ImportManager* m_importManager = nullptr;
 
         /**
          * @brief Управляющий экспортом
          */
-        ExportManager* m_exportManager;
+        ExportManager* m_exportManager = nullptr;
 
         /**
          * @brief Управляющий синхронизацией
          */
-        SynchronizationManager* m_synchronizationManager;
+        SynchronizationManager* m_synchronizationManager = nullptr;
 
         /**
          * @brief Таймер автосохранения

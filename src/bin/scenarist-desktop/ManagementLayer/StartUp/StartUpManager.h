@@ -58,61 +58,9 @@ namespace ManagementLayer
         void checkNewVersion();
 
         /**
-         * @brief Для процесса автологина меняет строку "Авторизация" на "Подключение"
-         */
-        void setProgressLoginLabel(bool _enable);
-
-        /**
-         * @brief Открыт ли в данный момент диалог авторизации/регистрации или смены пароля
-         */
-        bool isOnLoginDialog() const;
-
-        /**
          * @brief Открыт ли в данный момент список локальных проектов (true), или облачных (false)
          */
         bool isOnLocalProjectsTab() const;
-
-        /**
-         * @brief Пользователь с заданным именем успешно авторизован на сервере
-         */
-        void completeLogin(const QString& _userName, const QString& _userEmail,
-                           int _paymentMonth);
-
-        /**
-         * @brief Пользователь успешно отправил данные для регистрации
-         */
-        void verifyUser();
-
-        /**
-         * @brief Пользователь успешно ввел проверочный код
-         *        и окончательно зарегистрировался
-         */
-        void userAfterSignUp();
-
-        /**
-         * @brief Пользователю отправлен пароль на email
-         */
-        void userPassRestored();
-
-        /**
-         * @brief Пользователь закрыл авторизацию
-         */
-        void completeLogout();
-
-        /**
-         * @brief Пароль успешно сменен
-         */
-        void passwordChanged();
-
-        /**
-         * @brief passwordNotChanged
-         */
-        void showPasswordError(const QString& _error);
-
-        /**
-         * @brief Установить информацию о подписке
-         */
-        void setSubscriptionInfo(bool _isActive, const QString& _expiredDate, quint64 _usedSpace, quint64 _availableSpace);
 
         /**
          * @brief Установить список недавно используемых проектов
@@ -125,6 +73,11 @@ namespace ManagementLayer
         void setRecentProjectName(int _index, const QString& _name);
 
         /**
+         * @brief Установить видимость списка облачных проектов
+         */
+        void setRemoteProjectsVisible(bool _visible);
+
+        /**
          * @brief Установить список проектов из облака
          */
         void setRemoteProjects(QAbstractItemModel* _model);
@@ -134,26 +87,6 @@ namespace ManagementLayer
          */
         void setRemoteProjectName(int _index, const QString& _name);
 
-        /**
-         * @brief Попробовать повторно авторизоваться, после неудачной попытки
-         */
-        void retryLogin(const QString& _error);
-
-        /**
-         * @brief Попробовать повторно зарегистрироваться
-         */
-        void retrySignUp(const QString& _error);
-
-        /**
-         * @brief Попробовать повторно ввести проверочный код
-         */
-        void retryVerify(const QString& _error);
-
-        /**
-         * @brief Возникла неизвестная ошибка. Покажем на последнем окне
-         */
-        void retryLastAction(const QString& _error);
-
 #ifdef Q_OS_MAC
         /**
          * @brief Сформировать меню "Правка" с фиктивным содержанием
@@ -162,52 +95,6 @@ namespace ManagementLayer
 #endif
 
     signals:
-        /**
-         * @brief Пользователь хочет авторизоваться
-         */
-        void loginRequested(const QString& _email, const QString& _password);
-
-        /**
-         * @brief Пользователь хочет зарегистрироваться
-         */
-        void signUpRequested(const QString& _email, const QString& _password);
-
-        /**
-         * @brief Пользователь хочет отправить проверочный код
-         */
-        void verifyRequested(const QString& _code);
-
-        /**
-         * @brief Пользователь хочет восстановить пароль
-         */
-        void restoreRequested(const QString& _email);
-
-        /**
-         * @brief Пользователь хочет сменить имя
-         */
-        void userNameChangeRequested(const QString& _userName);
-
-        /**
-         * @brief Пользователь хочет запросить информацию о подписке
-         */
-        void getSubscriptionInfoRequested();
-
-        /**
-         * @brief Пользователь хочет продлить подписку
-         */
-        void renewSubscriptionRequested(unsigned _duration, unsigned _type);
-
-        /**
-         * @brief Пользователь хочет сменить пароль
-         */
-        void passwordChangeRequested(const QString& _password,
-                                     const QString& _newPassword);
-
-        /**
-         * @brief Пользователь хочет выйти
-         */
-        void logoutRequested();
-
         /**
          * @brief Создать проект
          */
@@ -284,7 +171,6 @@ namespace ManagementLayer
         void stopDownloadForUpdate();
 
     private slots:
-
         /**
          * @brief Покажем окно с информацией об обновлении
          */
@@ -297,16 +183,6 @@ namespace ManagementLayer
 
     private:
         /**
-         * @brief Настроить данные
-         */
-        void initData();
-
-        /**
-         * @brief Настроить представление
-         */
-        void initView();
-
-        /**
          * @brief Настроить соединения
          */
         void initConnections();
@@ -316,31 +192,6 @@ namespace ManagementLayer
          * @brief Представление для стартовой страницы
          */
         UserInterface::StartUpView* m_view;
-
-        /**
-         * @brief Логин введённый при авторизации
-         */
-        QString m_userEmail;
-
-        /**
-         * @brief Дата окончания подпискиы
-         */
-        QString m_subscriptionEndDate;
-
-        /**
-         * @brief Окно авторизации/регистрации
-         */
-        UserInterface::LoginDialog* m_loginDialog;
-
-        /**
-         * @brief Окно смены пароля
-         */
-        UserInterface::ChangePasswordDialog* m_changePasswordDialog;
-
-        /**
-         * @brief Окно продления подписки
-         */
-        UserInterface::RenewSubscriptionDialog* m_renewSubscriptionDialog;
 
         /**
          * @brief Путь до файла с обновлениями

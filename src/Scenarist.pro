@@ -17,4 +17,5 @@ TRANSLATIONS += bin/scenarist-core/Resources/Translations/Scenarist_ru.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_pl.ts
 
 RESOURCES += \
-    bin/scenarist-mobile/scenarist-core/Resources/Resources.qrc
+    bin/scenarist-mobile/scenarist-core/Resources/Resources.qrc \
+    bin/scenarist-desktop/scenarist-core/Resources/Resources.qrc

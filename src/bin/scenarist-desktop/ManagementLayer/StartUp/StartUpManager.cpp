@@ -20,11 +20,8 @@
 #include <ManagementLayer/Project/ProjectsManager.h>
 
 #include <UserInterfaceLayer/StartUp/StartUpView.h>
-#include <UserInterfaceLayer/StartUp/LoginDialog.h>
-#include <UserInterfaceLayer/StartUp/ChangePasswordDialog.h>
-#include <UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h>
-#include <UserInterfaceLayer/StartUp/CrashReportDialog.h>
-#include <UserInterfaceLayer/StartUp/UpdateDialog.h>
+#include <UserInterfaceLayer/Application/CrashReportDialog.h>
+#include <UserInterfaceLayer/Application/UpdateDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -55,9 +52,6 @@ using ManagementLayer::ProjectsManager;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 using UserInterface::StartUpView;
-using UserInterface::LoginDialog;
-using UserInterface::ChangePasswordDialog;
-using UserInterface::RenewSubscriptionDialog;
 using UserInterface::CrashReportDialog;
 using UserInterface::UpdateDialog;
 
@@ -68,13 +62,8 @@ namespace {
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
     QObject(_parent),
-    m_view(new StartUpView(_parentWidget)),
-    m_loginDialog(new LoginDialog(m_view)),
-    m_changePasswordDialog(new ChangePasswordDialog(m_view)),
-    m_renewSubscriptionDialog(new RenewSubscriptionDialog(m_view))
+    m_view(new StartUpView(_parentWidget))
 {
-    initView();
-    initData();
     initConnections();
 }
 
@@ -270,118 +259,9 @@ void StartUpManager::checkNewVersion()
     }
 }
 
-void StartUpManager::setProgressLoginLabel(bool _enable)
-{
-    if (_enable) {
-        m_view->enableProgressLoginLabel(0, true);
-    } else {
-        m_view->disableProgressLoginLabel();
-    }
-}
-
-bool StartUpManager::isOnLoginDialog() const
-{
-    return m_loginDialog->isVisible() || m_changePasswordDialog->isVisible();
-}
-
 bool StartUpManager::isOnLocalProjectsTab() const
 {
     return m_view->isOnLocalProjectsTab();
-}
-
-void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail,
-                                   int _paymentMonth)
-{
-    m_view->disableProgressLoginLabel();
-    m_userEmail = _userEmail;
-
-    m_renewSubscriptionDialog->setPaymentMonth(_paymentMonth);
-
-    const bool isLogged = true;
-    m_view->setUserLogged(isLogged, _userName, m_userEmail);
-    m_loginDialog->unblock();
-    m_loginDialog->hide();
-}
-
-void StartUpManager::verifyUser()
-{
-    //
-    // Покажем пользователю окно с вводом проверочного кода
-    //
-    m_loginDialog->showVerificationSuccess();
-}
-
-void StartUpManager::userAfterSignUp()
-{
-    //
-    // После того, как пользователь зарегистрировался, сразу выполним вход
-    //
-    emit loginRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword());
-}
-
-void StartUpManager::userPassRestored()
-{
-    m_loginDialog->showRestoreSuccess();
-}
-
-void StartUpManager::completeLogout()
-{
-    m_userEmail.clear();
-
-    const bool isLogged = false;
-    m_view->setUserLogged(isLogged);
-}
-
-void StartUpManager::passwordChanged()
-{
-    m_changePasswordDialog->stopAndHide();
-    QLightBoxMessage::information(m_view, QString::null, tr("Password successfully changed"));
-}
-
-void StartUpManager::showPasswordError(const QString& _error)
-{
-    if (m_loginDialog->isVisible()) {
-        //
-        // Если активно окно авторизации, то покажем ошибку там
-        //
-        retrySignUp(_error);
-    } else {
-        //
-        // Иначе, активно окно смены пароля
-        //
-        m_changePasswordDialog->stopAndHide();
-        QLightBoxMessage::critical(m_view, tr("Can not change password"),
-                                   _error);
-        m_changePasswordDialog->showUnprepared();
-    }
-}
-
-void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expiredDate, quint64 _usedSpace, quint64 _availableSpace)
-{
-    if (m_renewSubscriptionDialog->isVisible()) {
-        //
-        // Если окно продления подписки показано, значит,
-        // необходимо обновлять, пока не получим изменения
-        //
-        if (_expiredDate != m_subscriptionEndDate) {
-            //
-            // Обновилось, обновим окно и поле в StartUpView
-            //
-            m_renewSubscriptionDialog->showThanks(_expiredDate);
-            m_view->setSubscriptionInfo(_isActive, _expiredDate, _usedSpace, _availableSpace);
-        } else {
-            //
-            // Не обновилось, запросим еще раз
-            //
-            QTimer::singleShot(3000, this, &StartUpManager::getSubscriptionInfoRequested);
-        }
-    } else {
-        //
-        // Иначе, это обычный запрос на обновление
-        //
-        m_subscriptionEndDate = _expiredDate;
-        m_view->setSubscriptionInfo(_isActive, _expiredDate, _usedSpace, _availableSpace);
-    }
 }
 
 void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
@@ -394,6 +274,11 @@ void StartUpManager::setRecentProjectName(int _index, const QString& _name)
     m_view->setRecentProjectName(_index, _name);
 }
 
+void StartUpManager::setRemoteProjectsVisible(bool _visible)
+{
+    m_view->setRemoteProjectsVisible(_visible);
+}
+
 void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 {
     m_view->setRemoteProjects(_model);
@@ -402,42 +287,6 @@ void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 void StartUpManager::setRemoteProjectName(int _index, const QString& _name)
 {
     m_view->setRemoteProjectName(_index, _name);
-}
-
-void StartUpManager::retryLogin(const QString& _error)
-{
-    //
-    // Покажем пользователю ошибку авторизации
-    //
-    m_loginDialog->setLoginError(_error);
-}
-
-void StartUpManager::retrySignUp(const QString &_error)
-{
-    //
-    // Покажем пользователю ошибку регистрации
-    //
-    m_loginDialog->setSignUpError(_error);
-}
-
-void StartUpManager::retryVerify(const QString &_error)
-{
-    //
-    // Покажем пользователю ошибку ввода проверочного кода
-    //
-    m_loginDialog->setVerificationError(_error);
-}
-
-void StartUpManager::retryLastAction(const QString &_error)
-{
-    if (m_loginDialog->isVisible()) {
-        m_loginDialog->setLastActionError(_error);
-    } else if(m_changePasswordDialog->isVisible()) {
-        m_changePasswordDialog->stopAndHide();
-        QLightBoxMessage::critical(m_view, tr("Can not change password"),
-                                   _error);
-        m_changePasswordDialog->showUnprepared();
-    }
 }
 
 #ifdef Q_OS_MAC
@@ -588,25 +437,8 @@ void StartUpManager::showUpdateDialog()
     emit stopDownloadForUpdate();
 }
 
-void StartUpManager::initData()
-{
-}
-
-void StartUpManager::initView()
-{
-}
-
 void StartUpManager::initConnections()
 {
-    //
-    // Показать пользователю диалог авторизации/регистрации
-    // Предварительно его очистив
-    //
-    connect(m_view, &StartUpView::loginClicked, [this] {
-        m_loginDialog->showPrepared();
-    });
-
-    connect(m_view, &StartUpView::logoutClicked, this, &StartUpManager::logoutRequested);
     connect(m_view, &StartUpView::createProjectClicked, this, &StartUpManager::createProjectRequested);
     connect(m_view, &StartUpView::openProjectClicked, this, &StartUpManager::openProjectRequested);
     connect(m_view, &StartUpView::helpClicked, this, &StartUpManager::helpRequested);
@@ -620,38 +452,4 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::shareRemoteProjectRequested, this, &StartUpManager::shareRemoteProjectRequested);
     connect(m_view, &StartUpView::unshareRemoteProjectRequested, this, &StartUpManager::unshareRemoteProjectRequested);
     connect(m_view, &StartUpView::refreshProjects, this, &StartUpManager::refreshProjectsRequested);
-
-    connect(m_loginDialog, &LoginDialog::loginRequested, [this] {
-        emit loginRequested(m_loginDialog->loginEmail(),
-                            m_loginDialog->loginPassword());}
-    );
-    connect(m_loginDialog, &LoginDialog::signUpRequested, [this] {
-        emit signUpRequested(m_loginDialog->signUpEmail(),
-                             m_loginDialog->signUpPassword());
-    });
-    connect(m_loginDialog, &LoginDialog::verifyRequested, [this] {
-        emit verifyRequested(m_loginDialog->verificationCode());
-    });
-    connect(m_loginDialog, &LoginDialog::restoreRequested, [this] {
-        emit restoreRequested(m_loginDialog->loginEmail());
-    });
-    connect(m_view, &StartUpView::userNameChanged,
-            this, &StartUpManager::userNameChangeRequested);
-    connect(m_view, &StartUpView::getSubscriptionInfoClicked,
-            this, &StartUpManager::getSubscriptionInfoRequested);
-    connect(m_view, &StartUpView::renewSubscriptionClicked,
-            m_renewSubscriptionDialog, &RenewSubscriptionDialog::showPrepared);
-    connect(m_view, &StartUpView::passwordChangeClicked, [this] {
-        m_changePasswordDialog->showPrepared();
-    });
-
-    connect(m_changePasswordDialog, &ChangePasswordDialog::changeRequested, [this] {
-        emit passwordChangeRequested(m_changePasswordDialog->password(),
-                                     m_changePasswordDialog->newPassword());
-    });
-
-    connect(m_renewSubscriptionDialog, &RenewSubscriptionDialog::renewSubsciptionRequested, [this] {
-        emit renewSubscriptionRequested(m_renewSubscriptionDialog->duration(), m_renewSubscriptionDialog->paymentSystemType());
-        QTimer::singleShot(3000, this, &StartUpManager::getSubscriptionInfoRequested);
-    });
 }
