@@ -1881,7 +1881,7 @@ QMenu* ApplicationManager::createMenu()
     m_editMenu = m_menuBar->addMenu(tr("Edit"));
     m_startUpManager->buildEditMenu(m_editMenu);
 #else
-    QMenu* menu = new QMenu(m_menuView);
+    QMenu* menu = new QMenu(m_view);
 #endif
     QAction* createNewProject = menu->addAction(tr("New"));
     QAction* openProject = menu->addAction(tr("Open"));

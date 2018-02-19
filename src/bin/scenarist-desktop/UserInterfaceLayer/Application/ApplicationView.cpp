@@ -1,6 +1,6 @@
 #include "ApplicationView.h"
 
-#include "_tools/UIConfigurator.h"
+#include <UserInterfaceLayer/_tools/UIConfigurator.h>
 
 #include <QCloseEvent>
 #include <QIcon>
