@@ -14,6 +14,7 @@ SUBDIRS = \
     hunspell \
     fileformats \
     webloader \
-    mythes
+    mythes \
+    qgumboparser
 
 win32: SUBDIRS += qBreakpad
