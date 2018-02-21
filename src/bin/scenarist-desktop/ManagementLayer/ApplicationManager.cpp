@@ -99,7 +99,7 @@ namespace {
     /**
      * @brief Старый вордовский формат не поддерживается
      */
-    const QString MS_DOC_EXTENSION = ".doc";
+    const QString kMsDocExtension = ".doc";
 
     /**
      * @brief Суффикс "изменено" для заголовка окна добавляемый в маке
@@ -294,7 +294,7 @@ void ApplicationManager::aboutCreateNew()
                     //
                     // Старый вордовский формат не поддерживаем
                     //
-                    if (dlg.importFilePath().toLower().endsWith(MS_DOC_EXTENSION)) {
+                    if (dlg.importFilePath().toLower().endsWith(kMsDocExtension)) {
                         QLightBoxMessage::critical(&dlg, tr("File format not supported"),
                             tr("Microsoft <b>DOC</b> files are not supported. You need save it to <b>DOCX</b> file and reimport."));
                     }

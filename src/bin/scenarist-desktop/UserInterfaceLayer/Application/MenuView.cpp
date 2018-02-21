@@ -215,6 +215,8 @@ void MenuView::initView()
     m_ui->avatar->setAttribute(Qt::WA_TransparentForMouseEvents);
     m_ui->login->setAttribute(Qt::WA_TransparentForMouseEvents);
     m_ui->loginInfo->setAttribute(Qt::WA_TransparentForMouseEvents);
+    m_ui->account->setVisible(false);
+    m_ui->email->setVisible(false);
 
     m_ui->menuContent->setCurrentWidget(m_ui->menuActions);
 

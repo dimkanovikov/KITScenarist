@@ -79,6 +79,15 @@ DEPENDPATH += $$PWD/../libs/webloader/src
 #
 
 #
+# Подключаем библилотеку QGumboParser
+#
+LIBS += -L$$DESTDIR/../../libs/qgumboparser/ -lqgumboparser
+
+INCLUDEPATH += $$PWD/../libs/qgumboparser
+DEPENDPATH += $$PWD/../libs/qgumboparser
+#
+
+#
 # В маке собираем библиотеки статически, чтобы было удобней подписывать приложение
 #
 mac {
@@ -354,7 +363,8 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Application/MenuView.cpp \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableLabel.cpp \
     scenarist-desktop/ManagementLayer/MenuManager.cpp \
-    scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.cpp
+    scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.cpp \
+    scenarist-core/BusinessLayer/Import/CeltxImporter.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -625,7 +635,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Application/MenuView.h \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableLabel.h \
     scenarist-desktop/ManagementLayer/MenuManager.h \
-    scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.h
+    scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.h \
+    scenarist-core/BusinessLayer/Import/CeltxImporter.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

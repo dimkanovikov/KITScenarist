@@ -5,6 +5,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
+#include <BusinessLayer/Import/CeltxImporter.h>
 #include <BusinessLayer/Import/KitScenaristImporter.h>
 #include <BusinessLayer/Import/DocumentImporter.h>
 #include <BusinessLayer/Import/FdxImporter.h>
@@ -34,28 +35,19 @@ namespace {
     /**
      * @brief Старый вордовский формат не поддерживается
      */
-    const QString MS_DOC_EXTENSION = ".doc";
+    const QString kMsDocExtension = ".doc";
 
     /**
-     * @brief Формат файлов КИТ Сценарист
+     * @brief Форматы файлов импорт которых поддерживается
      */
-    const QString KIT_SCENARIST_EXTENSION = ".kitsp";
-
-    /**
-     * @brief Формат файлов Final Draft
-     */
-    const QString FINAL_DRAFT_EXTENSION = ".fdx";
-    const QString FINAL_DRAFT_TEMPLATE_EXTENSION = ".fdxt";
-
-    /**
-     * @brief Формат файлов Trelby
-     */
-    const QString TRELBY_EXTENSION = ".trelby";
-
-    /**
-     * @brief Формат файлов Fountain
-     */
-    const QString FOUNTAIN_EXTENSION = ".fountain";
+    /** @{ */
+    const QString kKitScenaristExtension = ".kitsp";
+    const QString kFinalDraftExtension = ".fdx";
+    const QString kFinalDraftTemplateExtension = ".fdxt";
+    const QString kTrelbyExtension = ".trelby";
+    const QString kFountainExtension = ".fountain";
+    const QString kCeltxExtension = ".celtx";
+    /** @} */
 
     /**
      * @brief Сохранить импортированный документ разработки со вложенными документами
@@ -149,15 +141,17 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
     // Получим xml-представление импортируемого сценария
     //
     QScopedPointer<BusinessLogic::AbstractImporter> importer;
-    if (_importParameters.filePath.toLower().endsWith(KIT_SCENARIST_EXTENSION)) {
+    if (_importParameters.filePath.toLower().endsWith(kKitScenaristExtension)) {
         importer.reset(new BusinessLogic::KitScenaristImporter);
-    } else if (_importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)
-               || _importParameters.filePath.toLower().endsWith(FINAL_DRAFT_TEMPLATE_EXTENSION)) {
+    } else if (_importParameters.filePath.toLower().endsWith(kFinalDraftExtension)
+               || _importParameters.filePath.toLower().endsWith(kFinalDraftTemplateExtension)) {
         importer.reset(new BusinessLogic::FdxImporter);
-    } else if (_importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
+    } else if (_importParameters.filePath.toLower().endsWith(kTrelbyExtension)) {
         importer.reset(new BusinessLogic::TrelbyImporter);
-    } else if (_importParameters.filePath.toLower().endsWith(FOUNTAIN_EXTENSION)) {
+    } else if (_importParameters.filePath.toLower().endsWith(kFountainExtension)) {
         importer.reset(new BusinessLogic::FountainImporter);
+    } else if (_importParameters.filePath.toLower().endsWith(kCeltxExtension)) {
+        importer.reset(new BusinessLogic::CeltxImporter);
     } else {
         importer.reset(new BusinessLogic::DocumentImporter);
     }
@@ -356,7 +350,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         // Формат MS DOC не поддерживается, он отображается только для того, чтобы пользователи
         // не теряли свои файлы
         //
-        if (importParameters.filePath.toLower().endsWith(MS_DOC_EXTENSION)) {
+        if (importParameters.filePath.toLower().endsWith(kMsDocExtension)) {
             QLightBoxMessage::critical(m_importDialog, tr("File format not supported"),
                 tr("Microsoft <b>DOC</b> files are not supported. You need save it to <b>DOCX</b> file and reimport."));
             return;
