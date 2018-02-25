@@ -20,7 +20,7 @@ ShareDialog::~ShareDialog()
 
 QString ShareDialog::email() const
 {
-    return m_ui->email->text();
+    return m_ui->email->text().simplified();
 }
 
 int ShareDialog::role() const
@@ -28,7 +28,7 @@ int ShareDialog::role() const
     return m_ui->role->currentIndex();
 }
 
-QWidget*ShareDialog::focusedOnExec() const
+QWidget* ShareDialog::focusedOnExec() const
 {
     return m_ui->email;
 }

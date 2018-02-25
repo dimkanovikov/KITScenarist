@@ -47,22 +47,22 @@ LoginDialog::~LoginDialog()
 
 QString LoginDialog::loginEmail() const
 {
-    return m_ui->loginEmail->text();
+    return m_ui->loginEmail->text().simplified();
 }
 
 QString LoginDialog::signUpEmail() const
 {
-    return m_ui->signUpEmail->text();
+    return m_ui->signUpEmail->text().simplified();
 }
 
 QString LoginDialog::loginPassword() const
 {
-    return m_ui->loginPasswordEdit->text();
+    return m_ui->loginPasswordEdit->text().simplified();
 }
 
 QString LoginDialog::signUpPassword() const
 {
-    return m_ui->signUpPasswordEdit->text();
+    return m_ui->signUpPasswordEdit->text().simplified();
 }
 
 QString LoginDialog::verificationCode() const
@@ -115,7 +115,7 @@ void LoginDialog::showRestoreSuccess()
 {
     updateLabel(m_ui->loginError, m_ui->loginErrorIcon,
                 tr("Your e-mail <b>%1</b> was sent a letter with a password.").
-                arg(m_ui->loginEmail->text()),
+                arg(loginEmail()),
                   false);
     m_ui->restorePassword->setEnabled(false);
 
@@ -161,7 +161,7 @@ void LoginDialog::checkVerificationCode()
 
 void LoginDialog::tryLogin()
 {
-    if (Validator::isEmailValid(m_ui->loginEmail->text())) {
+    if (Validator::isEmailValid(loginEmail())) {
         m_ui->loginError->clear();
         m_ui->loginErrorIcon->clear();
         block();
@@ -268,7 +268,7 @@ void LoginDialog::initConnections()
             this, &LoginDialog::hide);
 
     connect(m_ui->restorePassword, &QPushButton::clicked, [this] {
-        if (m_ui->loginEmail->text().isEmpty()) {
+        if (loginEmail().isEmpty()) {
             setLoginError(tr("Email is empty"));
         } else {
             //
