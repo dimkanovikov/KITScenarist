@@ -194,6 +194,8 @@ QString QGumboNode::innerText() const
     auto functor = [&text] (GumboNode* node) {
         if (node->type == GUMBO_NODE_TEXT) {
             text += QString::fromUtf8(node->v.text.text);
+        } else if (node->type == GUMBO_NODE_WHITESPACE) {
+            text += " ";
         }
         return false;
     };
@@ -295,6 +297,24 @@ QString QGumboNode::getAttribute(const QString& attrName) const
         return QString::fromUtf8(attr->value);
 
     return QString();
+}
+
+int QGumboNode::childStartPosition(const QGumboNode& _child) const
+{
+    int position = _child.rawStartPosition() - rawStartPosition() - ptr_->v.element.original_tag.length;
+    for (const auto& child : children()) {
+        if (child.ptr_ == _child.ptr_) {
+            break;
+        }
+
+        position -= child.outerHtml().length() - child.innerText().length();
+    }
+    return position;
+}
+
+int QGumboNode::rawStartPosition() const
+{
+    return ptr_->v.element.start_pos.offset;
 }
 
 QGumboAttributes QGumboNode::allAttributes() const

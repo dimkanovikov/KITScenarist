@@ -44,6 +44,9 @@ public:
     QString outerHtml() const;
     QString getAttribute(const QString&) const;
 
+    int childStartPosition(const QGumboNode&) const;
+    int rawStartPosition() const;
+
     QGumboAttributes allAttributes() const;
 
     void forEach(std::function<void(const QGumboNode&)>) const;
