@@ -446,6 +446,7 @@ void StartUpManager::initConnections()
 
     connect(m_view, &StartUpView::openRecentProjectClicked, this, &StartUpManager::openRecentProjectRequested);
     connect(m_view, &StartUpView::hideRecentProjectRequested, this, &StartUpManager::hideRecentProjectRequested);
+    connect(m_view, &StartUpView::moveToCloudRecentProjectRequested, this, &StartUpManager::moveToCloudRecentProjectRequested);
     connect(m_view, &StartUpView::openRemoteProjectClicked, this, &StartUpManager::openRemoteProjectRequested);
     connect(m_view, &StartUpView::editRemoteProjectRequested, this, &StartUpManager::editRemoteProjectRequested);
     connect(m_view, &StartUpView::removeRemoteProjectRequested, this, &StartUpManager::removeRemoteProjectRequested);

@@ -126,6 +126,11 @@ namespace ManagementLayer
         void hideRecentProjectRequested(const QModelIndex& _projectIndex);
 
         /**
+         * @brief Требуется перенести проект в облако
+         */
+        void moveToCloudRecentProjectRequested(const QModelIndex& _projectIndex);
+
+        /**
          * @brief Выбран один из проектов из облака для открытия
          */
         void openRemoteProjectRequested(const QModelIndex& _remoteProjectIndex);

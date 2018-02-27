@@ -428,6 +428,13 @@ void ApplicationManager::createNewRemoteProject(const QString& _projectName, con
     const int newProjectId = m_synchronizationManager->createProject(_projectName);
 
     //
+    // Проверяем удалось ли создать проект
+    //
+    if (newProjectId == Project::kInvalidId) {
+        return;
+    }
+
+    //
     // Переключаемся на работу с новым проектом
     //
     const bool isRemote = false;
@@ -861,6 +868,35 @@ void ApplicationManager::hideLocalProject(const QModelIndex& _index)
         == QDialogButtonBox::Yes) {
         m_projectsManager->hideProjectFromLocal(_index);
     }
+}
+
+void ApplicationManager::moveLocalProjectToCloud(const QModelIndex& _index)
+{
+    if (!_index.isValid()) {
+        return;
+    }
+
+    if (!saveIfNeeded()) {
+        return;
+    }
+
+    if (!m_synchronizationManager->isLogged()) {
+        QLightBoxMessage::warning(m_view, tr("Moving project to the cloud failed"),
+            tr("For moving projects to the cloud you should be logged in the KIT Scenaist cloud service."));
+        return;
+    }
+
+    if (!m_synchronizationManager->isSubscriptionActive()) {
+        QLightBoxMessage::warning(m_view, tr("Moving project to the cloud failed"),
+            tr("For moving projects to the cloud your subscription in the KIT Scenarist cloud service should be active."));
+        return;
+    }
+
+    //
+    // Получим путь до файла и название проекта
+    //
+    const Project project = m_projectsManager->project(_index);
+    createNewRemoteProject(project.name(), project.path());
 }
 
 void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
@@ -1965,6 +2001,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManager, &SynchronizationManager::loadProjects);
     connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
     connect(m_startUpManager, &StartUpManager::hideRecentProjectRequested, this, &ApplicationManager::hideLocalProject);
+    connect(m_startUpManager, &StartUpManager::moveToCloudRecentProjectRequested, this, &ApplicationManager::moveLocalProjectToCloud);
     connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
     connect(m_startUpManager, &StartUpManager::editRemoteProjectRequested, this, &ApplicationManager::editRemoteProjectName);
     connect(m_startUpManager, &StartUpManager::removeRemoteProjectRequested, this, &ApplicationManager::removeRemoteProject);

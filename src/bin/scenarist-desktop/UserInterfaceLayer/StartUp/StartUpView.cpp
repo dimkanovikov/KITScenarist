@@ -139,6 +139,7 @@ void StartUpView::initConnections()
     connect(m_ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
     connect(m_ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
     connect(m_ui->recentFiles, &ProjectsList::hideRequested, this, &StartUpView::hideRecentProjectRequested);
+    connect(m_ui->recentFiles, &ProjectsList::moveToCloudRequested, this, &StartUpView::moveToCloudRecentProjectRequested);
     connect(m_ui->remoteFiles, &ProjectsList::clicked, this, &StartUpView::openRemoteProjectClicked);
     connect(m_ui->remoteFiles, &ProjectsList::editRequested, this, &StartUpView::editRemoteProjectRequested);
     connect(m_ui->remoteFiles, &ProjectsList::removeRequested, this, &StartUpView::removeRemoteProjectRequested);

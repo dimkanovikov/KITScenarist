@@ -127,6 +127,11 @@ namespace ManagementLayer
         void hideLocalProject(const QModelIndex& _index);
 
         /**
+         * @brief Перенести локальный проект в облако
+         */
+        void moveLocalProjectToCloud(const QModelIndex& _index);
+
+        /**
          * @brief Загрузить выбранный проект из облака
          */
         void aboutLoadFromRemote(const QModelIndex& _projectIndex);
