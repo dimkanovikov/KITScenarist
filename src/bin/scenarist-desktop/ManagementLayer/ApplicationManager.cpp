@@ -220,10 +220,25 @@ ApplicationManager::~ApplicationManager()
 
 void ApplicationManager::exec(const QString& _fileToOpen)
 {
+    //
+    // Настроим приложение
+    //
     reloadApplicationSettings();
     loadViewState();
+
+    //
+    // Если были авторизованы покажем информацию из кэша
+    //
+    m_synchronizationManager->fakeLogin();
+
+    //
+    // Покажем приложение
+    //
     m_view->show();
 
+    //
+    // При необходимости откроем проект поданный в качестве аргументов
+    //
     if (!_fileToOpen.isEmpty()) {
         aboutLoad(_fileToOpen);
     }
