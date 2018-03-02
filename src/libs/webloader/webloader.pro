@@ -35,18 +35,22 @@ QMAKE_CXXFLAGS_RELEASE +=  /Zi
 QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
 }
 
-HEADERS += src/HttpMultiPart_p.h \
-       src/NetworkQueue_p.h \
-       src/NetworkRequest.h \
-       src/NetworkRequestPrivate_p.h \
-       src/WebLoader_p.h \
-       src/WebRequest_p.h \
-       src/NetworkRequestLoader.h \
-           src/WebLoaderGlobal.h
+HEADERS += \
+    src/NetworkRequest.h \
+    src/NetworkRequestLoader.h \
+    src/WebLoaderGlobal.h \
+    src/WebRequest.h \
+    src/WebLoader.h \
+    src/HttpMultiPart.h \
+    src/NetworkQueue.h \
+    src/WebRequestParameters.h \
+    src/NetworkTypes.h
 
-SOURCES += src/HttpMultiPart_p.cpp \
-       src/WebLoader_p.cpp \
-       src/WebRequest_p.cpp \
-       src/NetworkQueue_p.cpp \
-       src/NetworkRequest.cpp \
-    src/NetworkRequestLoader.cpp
+SOURCES += \
+    src/NetworkRequest.cpp \
+    src/NetworkRequestLoader.cpp \
+    src/WebRequest.cpp \
+    src/WebLoader.cpp \
+    src/HttpMultiPart.cpp \
+    src/NetworkQueue.cpp \
+    src/WebRequestParameters.cpp

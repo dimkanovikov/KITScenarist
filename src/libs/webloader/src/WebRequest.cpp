@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Dimka Novikov, to@dimkanovikov.pro
+* Copyright (C) 2015-2018 Dimka Novikov, to@dimkanovikov.pro
 * Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
 *
 * This library is free software; you can redistribute it and/or
@@ -15,8 +15,8 @@
 * Full license: http://dimkanovikov.pro/license/LGPLv3
 */
 
-#include "WebRequest_p.h"
-#include "HttpMultiPart_p.h"
+#include "WebRequest.h"
+#include "HttpMultiPart.h"
 
 
 #include <QFile>
@@ -24,27 +24,41 @@
 #include <QSslConfiguration>
 #include <QMimeDatabase>
 
-//! Заголовки запроса
-const QByteArray USER_AGENT_HEADER = "User-Agent";
-const QByteArray REFERER_HEADER = "Referer";
-//! Параметры запроса
-// UserAgent запроса
-const QByteArray USER_AGENT = "Web Robot v.0.12.1";
-// Boundary для разделения атрибутов запроса, при использовании  multi-part form data
-const QString BOUNDARY = "---------------------------7d935033608e2";
-// ContentType запроса
-const QString CONTENT_TYPE_DEFAULT = "application/x-www-form-urlencoded";
-const QString CONTENT_TYPE = "multipart/form-data; boundary=" + BOUNDARY;
+namespace {
+    /**
+     * @brief Заголовки запроса
+     */
+    /** @{ */
+    const QByteArray kUserAgentHeader = "User-Agent";
+    const QByteArray kRefererHeader = "Referer";
+    /** @} */
+
+    /**
+     * @brief UserAgent запроса по-умолчанию
+     */
+    const QByteArray kUserAgent = "Web Robot v.0.12.1";
+
+    /**
+     * @brief Boundary для разделения атрибутов запроса, при использовании  multi-part form data
+     */
+    const QString kBoundary = "---------------------------7d935033608e2";
+
+    /**
+     * @brief ContentType запроса по-умолчанию
+     */
+    /** @{ */
+    const QString kContentTypeDefault = "application/x-www-form-urlencoded";
+    const QString kContentType = "multipart/form-data; boundary=" + kBoundary;
+    /** @} */
+}
 
 
 WebRequest::WebRequest()
 {
-
 }
 
 WebRequest::~WebRequest()
 {
-
 }
 
 QUrl WebRequest::urlToLoad() const
@@ -66,8 +80,9 @@ QString WebRequest::urlQuery() const
 
 void WebRequest::setUrlToLoad(const QUrl& _url)
 {
-    if (urlToLoad() != _url)
+    if (urlToLoad() != _url){
         m_urlToLoad = _url;
+    }
 }
 
 QUrl WebRequest::urlReferer() const
@@ -77,8 +92,9 @@ QUrl WebRequest::urlReferer() const
 
 void WebRequest::setUrlReferer(const QUrl& _url)
 {
-    if (urlReferer() != _url)
+    if (urlReferer() != _url){
         m_urlReferer = _url;
+    }
 }
 
 void WebRequest::clearAttributes()
@@ -90,45 +106,41 @@ void WebRequest::clearAttributes()
 
 void WebRequest::addAttribute(const QString& _name, const QVariant& _value)
 {
-    if(m_usedRaw && !m_rawData.isEmpty()) {
+    if (m_useRawData && !m_rawData.isEmpty()) {
         qWarning() << "You are trying to mix methods. Raw data will be cleaned";
         m_rawData.clear();
     }
-    m_usedRaw = false;
 
-    QPair< QString, QVariant > attribute;
-    attribute.first = _name;
-    attribute.second = _value;
-    addAttribute(attribute);
+    m_useRawData = false;
+    addAttribute({ _name, _value });
 }
 
 void WebRequest::addAttributeFile(const QString& _name, const QString& _filePath)
 {
-    if(m_usedRaw && !m_rawData.isEmpty()) {
+    if(m_useRawData && !m_rawData.isEmpty()) {
         qWarning() << "You are trying to mix methods. Raw data will be cleaned";
         m_rawData.clear();
     }
-    m_usedRaw = false;
 
-    QPair< QString, QString > attributeFile;
-    attributeFile.first = _name;
-    attributeFile.second = _filePath;
-    addAttributeFile(attributeFile);
+    m_useRawData = false;
+    addAttributeFile({ _name, _filePath });
 }
 
-void WebRequest::setRawRequest(const QByteArray &_data)
+void WebRequest::setRawData(const QByteArray& _data)
 {
-    setRawRequest(_data, QMimeDatabase().mimeTypeForData(_data).name());
+    const QString mimeType = QMimeDatabase().mimeTypeForData(_data).name();
+    setRawData(_data, mimeType);
 }
 
-void WebRequest::setRawRequest(const QByteArray &_data, const QString &_mime)
+void WebRequest::setRawData(const QByteArray& _data, const QString& _mime)
 {
-    if(!m_usedRaw && (!m_attributes.isEmpty() || !m_attributeFiles.isEmpty())) {
+    if(!m_useRawData && (!m_attributes.isEmpty() || !m_attributeFiles.isEmpty())) {
         qWarning() << "You are trying to mix methods. Attributes will be cleaned";
         m_attributes.clear();
         m_attributeFiles.clear();
     }
-    m_usedRaw = true;
+
+    m_useRawData = true;
     m_rawData = _data;
     m_mimeRawData = _mime;
 }
@@ -136,24 +148,22 @@ void WebRequest::setRawRequest(const QByteArray &_data, const QString &_mime)
 QNetworkRequest WebRequest::networkRequest(bool _addContentHeaders)
 {
     QNetworkRequest request(urlToLoad());
-    // Установка заголовков запроса
-    // User-Agent
-    request.setRawHeader(USER_AGENT_HEADER, USER_AGENT);
-    // Referer
-    if (!urlReferer().isEmpty())
-        request.setRawHeader(REFERER_HEADER, urlReferer().toString().toUtf8().data());
-    // ContentType по-умолчанию
-    request.setHeader(QNetworkRequest::ContentTypeHeader, CONTENT_TYPE_DEFAULT);
 
+    //
+    // Установка заголовков запроса
+    //
+    request.setRawHeader(kUserAgentHeader, kUserAgent);
+    if (!urlReferer().isEmpty()){
+        request.setRawHeader(kRefererHeader, urlReferer().toString().toUtf8().data());
+    }
+    //
+    request.setHeader(QNetworkRequest::ContentTypeHeader, kContentTypeDefault);
     if (_addContentHeaders) {
-        // ContentType
-        if(m_usedRaw) {
+        if (m_useRawData) {
             request.setHeader(QNetworkRequest::ContentTypeHeader, m_mimeRawData);
+        } else {
+            request.setHeader(QNetworkRequest::ContentTypeHeader, kContentType);
         }
-        else {
-            request.setHeader(QNetworkRequest::ContentTypeHeader, CONTENT_TYPE);
-        }
-        // ContentLength
         request.setHeader(QNetworkRequest::ContentLengthHeader, multiPartData().size());
     }
 
@@ -162,63 +172,65 @@ QNetworkRequest WebRequest::networkRequest(bool _addContentHeaders)
 
 QByteArray WebRequest::multiPartData()
 {
-    if(m_usedRaw) {
+    if(m_useRawData) {
         return m_rawData;
     }
 
     HttpMultiPart multiPart;
-    multiPart.setBoundary(BOUNDARY);
+    multiPart.setBoundary(kBoundary);
 
+    //
     // Добавление текстовых атрибутов
-    QPair< QString, QVariant > attribute;
+    //
+    QPair<QString, QVariant> attribute;
     foreach (attribute, attributes()) {
-        QString attributeName  = attribute.first;
-        QString attributeValue = attribute.second.toString();
-
         HttpPart textPart(HttpPart::Text);
+        QString attributeName = attribute.first;
+        QString attributeValue = attribute.second.toString();
         textPart.setText(attributeName, attributeValue);
-
         multiPart.addPart(textPart);
     }
 
+    //
     // Добавление атрибутов-файлов
-    QPair< QString, QString > attributeFile;
+    //
+    QPair<QString, QString> attributeFile;
     foreach (attributeFile, attributeFiles()) {
-        QString attributeName     = attributeFile.first;
-        QString attributeFilePath = attributeFile.second;
-
         HttpPart filePart(HttpPart::File);
+        QString attributeName = attributeFile.first;
+        QString attributeFilePath = attributeFile.second;
         filePart.setFile(attributeName, attributeFilePath);
-
         multiPart.addPart(filePart);
     }
 
     return multiPart.data();
 }
 
-
-//*****************************************************************************
-// Методы доступа к данным класса, а так же вспомогательные
-// методы для работы с данными класса
-
-QList<QPair<QString, QVariant> > WebRequest::attributes() const
+QVector<QPair<QString, QVariant>> WebRequest::attributes() const
 {
     return m_attributes;
 }
 
 void WebRequest::addAttribute(const QPair<QString, QVariant>& _attribute)
 {
-    if (!attributes().contains(_attribute))
+    if (!attributes().contains(_attribute)) {
         m_attributes.append(_attribute);
+    }
 }
 
-QList<QPair<QString, QString> > WebRequest::attributeFiles() const
+QVector<QPair<QString, QString>> WebRequest::attributeFiles() const
 {
     return m_attributeFiles;
 }
 
 void WebRequest::addAttributeFile(const QPair<QString, QString>& _attributeFile)
 {
-    if (!attributeFiles().contains(_attributeFile))
+    if (!attributeFiles().contains(_attributeFile)) {
         m_attributeFiles.append(_attributeFile);
+    }
+}
+
+bool operator==(const WebRequest& _lhs, const WebRequest& _rhs)
+{
+    return &_lhs == &_rhs;
 }

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Dimka Novikov, to@dimkanovikov.pro
+* Copyright (C) 2015-2018 Dimka Novikov, to@dimkanovikov.pro
 * Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
 *
 * This library is free software; you can redistribute it and/or
@@ -15,17 +15,15 @@
 * Full license: http://dimkanovikov.pro/license/LGPLv3
 */
 
-#include "WebLoader_p.h"
-#include "WebRequest_p.h"
+#include "WebLoader.h"
 
-#include <QtNetwork/QNetworkCookieJar>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QHttpMultiPart>
-#include <QtCore/QTimer>
 #include <QEventLoop>
+#include <QNetworkCookieJar>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QPointer>
+#include <QTimer>
 
 namespace {
     /**
@@ -33,7 +31,7 @@ namespace {
      *		  поэтому для отображения прогресса загрузки используется
      *		  заранее заданное число (средний размер веб-страницы)
      */
-    const int POSSIBLE_RECIEVED_MAX_FILE_SIZE = 120000;
+    const int kPossibleRecievedMaxFileSize = 120000;
 
     /**
      * @brief Преобразовать ошибку в читаемый вид
@@ -84,45 +82,31 @@ namespace {
 }
 
 
-WebLoader::WebLoader(QObject* _parent, QNetworkCookieJar* _jar) :
-    QThread(_parent),
-    m_networkManager(nullptr),
-    m_cookieJar(_jar),
-    m_request(new WebRequest),
-    m_requestMethod(NetworkRequest::Undefined),
-    m_isNeedRedirect(true),
-    m_loadingTimeout(20000)
+WebLoader::WebLoader(QObject* _parent) :
+    QThread(_parent)
 {
 }
 
 WebLoader::~WebLoader()
 {
     stop();
-    if (m_networkManager)
-        m_networkManager->deleteLater();//delete m_networkManager;//
+    if (m_networkManager != nullptr)
+        m_networkManager->deleteLater();
 }
 
-void WebLoader::setCookieJar(QNetworkCookieJar* _jar)
+void WebLoader::setWebRequest(const WebRequest& _request)
 {
-    if (m_cookieJar != _jar)
-        m_cookieJar = _jar;
+    m_request = _request;
 }
 
-void WebLoader::setRequestMethod(NetworkRequest::RequestMethod _method)
+void WebLoader::setWebRequestParameters(const WebRequestParameters& _parameters)
 {
-    if (m_requestMethod != _method)
-        m_requestMethod = _method;
+    m_parameters = _parameters;
 }
 
-void WebLoader::setLoadingTimeout(int _msecs)
+void WebLoader::loadAsync()
 {
-    if (m_loadingTimeout != _msecs) {
-        m_loadingTimeout = _msecs;
-    }
-}
-
-void WebLoader::setWebRequest(WebRequest* _request) {
-    this->m_request = _request;
+    loadAsync(m_request.urlToLoad(), m_request.urlReferer());
 }
 
 void WebLoader::loadAsync(const QUrl& _urlToLoad, const QUrl& _referer)
@@ -141,8 +125,8 @@ void WebLoader::loadAsync(const QUrl& _urlToLoad, const QUrl& _referer)
     //
     // Настраиваем запрос
     //
-    m_request->setUrlToLoad(_urlToLoad);
-    m_request->setUrlReferer(_referer);
+    m_request.setUrlToLoad(_urlToLoad);
+    m_request.setUrlReferer(_referer);
 
     //
     // Запускаем загрузку
@@ -150,15 +134,11 @@ void WebLoader::loadAsync(const QUrl& _urlToLoad, const QUrl& _referer)
     start();
 }
 
-
-//*****************************************************************************
-// Внутренняя реализация класса
-
 void WebLoader::run()
 {
     initNetworkManager();
 
-    m_initUrl = m_request->urlToLoad();
+    m_requestSourceUrl = m_request.urlToLoad();
 
     do
     {
@@ -166,24 +146,24 @@ void WebLoader::run()
             return;
         }
 
-        //! Начало загрузки страницы m_request->url()
-        emit uploadProgress(0, m_initUrl);
-        emit downloadProgress(0, m_initUrl);
+        //! Начало загрузки страницы m_request.url()
+        emit uploadProgress(0, m_requestSourceUrl);
+        emit downloadProgress(0, m_requestSourceUrl);
 
-        QPointer<QNetworkReply> reply = 0;
+        QPointer<QNetworkReply> reply = nullptr;
 
-        switch (m_requestMethod) {
+        switch (m_parameters.requestMethod()) {
 
             default:
-            case NetworkRequest::Get: {
-                const QNetworkRequest request = this->m_request->networkRequest();
+            case NetworkRequestMethod::Get: {
+                const QNetworkRequest request = this->m_request.networkRequest();
                 reply = m_networkManager->get(request);
                 break;
             }
 
-            case NetworkRequest::Post: {
-                const QNetworkRequest networkRequest = m_request->networkRequest(true);
-                const QByteArray data = m_request->multiPartData();
+            case NetworkRequestMethod::Post: {
+                const QNetworkRequest networkRequest = m_request.networkRequest(true);
+                const QByteArray data = m_request.multiPartData();
                 reply = m_networkManager->post(networkRequest, data);
                 break;
             }
@@ -209,7 +189,7 @@ void WebLoader::run()
         connect(&timeoutTimer, &QTimer::timeout, this, &WebLoader::quit);
         connect(&timeoutTimer, &QTimer::timeout, reply.data(), &QNetworkReply::abort);
         timeoutTimer.setSingleShot(true);
-        timeoutTimer.start(m_loadingTimeout);
+        timeoutTimer.start(m_parameters.loadingTimeout());
 
         //
         // Входим в поток обработки событий, ожидая завершения отработки networkManager'а
@@ -237,12 +217,13 @@ void WebLoader::run()
 
     } while (m_isNeedRedirect);
 
-    emit downloadComplete(m_downloadedData, m_initUrl);
+    emit downloadComplete(m_downloadedData, m_requestSourceUrl);
 }
 
 void WebLoader::stop()
 {
     m_isNeedStop = true;
+
     //
     // Сперва пробуем остановить аккуратно
     //
@@ -250,6 +231,7 @@ void WebLoader::stop()
         quit();
         wait(1000);
     }
+
     //
     // Если не удалось, прерываем жёстко
     //
@@ -262,8 +244,9 @@ void WebLoader::stop()
 void WebLoader::uploadProgress(qint64 _uploadedBytes, qint64 _totalBytes)
 {
     //! отправлено [uploaded] байт из [total]
-    if (_totalBytes > 0)
-        emit uploadProgress(((float)_uploadedBytes / _totalBytes) * 100, m_initUrl);
+    if (_totalBytes > 0) {
+        emit uploadProgress(((float)_uploadedBytes / _totalBytes) * 100, m_requestSourceUrl);
+    }
 }
 
 void WebLoader::downloadProgress(qint64 _recievedBytes, qint64 _totalBytes)
@@ -272,25 +255,26 @@ void WebLoader::downloadProgress(qint64 _recievedBytes, qint64 _totalBytes)
     // не все сайты передают суммарный размер загружаемой страницы,
     // поэтому для отображения прогресса загрузки используется
     // заранее заданное число (средний размер веб-страницы)
-    if (_totalBytes < 0)
-        _totalBytes = POSSIBLE_RECIEVED_MAX_FILE_SIZE;
-    emit downloadProgress(((float)_recievedBytes / _totalBytes) * 100, m_initUrl);
+    if (_totalBytes < 0) {
+        _totalBytes = kPossibleRecievedMaxFileSize;
+    }
+    emit downloadProgress(((float)_recievedBytes / _totalBytes) * 100, m_requestSourceUrl);
 }
 
 void WebLoader::downloadComplete(QNetworkReply* _reply)
 {
-    //! Завершена загрузка страницы [m_request->url()]
+    //! Завершена загрузка страницы [m_request.url()]
 
     // требуется ли редирект?
     if (!_reply->header(QNetworkRequest::LocationHeader).isNull()) {
         //! Осуществляется редирект по ссылке [redirectUrl]
         // Referer'ом становится ссылка по хоторой был осуществлен запрос
-        QUrl refererUrl = m_request->urlToLoad();
-        m_request->setUrlReferer(refererUrl);
+        QUrl refererUrl = m_request.urlToLoad();
+        m_request.setUrlReferer(refererUrl);
         // Получаем ссылку для загрузки из заголовка ответа [Loacation]
         QUrl redirectUrl = _reply->header(QNetworkRequest::LocationHeader).toUrl();
-        m_request->setUrlToLoad(redirectUrl);
-        setRequestMethod(NetworkRequest::Get); // Редирект всегда методом Get
+        m_request.setUrlToLoad(redirectUrl);
+        m_parameters.setRequestMethod(NetworkRequestMethod::Get); // Редирект всегда методом Get
         m_isNeedRedirect = true;
     } else {
         //! Загружены данные [reply->bytesAvailable()]
@@ -306,6 +290,7 @@ void WebLoader::downloadComplete(QNetworkReply* _reply)
     if (!isRunning()) {
         wait(300);
     }
+
     quit(); // прерываем цикл обработки событий потока (возвращаемся в run())
 }
 
@@ -313,38 +298,32 @@ void WebLoader::downloadError(QNetworkReply::NetworkError _networkError)
 {
     switch (_networkError) {
 
-        case QNetworkReply::NoError:
-            m_lastError.clear();
-            m_lastErrorDetails.clear();
+        case QNetworkReply::NoError: {
             break;
-        default:
-            m_lastError =
-                    tr("Sorry, we have some error while loading. Error is: %1")
-                    .arg(::networkErrorToString(_networkError));
-            emit error(m_lastError, m_initUrl);
-            break;
+        }
 
+        default: {
+            const QString lastError =
+                    tr("Sorry, we have some error while loading. Error is: %1")
+                    .arg(networkErrorToString(_networkError));
+            emit error(lastError, m_requestSourceUrl);
+            break;
+        }
     }
 }
 
 void WebLoader::downloadSslErrors(const QList<QSslError>& _errors)
 {
-    QString fullError;
+    QString lastErrorDetails;
     foreach (const QSslError& error, _errors) {
-        if (!fullError.isEmpty()) {
-            fullError.append("\n");
+        if (!lastErrorDetails.isEmpty()) {
+            lastErrorDetails.append("\n");
         }
-        fullError.append(error.errorString());
+        lastErrorDetails.append(error.errorString());
     }
 
-    m_lastErrorDetails = fullError;
-    emit errorDetails(m_lastErrorDetails, m_initUrl);
+    emit errorDetails(lastErrorDetails, m_requestSourceUrl);
 }
-
-
-//*****************************************************************************
-// Методы доступа к данным класса, а так же вспомогательные
-// методы для работы с данными класса
 
 void WebLoader::initNetworkManager()
 {
@@ -358,18 +337,16 @@ void WebLoader::initNetworkManager()
     //
     // Настраиваем куки
     //
-    if (m_cookieJar != 0) {
-        m_networkManager->setCookieJar(m_cookieJar);
-        m_cookieJar->setParent(0);
+    QNetworkCookieJar* cookie = m_parameters.cookieJar();
+    if (cookie != nullptr) {
+        m_networkManager->setCookieJar(cookie);
+        cookie->setParent(nullptr); // Убираем родителя, т.к. удалением управляет клиент
     }
 
     //
-    // Оключаем от предыдущих соединений
+    // Оключаем от предыдущих соединений и настраиваем новое
     //
     m_networkManager->disconnect();
-    //
-    // Настраиваем новое соединение
-    //
     connect(m_networkManager, &QNetworkAccessManager::finished,
             this, static_cast<void (WebLoader::*)(QNetworkReply*)>(&WebLoader::downloadComplete));
 }

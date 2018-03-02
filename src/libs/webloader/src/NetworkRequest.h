@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
+* Copyright (C) 2018 Dimka Novikov, to@dimkanovikov.pro
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -17,170 +18,158 @@
 #ifndef NETWORKREQUEST_H
 #define NETWORKREQUEST_H
 
-#include <QEventLoop>
-#include <QTimer>
-#include <QUrl>
-
+#include "NetworkTypes.h"
 #include "WebLoaderGlobal.h"
 
-class NetworkRequestPrivate;
-class WebRequest;
-class QNetworkCookieJar;
+#include <QObject>
+#include <QUrl>
 
-/*!
- * \brief Пользовательский класс для создания GET и POST запросов
+class NetworkRequestPrivate;
+class QNetworkCookieJar;
+class WebRequest;
+class WebRequestParameters;
+
+/**
+ * @brief Пользовательский класс для создания GET и POST запросов
  */
 
 class WEBLOADER_EXPORT NetworkRequest : public QObject
 {
     Q_OBJECT
+    friend class NetworkQueue;
+
 public:
-
-    /*!
-    \enum Метод запроса
-    */
-    enum RequestMethod {
-        Undefined, /*!< Метод не установлен */
-        Get,
-        Post
-    };
-
     /**
      * @brief Остановить все текущие соединения
      */
     static void stopAllConnections();
 
 public:
-    explicit NetworkRequest(QObject* _parent = 0, QNetworkCookieJar* _jar = 0);
-    virtual ~NetworkRequest();
+    explicit NetworkRequest(QObject* _parent = nullptr);
 
-    /*!
-     * \brief Установка cookie для загрузчика
+    /**
+     * @brief Установка cookie для загрузчика
      */
     void setCookieJar(QNetworkCookieJar* _cookieJar);
 
-    /*!
-     * \brief Получение cookie загрузчика
+    /**
+     * @brief Получение cookie загрузчика
      */
-    QNetworkCookieJar* cookieJar();
+    QNetworkCookieJar* cookieJar() const;
 
-    /*!
-     * \brief Установка метода запроса
+    /**
+     * @brief Установка метода запроса
      */
-    void setRequestMethod(RequestMethod _method);
+    void setRequestMethod(NetworkRequestMethod _method);
 
-    /*!
-     * \brief Получение метода запроса
+    /**
+     * @brief Получение метода запроса
      */
-    RequestMethod requestMethod() const;
+    NetworkRequestMethod requestMethod() const;
 
-    /*!
-     * \brief Установка таймаута загрузки
+    /**
+     * @brief Установка таймаута загрузки
      */
     void setLoadingTimeout(int _loadingTimeout);
 
-    /*!
-     * \brief Получение таймаута загрузки
+    /**
+     * @brief Получение таймаута загрузки
      */
     int loadingTimeout() const;
 
-    /*!
-     * \brief Очистить все старые атрибуты запроса
+    /**
+     * @brief Очистить все старые атрибуты запроса
      */
     void clearRequestAttributes();
 
-    /*!
-     * \brief Добавление атрибута в запрос
+    /**
+     * @brief Добавление атрибута в запрос
      */
     void addRequestAttribute(const QString& _name, const QVariant& _value);
 
-    /*!
-     * \brief Добавление файла в запрос
+    /**
+     * @brief Добавление файла в запрос
      */
     void addRequestAttributeFile(const QString& _name, const QString& _filePath);
 
-    void setRawRequest(const QByteArray& _data);
-    void setRawRequest(const QByteArray& _data, const QString& _mime);
-
-    /*!
-     * \brief Асинхронная загрузка запроса
+    /**
+     * @brief Установить сырые данные для запроса
      */
-    void loadAsync(const QString& _urlToLoad, const QUrl& _referer = QUrl());
+    /** @{ */
+    void setRawRequestData(const QByteArray& _data);
+    void setRawRequestData(const QByteArray& _data, const QString& _mime);
+    /** @} */
+
+    /**
+     * @brief Асинхронная загрузка запроса
+     */
+    /** @{ */
+    void loadAsync(const QString& _urlToLoad, const QString& _referer = QString());
     void loadAsync(const QUrl& _urlToLoad, const QUrl& _referer = QUrl());
-    /*!
-     * \brief Синхронная загрузка запроса
+    /** @} */
+
+    /**
+     * @brief Синхронная загрузка запроса
      */
-    QByteArray loadSync(const QString& _urlToLoad, const QUrl& _referer = QUrl());
+    /** @{ */
+    QByteArray loadSync(const QString& _urlToLoad, const QString& _referer = QString());
     QByteArray loadSync(const QUrl& _urlToLoad, const QUrl& _referer = QUrl());
+    /** @} */
 
-    /*!
-     * \brief Получение загруженного URL
-     */
-    QUrl url() const;
-
-    /*!
-     * \brief Получение строки с последней ошибкой
-     */
-    QString lastError() const;
-    QString lastErrorDetails() const;
-
-    /*!
-     * \brief Остановка выполнения запроса, связанного с текущим объектом
-     * и удаление запросов, ожидающих в очереди, связанных с текущим объектом
+    /**
+     * @brief Остановка выполнения запроса, связанного с текущим объектом
      */
     void stop();
 
+    /**
+     * @brief Уведомить клиентов о том, что запрос завершился
+     */
+    void done();
+
 signals:
-    /*!
-     * \brief Прогресс отправки запроса на сервер
+    /**
+     * @brief Прогресс отправки запроса на сервер
      */
     void uploadProgress(int, QUrl);
 
-    /*!
-     * \brief Прогресс загрузки данных с сервера
+    /**
+     * @brief Прогресс загрузки данных с сервера
      */
     void downloadProgress(int, QUrl);
 
-    /*!
-     * \brief Данные загружены
+    /**
+     * @brief Данные загружены
      */
     void downloadComplete(QByteArray, QUrl);
+
+    /**
+     * @brief Выполнение запроса завершено
+     */
     void finished();
 
-    /*!
-     * \brief Сигнал об ошибке
+    /**
+     * @brief Сообщение об ошибке при загрузке
      */
+    /** @{ */
     void error(QString, QUrl);
-
-private slots:
-    /*!
-     * \brief Данные загружены. Используется при синхронной загрузке
-     */
-    void downloadCompleteData(const QByteArray&);
-
-    /*!
-     * \brief Ошибка при получении данных
-     */
-    void slotError(const QString&, const QUrl&);
-    void slotErrorDetails(const QString&);
+    void errorDetails(QString, QUrl);
+    /** @} */
 
 private:
-
-    /*!
-     * \brief Объект, используемый в очереди запросов
+    /**
+     * @brief Ссылка на запроса
      */
-    NetworkRequestPrivate *m_internal;
+    WebRequest& m_request;
 
-    /*!
-     * \brief Загруженные данные в случае, если используется синхронная загрузка
+    /**
+     * @brief Ссылка на параметры запроса
+     */
+    WebRequestParameters& m_requestParameters;
+
+    /**
+     * @brief Загруженные данные в случае, если используется синхронная загрузка
      */
     QByteArray m_downloadedData;
-
-    /*!
-     * \brief Строка, содержащая описание последней ошибки
-     */
-    QString m_lastError;
-    QString m_lastErrorDetails;
 };
 
 #endif // NETWORKREQUEST_H

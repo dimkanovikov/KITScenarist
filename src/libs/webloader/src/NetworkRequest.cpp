@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
+* Copyright (C) 2018 Dimka Novikov, to@dimkanovikov.pro
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -15,163 +16,115 @@
 */
 
 #include "NetworkRequest.h"
-#include "NetworkQueue_p.h"
-#include "NetworkRequestPrivate_p.h"
-#include "WebLoader_p.h"
-#include "WebRequest_p.h"
+#include "NetworkQueue.h"
+#include "WebLoader.h"
+#include "WebRequest.h"
+
+#include <QEventLoop>
+#include <QTimer>
 
 
 void NetworkRequest::stopAllConnections()
 {
-    //
-    // Получаем инстанс очереди
-    //
-    NetworkQueue* nq = NetworkQueue::getInstance();
-
-    nq->stopAll();
+    NetworkQueue::instance()->stopAll();
 }
 
-NetworkRequestPrivate::NetworkRequestPrivate(QObject* _parent, QNetworkCookieJar* _jar)
-    : QObject(_parent), m_cookieJar(_jar), m_loadingTimeout(20000), m_request(new WebRequest())
-
+NetworkRequest::NetworkRequest(QObject* _parent) :
+    QObject(_parent),
+    m_request(NetworkQueue::instance()->registerRequest()),
+    m_requestParameters(NetworkQueue::instance()->registerRequestParameters())
 {
-
-}
-
-NetworkRequestPrivate::~NetworkRequestPrivate()
-{
-    delete m_request;
-}
-
-QUrl NetworkRequestPrivate::url() const
-{
-    QUrl url = m_request->urlToLoad();
-    if (m_method == NetworkRequest::Get) {
-        url.setQuery(m_request->urlQuery());
-    }
-    return url;
-}
-
-void NetworkRequestPrivate::done()
-{
-    emit finished();
-}
-
-NetworkRequest::NetworkRequest(QObject* _parent, QNetworkCookieJar* _jar)
-    : QObject(_parent), m_internal(new NetworkRequestPrivate(this, _jar))
-{
-    //
-    // Соединим сигналы от internal с сигналами/слотами этого класса
-    //
-    connect(m_internal, &NetworkRequestPrivate::downloadComplete, this, &NetworkRequest::downloadComplete);
-    connect(m_internal, &NetworkRequestPrivate::downloadProgress,
-            this, &NetworkRequest::downloadProgress);
-    connect(m_internal, &NetworkRequestPrivate::uploadProgress,
-            this, &NetworkRequest::uploadProgress);
-    connect(m_internal, &NetworkRequestPrivate::error,
-            this, &NetworkRequest::slotError);
-    connect(m_internal, &NetworkRequestPrivate::errorDetails,
-            this, &NetworkRequest::slotErrorDetails);
-    connect(m_internal, &NetworkRequestPrivate::finished,
-            this, &NetworkRequest::finished);
-
-}
-
-NetworkRequest::~NetworkRequest()
-{
-
+    connect(this, &NetworkRequest::downloadComplete, [this] (const QByteArray& _downloadedData) {
+        m_downloadedData = _downloadedData;
+    });
 }
 
 void NetworkRequest::setCookieJar(QNetworkCookieJar* _cookieJar)
 {
     stop();
-    m_internal->m_cookieJar = _cookieJar;
+    m_requestParameters.setCookieJar(_cookieJar);
 }
 
-QNetworkCookieJar* NetworkRequest::cookieJar()
+QNetworkCookieJar* NetworkRequest::cookieJar() const
 {
-    return m_internal->m_cookieJar;
+    return m_requestParameters.cookieJar();
 }
 
-void NetworkRequest::setRequestMethod(NetworkRequest::RequestMethod _method)
+void NetworkRequest::setRequestMethod(NetworkRequestMethod _method)
 {
     stop();
-    m_internal->m_method = _method;
+    m_requestParameters.setRequestMethod(_method);
 }
 
-NetworkRequest::RequestMethod NetworkRequest::requestMethod() const
+NetworkRequestMethod NetworkRequest::requestMethod() const
 {
-    return m_internal->m_method;
+    return m_requestParameters.requestMethod();
 }
 
 void NetworkRequest::setLoadingTimeout(int _loadingTimeout)
 {
     stop();
-    m_internal->m_loadingTimeout = _loadingTimeout;
+    m_requestParameters.setLoadingTimeout(_loadingTimeout);
 }
 
 int NetworkRequest::loadingTimeout() const
 {
-    return m_internal->m_loadingTimeout;
+    return m_requestParameters.loadingTimeout();
 }
 
 void NetworkRequest::clearRequestAttributes()
 {
     stop();
-    m_internal->m_request->clearAttributes();
+    m_request.clearAttributes();
 }
 
 void NetworkRequest::addRequestAttribute(const QString& _name, const QVariant& _value)
 {
     stop();
-    m_internal->m_request->addAttribute(_name, _value);
+    m_request.addAttribute(_name, _value);
 }
 
 void NetworkRequest::addRequestAttributeFile(const QString& _name, const QString& _filePath)
 {
     stop();
-    m_internal->m_request->addAttributeFile(_name, _filePath);
+    m_request.addAttributeFile(_name, _filePath);
 }
 
-void NetworkRequest::setRawRequest(const QByteArray &_data)
+void NetworkRequest::setRawRequestData(const QByteArray &_data)
 {
     stop();
-    m_internal->m_request->setRawRequest(_data);
+    m_request.setRawData(_data);
 }
 
-void NetworkRequest::setRawRequest(const QByteArray &_data, const QString &_mime)
+void NetworkRequest::setRawRequestData(const QByteArray &_data, const QString &_mime)
 {
     stop();
-    m_internal->m_request->setRawRequest(_data, _mime);
+    m_request.setRawData(_data, _mime);
 }
 
-void NetworkRequest::loadAsync(const QString& _urlToLoad, const QUrl& _referer)
+void NetworkRequest::loadAsync(const QString& _urlToLoad, const QString& _referer)
 {
-    loadAsync(QUrl(_urlToLoad), _referer);
+    loadAsync(QUrl(_urlToLoad), QUrl(_referer));
 }
 
 void NetworkRequest::loadAsync(const QUrl& _urlToLoad, const QUrl& _referer)
 {
     //
-    // Получаем инстанс очереди
+    // Останавливаем в очереди запрос, связанный с данным запросом (если имеется)
     //
-    NetworkQueue* nq = NetworkQueue::getInstance();
-
-    //
-    // Останавливаем в очереди запрос, связанный с данным классом (если имеется)
-    //
-    nq->stop(m_internal);
+    NetworkQueue::instance()->stop(this);
 
     //
     // Настраиваем параметры и кладем в очередь
-    m_internal->m_request->setUrlToLoad(_urlToLoad);
-    m_internal->m_request->setUrlReferer(_referer);
-    nq->put(m_internal);
+    //
+    m_request.setUrlToLoad(_urlToLoad);
+    m_request.setUrlReferer(_referer);
+    NetworkQueue::instance()->enqueue(this);
 }
 
-QByteArray NetworkRequest::loadSync(const QString& _urlToLoad, const QUrl& _referer)
+QByteArray NetworkRequest::loadSync(const QString& _urlToLoad, const QString& _referer)
 {
-    return loadSync(QUrl(_urlToLoad), _referer);
+    return loadSync(QUrl(_urlToLoad), QUrl(_referer));
 }
 
 QByteArray NetworkRequest::loadSync(const QUrl& _urlToLoad, const QUrl& _referer)
@@ -181,47 +134,18 @@ QByteArray NetworkRequest::loadSync(const QUrl& _urlToLoad, const QUrl& _referer
     //
     QEventLoop loop;
     connect(this, &NetworkRequest::finished, &loop, &QEventLoop::quit);
-    connect(m_internal, static_cast<void (NetworkRequestPrivate::*)(QByteArray, QUrl)>(&NetworkRequestPrivate::downloadComplete),
-            this, &NetworkRequest::downloadCompleteData);
     loadAsync(_urlToLoad, _referer);
     loop.exec();
 
     return m_downloadedData;
 }
 
-QUrl NetworkRequest::url() const
-{
-    return m_internal->url();
-}
-
-QString NetworkRequest::lastError() const
-{
-    return m_lastError;
-}
-
-QString NetworkRequest::lastErrorDetails() const
-{
-    return m_lastErrorDetails;
-}
-
 void NetworkRequest::stop()
 {
-    NetworkQueue* nq = NetworkQueue::getInstance();
-    nq->stop(m_internal);
+    NetworkQueue::instance()->stop(this);
 }
 
-void NetworkRequest::downloadCompleteData(const QByteArray& _data)
+void NetworkRequest::done()
 {
-    m_downloadedData = _data;
-}
-
-void NetworkRequest::slotError(const QString& _errorStr, const QUrl& _url)
-{
-    m_lastError = _errorStr;
-    emit error(_errorStr, _url);
-}
-
-void NetworkRequest::slotErrorDetails(const QString& _errorStr)
-{
-    m_lastErrorDetails = _errorStr;
+    emit finished();
 }

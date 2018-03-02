@@ -15,7 +15,7 @@
 * Full license: http://dimkanovikov.pro/license/LGPLv3
 */
 
-#include "HttpMultiPart_p.h"
+#include "HttpMultiPart.h"
 #include "QMimeDatabase"
 #include <QtCore/QStringList>
 #include <QtCore/QFile>

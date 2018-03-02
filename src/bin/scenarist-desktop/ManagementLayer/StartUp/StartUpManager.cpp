@@ -117,7 +117,7 @@ void StartUpManager::checkCrashReports()
             // Отправляем
             //
             NetworkRequest loader;
-            loader.setRequestMethod(NetworkRequest::Post);
+            loader.setRequestMethod(NetworkRequestMethod::Post);
             loader.addRequestAttribute("version", QApplication::applicationVersion());
             loader.addRequestAttribute("email", dialog.email());
             loader.addRequestAttribute("message", dialog.message());
@@ -152,7 +152,7 @@ void StartUpManager::checkCrashReports()
 void StartUpManager::checkNewVersion()
 {
     NetworkRequest loader;
-    loader.setRequestMethod(NetworkRequest::Get);
+    loader.setRequestMethod(NetworkRequestMethod::Post);
 
     //
     // Сформируем uuid для приложения, по которому будем идентифицировать данного пользователя
@@ -308,7 +308,7 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
     connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
     connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop);
 
-    loader.setRequestMethod(NetworkRequest::Get);
+    loader.setRequestMethod(NetworkRequestMethod::Post);
     loader.clearRequestAttributes();
 
     //

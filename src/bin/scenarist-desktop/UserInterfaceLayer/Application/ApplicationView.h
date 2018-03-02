@@ -12,8 +12,9 @@ namespace UserInterface
 	class ApplicationView : public QWidget
 	{
 		Q_OBJECT
+
 	public:
-		explicit ApplicationView(QWidget* _parent = 0);
+        explicit ApplicationView(QWidget* _parent = nullptr);
 
 		/**
 		 * @brief Добавить для сплитеров функциональность смены панелей местами
