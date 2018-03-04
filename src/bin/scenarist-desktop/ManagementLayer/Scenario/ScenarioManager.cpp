@@ -655,6 +655,13 @@ void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _is
     }
 }
 
+void ScenarioManager::clearAdditionalCursors()
+{
+    m_cleanCursors.clear();
+    m_draftCursors.clear();
+    m_textEditManager->setAdditionalCursors(m_cleanCursors);
+}
+
 void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft)
 {
     //

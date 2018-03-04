@@ -1778,6 +1778,12 @@ void ApplicationManager::closeCurrentProject()
         DatabaseLayer::Database::closeCurrentFile();
 
         //
+        // Удалим всю информацию о курсорах соавтора
+        //
+        m_tabs->clearIndicatorMenu();
+        m_scenarioManager->clearAdditionalCursors();
+
+        //
         // Информируем управляющего проектами, что текущий проект закрыт
         //
         m_projectsManager->closeCurrentProject();
@@ -2072,7 +2078,7 @@ void ApplicationManager::initConnections()
             m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
     connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, [this] (const QMap<QString, int>& _cursors, bool _isDraft) {
         if (_isDraft == m_scenarioManager->workModeIsDraft()) {
-            m_tabs->setIndicatorMenu(QVector<QString>::fromList(_cursors.keys()));
+            m_tabs->setIndicatorMenu(_cursors.keys().toVector());
         }
     });
 

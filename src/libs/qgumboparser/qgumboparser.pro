@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-TARGET = QGumboParser
+TARGET = qgumboparser
 TEMPLATE = lib
 CONFIG += staticlib c++11
 QMAKE_CFLAGS += -std=c99

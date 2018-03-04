@@ -171,6 +171,11 @@ namespace ManagementLayer
         /** @} */
 
         /**
+         * @brief Очистить список курсоров пользователей
+         */
+        void clearAdditionalCursors();
+
+        /**
          * @brief Получены новые позиции курсоров пользователей
          */
         void aboutCursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft);
