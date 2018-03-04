@@ -817,7 +817,6 @@ void ScenarioTextEditWidget::initView()
     m_reviewView->hide();
 
     m_zenControls->setEditor(m_editor);
-    m_zenControls->hide();
 
     QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
     topLayout->setContentsMargins(QMargins());

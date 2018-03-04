@@ -6,6 +6,7 @@
 
 class FlatButton;
 class QCheckBox;
+class QGraphicsOpacityEffect;
 class QPushButton;
 
 
@@ -62,6 +63,11 @@ namespace UserInterface
         bool eventFilter(QObject* _watched, QEvent* _event) override;
 
     private:
+        void showAnimated();
+
+        void hideAnimated();
+
+    private:
         /**
          * @brief Активен ли элемент управления в данный момент
          */
@@ -91,6 +97,11 @@ namespace UserInterface
          * @brief Таймер скрытия виджета
          */
         QTimer m_hideTimer;
+
+        /**
+         * @brief Эффект полупрозрачности для красоты отображения/скрытия
+         */
+        QGraphicsOpacityEffect* m_opacityEffect = nullptr;
     };
 }
 

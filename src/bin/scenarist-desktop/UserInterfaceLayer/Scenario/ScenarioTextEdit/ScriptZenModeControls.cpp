@@ -8,7 +8,10 @@
 
 #include <QApplication>
 #include <QCheckBox>
+#include <QDateTime>
+#include <QGraphicsOpacityEffect>
 #include <QPainter>
+#include <QPropertyAnimation>
 #include <QPushButton>
 #include <QShortcut>
 #include <QTextBlock>
@@ -44,11 +47,14 @@ namespace {
 ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     QFrame(_parent),
     m_quit(new FlatButton(this)),
-    m_keyboardSound(new QCheckBox(this))
+    m_keyboardSound(new QCheckBox(this)),
+    m_opacityEffect(new QGraphicsOpacityEffect(this))
 {
     setFrameShape(QFrame::NoFrame);
 
     qApp->installEventFilter(this);
+
+    setGraphicsEffect(m_opacityEffect);
 
     m_quit->setIconSize(QSize(36, 36));
     m_quit->setIcons(QIcon(":/Graphics/Icons/Editing/close.png"));
@@ -84,8 +90,8 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     setLayout(layout);
 
     m_hideTimer.setSingleShot(true);
-    m_hideTimer.setInterval(1000);
-    connect(&m_hideTimer, &QTimer::timeout, this, &ScriptZenModeControls::hide);
+    m_hideTimer.setInterval(2000);
+    connect(&m_hideTimer, &QTimer::timeout, this, &ScriptZenModeControls::hideAnimated);
     m_hideTimer.start();
 }
 
@@ -170,10 +176,11 @@ void ScriptZenModeControls::activate(bool _active)
 
         if (m_active) {
             raise();
-            show();
+            showAnimated();
             m_editor->setKeyboardSoundEnabled(m_keyboardSound->isChecked());
+            m_hideTimer.start();
         } else {
-            hide();
+            hideAnimated();
         }
     }
 }
@@ -193,10 +200,64 @@ bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)
                    || _event->type() == QEvent::Wheel
                    || _event->type() == QEvent::MouseButtonPress
                    || _event->type() == QEvent::MouseButtonRelease) {
-            show();
-            m_hideTimer.start();
+            //
+            // Показываем панель не после первого движения, а лишь после определённых усилий пользователя
+            // Делается это для того, чтобы случайные прикосновения к мыши и тачпаду не приводили
+            // к отображению вспомогательной панели, т.к. это отвлекает
+            //
+            static int s_eventsCounter = 0;
+            const int maxEvents = 300;
+            static qint64 s_lastActivateTime = QDateTime::currentMSecsSinceEpoch();
+            const qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+            const qint64 showTimeout = 2000;
+            //
+            // Если со времени последней активности прошло больше showTimeout, то сбрасываем счётчик
+            // событий и назначаем временем последней активности - текущее
+            //
+            if (currentTime - s_lastActivateTime > showTimeout) {
+                s_lastActivateTime = currentTime;
+                s_eventsCounter = 0;
+            }
+            //
+            // Если пользователь совершил достаточно действий, отобразим себя
+            //
+            if (s_eventsCounter == maxEvents) {
+                s_eventsCounter = 0;
+                showAnimated();
+                m_hideTimer.start();
+            } else {
+                ++s_eventsCounter;
+            }
         }
     }
 
     return QFrame::eventFilter(_watched, _event);
+}
+
+void ScriptZenModeControls::showAnimated()
+{
+    if (isVisible()) {
+        return;
+    }
+
+    m_opacityEffect->setOpacity(0);
+    show();
+
+    QPropertyAnimation* opacityAnimation = new QPropertyAnimation(m_opacityEffect, "opacity", this);
+    opacityAnimation->setDuration(180);
+    opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
+    opacityAnimation->setStartValue(0);
+    opacityAnimation->setEndValue(1);
+    opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void ScriptZenModeControls::hideAnimated()
+{
+    QPropertyAnimation* opacityAnimation = new QPropertyAnimation(m_opacityEffect, "opacity", this);
+    opacityAnimation->setDuration(180);
+    opacityAnimation->setEasingCurve(QEasingCurve::InCirc);
+    opacityAnimation->setStartValue(1);
+    opacityAnimation->setEndValue(0);
+    connect(opacityAnimation, &QPropertyAnimation::finished, this, &ScriptZenModeControls::hide);
+    opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
