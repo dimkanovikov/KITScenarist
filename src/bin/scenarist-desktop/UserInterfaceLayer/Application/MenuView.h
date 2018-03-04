@@ -76,6 +76,11 @@ namespace UserInterface
         void disableProgressLoginLabel();
 
         /**
+         * @brief Задать аватар пользователя
+         */
+        void setAvatar(const QPixmap& _avatar);
+
+        /**
          * @brief Задать авторизован ли пользователь
          */
         void setUserLogged(bool _isLogged, const QString& _userName = QString(), const QString& _email = QString());

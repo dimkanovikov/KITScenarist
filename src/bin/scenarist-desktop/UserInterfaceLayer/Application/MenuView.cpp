@@ -6,6 +6,7 @@
 
 #include <QDesktopServices>
 #include <QMenu>
+#include <QPainter>
 #include <QTimer>
 #include <QUrl>
 
@@ -144,6 +145,21 @@ void MenuView::disableProgressLoginLabel()
 {
     m_isProcessLogin = false;
     m_ui->login->setText(tr("<a href=\"#\" style=\"color:#2b78da;\">Login</a>"));
+}
+
+void MenuView::setAvatar(const QPixmap& _avatar)
+{
+    QImage roundedAvatar = QImage(_avatar.size(), QImage::Format_ARGB32_Premultiplied);
+    roundedAvatar.fill(Qt::transparent);
+    QPainter painter(&roundedAvatar);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath circleClipPath;
+    circleClipPath.addEllipse(roundedAvatar.rect().center(), roundedAvatar.width()/2, roundedAvatar.height()/2);
+    painter.setClipPath(circleClipPath);
+    painter.drawPixmap(0, 0, _avatar);
+    painter.end();
+
+    m_ui->avatar->setPixmap(QPixmap::fromImage(roundedAvatar));
 }
 
 void MenuView::setUserLogged(bool _isLogged, const QString& _userName, const QString& _email)
@@ -301,7 +317,6 @@ void MenuView::initStyleSheet()
 {
     m_ui->accountPanel->setProperty("menuAccount", true);
     m_ui->login->setProperty("link", true);
-    m_ui->account->setProperty("link", true);
 
     m_ui->createProject->setProperty("menuButton", true);
     m_ui->openProject->setProperty("menuButton", true);

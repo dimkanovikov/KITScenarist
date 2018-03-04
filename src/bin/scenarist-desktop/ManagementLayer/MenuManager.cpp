@@ -8,6 +8,9 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
 
+#include <NetworkRequestLoader.h>
+
+#include <QCryptographicHash>
 #include <QTimer>
 
 using ManagementLayer::MenuManager;
@@ -15,6 +18,15 @@ using UserInterface::MenuView;
 using UserInterface::LoginDialog;
 using UserInterface::ChangePasswordDialog;
 using UserInterface::RenewSubscriptionDialog;
+
+namespace {
+    /**
+     * @brief Получить стандартную аватарку
+     */
+    static const QPixmap defaultAvatar() {
+        return QPixmap(":/Graphics/Images/avatar.png");
+    }
+}
 
 
 MenuManager::MenuManager(QObject* _parent, QWidget* _parentWidget) :
@@ -80,6 +92,28 @@ void MenuManager::completeLogin(const QString& _userName, const QString& _userEm
     m_view->setUserLogged(isLogged, _userName, m_userEmail);
     m_loginDialog->unblock();
     m_loginDialog->hide();
+
+    //
+    // Загрузим аватарку пользователя
+    //
+    const QString emailHash = QCryptographicHash::hash(_userEmail.toLower().toUtf8(), QCryptographicHash::Md5).toHex();
+    const QString avatarUrl = QString("https://www.gravatar.com/avatar/%1?s=45&d=404").arg(emailHash);
+    NetworkRequestLoader::loadAsync(avatarUrl, [this] (const QByteArray& _avatarData) {
+        QPixmap avatar;
+        //
+        // Если аватар не найден используем стандартную аватарку
+        //
+        if (_avatarData == "404 Not Found") {
+            avatar = defaultAvatar();
+        }
+        //
+        // В противном случае используем полученное изображение
+        //
+        else {
+            avatar.loadFromData(_avatarData);
+        }
+        m_view->setAvatar(avatar);
+    });
 }
 
 void MenuManager::setSubscriptionInfo(bool _isActive, const QString& _expiredDate, quint64 _usedSpace, quint64 _availableSpace)
@@ -137,6 +171,7 @@ void MenuManager::completeLogout()
 
     const bool isLogged = false;
     m_view->setUserLogged(isLogged);
+    m_view->setAvatar(defaultAvatar());
 }
 
 void MenuManager::passwordChanged()
