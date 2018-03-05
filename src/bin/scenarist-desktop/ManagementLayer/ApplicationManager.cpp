@@ -393,13 +393,7 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
             //
             // ... перейдём к редактированию
             //
-            goToEditCurrentProject();
-            //
-            // ... и импортируем, если надо
-            //
-            if (!_importFilePath.isEmpty()) {
-                m_importManager->importScenario(m_scenarioManager->scenario(), _importFilePath);
-            }
+            goToEditCurrentProject(_importFilePath);
         }
         //
         // Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
@@ -457,13 +451,7 @@ void ApplicationManager::createNewRemoteProject(const QString& _projectName, con
         //
         // ... перейдём к редактированию
         //
-        goToEditCurrentProject();
-        //
-        // ... и импортируем, если надо
-        //
-        if (!_importFilePath.isEmpty()) {
-            m_importManager->importScenario(m_scenarioManager->scenario(), _importFilePath);
-        }
+        goToEditCurrentProject(_importFilePath);
     }
     //
     // Если переключиться не удалось, сообщаем пользователю об ошибке
@@ -1644,7 +1632,7 @@ bool ApplicationManager::saveIfNeeded()
     return success;
 }
 
-void ApplicationManager::goToEditCurrentProject()
+void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
 {
     //
     // Покажем уведомление пользователю
@@ -1716,6 +1704,15 @@ void ApplicationManager::goToEditCurrentProject()
     if (m_projectsManager->currentProject().isRemote()) {
         m_view->setWindowModified(true);
         aboutSave();
+    }
+
+    //
+    // Затем импортируем данные из указанного файла, если необходимо
+    //
+    if (!_importFilePath.isEmpty()) {
+        progress.setProgressText(tr("Import"), tr("Please wait. Import can take few minutes."));
+        m_importManager->importScenario(m_scenarioManager->scenario(), _importFilePath);
+        m_researchManager->loadScenarioData();
     }
 
     //

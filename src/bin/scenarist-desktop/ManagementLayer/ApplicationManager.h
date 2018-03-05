@@ -249,7 +249,7 @@ namespace ManagementLayer
         /**
          * @brief Настроить текущий проект для редактирования
          */
-        void goToEditCurrentProject();
+        void goToEditCurrentProject(const QString& _importFilePath = QString());
 
         /**
          * @brief Закрыть текущий проект
