@@ -104,7 +104,7 @@ namespace {
                 //
                 if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
                     const QString name = BusinessLogic::CharacterParser::name(cursor.block().text());
-                    if (name == cursor.selectedText().toUpper()) {
+                    if (name == TextEditHelper::smartToUpper(cursor.selectedText())) {
                         replaceSelection = true;
                     }
                 }
@@ -113,7 +113,7 @@ namespace {
                 //
                 else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
                     const QStringList names = BusinessLogic::SceneCharactersParser::characters(cursor.block().text());
-                    if (names.contains(cursor.selectedText().toUpper())) {
+                    if (names.contains(TextEditHelper::smartToUpper(cursor.selectedText()))) {
                         //
                         // Убедимся, что выделено именно имя, а не часть другого имени
                         //
@@ -181,7 +181,7 @@ namespace {
                 //
                 if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneHeading) {
                     const QString location = BusinessLogic::SceneHeadingParser::locationName(cursor.block().text());
-                    if (location == cursor.selectedText().toUpper()) {
+                    if (location == TextEditHelper::smartToUpper(cursor.selectedText())) {
                         replaceSelection = true;
                     }
                 }

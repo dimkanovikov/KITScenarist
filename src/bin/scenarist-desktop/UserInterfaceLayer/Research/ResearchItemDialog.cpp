@@ -3,6 +3,8 @@
 
 #include <Domain/Research.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QPushButton>
 
 using UserInterface::ResearchItemDialog;
@@ -187,7 +189,7 @@ QString ResearchItemDialog::researchName() const
 {
     if (m_ui->character->isChecked()
         || m_ui->location->isChecked()) {
-        return m_ui->name->text().toUpper();
+        return TextEditHelper::smartToUpper(m_ui->name->text());
     }
 
     return m_ui->name->text();

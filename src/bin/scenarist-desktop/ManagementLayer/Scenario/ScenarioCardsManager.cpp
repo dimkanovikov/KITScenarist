@@ -13,6 +13,7 @@
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
 #include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Helpers/TextUtils.h>
 
 #include <QApplication>
@@ -132,7 +133,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                     item->uuid(),
                     item->type() == BusinessLogic::ScenarioModelItem::Folder,
                     item->sceneNumber(),
-                    item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
+                    item->title().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->title()),
                     item->description().isEmpty() ? item->fullText() : item->description(),
                     item->stamp(),
                     item->colors(),
@@ -177,7 +178,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                         item->uuid(),
                         item->type() == BusinessLogic::ScenarioModelItem::Folder,
                         item->sceneNumber(),
-                        item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
+                        item->title().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->title()),
                         item->description().isEmpty() ? item->fullText() : item->description(),
                         item->stamp(),
                         item->colors(),
@@ -624,7 +625,7 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
             if (item->type() == BusinessLogic::ScenarioModelItem::Scene) {
                 titleText.prepend(QString("%1. ").arg(item->sceneNumber()));
             }
-            titleText = TextUtils::elidedText(titleText.toUpper(), painter.font(), titleRect.size(), textoption);
+            titleText = TextUtils::elidedText(TextEditHelper::smartToUpper(titleText), painter.font(), titleRect.size(), textoption);
             painter.drawText(titleRect, titleText, textoption);
 
             //

@@ -15,6 +15,7 @@
 #include <UserInterfaceLayer/Research/ResearchView.h>
 #include <UserInterfaceLayer/Research/ResearchItemDialog.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
@@ -622,7 +623,7 @@ void ResearchManager::initConnections()
     // ... персонаж
     //
     connect(m_view, &ResearchView::characterNameChanged, [=] (const QString& _name) {
-        const QString newName = _name.toUpper();
+        const QString newName = TextEditHelper::smartToUpper(_name);
         if (m_currentResearch != 0
             && m_currentResearch->type() == Research::Character
             && m_currentResearch->name() != newName) {
@@ -666,7 +667,7 @@ void ResearchManager::initConnections()
     // ... локация
     //
     connect(m_view, &ResearchView::locationNameChanged, [=] (const QString& _name) {
-        const QString newName = _name.toUpper();
+        const QString newName = TextEditHelper::smartToUpper(_name);
         if (m_currentResearch != 0
             && m_currentResearch->type() == Research::Location
             && m_currentResearch->name() != newName) {
