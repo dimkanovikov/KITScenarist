@@ -103,7 +103,8 @@ void MenuManager::completeLogin(const QString& _userName, const QString& _userEm
         //
         // Если аватар не найден используем стандартную аватарку
         //
-        if (_avatarData == "404 Not Found") {
+        if (_avatarData == "404 Not Found"
+            || _avatarData.isEmpty()) {
             avatar = defaultAvatar();
         }
         //

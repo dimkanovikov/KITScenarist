@@ -1941,6 +1941,7 @@ QMenu* ApplicationManager::createMenu()
     QAction* openProject = menu->addAction(tr("Open"));
     QAction* saveProject = menu->addAction(tr("Save"));
     saveProject->setShortcut(QKeySequence::Save);
+    m_view->addAction(saveProject);
     QAction* saveProjectAs = menu->addAction(tr("Save As..."));
 
     menu->addSeparator();
@@ -1951,11 +1952,13 @@ QMenu* ApplicationManager::createMenu()
     // ... предварительный просмотр
     QAction* printPreview = menu->addAction(tr("Print Preview"));
     printPreview->setShortcut(QKeySequence(Qt::Key_F12));
+    m_view->addAction(printPreview);
 
     menu->addSeparator();
     QAction* twoPanelMode = menu->addAction(tr("Two Panel Mode"));
     twoPanelMode->setCheckable(true);
     twoPanelMode->setShortcut(QKeySequence(Qt::Key_F2));
+    m_view->addAction(twoPanelMode);
 
     //
     // Настроим соединения
