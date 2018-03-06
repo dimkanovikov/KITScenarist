@@ -47,18 +47,16 @@ namespace {
 ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     QFrame(_parent),
     m_quit(new FlatButton(this)),
-    m_keyboardSound(new QCheckBox(this)),
-    m_opacityEffect(new QGraphicsOpacityEffect(this))
+    m_keyboardSound(new QCheckBox(this))
 {
     setFrameShape(QFrame::NoFrame);
 
     qApp->installEventFilter(this);
 
-    setGraphicsEffect(m_opacityEffect);
-
     m_quit->setIconSize(QSize(36, 36));
     m_quit->setIcons(QIcon(":/Graphics/Icons/Editing/close.png"));
     m_quit->setShortcut(QKeySequence("F5"));
+    m_quit->installEventFilter(this);
     connect(m_quit, &FlatButton::clicked, this, &ScriptZenModeControls::quitPressed);
 
     m_buttons << ::createStyleButton(this);
@@ -73,8 +71,12 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     m_buttons << ::createStyleButton(this);
     m_buttons << ::createStyleButton(this);
     reinitBlockStyles();
+    foreach (QPushButton* button, m_buttons) {
+        button->installEventFilter(this);
+    }
 
     m_keyboardSound->setText(tr("Typewriter sound"));
+    m_keyboardSound->installEventFilter(this);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addSpacing(10);
@@ -196,6 +198,13 @@ bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)
                                     ? parentWidget()->width() - width() - margin
                                     : margin;
             move(xCoordinate, 0);
+        } else if (_watched->parent() == this) {
+            if (_event->type() == QEvent::Enter) {
+                m_hideTimer.stop();
+                showAnimated();
+            } else if (_event->type() == QEvent::Leave) {
+                m_hideTimer.start();
+            }
         } else if (_event->type() == QEvent::MouseMove
                    || _event->type() == QEvent::Wheel
                    || _event->type() == QEvent::MouseButtonPress
@@ -240,24 +249,35 @@ void ScriptZenModeControls::showAnimated()
         return;
     }
 
-    m_opacityEffect->setOpacity(0);
+    QPropertyAnimation* opacityAnimation = configureOpacityAnimation(0, 1);
     show();
-
-    QPropertyAnimation* opacityAnimation = new QPropertyAnimation(m_opacityEffect, "opacity", this);
-    opacityAnimation->setDuration(180);
-    opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
-    opacityAnimation->setStartValue(0);
-    opacityAnimation->setEndValue(1);
     opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 void ScriptZenModeControls::hideAnimated()
 {
-    QPropertyAnimation* opacityAnimation = new QPropertyAnimation(m_opacityEffect, "opacity", this);
-    opacityAnimation->setDuration(180);
-    opacityAnimation->setEasingCurve(QEasingCurve::InCirc);
-    opacityAnimation->setStartValue(1);
-    opacityAnimation->setEndValue(0);
+    if (!isVisible()) {
+        return;
+    }
+
+    QPropertyAnimation* opacityAnimation = configureOpacityAnimation(0.95, 0);
     connect(opacityAnimation, &QPropertyAnimation::finished, this, &ScriptZenModeControls::hide);
     opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+QPropertyAnimation* ScriptZenModeControls::configureOpacityAnimation(qreal _startOpacity, qreal _endOpacity)
+{
+    QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect;
+    opacityEffect->setOpacity(_startOpacity);
+    setGraphicsEffect(opacityEffect);
+
+    QPropertyAnimation* opacityAnimation = new QPropertyAnimation(opacityEffect, "opacity");
+    opacityAnimation->setDuration(180);
+    opacityAnimation->setEasingCurve(QEasingCurve::InCirc);
+    opacityAnimation->setStartValue(_startOpacity);
+    opacityAnimation->setEndValue(_endOpacity);
+    connect(opacityAnimation, &QPropertyAnimation::finished, opacityEffect, &QGraphicsOpacityEffect::deleteLater);
+    connect(opacityAnimation, &QPropertyAnimation::finished, [this] { setGraphicsEffect(nullptr); });
+
+    return opacityAnimation;
 }

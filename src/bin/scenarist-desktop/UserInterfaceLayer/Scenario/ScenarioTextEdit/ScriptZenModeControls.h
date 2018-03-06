@@ -7,6 +7,7 @@
 class FlatButton;
 class QCheckBox;
 class QGraphicsOpacityEffect;
+class QPropertyAnimation;
 class QPushButton;
 
 
@@ -63,9 +64,20 @@ namespace UserInterface
         bool eventFilter(QObject* _watched, QEvent* _event) override;
 
     private:
+        /**
+         * @brief Плавно показать
+         */
         void showAnimated();
 
+        /**
+         * @brief Плавно скрыть
+         */
         void hideAnimated();
+
+        /**
+         * @brief Настроить анимацию прозрачности виджета
+         */
+        QPropertyAnimation* configureOpacityAnimation(qreal _startOpacity, qreal _endOpacity);
 
     private:
         /**
@@ -97,11 +109,6 @@ namespace UserInterface
          * @brief Таймер скрытия виджета
          */
         QTimer m_hideTimer;
-
-        /**
-         * @brief Эффект полупрозрачности для красоты отображения/скрытия
-         */
-        QGraphicsOpacityEffect* m_opacityEffect = nullptr;
     };
 }
 
