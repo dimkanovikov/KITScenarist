@@ -196,6 +196,10 @@ void WebLoader::run()
         //
         exec();
 
+        if (m_isNeedStop) {
+            return;
+        }
+
         //
         // Если ответ ещё не удалён
         //

@@ -160,9 +160,9 @@ void ExportDialog::setPrintTitle(bool _isChecked)
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
     BusinessLogic::ExportParameters exportParameters;
-    exportParameters.isResearch = m_ui->exportTypes->currentIndex() == RESEARCH_TAB_INDEX;
-    exportParameters.isOutline = m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX;
-    exportParameters.isScript = m_ui->exportTypes->currentIndex() == SCRIPT_TAB_INDEX;
+    exportParameters.isResearch = m_exportType == RESEARCH_TAB_INDEX;
+    exportParameters.isOutline = m_exportType == OUTLINE_TAB_INDEX;
+    exportParameters.isScript = m_exportType == SCRIPT_TAB_INDEX;
     if (exportParameters.isResearch) {
         exportParameters.filePath = m_ui->researchFile->text();
     } else {
@@ -182,7 +182,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 
 int ExportDialog::exportType() const
 {
-    return m_ui->exportTypes->currentIndex();
+    return m_exportType;
 }
 
 QString ExportDialog::researchFilePath() const
@@ -198,7 +198,7 @@ QString ExportDialog::scriptFilePath() const
 QString ExportDialog::exportFormat() const
 {
     QString format;
-    if (m_ui->exportTypes->currentIndex() == RESEARCH_TAB_INDEX) {
+    if (m_exportType == RESEARCH_TAB_INDEX) {
         format = "pdf";
     } else {
         if (m_ui->docx->isChecked()) {
@@ -349,7 +349,7 @@ void ExportDialog::updateParametersVisibility()
     //
     // Зависимость от вида
     //
-    if (m_ui->exportTypes->currentIndex() == OUTLINE_TAB_INDEX) {
+    if (m_exportType == OUTLINE_TAB_INDEX) {
         showDialoguesNumbers = false;
     }
     //
@@ -407,13 +407,13 @@ void ExportDialog::initConnections()
     // Покажем страницу параметров экспорта в зависимости от выбранной вкладки
     //
     connect(m_ui->exportTypes, &TabBarExpanded::currentChanged, [this] (int _index) {
-        m_exportType= _index;
-        if (_index == RESEARCH_TAB_INDEX) {
+        m_exportType = _index;
+        if (m_exportType == RESEARCH_TAB_INDEX) {
             m_ui->exportParameters->setCurrentWidget(m_ui->researchExportPage);
         } else {
             m_ui->exportParameters->setCurrentWidget(m_ui->scriptExportPage);
         }
-        checkExportAvailability(_index);
+        checkExportAvailability(m_exportType);
         updateParametersVisibility();
     });
 
