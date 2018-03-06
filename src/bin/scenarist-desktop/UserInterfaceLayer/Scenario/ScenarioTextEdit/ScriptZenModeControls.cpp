@@ -36,6 +36,7 @@ namespace {
         QPushButton* styleButton = new QPushButton(_parent);
         styleButton->setCheckable(true);
         styleButton->setProperty("leftAlignedText", true);
+        styleButton->setFocusPolicy(Qt::NoFocus);
 
         _parent->connect(styleButton, &QPushButton::clicked, _parent, &ScriptZenModeControls::changeStyle);
 
