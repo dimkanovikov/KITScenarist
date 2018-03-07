@@ -95,7 +95,7 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     m_hideTimer.setSingleShot(true);
     m_hideTimer.setInterval(2000);
     connect(&m_hideTimer, &QTimer::timeout, this, &ScriptZenModeControls::hideAnimated);
-    m_hideTimer.start();
+    hide();
 }
 
 void ScriptZenModeControls::setEditor(UserInterface::ScenarioTextEdit* _editor)
