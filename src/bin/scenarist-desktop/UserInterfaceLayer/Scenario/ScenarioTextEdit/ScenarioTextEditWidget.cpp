@@ -130,6 +130,7 @@ void ScenarioTextEditWidget::setDuration(const QString& _duration)
 void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
 {
     m_countersInfo->setText(_counters);
+    m_zenControls->setCountersInfo(_counters);
 }
 
 void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)

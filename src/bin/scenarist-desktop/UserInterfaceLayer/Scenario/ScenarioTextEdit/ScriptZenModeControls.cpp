@@ -16,6 +16,7 @@
 #include <QShortcut>
 #include <QTextBlock>
 #include <QVBoxLayout>
+#include <QLabel>
 
 using UserInterface::ScriptZenModeControls;
 using UserInterface::ScenarioTextEdit;
@@ -60,6 +61,8 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     m_quit->installEventFilter(this);
     connect(m_quit, &FlatButton::clicked, this, &ScriptZenModeControls::quitPressed);
 
+    m_countersInfo = new QLabel(this);
+
     m_buttons << ::createStyleButton(this);
     m_buttons << ::createStyleButton(this);
     m_buttons << ::createStyleButton(this);
@@ -83,6 +86,7 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     layout->addSpacing(10);
     layout->addWidget(m_quit, 0, Qt::AlignRight);
     layout->addStretch(1);
+    layout->addWidget(m_countersInfo);
     foreach (QPushButton* button, m_buttons) {
         layout->addWidget(button);
     }
@@ -186,6 +190,11 @@ void ScriptZenModeControls::activate(bool _active)
             hideAnimated();
         }
     }
+}
+
+void ScriptZenModeControls::setCountersInfo(const QString &_counters)
+{
+    m_countersInfo->setText(_counters);
 }
 
 bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)

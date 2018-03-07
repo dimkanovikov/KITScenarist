@@ -9,6 +9,7 @@ class QCheckBox;
 class QGraphicsOpacityEffect;
 class QPropertyAnimation;
 class QPushButton;
+class QLabel;
 
 
 namespace UserInterface
@@ -50,6 +51,11 @@ namespace UserInterface
          * @brief Настроить элементы управления для работы
          */
         void activate(bool _active);
+
+        /**
+         * @brief Установить счетчики
+         */
+        void setCountersInfo(const QString& _counters);
 
     signals:
         /**
@@ -99,6 +105,11 @@ namespace UserInterface
          * @brief Список кнопок
          */
         QList<QPushButton*> m_buttons;
+
+        /**
+         * @brief Счетчики
+         */
+        QLabel* m_countersInfo;
 
         /**
          * @brief Переключатель воспроизведения звука клавиатуры
