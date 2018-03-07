@@ -4,6 +4,7 @@
 #include <UserInterfaceLayer/Account/LoginDialog.h>
 #include <UserInterfaceLayer/Account/RenewSubscriptionDialog.h>
 #include <UserInterfaceLayer/Application/MenuView.h>
+#include <UserInterfaceLayer/Application/AboutDialog.h>
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
@@ -277,6 +278,11 @@ void MenuManager::initConnections()
     connect(m_renewSubscriptionDialog, &RenewSubscriptionDialog::renewSubsciptionRequested, [this] {
         emit renewSubscriptionRequested(m_renewSubscriptionDialog->duration(), m_renewSubscriptionDialog->paymentSystemType());
         QTimer::singleShot(3000, this, &MenuManager::getSubscriptionInfoRequested);
+    });
+
+    connect(m_view, &MenuView::aboutAppPressed, [this] {
+        UserInterface::AboutDialog dlg(m_view);
+        dlg.exec();
     });
 
     connect(m_view, &MenuView::hideRequested, [this] { WAF::Animation::sideSlideOut(m_view); });

@@ -364,7 +364,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableLabel.cpp \
     scenarist-desktop/ManagementLayer/MenuManager.cpp \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.cpp \
-    scenarist-core/BusinessLayer/Import/CeltxImporter.cpp
+    scenarist-core/BusinessLayer/Import/CeltxImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -636,7 +637,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableLabel.h \
     scenarist-desktop/ManagementLayer/MenuManager.h \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.h \
-    scenarist-core/BusinessLayer/Import/CeltxImporter.h
+    scenarist-core/BusinessLayer/Import/CeltxImporter.h \
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -662,7 +664,8 @@ FORMS += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectFileWidget.ui \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui \
-    scenarist-desktop/UserInterfaceLayer/Application/MenuView.ui
+    scenarist-desktop/UserInterfaceLayer/Application/MenuView.ui \
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui
 
 
 RESOURCES += \
