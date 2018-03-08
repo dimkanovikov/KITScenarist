@@ -162,7 +162,7 @@ void SettingsManager::applicationLanguageChanged(int _value)
     //
     // Уведомляем о том, что язык сменится после перезапуска
     //
-    QLightBoxMessage::information(m_view, QString::null, tr("Language will be change after application restart."));
+    QLightBoxMessage::information(m_view, QString::null, tr("Language will be changed after application restart."));
 }
 
 void SettingsManager::applicationUseDarkThemeChanged(bool _value)

@@ -410,7 +410,7 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
                     .arg(fileInfo.dir().absolutePath());
             } else if (fileInfo.exists()) {
                 errorMessage =
-                    tr("Can't write to file. Maybe it opened in other application. Please, close it and retry.");
+                    tr("Can't write to file. Maybe it is opened by another application. Please close it and retry.");
             } else {
                 errorMessage =
                     tr("Can't write to file. Check permissions to write in choosed folder. Please, choose other folder.");
@@ -499,7 +499,7 @@ void ApplicationManager::aboutSaveAs()
     QString saveAsProjectFileName =
             QFileDialog::getSaveFileName(
                 m_view,
-                tr("Choose file for save project"),
+                tr("Choose file to save project"),
                 projectPath,
                 tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
                 );
@@ -641,8 +641,8 @@ void ApplicationManager::aboutSave()
                 //
                 const QDialogButtonBox::StandardButton messageResult =
                         QLightBoxMessage::critical(m_view, tr("Saving error"),
-                                                   tr("Can't write you changes to project. There is some internal database error: %1 "
-                                                      "Please check that file is exists and you have permissions to write in it. Retry to save?")
+                                                   tr("Can't write your changes to the project. There is a internal database error: %1 "
+                                                      "Please check, if this file exists and if you have permissions to write. Retry (to save)?")
                                                    .arg(DatabaseLayer::Database::lastError()),
                                                    QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
                 //
@@ -662,8 +662,8 @@ void ApplicationManager::aboutSave()
                 //
                 const QDialogButtonBox::StandardButton messageResult =
                         QLightBoxMessage::critical(m_view, tr("Saving error"),
-                            tr("Can't write you changes to project located at <b>%1</b> becourse file isn't exist. "
-                               "Please move file back and retry to save. Retry to save?")
+                            tr("Can't write your changes to project located at <b>%1</b>, because the file doesn't exist. "
+                               "Please move the file back and retry saving. Retry saving")
                                 .arg(DatabaseLayer::Database::currentFile()),
                             QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
                 //
@@ -885,7 +885,7 @@ void ApplicationManager::moveLocalProjectToCloud(const QModelIndex& _index)
 
     if (!m_synchronizationManager->isLogged()) {
         QLightBoxMessage::warning(m_view, tr("Moving project to the cloud failed"),
-            tr("For moving projects to the cloud you should be logged in the KIT Scenaist cloud service."));
+            tr("For moving projects to the cloud you should be logged in the KIT Scenarist cloud service."));
         return;
     }
 
@@ -1181,8 +1181,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::NoSessionKeyError: {
             title = tr("Network Error");
-            error = tr("Can't correct load all data from service. "
-                       "Please check your internet connection quality and refresh synchronization.\n\n"
+            error = tr("Can't load all data from service correctly. "
+                       "Please check your internet connection and refresh synchronization.\n\n"
                        "Project didn't synchronized.");
             break;
         }
@@ -1357,7 +1357,7 @@ void ApplicationManager::aboutExit()
         // Выводим информацию для пользователя, о закрытии программы
         //
         QLightBoxProgress progress(m_view);
-        progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
+        progress.showProgress(tr("Exit from Application"), tr("Closing Database Connections and remove temporary files."));
 
         //
         // Закроем текущий проект
