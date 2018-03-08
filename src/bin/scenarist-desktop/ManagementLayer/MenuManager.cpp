@@ -82,6 +82,13 @@ void MenuManager::setProgressLoginLabel(bool _enable)
     }
 }
 
+void MenuManager::showLoginDialog(const QString& _email, const QString& _message)
+{
+    m_loginDialog->showPrepared();
+    m_loginDialog->setLoginEmail(_email);
+    m_loginDialog->setLoginError(_message);
+}
+
 void MenuManager::completeLogin(const QString& _userName, const QString& _userEmail, int _paymentMonth)
 {
     m_view->disableProgressLoginLabel();
@@ -116,6 +123,11 @@ void MenuManager::completeLogin(const QString& _userName, const QString& _userEm
         }
         m_view->setAvatar(avatar);
     });
+}
+
+QString MenuManager::userEmail() const
+{
+    return m_userEmail;
 }
 
 void MenuManager::setSubscriptionInfo(bool _isActive, const QString& _expiredDate, quint64 _usedSpace, quint64 _availableSpace)

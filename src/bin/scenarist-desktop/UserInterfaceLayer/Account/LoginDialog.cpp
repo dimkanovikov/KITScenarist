@@ -45,6 +45,12 @@ LoginDialog::~LoginDialog()
     delete m_ui;
 }
 
+void LoginDialog::setLoginEmail(const QString& _email)
+{
+    m_ui->loginEmail->setText(_email);
+    m_ui->loginPasswordEdit->setFocus();
+}
+
 QString LoginDialog::loginEmail() const
 {
     return m_ui->loginEmail->text().simplified();

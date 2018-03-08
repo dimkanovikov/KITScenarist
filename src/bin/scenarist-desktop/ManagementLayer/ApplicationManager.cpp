@@ -1141,9 +1141,25 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::IncorrectLoginError:
         case Sync::IncorrectPasswordError: {
-            error = tr("Incorrect username or password.");
-            m_menuManager->setProgressLoginLabel(false);
-            m_menuManager->retryLogin(error);
+            //
+            // Если пользователь не был авторизован, то прокинем
+            // сообщение об ошибке в диалог авторизации
+            //
+            if (!m_synchronizationManager->isLogged()) {
+                error = tr("Incorrect username or password.");
+                m_menuManager->setProgressLoginLabel(false);
+                m_menuManager->retryLogin(error);
+            }
+            //
+            // В противном случае, разавторизуем и покажем окно авторизации
+            // с сообщением о том, что пароль изменился
+            //
+            else {
+                const QString email = m_menuManager->userEmail();
+                m_synchronizationManager->logout();
+                error = tr("Saved password is incorrect. Look like you changed the password. Please, enter the new password.");
+                m_menuManager->showLoginDialog(email, error);
+            }
             break;
         }
 
