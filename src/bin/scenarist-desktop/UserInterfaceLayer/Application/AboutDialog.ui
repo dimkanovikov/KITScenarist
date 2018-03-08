@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>443</height>
+    <height>449</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -50,9 +50,15 @@ font-weight: 600;</string>
    <item row="3" column="0" colspan="2">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Simple and powerful screenplay editor developed by DimkaNovikov labs.</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Simple and powerful screenplay editor developed by &lt;a href=&quot;\&amp;quot;dimkanovikov.pro\&amp;quot;&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2b78da;&quot;&gt;DimkaNovikov labs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
      </property>
      <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
       <bool>true</bool>
      </property>
     </widget>
@@ -76,9 +82,15 @@ font-weight: 600;</string>
    <item row="5" column="0" colspan="2">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>This software is distributed under GNU GPL3 license, source code available on GitHub.</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This software is distributed under &lt;a href=&quot;\&amp;quot;https://github.com/dimkanovikov/KITScenarist/blob/develop/LICENSE\&amp;quot;&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2b78da;&quot;&gt;GNU GPL3&lt;/span&gt;&lt;/a&gt; license, source code available on &lt;a href=&quot;\&amp;quot;https://github.com/dimkanovikov/KITScenarist/\&amp;quot;&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2b78da;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
      </property>
      <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
       <bool>true</bool>
      </property>
     </widget>
@@ -133,18 +145,18 @@ font-weight: 600;</string>
     <widget class="QLabel" name="translators">
      <property name="text">
       <string>Our heroes, who help us to create international versions:
-Deutsch: 
-English: 
-Español: 
-Français: 
-Қазақ: 
-Polski: 
-Português: 
-Русский: 
-Українська мова: 
-فارْسِى: 
-汉语: 
-עִבְרִית: 
+Deutsch: Michael Krämer
+English: Dimka Novikov
+Español: Felipe Vece, Pedro Terrero
+Français: Felipe Vece, Antonio, Armand Robin
+Қазақ: Алпамыс Баткалов
+Polski: Rafał Puka
+Português: Ricardo Graça, Ronaldo German 
+Русский: Димка Новиков
+Українська мова: Myroslav S 
+فارْسِى: Arash Aneessee
+汉语: Stepan Chernetskiy, Barron Kang
+עִבְרִית: Maxim Ronkin
 </string>
      </property>
      <property name="wordWrap">
