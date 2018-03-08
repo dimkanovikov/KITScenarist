@@ -1157,7 +1157,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             else {
                 const QString email = m_menuManager->userEmail();
                 m_synchronizationManager->logout();
-                error = tr("Saved password is incorrect. Look like you changed the password. Please, enter the new password.");
+                error = tr("Saved password is incorrect. Looks like you changed the password. Please, enter the new password.");
                 m_menuManager->showLoginDialog(email, error);
             }
             break;
