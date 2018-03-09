@@ -55,7 +55,12 @@ namespace UserInterface
         /**
          * @brief Установить счетчики
          */
-        void setCountersInfo(const QString& _counters);
+        void setCountersInfo(const QStringList& _counters);
+
+        /**
+         * @brief Установить хронометраж
+         */
+        void setDuration(const QString& _duration);
 
     signals:
         /**
@@ -105,6 +110,11 @@ namespace UserInterface
          * @brief Список кнопок
          */
         QList<QPushButton*> m_buttons;
+
+        /**
+         * @brief Хронометраж
+         */
+        QLabel* m_duration;
 
         /**
          * @brief Счетчики

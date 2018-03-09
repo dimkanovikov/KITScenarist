@@ -57,7 +57,7 @@ namespace UserInterface
         /**
          * @brief Установить значения счётчиков
          */
-        void setCountersInfo(const QString& _counters);
+        void setCountersInfo(const QStringList& _counters);
 
         /**
          * @brief Включить/выключить отображение номеров сцен

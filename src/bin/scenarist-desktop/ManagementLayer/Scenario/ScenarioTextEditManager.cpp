@@ -61,7 +61,7 @@ void ScenarioTextEditManager::setDuration(const QString& _duration)
     m_view->setDuration(_duration);
 }
 
-void ScenarioTextEditManager::setCountersInfo(const QString& _counters)
+void ScenarioTextEditManager::setCountersInfo(const QStringList& _counters)
 {
     m_view->setCountersInfo(_counters);
 }
