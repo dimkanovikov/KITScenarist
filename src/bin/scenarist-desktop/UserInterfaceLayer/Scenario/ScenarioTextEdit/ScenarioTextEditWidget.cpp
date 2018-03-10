@@ -125,11 +125,13 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 void ScenarioTextEditWidget::setDuration(const QString& _duration)
 {
     m_duration->setText(_duration);
+    m_zenControls->setDuration(_duration);
 }
 
-void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
+void ScenarioTextEditWidget::setCountersInfo(const QStringList& _counters)
 {
-    m_countersInfo->setText(_counters);
+    m_countersInfo->setText(_counters.join("&nbsp;"));
+    m_zenControls->setCountersInfo(_counters);
 }
 
 void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)

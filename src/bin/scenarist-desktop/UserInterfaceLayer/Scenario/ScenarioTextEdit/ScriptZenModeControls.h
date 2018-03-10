@@ -9,6 +9,7 @@ class QCheckBox;
 class QGraphicsOpacityEffect;
 class QPropertyAnimation;
 class QPushButton;
+class QLabel;
 
 
 namespace UserInterface
@@ -50,6 +51,16 @@ namespace UserInterface
          * @brief Настроить элементы управления для работы
          */
         void activate(bool _active);
+
+        /**
+         * @brief Установить счетчики
+         */
+        void setCountersInfo(const QStringList& _counters);
+
+        /**
+         * @brief Установить хронометраж
+         */
+        void setDuration(const QString& _duration);
 
     signals:
         /**
@@ -99,6 +110,16 @@ namespace UserInterface
          * @brief Список кнопок
          */
         QList<QPushButton*> m_buttons;
+
+        /**
+         * @brief Хронометраж
+         */
+        QLabel* m_duration;
+
+        /**
+         * @brief Счетчики
+         */
+        QLabel* m_countersInfo;
 
         /**
          * @brief Переключатель воспроизведения звука клавиатуры

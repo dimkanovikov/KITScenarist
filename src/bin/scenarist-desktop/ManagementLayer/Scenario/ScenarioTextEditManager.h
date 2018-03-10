@@ -43,7 +43,7 @@ namespace ManagementLayer
         /**
          * @brief Установить значения счётчиков
          */
-        void setCountersInfo(const QString& _counters);
+        void setCountersInfo(const QStringList& _counters);
 
         /**
          * @brief Установить позицию курсора
