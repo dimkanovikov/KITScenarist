@@ -89,12 +89,13 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     layout->addStretch(1);
     layout->addWidget(m_duration);
     layout->addWidget(m_countersInfo);
+    layout->addStretch(1);
     foreach (QPushButton* button, m_buttons) {
         layout->addWidget(button);
     }
     layout->addSpacing(20);
     layout->addWidget(m_keyboardSound);
-    layout->addStretch(2);
+    layout->addStretch(4);
 
     setLayout(layout);
 
@@ -194,14 +195,14 @@ void ScriptZenModeControls::activate(bool _active)
     }
 }
 
-void ScriptZenModeControls::setCountersInfo(const QStringList &_counters)
-{
-    m_countersInfo->setText(_counters.join("<br>"));
-}
-
 void ScriptZenModeControls::setDuration(const QString &_duration)
 {
     m_duration->setText(_duration);
+}
+
+void ScriptZenModeControls::setCountersInfo(const QStringList &_counters)
+{
+    m_countersInfo->setText(_counters.join("<br>"));
 }
 
 bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)

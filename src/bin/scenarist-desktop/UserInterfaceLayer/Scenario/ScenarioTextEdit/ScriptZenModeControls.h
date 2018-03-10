@@ -53,14 +53,14 @@ namespace UserInterface
         void activate(bool _active);
 
         /**
-         * @brief Установить счетчики
-         */
-        void setCountersInfo(const QStringList& _counters);
-
-        /**
          * @brief Установить хронометраж
          */
         void setDuration(const QString& _duration);
+
+        /**
+         * @brief Установить счетчики
+         */
+        void setCountersInfo(const QStringList& _counters);
 
     signals:
         /**
