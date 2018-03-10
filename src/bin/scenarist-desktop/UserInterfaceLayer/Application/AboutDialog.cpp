@@ -18,7 +18,7 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::initView()
 {
-
+    m_ui->version->setText(tr("version") + " " + QApplication::applicationVersion());
 }
 
 void AboutDialog::initConnections()

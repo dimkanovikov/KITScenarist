@@ -63,10 +63,20 @@ namespace ManagementLayer
         void setProgressLoginLabel(bool _enable);
 
         /**
+         * @brief Отобразить диалог авторизации с заданными имейлом и сообщением об ошибке
+         */
+        void showLoginDialog(const QString& _email, const QString& _message);
+
+        /**
          * @brief Пользователь с заданным именем успешно авторизован на сервере
          */
         void completeLogin(const QString& _userName, const QString& _userEmail,
                            int _paymentMonth);
+
+        /**
+         * @brief Имейл пользователя
+         */
+        QString userEmail() const;
 
         /**
          * @brief Установить информацию о подписке

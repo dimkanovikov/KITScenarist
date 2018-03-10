@@ -141,7 +141,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                         .arg(fileInfo.dir().absolutePath());
                 } else if (fileInfo.exists()) {
                     errorMessage =
-                        tr("Can't write to file. Maybe it opened in other application. Please, close it and retry export.");
+                        tr("Can't write to file. Maybe it is opened by another application. Please close it and retry export.");
                 } else {
                     errorMessage =
                         tr("Can't write to file. Check permissions to write in choosed folder. Please, choose other folder.");

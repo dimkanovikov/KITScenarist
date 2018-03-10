@@ -162,7 +162,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>3</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -865,7 +865,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="scenarioEditPageStack">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -2442,7 +2442,7 @@ Paragraph</string>
                    <item>
                     <widget class="QCheckBox" name="simbolsCounter">
                      <property name="text">
-                      <string>Simbols</string>
+                      <string>Symbols</string>
                      </property>
                     </widget>
                    </item>
@@ -2455,7 +2455,7 @@ Paragraph</string>
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Simbols without spaces | Simbols with spaces</string>
+                      <string>Symbols without spaces | Symbols with spaces</string>
                      </property>
                      <property name="text">
                       <string/>

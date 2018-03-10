@@ -448,7 +448,7 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
     ResearchModelItem* researchItem = m_model->itemForIndex(_index);
     Research* research = researchItem->research();
     if (QLightBoxMessage::question(m_view, QString::null,
-            tr("Are you shure to remove research: <b>%1</b>?").arg(research->name()),
+            tr("Are you sure to remove research: <b>%1</b>?").arg(research->name()),
             QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes)
         == QDialogButtonBox::Yes) {
         //
