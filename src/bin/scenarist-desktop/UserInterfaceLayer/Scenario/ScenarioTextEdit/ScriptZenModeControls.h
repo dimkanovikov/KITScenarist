@@ -114,12 +114,12 @@ namespace UserInterface
         /**
          * @brief Хронометраж
          */
-        QLabel* m_duration;
+        QLabel* m_duration = nullptr;
 
         /**
          * @brief Счетчики
          */
-        QLabel* m_countersInfo;
+        QLabel* m_countersInfo = nullptr;
 
         /**
          * @brief Переключатель воспроизведения звука клавиатуры
