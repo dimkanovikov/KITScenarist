@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>597</width>
+    <width>613</width>
     <height>459</height>
    </rect>
   </property>
@@ -168,7 +168,7 @@
        <item row="13" column="0">
         <widget class="QRadioButton" name="ukrainian">
          <property name="text">
-          <string>Українська мова</string>
+          <string>Українська</string>
          </property>
         </widget>
        </item>
@@ -644,8 +644,8 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>257</width>
-            <height>393</height>
+            <width>297</width>
+            <height>472</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">

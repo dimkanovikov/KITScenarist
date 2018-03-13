@@ -43,7 +43,7 @@
    <item row="11" column="0">
     <widget class="QRadioButton" name="ukrainian">
      <property name="text">
-      <string>Українська мова</string>
+      <string>Українська</string>
      </property>
     </widget>
    </item>
