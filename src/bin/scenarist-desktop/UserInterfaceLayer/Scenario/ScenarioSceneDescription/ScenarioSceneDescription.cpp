@@ -65,6 +65,7 @@ void ScenarioSceneDescription::setDescription(const QString& _description)
 void ScenarioSceneDescription::setCommentOnly(bool _isCommentOnly)
 {
     m_title->setReadOnly(_isCommentOnly);
+    m_copyToScript->setVisible(!_isCommentOnly);
     m_description->setReadOnly(_isCommentOnly);
 }
 

@@ -937,7 +937,7 @@ void ScenarioTextEditWidget::initEditorConnections()
     connect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextEditWidget::aboutStyleChanged);
     connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
     connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
-    connect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setAdditionalContextMenuActions);
+    connect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setReviewContextMenuActions);
 
     updateTextMode(m_outline->isChecked());
 }
@@ -954,7 +954,7 @@ void ScenarioTextEditWidget::removeEditorConnections()
     disconnect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextEditWidget::aboutStyleChanged);
     disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
     disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
-    disconnect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setAdditionalContextMenuActions);
+    disconnect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setReviewContextMenuActions);
 }
 
 void ScenarioTextEditWidget::initStyleSheet()
