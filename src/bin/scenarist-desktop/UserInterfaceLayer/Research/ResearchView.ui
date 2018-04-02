@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
+    <width>676</width>
     <height>587</height>
    </rect>
   </property>
@@ -140,7 +140,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>12</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -728,7 +728,7 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon">
                 <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                 <normaloff>:/Graphics/Iconset/sitemap.svg</normaloff>:/Graphics/Iconset/sitemap.svg</iconset>
+                 <normaloff>:/Graphics/Iconset/mind-map.svg</normaloff>:/Graphics/Iconset/mind-map.svg</iconset>
                </property>
               </widget>
              </item>

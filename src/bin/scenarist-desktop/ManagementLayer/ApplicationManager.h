@@ -28,6 +28,7 @@ namespace ManagementLayer
     class ResearchManager;
     class ScenarioManager;
     class StatisticsManager;
+    class ToolsManager;
     class SettingsManager;
     class ExportManager;
     class ImportManager;
@@ -379,6 +380,11 @@ namespace ManagementLayer
          * @brief Управляющий статистикой
          */
         StatisticsManager* m_statisticsManager = nullptr;
+
+        /**
+         * @brief Управляющий инструментами
+         */
+        ToolsManager* m_toolsManager = nullptr;
 
         /**
          * @brief Управляющий настройками

@@ -365,7 +365,9 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/MenuManager.cpp \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.cpp \
     scenarist-core/BusinessLayer/Import/CeltxImporter.cpp \
-    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp \
+    scenarist-desktop/ManagementLayer/Tools/ToolsManager.cpp \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -638,7 +640,9 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/MenuManager.h \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.h \
     scenarist-core/BusinessLayer/Import/CeltxImporter.h \
-    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h \
+    scenarist-desktop/ManagementLayer/Tools/ToolsManager.h \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

@@ -5,6 +5,7 @@
 #include "Scenario/ScenarioCardsManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Statistics/StatisticsManager.h"
+#include "Tools/ToolsManager.h"
 #include "Settings/SettingsManager.h"
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
@@ -88,7 +89,8 @@ namespace {
     const int SCENARIO_CARDS_TAB_INDEX = 2;
     const int SCENARIO_TAB_INDEX = 3;
     const int STATISTICS_TAB_INDEX = 4;
-    const int SETTINGS_TAB_INDEX = 5;
+    const int TOOLS_TAB_INDEX = 5;
+    const int SETTINGS_TAB_INDEX = 6;
     /** @} */
 
     /**
@@ -196,6 +198,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     m_researchManager(new ResearchManager(this, m_view)),
     m_scenarioManager(new ScenarioManager(this, m_view)),
     m_statisticsManager(new StatisticsManager(this, m_view)),
+    m_toolsManager(new ToolsManager(this, m_view)),
     m_settingsManager(new SettingsManager(this, m_view)),
     m_importManager(new ImportManager(this, m_view)),
     m_exportManager(new ExportManager(this, m_view)),
@@ -1565,6 +1568,7 @@ void ApplicationManager::currentTabIndexChanged()
                     case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
                     case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
                     case STATISTICS_TAB_INDEX: result = m_statisticsManager->view(); break;
+                    case TOOLS_TAB_INDEX: result = m_toolsManager->view(); break;
                     case SETTINGS_TAB_INDEX: result = m_settingsManager->view(); break;
                 }
                 return result;
@@ -1855,22 +1859,24 @@ void ApplicationManager::initView()
     //
     // ... основную
     //
-    m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
-    m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+    m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Iconset/apps.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Iconset/sitemap.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Iconset/arrange-bring-to-front.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Iconset/file-document-box.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Iconset/chart-areaspline.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Tools"), QIcon(":/Graphics/Iconset/wrench.svg"));
+    m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Iconset/settings.svg"));
     //
     // ... вспомогательную
     //
     m_tabsSecondary->setCompactMode(true);
-    m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
-    m_tabsSecondary->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+    m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Iconset/apps.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Iconset/sitemap.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Iconset/arrange-bring-to-front.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Iconset/file-document-box.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Statistics"), QIcon(":/Graphics/Iconset/chart-areaspline.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Tools"), QIcon(":/Graphics/Iconset/wrench.svg"));
+    m_tabsSecondary->addTab(tr("Settings"), QIcon(":/Graphics/Iconset/settings.svg"));
     m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
 
     //
@@ -1882,6 +1888,7 @@ void ApplicationManager::initView()
     m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
     m_tabsWidgets->addWidget(m_scenarioManager->view());
     m_tabsWidgets->addWidget(m_statisticsManager->view());
+    m_tabsWidgets->addWidget(m_toolsManager->view());
     m_tabsWidgetsSecondary->setObjectName("tabsWidgetsSecondary");
     m_tabsWidgetsSecondary->addWidget(m_settingsManager->view());
 
