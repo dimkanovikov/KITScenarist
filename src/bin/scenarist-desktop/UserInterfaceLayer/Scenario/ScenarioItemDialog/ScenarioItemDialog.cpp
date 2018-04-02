@@ -21,7 +21,7 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
     m_folder(new QRadioButton(this)),
     m_scene(new QRadioButton(this)),
     m_header(new QLineEdit(this)),
-    m_color(new ColoredToolButton(QIcon(":/Graphics/Icons/Editing/rect.png"), this)),
+    m_color(new ColoredToolButton(QIcon(":/Graphics/Iconset/square.svg"), this)),
     m_description(new SimpleTextEditorWidget(this)),
     m_buttons(new QDialogButtonBox(this)),
     m_saveButton(m_buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole))

@@ -1038,20 +1038,20 @@ void ApplicationManager::setSyncIndicator()
             //
             // Облачный проект
             //
-            iconPath = ":/Graphics/Icons/Indicator/synced.png";
+            iconPath = ":/Graphics/Iconset/Indicator/synced.png";
             indicatorText = tr("Project synchronized");
         } else {
             //
             // Локальный проект
             //
-            iconPath = ":/Graphics/Icons/Indicator/connected.png";
+            iconPath = ":/Graphics/Iconset/Indicator/connected.png";
         }
         waveColor = QColor(0, 255, 0, 40);
     } else {
         //
         // Если интернета нет, то всегда показываем значок отключенного интернета
         //
-        iconPath = ":/Graphics/Icons/Indicator/disconnected.png";
+        iconPath = ":/Graphics/Iconset/Indicator/disconnected.png";
         indicatorTitle = tr("Connection inactive");
         indicatorText = isRemoteProject ? tr("Project didn't synchronized") : QString::null;
         waveColor = QColor(255, 0, 0, 40);
@@ -1197,7 +1197,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             title = tr("Session closed");
             error = tr("New session for you account started at other device.\n\n"
                        "Project didn't synchronized.");
-            reactivateIcon = QIcon(":/Graphics/Icons/Editing/refresh.png");
+            reactivateIcon = QIcon(":/Graphics/Iconset/refresh.svg");
             break;
         }
 
@@ -1309,7 +1309,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         if (m_synchronizationManager->isInternetConnectionActive()
                 && m_synchronizationManager->isLogged()) {
-            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
+            m_tabs->addIndicator(QIcon(":/Graphics/Iconset/Indicator/unsynced.png"));
             m_tabs->setIndicatorTitle(title);
             m_tabs->setIndicatorText(error);
             m_tabs->setIndicatorActionIcon(reactivateIcon);
@@ -1830,7 +1830,7 @@ void ApplicationManager::initView()
     // Настроим меню
     //
     m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
+    m_menu->setIcons(QIcon(":/Graphics/Iconset/menu.svg"));
     m_menu->setText(tr("Menu"));
     m_menuManager->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -2240,7 +2240,7 @@ void ApplicationManager::reloadApplicationSettings()
         //
         // Настроим боковую панель в зависимости от необходимости быть компактным
         //
-        m_menu->setIcons(QIcon(useCompactMode ? ":/Graphics/Icons/Mobile/menu.png" : ""));
+        m_menu->setIcons(QIcon(useCompactMode ? ":/Graphics/Iconset/menu.svg" : ""));
         m_tabs->setCompactMode(useCompactMode);
     }
 

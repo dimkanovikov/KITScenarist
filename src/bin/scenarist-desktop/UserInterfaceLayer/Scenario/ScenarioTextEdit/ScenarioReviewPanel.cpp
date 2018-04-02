@@ -99,10 +99,10 @@ ScenarioReviewPanel::ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _pa
     QFrame(_parent),
     m_editor(_editor),
     m_activateButton(new FlatButton(this)),
-    m_textColor(new ColoredToolButton(QIcon(":/Graphics/Icons/Review/font-color.png"), this)),
-    m_textBgColor(new ColoredToolButton(QIcon(":/Graphics/Icons/Review/font-bg-color.png"), this)),
-    m_textHighlight(new ColoredToolButton(QIcon(":/Graphics/Icons/Review/font-bg-color.png"), this)),
-    m_comment(new ColoredToolButton(QIcon(":/Graphics/Icons/Review/comment.png"), this)),
+    m_textColor(new ColoredToolButton(QIcon(":/Graphics/Iconset/format-color-text.svg"), this)),
+    m_textBgColor(new ColoredToolButton(QIcon(":/Graphics/Iconset/format-color-fill.svg"), this)),
+    m_textHighlight(new ColoredToolButton(QIcon(":/Graphics/Iconset/format-color-fill.svg"), this)),
+    m_comment(new ColoredToolButton(QIcon(":/Graphics/Iconset/message-text.svg"), this)),
     m_done(new FlatButton(this)),
     m_clear(new FlatButton(this))
 {
@@ -267,7 +267,7 @@ void ScenarioReviewPanel::updateContextMenuActions()
 
 void ScenarioReviewPanel::initView()
 {
-    m_activateButton->setIcons(QIcon(":/Graphics/Icons/Editing/review.png"));
+    m_activateButton->setIcons(QIcon(":/Graphics/Iconset/pencil.svg"));
     m_activateButton->setToolTip(tr("Review"));
     m_activateButton->setCheckable(true);
 
@@ -287,10 +287,10 @@ void ScenarioReviewPanel::initView()
     m_comment->setColorsPane(ColoredToolButton::Google);
     m_comment->setToolTip(tr("Add comment"));
     m_comment->setColor(::loadCommentColor());
-    m_done->setIcons(QIcon(":/Graphics/Icons/Review/done.png"));
+    m_done->setIcons(QIcon(":/Graphics/Iconset/check.svg"));
     m_done->setCheckable(true);
     m_done->setToolTip(tr("Mark as done"));
-    m_clear->setIcons(QIcon(":/Graphics/Icons/Review/clear.png"));
+    m_clear->setIcons(QIcon(":/Graphics/Iconset/pencil-off.svg"));
     m_clear->setToolTip(tr("Clear"));
 
     QFrame* popup = new QFrame(this);

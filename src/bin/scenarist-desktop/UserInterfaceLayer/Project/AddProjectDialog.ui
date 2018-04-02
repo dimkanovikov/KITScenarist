@@ -131,7 +131,7 @@ border: 1px solid palette(dark);
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+          <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -177,7 +177,7 @@ border: 1px solid palette(dark);
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+          <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -260,14 +260,14 @@ border: 1px solid palette(dark);
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ToolTipLabel</class>
-   <extends>QLabel</extends>
-   <header>3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ToolTipLabel</class>
+   <extends>QLabel</extends>
+   <header>3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -56,7 +56,7 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     qApp->installEventFilter(this);
 
     m_quit->setIconSize(QSize(36, 36));
-    m_quit->setIcons(QIcon(":/Graphics/Icons/Editing/close.png"));
+    m_quit->setIcons(QIcon(":/Graphics/Iconset/close.svg"));
     m_quit->setShortcut(QKeySequence("F5"));
     m_quit->installEventFilter(this);
     connect(m_quit, &FlatButton::clicked, this, &ScriptZenModeControls::quitPressed);

@@ -203,13 +203,13 @@ void ScenarioCardsView::initView(bool _isDraft)
     m_active->setCheckable(true);
     m_active->setToolButtonStyle(Qt::ToolButtonTextOnly);
 
-    m_addCard->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
+    m_addCard->setIcons(QIcon(":/Graphics/Iconset/plus.svg"));
     m_addCard->setToolTip(tr("Add new card"));
 
-    m_removeCard->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
+    m_removeCard->setIcons(QIcon(":/Graphics/Iconset/delete.svg"));
     m_removeCard->setToolTip(tr("Remove selected card"));
 
-    m_sort->setIcons(QIcon(":/Graphics/Icons/Cards/table.png"));
+    m_sort->setIcons(QIcon(":/Graphics/Iconset/grid.svg"));
     m_sort->setToolTip(tr("Sort cards"));
     //
     // Настроим меню кнопки упорядочивания карточек по сетке
@@ -223,14 +223,14 @@ void ScenarioCardsView::initView(bool _isDraft)
         m_sort->setMenu(menu);
     }
 
-    m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
+    m_save->setIcons(QIcon(":/Graphics/Iconset/content-save.svg"));
     m_save->setToolTip(tr("Save cards to file"));
 
-    m_print->setIcons(QIcon(":/Graphics/Icons/printer.png"));
+    m_print->setIcons(QIcon(":/Graphics/Iconset/printer.svg"));
     m_print->setToolTip(tr("Print cards"));
 
-    m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
-        QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
+    m_fullscreen->setIcons(QIcon(":/Graphics/Iconset/fullscreen.svg"),
+        QIcon(":/Graphics/Iconset/fullscreen-exit.svg"));
     m_fullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
     m_fullscreen->setCheckable(true);
 

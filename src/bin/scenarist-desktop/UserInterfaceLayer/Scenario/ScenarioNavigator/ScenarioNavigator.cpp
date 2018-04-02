@@ -339,15 +339,15 @@ void ScenarioNavigator::initView()
     m_scenesCount->setToolTip(tr("Scenes Count"));
     m_scenesCount->setAlignment((QLocale().textDirection() == Qt::LeftToRight ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignVCenter);
 
-    m_addItem->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
+    m_addItem->setIcons(QIcon(":/Graphics/Iconset/plus.svg"));
     m_addItem->setToolTip(tr("Add Scenario Item After Selected"));
 
-    m_removeItem->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
+    m_removeItem->setIcons(QIcon(":/Graphics/Iconset/delete.svg"));
     m_removeItem->setToolTip(tr("Remove Selected Scenario Item"));
 
     m_middleTitle->setFixedWidth(1);
 
-    m_showAdditionalPanels->setIcons(QIcon(":/Graphics/Icons/view-panels.png"));
+    m_showAdditionalPanels->setIcons(QIcon(":/Graphics/Iconset/view-agenda.svg"));
     m_showAdditionalPanels->setToolTip(tr("Show/hide additional panels"));
     m_showAdditionalPanels->setPopupMode(QToolButton::MenuButtonPopup);
     m_showAdditionalPanels->addAction(m_showDraft);
