@@ -367,7 +367,8 @@ SOURCES += \
     scenarist-core/BusinessLayer/Import/CeltxImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp \
     scenarist-desktop/ManagementLayer/Tools/ToolsManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.cpp
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.cpp \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -642,7 +643,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/Import/CeltxImporter.h \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h \
     scenarist-desktop/ManagementLayer/Tools/ToolsManager.h \
-    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.h
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.h \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -669,7 +671,8 @@ FORMS += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui \
     scenarist-desktop/UserInterfaceLayer/Application/MenuView.ui \
-    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui
 
 
 RESOURCES += \

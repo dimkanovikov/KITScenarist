@@ -3,9 +3,19 @@
 
 #include <QWidget>
 
+class FlatButton;
+class QLabel;
+class QTreeWidget;
+class QStackedWidget;
+class ScalableWrapper;
+
 
 namespace UserInterface
 {
+    class ScenarioTextEdit;
+    class ToolsSettings;
+
+
     /**
      * @brief Представление страницы инструментов
      */
@@ -31,6 +41,50 @@ namespace UserInterface
          * @brief Настроить внешний вид
          */
         void initStyleSheet();
+
+    private:
+        /**
+         * @brief Заполнители верхней панели
+         */
+        /** @{ */
+        QLabel* m_leftTopEmptyLabel = nullptr;
+        QLabel* m_rightTopEmptyLabel = nullptr;
+        /** @} */
+
+        /**
+         * @brief Кнопка "настройки инстрмента"
+         */
+        FlatButton* m_settings = nullptr;
+
+        /**
+         * @brief Кнопка "восстановить"
+         */
+        FlatButton* m_restore = nullptr;
+
+        /**
+         * @brief Панель навигации
+         */
+        QStackedWidget* m_navigation = nullptr;
+
+        /**
+         * @brief Панель с видами инструментов
+         */
+        QTreeWidget* m_toolsTypes = nullptr;
+
+        /**
+         * @brief Панель параметров инструментов
+         */
+        ToolsSettings* m_toolsSettings = nullptr;
+
+        /**
+         * @brief Редактор текста сценария для отображения результатов работы инструментов
+         */
+        ScenarioTextEdit* m_editor = nullptr;
+
+        /**
+         * @brief Обёртка редактора, позволяющая его масштабировать
+         */
+        ScalableWrapper* m_editorWrapper = nullptr;
     };
 }
 
