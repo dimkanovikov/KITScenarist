@@ -96,7 +96,7 @@ namespace {
     /**
      * @brief Расширения файлов проекта
      */
-    const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
+    const QString kProjectFleExtension = ".kitsp"; // kit scenarist project
 
     /**
      * @brief Старый вордовский формат не поддерживается
@@ -364,8 +364,8 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
         //
         // ... установим расширение, если не задано
         //
-        if (!newProjectFilePath.endsWith(PROJECT_FILE_EXTENSION)) {
-            newProjectFilePath.append(PROJECT_FILE_EXTENSION);
+        if (!newProjectFilePath.endsWith(kProjectFleExtension)) {
+            newProjectFilePath.append(kProjectFleExtension);
         }
 
         //
@@ -493,7 +493,7 @@ void ApplicationManager::aboutSaveAs()
         projectPath = projectsFolderPath() + QDir::separator()
                       + QString("%1 [%2]%3").arg(currentProject.name())
                                             .arg(currentProject.id())
-                                            .arg(PROJECT_FILE_EXTENSION);
+                                            .arg(kProjectFleExtension);
     }
 
     //
@@ -504,7 +504,7 @@ void ApplicationManager::aboutSaveAs()
                 m_view,
                 tr("Choose file to save project"),
                 projectPath,
-                tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+                tr ("Scenarist project files (*%1)").arg(kProjectFleExtension)
                 );
 
     //
@@ -514,8 +514,8 @@ void ApplicationManager::aboutSaveAs()
         //
         // ... установим расширение, если не задано
         //
-        if (!saveAsProjectFileName.endsWith(PROJECT_FILE_EXTENSION)) {
-            saveAsProjectFileName.append(PROJECT_FILE_EXTENSION);
+        if (!saveAsProjectFileName.endsWith(kProjectFleExtension)) {
+            saveAsProjectFileName.append(kProjectFleExtension);
         }
 
         //
@@ -731,7 +731,7 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
                         m_view,
                         tr("Choose project file to open"),
                         projectsFolderPath(),
-                        tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+                        tr ("Scenarist project files (*%1)").arg(kProjectFleExtension)
                         );
         }
 

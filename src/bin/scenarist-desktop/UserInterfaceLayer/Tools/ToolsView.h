@@ -4,11 +4,16 @@
 #include <QWidget>
 
 class FlatButton;
+class QAbstractItemModel;
 class QLabel;
 class QTreeWidget;
+class QTreeWidgetItem;
 class QStackedWidget;
 class ScalableWrapper;
 
+namespace BusinessLogic {
+    class ScenarioTextDocument;
+}
 
 namespace UserInterface
 {
@@ -25,6 +30,43 @@ namespace UserInterface
 
     public:
         explicit ToolsView(QWidget* _parent = nullptr);
+
+        /**
+         * @brief Задать поясняющий текст панели с данными
+         */
+        void showPlaceholderText(const QString& _text);
+
+        /**
+         * @brief Отобразить редактор сценария
+         */
+        void showScript();
+
+        /**
+         * @brief Задать документ сценария
+         */
+        void setScriptDocument(BusinessLogic::ScenarioTextDocument* _document);
+
+        /**
+         * @brief Установить список бэкапов
+         */
+        void setBackupsModel(QAbstractItemModel* _model);
+
+    signals:
+        /**
+         * @brief Необходимо загрузить данные для заданного инструмента
+         */
+        void dataRequested(int _toolIndex);
+
+        /**
+         * @brief Пользователь выбрал бэкап для восстановления
+         */
+        void backupSelected(const QModelIndex& _backupItemIndex);
+
+    private:
+        /**
+         * @brief Активировать инстумент
+         */
+        void activateTool(QTreeWidgetItem* _toolItem);
 
     private:
         /**
@@ -75,6 +117,16 @@ namespace UserInterface
          * @brief Панель параметров инструментов
          */
         ToolsSettings* m_toolsSettings = nullptr;
+
+        /**
+         * @brief Панель данных инструментов
+         */
+        QStackedWidget* m_content = nullptr;
+
+        /**
+         * @brief Вспомогательный текст для правой панели с контентом
+         */
+        QLabel* m_placeholder = nullptr;
 
         /**
          * @brief Редактор текста сценария для отображения результатов работы инструментов

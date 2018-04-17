@@ -4,6 +4,8 @@
 #include <QWidget>
 
 class FlatButton;
+class QAbstractItemModel;
+class QLightBoxProgress;
 
 namespace Ui {
     class ToolsSettings;
@@ -30,11 +32,21 @@ namespace UserInterface
          */
         void setCurrentType(int _index);
 
+        /**
+         * @brief Установить список бэкапов
+         */
+        void setBackupsModel(QAbstractItemModel* _model);
+
     signals:
         /**
          * @brief Пользователь нажал кнопку выйти из настроек инструментов
          */
         void backPressed();
+
+        /**
+         * @brief Пользователь выбрал бэкап для восстановления
+         */
+        void backupSelected(const QModelIndex& _backupItemIndex);
 
     private:
         /**
@@ -62,6 +74,11 @@ namespace UserInterface
          * @brief Кнопка "назад к списку инструментов"
          */
         FlatButton* m_back = nullptr;
+
+        /**
+         * @brief Виджет отображения прогресса загрузки данных в компоненте
+         */
+        QLightBoxProgress* m_loadingIndicator = nullptr;
     };
 }
 

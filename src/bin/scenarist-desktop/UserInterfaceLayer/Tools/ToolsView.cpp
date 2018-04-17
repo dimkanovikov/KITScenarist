@@ -12,6 +12,7 @@
 #include <QLabel>
 #include <QSplitter>
 #include <QStackedWidget>
+#include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
@@ -29,12 +30,42 @@ ToolsView::ToolsView(QWidget* _parent) :
     m_navigation(new QStackedWidget(this)),
     m_toolsTypes(new QTreeWidget(this)),
     m_toolsSettings(new ToolsSettings(this)),
+    m_content(new QStackedWidget(this)),
+    m_placeholder(new QLabel(this)),
     m_editor(new ScenarioTextEdit(this)),
     m_editorWrapper(new ScalableWrapper(m_editor, this))
 {
     initView();
     initConnections();
     initStyleSheet();
+}
+
+void ToolsView::showPlaceholderText(const QString& _text)
+{
+    m_placeholder->setText(_text);
+    WAF::StackedWidgetAnimation::fadeIn(m_content, m_placeholder);
+}
+
+void ToolsView::showScript()
+{
+    WAF::StackedWidgetAnimation::fadeIn(m_content, m_editorWrapper);
+}
+
+void ToolsView::setScriptDocument(BusinessLogic::ScenarioTextDocument* _document)
+{
+    m_editor->setScenarioDocument(_document);
+}
+
+void ToolsView::setBackupsModel(QAbstractItemModel* _model)
+{
+    m_toolsSettings->setBackupsModel(_model);
+}
+
+void ToolsView::activateTool(QTreeWidgetItem* _toolItem)
+{
+    m_toolsSettings->setTitle(_toolItem->text(0));
+    m_toolsSettings->setCurrentType(m_toolsTypes->indexOfTopLevelItem(_toolItem));
+    QTimer::singleShot(0, m_settings, &FlatButton::click);
 }
 
 void ToolsView::initView()
@@ -61,6 +92,8 @@ void ToolsView::initView()
     m_toolsTypes->setHeaderHidden(true);
     m_toolsTypes->setItemDelegate(new TreeViewItemDelegate(m_toolsTypes));
     m_toolsTypes->setStyle(new TreeViewProxyStyle(m_toolsTypes->style()));
+
+    m_editor->setReadOnly(true);
 
     //
     // Настраиваем общую панель с группами отчётов
@@ -89,17 +122,23 @@ void ToolsView::initView()
     //
     // Настраиваем панель с результатами работы инструментов
     //
+    m_placeholder->setAlignment(Qt::AlignCenter);
+    m_placeholder->setText(tr("Choose tool from list"));
+
     QHBoxLayout* toolDataToolbarLayout = new QHBoxLayout;
     toolDataToolbarLayout->setContentsMargins(QMargins());
     toolDataToolbarLayout->setSpacing(0);
     toolDataToolbarLayout->addWidget(m_restore);
     toolDataToolbarLayout->addWidget(m_rightTopEmptyLabel);
     //
+    m_content->addWidget(m_placeholder);
+    m_content->addWidget(m_editorWrapper);
+    //
     QVBoxLayout* toolDataLayout = new QVBoxLayout;
     toolDataLayout->setContentsMargins(QMargins());
     toolDataLayout->setSpacing(0);
     toolDataLayout->addLayout(toolDataToolbarLayout);
-    toolDataLayout->addWidget(m_editorWrapper, 1);
+    toolDataLayout->addWidget(m_content, 1);
 
     //
     // Настраиваем виджет результатов работы инструментов целиком
@@ -129,12 +168,14 @@ void ToolsView::initView()
 
 void ToolsView::initConnections()
 {
-    connect(m_toolsTypes, &QTreeWidget::currentItemChanged, [this] (QTreeWidgetItem* _item) {
-        m_toolsSettings->setTitle(_item->text(0));
-        m_toolsSettings->setCurrentType(m_toolsTypes->indexOfTopLevelItem(_item));
+    connect(m_toolsTypes, &QTreeWidget::itemActivated, this, &ToolsView::activateTool);
+    connect(m_toolsTypes, &QTreeWidget::itemClicked, this, &ToolsView::activateTool);
+    connect(m_settings, &FlatButton::clicked, [this] {
+        const int delay = WAF::StackedWidgetAnimation::slide(m_navigation, m_toolsSettings, WAF::FromRightToLeft);
+        QTimer::singleShot(delay, [this] { emit dataRequested(m_toolsTypes->currentIndex().row()); });
     });
-    connect(m_settings, &FlatButton::clicked, [this] { WAF::StackedWidgetAnimation::slide(m_navigation, m_toolsSettings, WAF::FromRightToLeft); });
     connect(m_toolsSettings, &ToolsSettings::backPressed, [this] { WAF::StackedWidgetAnimation::slide(m_navigation, m_navigation->widget(0), WAF::FromLeftToRight); });
+    connect(m_toolsSettings, &ToolsSettings::backupSelected, this, &ToolsView::backupSelected);
 }
 
 void ToolsView::initStyleSheet()

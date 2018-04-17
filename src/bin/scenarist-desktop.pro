@@ -368,7 +368,8 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp \
     scenarist-desktop/ManagementLayer/Tools/ToolsManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.cpp \
-    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.cpp
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.cpp \
+    scenarist-core/BusinessLayer/Tools/RestoreFromBackupTool.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -644,7 +645,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h \
     scenarist-desktop/ManagementLayer/Tools/ToolsManager.h \
     scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.h \
-    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.h
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.h \
+    scenarist-core/BusinessLayer/Tools/RestoreFromBackupTool.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
