@@ -722,6 +722,17 @@ void ScenarioManager::setZenMode(bool _isZen)
     m_textEditManager->setZenMode(_isZen);
 }
 
+void ScenarioManager::setScriptXml(const QString& _xml)
+{
+    BusinessLogic::ScenarioTextDocument* document = m_scenario->document();
+    QTextCursor cursor(document);
+    cursor.beginEditBlock();
+    cursor.select(QTextCursor::Document);
+    cursor.removeSelectedText();
+    document->insertFromMime(0, _xml);
+    cursor.endEditBlock();
+}
+
 void ScenarioManager::aboutUndo()
 {
     aboutSaveScenarioChanges();

@@ -28,6 +28,22 @@ namespace ManagementLayer
 
         QWidget* view() const;
 
+        /**
+         * @brief Подготовить инструменты для работы с текущим проектом
+         */
+        void loadCurrentProjectSettings();
+
+        /**
+         * @brief Перезагрузить параметры текстового редактора
+         */
+        void reloadTextEditSettings();
+
+    signals:
+        /**
+         * @brief Пользователь хочет применить заданный xml
+         */
+        void applyScriptRequested(const QString& _xml);
+
     private:
         /**
          * @brief Загрузить список доступных бэкапов из файла

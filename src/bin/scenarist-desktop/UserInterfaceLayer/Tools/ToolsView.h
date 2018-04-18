@@ -32,6 +32,31 @@ namespace UserInterface
         explicit ToolsView(QWidget* _parent = nullptr);
 
         /**
+         * @brief Сбросить представление
+         */
+        void reset();
+
+        /**
+         * @brief Включить/выключить отображение номеров сцен
+         */
+        void setShowScenesNumbers(bool _show);
+
+        /**
+         * @brief Включить/выключить отображение номеров реплик
+         */
+        void setShowDialoguesNumbers(bool _show);
+
+        /**
+         * @brief Настроить цвета текстового редактора
+         */
+        void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
+
+        /**
+         * @brief Настроить масштабирование редактора сценария
+         */
+        void setTextEditZoomRange(qreal _zoomRange);
+
+        /**
          * @brief Задать поясняющий текст панели с данными
          */
         void showPlaceholderText(const QString& _text);
@@ -61,6 +86,11 @@ namespace UserInterface
          * @brief Пользователь выбрал бэкап для восстановления
          */
         void backupSelected(const QModelIndex& _backupItemIndex);
+
+        /**
+         * @brief Пользователь хочет применить текущий сценарий
+         */
+        void applyScriptRequested();
 
     private:
         /**

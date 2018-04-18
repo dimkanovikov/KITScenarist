@@ -1,6 +1,8 @@
 #include "ToolsSettings.h"
 #include "ui_ToolsSettings.h"
 
+#include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
+#include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 
@@ -52,6 +54,9 @@ void ToolsSettings::initView()
     m_ui->back->setToolTip(tr("Back to the tools list"));
 
     m_loadingIndicator->hide();
+
+    m_ui->backups->setItemDelegate(new TreeViewItemDelegate(m_ui->backups));
+    m_ui->backups->setStyle(new TreeViewProxyStyle(m_ui->backups->style()));
 }
 
 void ToolsSettings::initConnections()
@@ -67,4 +72,6 @@ void ToolsSettings::initStyleSheet()
     m_ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 
     m_ui->back->setProperty("inTopPanel", true);
+
+    m_ui->backups->setProperty("mainContainer", true);
 }

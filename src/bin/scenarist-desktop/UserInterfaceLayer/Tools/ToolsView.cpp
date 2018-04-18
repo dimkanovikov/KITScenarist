@@ -40,14 +40,49 @@ ToolsView::ToolsView(QWidget* _parent) :
     initStyleSheet();
 }
 
+void ToolsView::reset()
+{
+    const int toolsTypesIndex = 0;
+    m_navigation->setCurrentIndex(toolsTypesIndex);
+    m_toolsTypes->clearSelection();
+
+    m_restore->hide();
+
+    showPlaceholderText(tr("Choose tool from list"));
+}
+
+void ToolsView::setShowScenesNumbers(bool _show)
+{
+    m_editor->setShowSceneNumbers(_show);
+}
+
+void ToolsView::setShowDialoguesNumbers(bool _show)
+{
+    m_editor->setShowDialoguesNumbers(_show);
+}
+
+void ToolsView::setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
+{
+    m_editor->viewport()->setStyleSheet(QString("color: %1; background-color: %2;").arg(_textColor.name(), _backgroundColor.name()));
+    m_editor->setStyleSheet(QString("#scenarioEditor { color: %1; }").arg(_textColor.name()));
+}
+
+void ToolsView::setTextEditZoomRange(qreal _zoomRange)
+{
+    m_editorWrapper->setZoomRange(_zoomRange);
+}
+
 void ToolsView::showPlaceholderText(const QString& _text)
 {
+    m_restore->hide();
     m_placeholder->setText(_text);
     WAF::StackedWidgetAnimation::fadeIn(m_content, m_placeholder);
 }
 
 void ToolsView::showScript()
 {
+    m_restore->show();
+    m_editor->relayoutDocument();
     WAF::StackedWidgetAnimation::fadeIn(m_content, m_editorWrapper);
 }
 
@@ -59,6 +94,10 @@ void ToolsView::setScriptDocument(BusinessLogic::ScenarioTextDocument* _document
 void ToolsView::setBackupsModel(QAbstractItemModel* _model)
 {
     m_toolsSettings->setBackupsModel(_model);
+
+    if (_model == nullptr) {
+        showPlaceholderText(tr("Didn't find any backups for the current project"));
+    }
 }
 
 void ToolsView::activateTool(QTreeWidgetItem* _toolItem)
@@ -123,7 +162,9 @@ void ToolsView::initView()
     // Настраиваем панель с результатами работы инструментов
     //
     m_placeholder->setAlignment(Qt::AlignCenter);
-    m_placeholder->setText(tr("Choose tool from list"));
+
+    m_editor->setPageMargins(QMarginsF{15, 5, 12, 5});
+    m_editor->setUseSpellChecker(false);
 
     QHBoxLayout* toolDataToolbarLayout = new QHBoxLayout;
     toolDataToolbarLayout->setContentsMargins(QMargins());
@@ -176,6 +217,7 @@ void ToolsView::initConnections()
     });
     connect(m_toolsSettings, &ToolsSettings::backPressed, [this] { WAF::StackedWidgetAnimation::slide(m_navigation, m_navigation->widget(0), WAF::FromLeftToRight); });
     connect(m_toolsSettings, &ToolsSettings::backupSelected, this, &ToolsView::backupSelected);
+    connect(m_restore, &FlatButton::clicked, this, &ToolsView::applyScriptRequested);
 }
 
 void ToolsView::initStyleSheet()

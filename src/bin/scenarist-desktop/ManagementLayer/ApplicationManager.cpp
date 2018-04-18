@@ -1747,6 +1747,7 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     m_researchManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
     m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
     m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
+    m_toolsManager->loadCurrentProjectSettings();
     loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 
     //
@@ -2076,14 +2077,17 @@ void ApplicationManager::initConnections()
             m_researchManager, &ResearchManager::updateSettings);
     connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,
             m_scenarioManager, &ScenarioManager::aboutCardsSettingsUpdated);
-    connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
-            m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
-    connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
-            m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
-    connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
-            m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
-    connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
-            m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
+    connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutTextEditSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::navigatorSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutNavigatorSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::chronometrySettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutChronometrySettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::countersSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutCountersSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated, m_toolsManager, &ToolsManager::reloadTextEditSettings);
+
+    connect(m_toolsManager, &ToolsManager::applyScriptRequested, m_scenarioManager, &ScenarioManager::setScriptXml);
 
     connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
     connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
