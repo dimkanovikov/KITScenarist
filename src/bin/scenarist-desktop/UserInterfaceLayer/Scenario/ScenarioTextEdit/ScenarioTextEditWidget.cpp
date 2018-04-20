@@ -773,7 +773,7 @@ void ScenarioTextEditWidget::aboutStyleChanged()
 void ScenarioTextEditWidget::initView()
 {
     m_outline->setObjectName("scenarioOutlineMode");
-    m_outline->setIcons(QIcon(":/Graphics/Icons/Editing/outline.png"));
+    m_outline->setIcons(QIcon(":/Graphics/Iconset/view-list.svg"));
     m_outline->setToolTip(tr("Outline mode"));
     m_outline->setCheckable(true);
 
@@ -782,19 +782,19 @@ void ScenarioTextEditWidget::initView()
 
     initStylesCombo();
 
-    m_undo->setIcons(QIcon(":/Graphics/Icons/Editing/undo.png"));
+    m_undo->setIcons(QIcon(":/Graphics/Iconset/undo.svg"));
     m_undo->setToolTip(ShortcutHelper::makeToolTip(tr("Undo last action"), "Ctrl+Z"));
 
-    m_redo->setIcons(QIcon(":/Graphics/Icons/Editing/redo.png"));
+    m_redo->setIcons(QIcon(":/Graphics/Iconset/redo.svg"));
     m_redo->setToolTip(ShortcutHelper::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
 
     m_search->setObjectName("scenarioSearch");
-    m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
+    m_search->setIcons(QIcon(":/Graphics/Iconset/magnify.svg"));
     m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search and Replace"), "Ctrl+F"));
     m_search->setCheckable(true);
 
     m_fastFormat->setObjectName("scenarioFastFormat");
-    m_fastFormat->setIcons(QIcon(":/Graphics/Icons/Editing/format.png"));
+    m_fastFormat->setIcons(QIcon(":/Graphics/Iconset/layers.svg"));
     m_fastFormat->setToolTip(tr("Text Fast Format"));
     m_fastFormat->setCheckable(true);
 

@@ -210,7 +210,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/help_startpage.png</normaloff>:/Graphics/Icons/help_startpage.png</iconset>
+              <normaloff>:/Graphics/Iconset/help-circle.svg</normaloff>:/Graphics/Iconset/help-circle.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -243,7 +243,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/project_open.png</normaloff>:/Graphics/Icons/project_open.png</iconset>
+              <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -263,7 +263,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/project_new.png</normaloff>:/Graphics/Icons/project_new.png</iconset>
+              <normaloff>:/Graphics/Iconset/plus.svg</normaloff>:/Graphics/Iconset/plus.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -302,7 +302,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-             <normaloff>:/Graphics/Icons/Editing/refresh_green.png</normaloff>:/Graphics/Icons/Editing/refresh_green.png</iconset>
+             <normaloff>:/Graphics/Iconset/refresh.svg</normaloff>:/Graphics/Iconset/refresh.svg</iconset>
            </property>
            <property name="iconSize">
             <size>

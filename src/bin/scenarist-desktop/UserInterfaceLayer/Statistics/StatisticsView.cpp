@@ -294,7 +294,7 @@ void StatisticsView::initView()
     //
     // Настраиваем панели инструментов
     //
-    m_settings->setIcons(QIcon(":/Graphics/Icons/settings_tool.png"));
+    m_settings->setIcons(QIcon(":/Graphics/Iconset/settings.svg"));
     m_settings->setCheckable(true);
     m_settings->setToolTip(tr("Report settings"));
     ctkPopupWidget* settingsPanel = new ctkPopupWidget(m_settings);
@@ -308,11 +308,11 @@ void StatisticsView::initView()
     settingsPanel->setFixedSize(1, 0);
     connect(m_settings, SIGNAL(toggled(bool)), settingsPanel, SLOT(showPopup(bool)));
 
-    m_print->setIcons(QIcon(":/Graphics/Icons/printer.png"));
+    m_print->setIcons(QIcon(":/Graphics/Iconset/printer.svg"));
     m_print->setToolTip(tr("Print preview"));
-    m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
+    m_save->setIcons(QIcon(":/Graphics/Iconset/content-save.svg"));
     m_save->setToolTip(tr("Save report to file"));
-    m_update->setIcons(QIcon(":/Graphics/Icons/Editing/refresh.png"));
+    m_update->setIcons(QIcon(":/Graphics/Iconset/refresh.svg"));
     m_update->setToolTip(tr("Update current report"));
 
 
@@ -320,42 +320,42 @@ void StatisticsView::initView()
     // Настраиваем панель со списком отчётов
     //
     QTreeWidgetItem* reports = new QTreeWidgetItem(m_statisticTypes, { tr("Reports") });
-    reports->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report-multiple.png"));
+    reports->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/clipboard-text.svg"));
     QTreeWidgetItem* summaryStatisticsReport = new QTreeWidgetItem(reports, { tr("Summary statistics") });
     summaryStatisticsReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     summaryStatisticsReport->setData(0, Qt::UserRole + 1, StatisticsParameters::SummaryReport);
-    summaryStatisticsReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
+    summaryStatisticsReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/file-document-box.svg"));
     QTreeWidgetItem* sceneReport = new QTreeWidgetItem(reports, { tr("Scene report") });
     sceneReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     sceneReport->setData(0, Qt::UserRole + 1, StatisticsParameters::SceneReport);
-    sceneReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
+    sceneReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/file-document-box.svg"));
     QTreeWidgetItem* locationReport = new QTreeWidgetItem(reports, { tr("Location report") });
     locationReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     locationReport->setData(0, Qt::UserRole + 1, StatisticsParameters::LocationReport);
-    locationReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
+    locationReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/file-document-box.svg"));
     QTreeWidgetItem* castReport = new QTreeWidgetItem(reports, { tr("Cast report") });
     castReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     castReport->setData(0, Qt::UserRole + 1, StatisticsParameters::CastReport);
-    castReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
+    castReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/file-document-box.svg"));
     QTreeWidgetItem* charactersDialoguesReport = new QTreeWidgetItem(reports, { tr("Characters dialogues") });
     charactersDialoguesReport->setData(0, Qt::UserRole, StatisticsParameters::Report);
     charactersDialoguesReport->setData(0, Qt::UserRole + 1, StatisticsParameters::CharacterReport);
-    charactersDialoguesReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/report.png"));
+    charactersDialoguesReport->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/file-document-box.svg"));
     m_statisticTypes->addTopLevelItem(reports);
 
     //
     // Настраиваем панель со списком графиков
     //
     QTreeWidgetItem* plots = new QTreeWidgetItem(m_statisticTypes, { tr("Plots") });
-    plots->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot-multiple.png"));
+    plots->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/clipboard-pulse.svg"));
     QTreeWidgetItem* storyStructureAnalisysPlot = new QTreeWidgetItem(plots, { tr("Story structure analysis") });
     storyStructureAnalisysPlot->setData(0, Qt::UserRole, StatisticsParameters::Plot);
     storyStructureAnalisysPlot->setData(0, Qt::UserRole + 1, StatisticsParameters::StoryStructureAnalisysPlot);
-    storyStructureAnalisysPlot->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot.png"));
+    storyStructureAnalisysPlot->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/chart-line.svg"));
     QTreeWidgetItem* charactersActivityPlot = new QTreeWidgetItem(plots, { tr("Characters activity") });
     charactersActivityPlot->setData(0, Qt::UserRole, StatisticsParameters::Plot);
     charactersActivityPlot->setData(0, Qt::UserRole + 1, StatisticsParameters::CharactersActivityPlot);
-    charactersActivityPlot->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Icons/plot.png"));
+    charactersActivityPlot->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/chart-line.svg"));
     m_statisticTypes->addTopLevelItem(plots);
 
     m_statisticTypes->setObjectName("StatisticsTypesTree");

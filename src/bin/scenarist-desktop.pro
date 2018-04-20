@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent multimedia
+QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent multimedia svg
 !win32-g++: QT += webengine webenginewidgets
 
 TARGET = Scenarist
@@ -365,7 +365,11 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/MenuManager.cpp \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.cpp \
     scenarist-core/BusinessLayer/Import/CeltxImporter.cpp \
-    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.cpp \
+    scenarist-desktop/ManagementLayer/Tools/ToolsManager.cpp \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.cpp \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.cpp \
+    scenarist-core/BusinessLayer/Tools/RestoreFromBackupTool.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -638,7 +642,11 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/MenuManager.h \
     scenarist-core/3rd_party/Widgets/ClickableLabel/ClickableFrame.h \
     scenarist-core/BusinessLayer/Import/CeltxImporter.h \
-    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.h \
+    scenarist-desktop/ManagementLayer/Tools/ToolsManager.h \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsView.h \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.h \
+    scenarist-core/BusinessLayer/Tools/RestoreFromBackupTool.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -665,7 +673,8 @@ FORMS += \
     scenarist-core/UserInterfaceLayer/ProjectsList/ProjectUserWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui \
     scenarist-desktop/UserInterfaceLayer/Application/MenuView.ui \
-    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui
 
 
 RESOURCES += \

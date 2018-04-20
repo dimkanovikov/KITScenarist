@@ -84,7 +84,7 @@ border: 1px solid palette(dark);
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+          <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
         </property>
         <property name="iconSize">
          <size>

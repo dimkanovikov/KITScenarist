@@ -42,10 +42,10 @@ void ScriptDictionaries::initView()
     m_types->addItem(tr("Character states"), static_cast<int>(Type::CharacterStates));
     m_types->addItem(tr("Transitions"), static_cast<int>(Type::Transitions));
 
-    m_addItem->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
+    m_addItem->setIcons(QIcon(":/Graphics/Iconset/plus.svg"));
     m_addItem->setToolTip(tr("Add dictionary item"));
 
-    m_removeItem->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
+    m_removeItem->setIcons(QIcon(":/Graphics/Iconset/delete.svg"));
     m_removeItem->setToolTip(tr("Remove selected item"));
 
     m_items->setItemDelegate(new TreeViewItemDelegate(m_items));

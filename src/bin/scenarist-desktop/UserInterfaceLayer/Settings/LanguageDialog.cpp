@@ -25,6 +25,7 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
         case 9: languageButton = m_ui->chinese; break;
         case 10: languageButton = m_ui->hebrew; break;
         case 11: languageButton = m_ui->polish; break;
+        case 12: languageButton = m_ui->turkish; break;
         default: break;
     }
 
@@ -67,6 +68,8 @@ int LanguageDialog::language() const
         result = 10;
     } else if (m_ui->polish->isChecked()) {
         result = 11;
+    } else if (m_ui->turkish->isChecked()) {
+        result = 12;
     }
 
     return result;

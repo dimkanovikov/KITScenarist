@@ -722,6 +722,17 @@ void ScenarioManager::setZenMode(bool _isZen)
     m_textEditManager->setZenMode(_isZen);
 }
 
+void ScenarioManager::setScriptXml(const QString& _xml)
+{
+    BusinessLogic::ScenarioTextDocument* document = m_scenario->document();
+    QTextCursor cursor(document);
+    cursor.beginEditBlock();
+    cursor.select(QTextCursor::Document);
+    cursor.removeSelectedText();
+    document->insertFromMime(0, _xml);
+    cursor.endEditBlock();
+}
+
 void ScenarioManager::aboutUndo()
 {
     aboutSaveScenarioChanges();
@@ -1017,8 +1028,8 @@ void ScenarioManager::initView()
     m_viewEditors->addWidget(m_textEditManager->view());
 
     m_showFullscreen = new FlatButton(m_view);
-    m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
-        QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
+    m_showFullscreen->setIcons(QIcon(":/Graphics/Iconset/fullscreen.svg"),
+        QIcon(":/Graphics/Iconset/fullscreen-exit.svg"));
     m_showFullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
     m_showFullscreen->setShortcut(Qt::Key_F5);
     m_showFullscreen->setCheckable(true);
