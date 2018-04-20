@@ -8,8 +8,8 @@
 
 namespace {
 
-const char* const ID_ATTRIBUTE 		= u8"id";
-const char* const CLASS_ATTRIBUTE 	= u8"class";
+const char* const ID_ATTRIBUTE 		= "id";
+const char* const CLASS_ATTRIBUTE 	= "class";
 
 template<typename TFunctor>
 bool iterateTree(GumboNode* node, TFunctor& functor)
@@ -265,7 +265,7 @@ QStringList QGumboNode::classList() const
     GumboAttribute* attr = gumbo_get_attribute(&ptr_->v.element.attributes, CLASS_ATTRIBUTE);
     if (attr) {
         QString values = QString::fromUtf8(attr->value);
-        return values.split(u8" ", QString::SkipEmptyParts, Qt::CaseInsensitive);
+        return values.split(" ", QString::SkipEmptyParts, Qt::CaseInsensitive);
     }
 
     return QStringList();

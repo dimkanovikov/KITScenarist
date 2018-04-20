@@ -60,7 +60,7 @@ void OnboardingManager::initConnections()
 
 void OnboardingManager::updateUsedTemplates()
 {
-    auto newTemplateName = [] (const QString& _oldName) {
+    auto newTemplateName = [] (const QString& _oldName) -> const QString {
         if (_oldName == BusinessLogic::ScenarioTemplate::oldFinalDraftA4TemplateName()) {
             return BusinessLogic::ScenarioTemplate::finalDraftA4TemplateName();
         } else if (_oldName == BusinessLogic::ScenarioTemplate::oldFinalDraftLetterTemplateName()) {
