@@ -2097,12 +2097,9 @@ void ApplicationManager::initConnections()
     connect(m_synchronizationManager, &SynchronizationManager::networkStatusChanged, this, &ApplicationManager::setSyncIndicator);
     connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, m_tabs, &SideTabBar::removeIndicator);
 
-    connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
-            m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
-    connect(m_synchronizationManager, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
-            m_scenarioManager, SLOT(aboutApplyPatches(QList<QString>,bool)));
-    connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
-            m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
+    connect(m_synchronizationManager, &SynchronizationManager::applyPatchRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatch);
+    connect(m_synchronizationManager, &SynchronizationManager::applyPatchesRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatches);
+    connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, m_scenarioManager, &ScenarioManager::aboutCursorsUpdated);
     connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, [this] (const QMap<QString, int>& _cursors, bool _isDraft) {
         if (_isDraft == m_scenarioManager->workModeIsDraft()) {
             m_tabs->setIndicatorMenu(_cursors.keys().toVector());

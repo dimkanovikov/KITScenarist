@@ -162,7 +162,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>6</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">

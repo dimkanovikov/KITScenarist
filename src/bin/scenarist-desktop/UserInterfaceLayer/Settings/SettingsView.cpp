@@ -191,6 +191,11 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Polish"));
             break;
         }
+
+        case 12: {
+            m_ui->applicationLanguage->setText(tr("Turkish"));
+            break;
+        }
     }
 }
 
@@ -729,8 +734,6 @@ void SettingsView::initData()
     //
     // Добавим словари проверки орфографии
     //
-    m_ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
-    m_ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
     m_ui->spellCheckingLanguage->addItem(tr("Armenian (Eastern)"), SpellChecker::ArmenianEastern);
     m_ui->spellCheckingLanguage->addItem(tr("Armenian (Western)"), SpellChecker::ArmenianWestern);
     m_ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
@@ -743,8 +746,11 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Polish"), SpellChecker::Polish);
     m_ui->spellCheckingLanguage->addItem(tr("Portuguese (Brazil)"), SpellChecker::PortugueseBrazilian);
     m_ui->spellCheckingLanguage->addItem(tr("Portuguese (Portugal)"), SpellChecker::Portuguese);
+    m_ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
+    m_ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
     m_ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
     m_ui->spellCheckingLanguage->addItem(tr("Swedish"), SpellChecker::Swedish);
+    m_ui->spellCheckingLanguage->addItem(tr("Turkish"), SpellChecker::Turkish);
     m_ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 }
 
@@ -758,7 +764,7 @@ void SettingsView::initView()
     m_ui->settingsSplitter->setOpaqueResize(false);
     m_ui->settingsSplitter->setStretchFactor(1, 1);
 
-    m_ui->spellCheckingLanguage->setCurrentIndex(0);
+    m_ui->spellCheckingLanguage->setCurrentIndex(-1);
     m_ui->spellCheckingLanguage->setEnabled(false);
     m_ui->browseBackupFolder->updateIcons();
 
