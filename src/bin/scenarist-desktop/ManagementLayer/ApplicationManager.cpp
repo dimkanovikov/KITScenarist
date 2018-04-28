@@ -5,6 +5,7 @@
 #include "Scenario/ScenarioCardsManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Statistics/StatisticsManager.h"
+#include "Tools/ToolsManager.h"
 #include "Settings/SettingsManager.h"
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
@@ -88,13 +89,14 @@ namespace {
     const int SCENARIO_CARDS_TAB_INDEX = 2;
     const int SCENARIO_TAB_INDEX = 3;
     const int STATISTICS_TAB_INDEX = 4;
-    const int SETTINGS_TAB_INDEX = 5;
+    const int TOOLS_TAB_INDEX = 5;
+    const int SETTINGS_TAB_INDEX = 6;
     /** @} */
 
     /**
      * @brief Расширения файлов проекта
      */
-    const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
+    const QString kProjectFleExtension = ".kitsp"; // kit scenarist project
 
     /**
      * @brief Старый вордовский формат не поддерживается
@@ -196,6 +198,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     m_researchManager(new ResearchManager(this, m_view)),
     m_scenarioManager(new ScenarioManager(this, m_view)),
     m_statisticsManager(new StatisticsManager(this, m_view)),
+    m_toolsManager(new ToolsManager(this, m_view)),
     m_settingsManager(new SettingsManager(this, m_view)),
     m_importManager(new ImportManager(this, m_view)),
     m_exportManager(new ExportManager(this, m_view)),
@@ -361,8 +364,8 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
         //
         // ... установим расширение, если не задано
         //
-        if (!newProjectFilePath.endsWith(PROJECT_FILE_EXTENSION)) {
-            newProjectFilePath.append(PROJECT_FILE_EXTENSION);
+        if (!newProjectFilePath.endsWith(kProjectFleExtension)) {
+            newProjectFilePath.append(kProjectFleExtension);
         }
 
         //
@@ -490,7 +493,7 @@ void ApplicationManager::aboutSaveAs()
         projectPath = projectsFolderPath() + QDir::separator()
                       + QString("%1 [%2]%3").arg(currentProject.name())
                                             .arg(currentProject.id())
-                                            .arg(PROJECT_FILE_EXTENSION);
+                                            .arg(kProjectFleExtension);
     }
 
     //
@@ -501,7 +504,7 @@ void ApplicationManager::aboutSaveAs()
                 m_view,
                 tr("Choose file to save project"),
                 projectPath,
-                tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+                tr ("Scenarist project files (*%1)").arg(kProjectFleExtension)
                 );
 
     //
@@ -511,8 +514,8 @@ void ApplicationManager::aboutSaveAs()
         //
         // ... установим расширение, если не задано
         //
-        if (!saveAsProjectFileName.endsWith(PROJECT_FILE_EXTENSION)) {
-            saveAsProjectFileName.append(PROJECT_FILE_EXTENSION);
+        if (!saveAsProjectFileName.endsWith(kProjectFleExtension)) {
+            saveAsProjectFileName.append(kProjectFleExtension);
         }
 
         //
@@ -728,7 +731,7 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
                         m_view,
                         tr("Choose project file to open"),
                         projectsFolderPath(),
-                        tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+                        tr ("Scenarist project files (*%1)").arg(kProjectFleExtension)
                         );
         }
 
@@ -1038,20 +1041,20 @@ void ApplicationManager::setSyncIndicator()
             //
             // Облачный проект
             //
-            iconPath = ":/Graphics/Icons/Indicator/synced.png";
+            iconPath = ":/Graphics/Iconset/Indicator/synced.png";
             indicatorText = tr("Project synchronized");
         } else {
             //
             // Локальный проект
             //
-            iconPath = ":/Graphics/Icons/Indicator/connected.png";
+            iconPath = ":/Graphics/Iconset/Indicator/connected.png";
         }
         waveColor = QColor(0, 255, 0, 40);
     } else {
         //
         // Если интернета нет, то всегда показываем значок отключенного интернета
         //
-        iconPath = ":/Graphics/Icons/Indicator/disconnected.png";
+        iconPath = ":/Graphics/Iconset/Indicator/disconnected.png";
         indicatorTitle = tr("Connection inactive");
         indicatorText = isRemoteProject ? tr("Project didn't synchronized") : QString::null;
         waveColor = QColor(255, 0, 0, 40);
@@ -1197,7 +1200,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             title = tr("Session closed");
             error = tr("New session for you account started at other device.\n\n"
                        "Project didn't synchronized.");
-            reactivateIcon = QIcon(":/Graphics/Icons/Editing/refresh.png");
+            reactivateIcon = QIcon(":/Graphics/Iconset/refresh.svg");
             break;
         }
 
@@ -1309,7 +1312,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         if (m_synchronizationManager->isInternetConnectionActive()
                 && m_synchronizationManager->isLogged()) {
-            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
+            m_tabs->addIndicator(QIcon(":/Graphics/Iconset/Indicator/unsynced.png"));
             m_tabs->setIndicatorTitle(title);
             m_tabs->setIndicatorText(error);
             m_tabs->setIndicatorActionIcon(reactivateIcon);
@@ -1565,6 +1568,7 @@ void ApplicationManager::currentTabIndexChanged()
                     case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
                     case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
                     case STATISTICS_TAB_INDEX: result = m_statisticsManager->view(); break;
+                    case TOOLS_TAB_INDEX: result = m_toolsManager->view(); break;
                     case SETTINGS_TAB_INDEX: result = m_settingsManager->view(); break;
                 }
                 return result;
@@ -1743,6 +1747,7 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     m_researchManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
     m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
     m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
+    m_toolsManager->loadCurrentProjectSettings();
     loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 
     //
@@ -1830,7 +1835,7 @@ void ApplicationManager::initView()
     // Настроим меню
     //
     m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_menu->setIcons(QIcon(":/Graphics/Icons/Mobile/menu.png"));
+    m_menu->setIcons(QIcon(":/Graphics/Iconset/menu.svg"));
     m_menu->setText(tr("Menu"));
     m_menuManager->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -1855,22 +1860,24 @@ void ApplicationManager::initView()
     //
     // ... основную
     //
-    m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
-    m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+    m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Iconset/apps.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Iconset/sitemap.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Iconset/arrange-bring-to-front.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Iconset/file-document-box.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Iconset/chart-areaspline.svg"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Tools"), QIcon(":/Graphics/Iconset/wrench.svg"));
+    m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Iconset/settings.svg"));
     //
     // ... вспомогательную
     //
     m_tabsSecondary->setCompactMode(true);
-    m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
-    m_tabsSecondary->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+    m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Iconset/apps.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Iconset/sitemap.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Iconset/arrange-bring-to-front.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Iconset/file-document-box.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Statistics"), QIcon(":/Graphics/Iconset/chart-areaspline.svg"));
+    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Tools"), QIcon(":/Graphics/Iconset/wrench.svg"));
+    m_tabsSecondary->addTab(tr("Settings"), QIcon(":/Graphics/Iconset/settings.svg"));
     m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
 
     //
@@ -1882,6 +1889,7 @@ void ApplicationManager::initView()
     m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
     m_tabsWidgets->addWidget(m_scenarioManager->view());
     m_tabsWidgets->addWidget(m_statisticsManager->view());
+    m_tabsWidgets->addWidget(m_toolsManager->view());
     m_tabsWidgetsSecondary->setObjectName("tabsWidgetsSecondary");
     m_tabsWidgetsSecondary->addWidget(m_settingsManager->view());
 
@@ -2069,14 +2077,17 @@ void ApplicationManager::initConnections()
             m_researchManager, &ResearchManager::updateSettings);
     connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,
             m_scenarioManager, &ScenarioManager::aboutCardsSettingsUpdated);
-    connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
-            m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
-    connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
-            m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
-    connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
-            m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
-    connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
-            m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
+    connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutTextEditSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::navigatorSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutNavigatorSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::chronometrySettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutChronometrySettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::countersSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutCountersSettingsUpdated);
+    connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated, m_toolsManager, &ToolsManager::reloadTextEditSettings);
+
+    connect(m_toolsManager, &ToolsManager::applyScriptRequested, m_scenarioManager, &ScenarioManager::setScriptXml);
 
     connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
     connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
@@ -2086,12 +2097,9 @@ void ApplicationManager::initConnections()
     connect(m_synchronizationManager, &SynchronizationManager::networkStatusChanged, this, &ApplicationManager::setSyncIndicator);
     connect(m_synchronizationManager, &SynchronizationManager::logoutFinished, m_tabs, &SideTabBar::removeIndicator);
 
-    connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
-            m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
-    connect(m_synchronizationManager, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
-            m_scenarioManager, SLOT(aboutApplyPatches(QList<QString>,bool)));
-    connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
-            m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
+    connect(m_synchronizationManager, &SynchronizationManager::applyPatchRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatch);
+    connect(m_synchronizationManager, &SynchronizationManager::applyPatchesRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatches);
+    connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, m_scenarioManager, &ScenarioManager::aboutCursorsUpdated);
     connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, [this] (const QMap<QString, int>& _cursors, bool _isDraft) {
         if (_isDraft == m_scenarioManager->workModeIsDraft()) {
             m_tabs->setIndicatorMenu(_cursors.keys().toVector());
@@ -2240,7 +2248,7 @@ void ApplicationManager::reloadApplicationSettings()
         //
         // Настроим боковую панель в зависимости от необходимости быть компактным
         //
-        m_menu->setIcons(QIcon(useCompactMode ? ":/Graphics/Icons/Mobile/menu.png" : ""));
+        m_menu->setIcons(QIcon(useCompactMode ? ":/Graphics/Iconset/menu.svg" : ""));
         m_tabs->setCompactMode(useCompactMode);
     }
 

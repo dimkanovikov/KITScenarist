@@ -165,7 +165,7 @@
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="14" column="0">
         <widget class="QRadioButton" name="ukrainian">
          <property name="text">
           <string>Українська</string>
@@ -183,7 +183,7 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="15" column="0" colspan="2">
+       <item row="16" column="0" colspan="2">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
@@ -193,7 +193,7 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="0">
+       <item row="15" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -234,6 +234,16 @@ font-weight: 600;</string>
         <widget class="QRadioButton" name="polish">
          <property name="text">
           <string>Polski</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="0">
+        <widget class="QRadioButton" name="turkish">
+         <property name="text">
+          <string>Türkçe</string>
          </property>
          <property name="checked">
           <bool>false</bool>
@@ -644,8 +654,8 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>297</width>
-            <height>472</height>
+            <width>257</width>
+            <height>393</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">

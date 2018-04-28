@@ -19,7 +19,7 @@ namespace {
     /**
      * @brief Расширения файлов проекта
      */
-    const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
+    const QString kProjectFleExtension = ".kitsp"; // kit scenarist project
 
     /**
      * @brief Получить путь к папке из настроек по заданному ключу
@@ -123,7 +123,7 @@ QString AddProjectDialog::projectName() const
 
 QString AddProjectDialog::projectFilePath() const
 {
-    return m_ui->saveDir->text() + QDir::separator() + projectName() + PROJECT_FILE_EXTENSION;
+    return m_ui->saveDir->text() + QDir::separator() + projectName() + kProjectFleExtension;
 }
 
 QString AddProjectDialog::importFilePath() const

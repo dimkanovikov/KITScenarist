@@ -205,6 +205,16 @@ void Application::updateTranslation()
             break;
         }
 
+        case 12: {
+            translationSuffix = "tr";
+            //
+            // FIXME: Найти турецкий перевод Qt5
+            //
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Turkish;
+        }
+
         default: break;
     }
 

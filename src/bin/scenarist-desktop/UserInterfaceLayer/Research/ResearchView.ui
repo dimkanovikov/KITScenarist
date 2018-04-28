@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
+    <width>676</width>
     <height>587</height>
    </rect>
   </property>
@@ -65,7 +65,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-           <normaloff>:/Graphics/Icons/Editing/delete.png</normaloff>:/Graphics/Icons/Editing/delete.png</iconset>
+           <normaloff>:/Graphics/Iconset/delete.svg</normaloff>:/Graphics/Iconset/delete.svg</iconset>
          </property>
         </widget>
        </item>
@@ -76,7 +76,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-           <normaloff>:/Graphics/Icons/Editing/add.png</normaloff>:/Graphics/Icons/Editing/add.png</iconset>
+           <normaloff>:/Graphics/Iconset/plus.svg</normaloff>:/Graphics/Iconset/plus.svg</iconset>
          </property>
         </widget>
        </item>
@@ -90,7 +90,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-           <normaloff>:/Graphics/Icons/Editing/refresh.png</normaloff>:/Graphics/Icons/Editing/refresh.png</iconset>
+           <normaloff>:/Graphics/Iconset/refresh.svg</normaloff>:/Graphics/Iconset/refresh.svg</iconset>
          </property>
         </widget>
        </item>
@@ -111,7 +111,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-           <normaloff>:/Graphics/Icons/Editing/search.png</normaloff>:/Graphics/Icons/Editing/search.png</iconset>
+           <normaloff>:/Graphics/Iconset/magnify.svg</normaloff>:/Graphics/Iconset/magnify.svg</iconset>
          </property>
          <property name="shortcut">
           <string>Ctrl+Tab</string>
@@ -331,8 +331,8 @@
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Cantarell'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -602,7 +602,7 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon">
                 <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                 <normaloff>:/Graphics/Icons/folder.png</normaloff>:/Graphics/Icons/folder.png</iconset>
+                 <normaloff>:/Graphics/Iconset/folder.svg</normaloff>:/Graphics/Iconset/folder.svg</iconset>
                </property>
               </widget>
              </item>
@@ -665,7 +665,7 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon">
                 <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                 <normaloff>:/Graphics/Icons/file-document.png</normaloff>:/Graphics/Icons/file-document.png</iconset>
+                 <normaloff>:/Graphics/Iconset/file-document-box.svg</normaloff>:/Graphics/Iconset/file-document-box.svg</iconset>
                </property>
               </widget>
              </item>
@@ -728,7 +728,7 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon">
                 <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                 <normaloff>:/Graphics/Icons/file-mind-map.png</normaloff>:/Graphics/Icons/file-mind-map.png</iconset>
+                 <normaloff>:/Graphics/Iconset/mind-map.svg</normaloff>:/Graphics/Iconset/mind-map.svg</iconset>
                </property>
               </widget>
              </item>
@@ -791,7 +791,7 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon">
                 <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                 <normaloff>:/Graphics/Icons/file-images.png</normaloff>:/Graphics/Icons/file-images.png</iconset>
+                 <normaloff>:/Graphics/Iconset/image-multiple.svg</normaloff>:/Graphics/Iconset/image-multiple.svg</iconset>
                </property>
               </widget>
              </item>
@@ -854,7 +854,7 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon">
                 <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                 <normaloff>:/Graphics/Icons/file-web.png</normaloff>:/Graphics/Icons/file-web.png</iconset>
+                 <normaloff>:/Graphics/Iconset/web.svg</normaloff>:/Graphics/Iconset/web.svg</iconset>
                </property>
               </widget>
              </item>
@@ -1204,7 +1204,7 @@ p, li { white-space: pre-wrap; }
                   </property>
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                    <normaloff>:/Graphics/Icons/Review/font-color.png</normaloff>:/Graphics/Icons/Review/font-color.png</iconset>
+                    <normaloff>:/Graphics/Iconset/format-color-text.svg</normaloff>:/Graphics/Iconset/format-color-text.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1227,7 +1227,7 @@ p, li { white-space: pre-wrap; }
                   </property>
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                    <normaloff>:/Graphics/Icons/Review/font-bg-color.png</normaloff>:/Graphics/Icons/Review/font-bg-color.png</iconset>
+                    <normaloff>:/Graphics/Iconset/format-color-fill.svg</normaloff>:/Graphics/Iconset/format-color-fill.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1278,7 +1278,7 @@ p, li { white-space: pre-wrap; }
                   </property>
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                    <normaloff>:/Graphics/Icons/Editing/download.png</normaloff>:/Graphics/Icons/Editing/download.png</iconset>
+                    <normaloff>:/Graphics/Iconset/content-save.svg</normaloff>:/Graphics/Iconset/content-save.svg</iconset>
                   </property>
                  </widget>
                 </item>

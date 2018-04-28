@@ -116,7 +116,6 @@ namespace ManagementLayer
         void buildScriptEditMenu(QMenu* _menu);
 #endif
 
-    public slots:
         /**
          * @brief Обновить параметры редактора карточек
          */
@@ -189,6 +188,11 @@ namespace ManagementLayer
          * @brief Включить/выключить дзен режим
          */
         void setZenMode(bool _isZen);
+
+        /**
+         * @brief Загрузить сценарий из заданного xml
+         */
+        void setScriptXml(const QString& _xml);
 
     signals:
         /**

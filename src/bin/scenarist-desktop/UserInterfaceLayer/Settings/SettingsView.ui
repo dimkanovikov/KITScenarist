@@ -86,7 +86,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/settings_application.png</normaloff>:/Graphics/Icons/settings_application.png</iconset>
+            <normaloff>:/Graphics/Iconset/application.svg</normaloff>:/Graphics/Iconset/application.svg</iconset>
           </property>
          </item>
          <item>
@@ -95,7 +95,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/research1.png</normaloff>:/Graphics/Icons/research1.png</iconset>
+            <normaloff>:/Graphics/Iconset/sitemap.svg</normaloff>:/Graphics/Iconset/sitemap.svg</iconset>
           </property>
          </item>
          <item>
@@ -104,7 +104,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/settings-cards.png</normaloff>:/Graphics/Icons/settings-cards.png</iconset>
+            <normaloff>:/Graphics/Iconset/arrange-bring-to-front.svg</normaloff>:/Graphics/Iconset/arrange-bring-to-front.svg</iconset>
           </property>
          </item>
          <item>
@@ -113,7 +113,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/settings_text_editor.png</normaloff>:/Graphics/Icons/settings_text_editor.png</iconset>
+            <normaloff>:/Graphics/Iconset/file-document-box.svg</normaloff>:/Graphics/Iconset/file-document-box.svg</iconset>
           </property>
          </item>
          <item>
@@ -122,7 +122,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/settings_navigator.png</normaloff>:/Graphics/Icons/settings_navigator.png</iconset>
+            <normaloff>:/Graphics/Iconset/file-tree.svg</normaloff>:/Graphics/Iconset/file-tree.svg</iconset>
           </property>
          </item>
          <item>
@@ -131,7 +131,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/settings_chronometry.png</normaloff>:/Graphics/Icons/settings_chronometry.png</iconset>
+            <normaloff>:/Graphics/Iconset/timer.svg</normaloff>:/Graphics/Iconset/timer.svg</iconset>
           </property>
          </item>
          <item>
@@ -140,7 +140,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/settings_templates.png</normaloff>:/Graphics/Icons/settings_templates.png</iconset>
+            <normaloff>:/Graphics/Iconset/format-size.svg</normaloff>:/Graphics/Iconset/format-size.svg</iconset>
           </property>
          </item>
         </widget>
@@ -162,7 +162,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>5</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -289,7 +289,7 @@
                       </property>
                       <property name="icon">
                        <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                        <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+                        <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2596,7 +2596,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/Editing/checkmark.png</normaloff>:/Graphics/Icons/Editing/checkmark.png</iconset>
+               <normaloff>:/Graphics/Iconset/check.svg</normaloff>:/Graphics/Iconset/check.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2610,7 +2610,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/Editing/add.png</normaloff>:/Graphics/Icons/Editing/add.png</iconset>
+               <normaloff>:/Graphics/Iconset/plus.svg</normaloff>:/Graphics/Iconset/plus.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2624,7 +2624,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/Editing/edit.png</normaloff>:/Graphics/Icons/Editing/edit.png</iconset>
+               <normaloff>:/Graphics/Iconset/pencil.svg</normaloff>:/Graphics/Iconset/pencil.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2638,7 +2638,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/Editing/delete.png</normaloff>:/Graphics/Icons/Editing/delete.png</iconset>
+               <normaloff>:/Graphics/Iconset/delete.svg</normaloff>:/Graphics/Iconset/delete.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2652,7 +2652,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/folder.png</normaloff>:/Graphics/Icons/folder.png</iconset>
+               <normaloff>:/Graphics/Iconset/folder.svg</normaloff>:/Graphics/Iconset/folder.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2666,7 +2666,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/Editing/save.png</normaloff>:/Graphics/Icons/Editing/save.png</iconset>
+               <normaloff>:/Graphics/Iconset/content-save.svg</normaloff>:/Graphics/Iconset/content-save.svg</iconset>
              </property>
             </widget>
            </item>

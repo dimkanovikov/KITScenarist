@@ -19,7 +19,9 @@ class QGumboNode
 {
 public:
     QGumboNode(const QGumboNode&) = default;
+#ifndef Q_OS_WIN
     QGumboNode(QGumboNode&&) noexcept = default;
+#endif
     QGumboNode& operator=(const QGumboNode&) = default;
 
     HtmlTag tag() const;

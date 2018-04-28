@@ -81,7 +81,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../scenarist-core/Resources/Resources.qrc">
-       <normaloff>:/Graphics/Icons/Editing/rect.png</normaloff>:/Graphics/Icons/Editing/rect.png</iconset>
+       <normaloff>:/Graphics/Iconset/square.svg</normaloff>:/Graphics/Iconset/square.svg</iconset>
      </property>
     </widget>
    </item>

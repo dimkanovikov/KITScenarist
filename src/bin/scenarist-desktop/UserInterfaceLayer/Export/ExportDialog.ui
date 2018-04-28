@@ -110,7 +110,7 @@ border: 1px solid palette(dark);
    <item>
     <widget class="QStackedWidget" name="exportParameters">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="researchExportPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -212,7 +212,7 @@ border: 1px solid palette(dark);
            </property>
            <property name="icon">
             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-             <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+             <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -327,7 +327,7 @@ border: 1px solid palette(dark);
            </property>
            <property name="icon">
             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-             <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
+             <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
            </property>
            <property name="iconSize">
             <size>

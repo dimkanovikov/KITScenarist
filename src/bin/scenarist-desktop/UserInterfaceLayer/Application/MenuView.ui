@@ -290,7 +290,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QStackedWidget" name="menuContent">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QFrame" name="menuActions">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -316,7 +316,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/project_new.png</normaloff>:/Graphics/Icons/project_new.png</iconset>
+              <normaloff>:/Graphics/Iconset/plus.svg</normaloff>:/Graphics/Iconset/plus.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -333,7 +333,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/project_open.png</normaloff>:/Graphics/Icons/project_open.png</iconset>
+              <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -350,7 +350,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/Mobile/menu/content-save.png</normaloff>:/Graphics/Icons/Mobile/menu/content-save.png</iconset>
+              <normaloff>:/Graphics/Iconset/content-save.svg</normaloff>:/Graphics/Iconset/content-save.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -384,7 +384,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/Mobile/menu/import.png</normaloff>:/Graphics/Icons/Mobile/menu/import.png</iconset>
+              <normaloff>:/Graphics/Iconset/import.svg</normaloff>:/Graphics/Iconset/import.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -401,7 +401,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/Mobile/menu/export.png</normaloff>:/Graphics/Icons/Mobile/menu/export.png</iconset>
+              <normaloff>:/Graphics/Iconset/export.svg</normaloff>:/Graphics/Iconset/export.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -418,7 +418,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/printer.png</normaloff>:/Graphics/Icons/printer.png</iconset>
+              <normaloff>:/Graphics/Iconset/printer.svg</normaloff>:/Graphics/Iconset/printer.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -435,7 +435,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/help_startpage.png</normaloff>:/Graphics/Icons/help_startpage.png</iconset>
+              <normaloff>:/Graphics/Iconset/help-circle.svg</normaloff>:/Graphics/Iconset/help-circle.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -514,7 +514,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                <normaloff>:/Graphics/Icons/Editing/refresh_green.png</normaloff>:/Graphics/Icons/Editing/refresh_green.png</iconset>
+                <normaloff>:/Graphics/Iconset/refresh.svg</normaloff>:/Graphics/Iconset/refresh.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -606,7 +606,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/renew.png</normaloff>:/Graphics/Icons/renew.png</iconset>
+              <normaloff>:/Graphics/Iconset/autorenew.svg</normaloff>:/Graphics/Iconset/autorenew.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -623,7 +623,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/lock-reset.png</normaloff>:/Graphics/Icons/lock-reset.png</iconset>
+              <normaloff>:/Graphics/Iconset/lock-reset.svg</normaloff>:/Graphics/Iconset/lock-reset.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -640,7 +640,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/logout.png</normaloff>:/Graphics/Icons/logout.png</iconset>
+              <normaloff>:/Graphics/Iconset/logout.svg</normaloff>:/Graphics/Iconset/logout.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
