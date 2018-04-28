@@ -150,6 +150,16 @@ namespace ManagementLayer
          */
         void quitFromZenMode();
 
+        /**
+         * @brief Пользователь хочет добавить закладку в заданном месте документа
+         */
+        void addBookmarkRequested(int _position);
+
+        /**
+         * @brief Пользователь хочет убрать закладку в заданном месте документа
+         */
+        void removeBookmarkRequested(int _position);
+
     private slots:
         /**
          * @brief Реакция на изменение коэффициента масштабирования редактора сценария

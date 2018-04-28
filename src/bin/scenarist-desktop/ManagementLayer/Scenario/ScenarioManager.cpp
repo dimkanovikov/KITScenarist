@@ -1128,12 +1128,15 @@ void ScenarioManager::initConnections()
     connect(m_textEditManager, &ScenarioTextEditManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_textEditManager, &ScenarioTextEditManager::redoRequest, this, &ScenarioManager::aboutRedo);
     connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
+    connect(m_textEditManager, &ScenarioTextEditManager::addBookmarkRequested, m_scenario, &ScenarioDocument::addBookmark);
+    connect(m_textEditManager, &ScenarioTextEditManager::removeBookmarkRequested, m_scenario, &ScenarioDocument::removeBookmark);
 
     connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 
     //
     // Настраиваем отслеживание изменений документа
     //
+    connect(m_scenario, &ScenarioDocument::textChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_cardsManager, &ScenarioCardsManager::cardsChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);

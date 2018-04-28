@@ -235,6 +235,16 @@ namespace UserInterface
          */
         void quitFromZenMode();
 
+        /**
+         * @brief Пользователь хочет добавить закладку в заданном месте документа
+         */
+        void addBookmarkRequested(int _position);
+
+        /**
+         * @brief Пользователь хочет убрать закладку в заданном месте документа
+         */
+        void removeBookmarkRequested(int _position);
+
     private slots:
         /**
          * @brief Обновить текущий режим (поэпизодник или текст)

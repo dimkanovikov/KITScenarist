@@ -130,7 +130,7 @@ namespace UserInterface
         /**
          * @brief Переопределяем, чтобы настроить тип экспорта, перед отображением
          */
-        void setVisible(bool _visible);
+        void setVisible(bool _visible) override;
 
     signals:
         /**

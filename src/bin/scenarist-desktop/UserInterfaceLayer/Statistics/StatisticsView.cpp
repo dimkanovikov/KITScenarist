@@ -1,6 +1,5 @@
 #include "StatisticsView.h"
 
-#include "ReportButton.h"
 #include "StatisticsSettings.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
@@ -15,8 +14,6 @@
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QCutomPlot/qcustomplotextended.h>
-
-#include <math.h>
 
 #include <QApplication>
 #include <QButtonGroup>
@@ -36,9 +33,10 @@
 #include <QVariant>
 #include <QVBoxLayout>
 
+#include <cmath>
+
 using UserInterface::StatisticsView;
 using UserInterface::StatisticsSettings;
-using UserInterface::ReportButton;
 using BusinessLogic::StatisticsParameters;
 
 namespace {
@@ -141,12 +139,12 @@ void StatisticsView::setPlot(const BusinessLogic::Plot& _plot)
         // Определяем максимумы
         //
         for (const qreal& x : singlePlotData.x) {
-            if (!isnan(x) && x > maxX) {
+            if (!std::isnan(x) && x > maxX) {
                 maxX = x;
             }
         }
         for (const qreal& y : singlePlotData.y) {
-            if (!isnan(y) && y > maxY) {
+            if (!std::isnan(y) && y > maxY) {
                 maxY = y;
             }
         }

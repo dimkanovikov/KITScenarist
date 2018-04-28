@@ -245,7 +245,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/Ctk/ctkPopupWidget.cpp \
     scenarist-core/3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
-    scenarist-desktop/UserInterfaceLayer/Statistics/ReportButton.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/CastReport.cpp \
@@ -505,7 +504,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/Ctk/ctkPimpl.h \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.h \
     scenarist-core/BusinessLayer/Statistics/Reports/AbstractReport.h \
-    scenarist-desktop/UserInterfaceLayer/Statistics/ReportButton.h \
     scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.h \
     scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.h \
     scenarist-core/BusinessLayer/Statistics/Reports/CastReport.h \
