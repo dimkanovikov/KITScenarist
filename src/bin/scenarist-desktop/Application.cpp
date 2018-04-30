@@ -207,11 +207,8 @@ void Application::updateTranslation()
 
         case 12: {
             translationSuffix = "tr";
-            //
-            // FIXME: Найти турецкий перевод Qt5
-            //
-            qtTranslationSuffix = "en";
-            qtBaseTranslationSuffix = "en";
+            qtTranslationSuffix = "tr";
+            qtBaseTranslationSuffix = "tr";
             currentLanguage = QLocale::Turkish;
         }
 
