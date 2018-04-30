@@ -415,6 +415,28 @@ namespace ManagementLayer
          * @brief Помощник резервного копирования
          */
         BackupHelper m_backupHelper;
+
+        /**
+         * @brief Состояние приложения в данный момент
+         */
+        enum class ApplicationState {
+            /**
+             * @brief Инициализация после запуска
+             */
+            Initializing,
+            /**
+             * @brief Загрузка проекта
+             */
+            ProjectLoading,
+            /**
+             * @brief Рабочее состояние
+             */
+            Working,
+            /**
+             * @brief Импортирование
+             */
+            Importing
+        } m_state = ApplicationState::Initializing;
     };
 }
 

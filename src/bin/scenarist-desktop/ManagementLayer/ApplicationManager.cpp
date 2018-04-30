@@ -245,6 +245,11 @@ void ApplicationManager::exec(const QString& _fileToOpen)
     if (!_fileToOpen.isEmpty()) {
         aboutLoad(_fileToOpen);
     }
+
+    //
+    // Переводим состояние приложение в рабочий режим
+    //
+    m_state = ApplicationState::Working;
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
@@ -578,6 +583,13 @@ void ApplicationManager::aboutSaveAs()
 
 void ApplicationManager::aboutSave()
 {
+    //
+    // Сохраняем только, если приложение находится в рабочем состоянии
+    //
+    if (m_state != ApplicationState::Working) {
+        return;
+    }
+
     //
     // Если какие-то данные изменены
     //
@@ -1336,8 +1348,11 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 
 void ApplicationManager::aboutImport()
 {
+    m_state = ApplicationState::Importing;
     m_importManager->importScenario(m_scenarioManager->scenario(), m_scenarioManager->cursorPosition());
     m_researchManager->loadScenarioData();
+
+    m_state = ApplicationState::Working;
 }
 
 void ApplicationManager::aboutExport()
@@ -1654,6 +1669,8 @@ bool ApplicationManager::saveIfNeeded()
 
 void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
 {
+    m_state = ApplicationState::ProjectLoading;
+
     //
     // Покажем уведомление пользователю
     //
@@ -1766,6 +1783,8 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     QApplication::sendPostedEvents();
     QApplication::processEvents();
     progress.finish();
+
+    m_state = ApplicationState::Working;
 }
 
 void ApplicationManager::closeCurrentProject()
