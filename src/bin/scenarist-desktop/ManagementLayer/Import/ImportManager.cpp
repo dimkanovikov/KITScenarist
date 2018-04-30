@@ -83,6 +83,11 @@ namespace {
             document->setImage(ImageHelper::imageFromBytes(_documentData["image"].toByteArray()));
         }
         //
+        // И обновим, т.к. добавились дополнительные данные
+        //
+        DataStorageLayer::StorageFacade::researchStorage()->updateResearch(document);
+
+        //
         // Загрузим дочерние элементы, если есть
         //
         if (_documentData.contains("childs")) {
@@ -96,12 +101,19 @@ namespace {
      * @brief Сохранить импортированного персонажа
      */
     static void storeCharacter(const QVariantMap& _characterData) {
+        //
+        // Загрузим данные
+        //
         const QString name = _characterData["name"].toString();
         auto* character = DataStorageLayer::StorageFacade::researchStorage()->character(name);
         if (character == nullptr) {
             character = DataStorageLayer::StorageFacade::researchStorage()->storeCharacter(name);
         }
         character->addDescription(_characterData["description"].toString());
+        //
+        // И обновим, т.к. добавились дополнительные данные
+        //
+        DataStorageLayer::StorageFacade::researchStorage()->updateCharacter(character);
 
         for (const QVariant& childDocumentData : _characterData["childs"].toList()) {
             storeResearchDocument(childDocumentData.toMap(), character);
@@ -112,12 +124,19 @@ namespace {
      * @brief Сохранить импортированную локацию
      */
     static void storeLocation(const QVariantMap& _locationData) {
+        //
+        // Загрузим данные
+        //
         const QString name = _locationData["name"].toString();
         auto* location = DataStorageLayer::StorageFacade::researchStorage()->location(name);
         if (location == nullptr) {
             location = DataStorageLayer::StorageFacade::researchStorage()->storeLocation(name);
         }
         location->addDescription(_locationData["description"].toString());
+        //
+        // И обновим, т.к. добавились дополнительные данные
+        //
+        DataStorageLayer::StorageFacade::researchStorage()->updateLocation(location);
 
         for (const QVariant& childDocumentData : _locationData["childs"].toList()) {
             storeResearchDocument(childDocumentData.toMap(), location);
