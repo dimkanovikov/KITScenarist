@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BookmarkDialog</class>
+ <widget class="QWidget" name="BookmarkDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>93</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Bookmark text</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLineEdit" name="bookmarkText"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="ColoredToolButton" name="bookmarkColor">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../scenarist-core/Resources/Resources.qrc">
+       <normaloff>:/Graphics/Iconset/square.svg</normaloff>:/Graphics/Iconset/square.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttons">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColoredToolButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>bookmarkText</tabstop>
+  <tabstop>bookmarkColor</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

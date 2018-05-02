@@ -36,6 +36,50 @@ namespace ManagementLayer
          */
         void setCommentOnly(bool _isCommentOnly);
 
+        /**
+         * @brief Добавить закладку
+         */
+        void addBookmark(int _position);
+
+        /**
+         * @brief Изменить закладку
+         */
+        void editBookmark(const QModelIndex& _index);
+
+        /**
+         * @brief Удалить закладку
+         */
+        void removeBookmark(const QModelIndex& _index);
+
+        /**
+         * @brief Выбрать закладку
+         */
+        /** @{ */
+        void selectBookmark(const QModelIndex& _index);
+        void selectBookmark(int _position);
+        /** @} */
+
+    signals:
+        /**
+         * @brief Запрос на добавление закладки
+         */
+        void addBookmarkRequested(int _position, const QString& _text, const QColor& _color);
+
+        /**
+         * @brief Пользователь хочет добавить закладку
+         */
+        void editBookmarkRequested(int _position, const QString& _text, const QColor& _color);
+
+        /**
+         * @brief Пользователь хочет удалить выбранную закладку
+         */
+        void removeBookmarkRequested(int _position);
+
+        /**
+         * @brief Пользователь выбрал закладку
+         */
+        void bookmarkSelected(int _position);
+
     private:
         /**
          * @brief Настроить представление
@@ -52,6 +96,11 @@ namespace ManagementLayer
          * @brief Представление
          */
         UserInterface::ScriptBookmarks* m_view = nullptr;
+
+        /**
+         * @brief Модель закладок
+         */
+        BusinessLogic::ScriptBookmarksModel* m_model = nullptr;
     };
 }
 

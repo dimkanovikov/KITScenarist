@@ -283,10 +283,6 @@ void ScenarioTextEditManager::initConnections()
     connect(m_view, &ScenarioTextEditWidget::cursorPositionChanged, this, &ScenarioTextEditManager::cursorPositionChanged);
     connect(m_view, &ScenarioTextEditWidget::zoomRangeChanged, this, &ScenarioTextEditManager::aboutTextEditZoomRangeChanged);
     connect(m_view, &ScenarioTextEditWidget::quitFromZenMode, this, &ScenarioTextEditManager::quitFromZenMode);
-    connect(m_view, &ScenarioTextEditWidget::addBookmarkRequested, this, [this] (int _position) {
-        QString text = "bookmark";
-        QColor color = Qt::red;
-        emit addBookmarkRequested(_position, text, color);
-    });
+    connect(m_view, &ScenarioTextEditWidget::addBookmarkRequested, this, &ScenarioTextEditManager::addBookmarkRequested);
     connect(m_view, &ScenarioTextEditWidget::removeBookmarkRequested, this, &ScenarioTextEditManager::removeBookmarkRequested);
 }

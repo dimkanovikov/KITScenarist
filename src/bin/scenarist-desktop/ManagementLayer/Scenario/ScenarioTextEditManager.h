@@ -153,7 +153,7 @@ namespace ManagementLayer
         /**
          * @brief Пользователь хочет добавить закладку в заданном месте документа
          */
-        void addBookmarkRequested(int _position, const QString& _text, const QColor& _color);
+        void addBookmarkRequested(int _position);
 
         /**
          * @brief Пользователь хочет убрать закладку в заданном месте документа

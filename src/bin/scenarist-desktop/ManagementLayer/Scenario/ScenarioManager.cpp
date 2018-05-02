@@ -1138,16 +1138,22 @@ void ScenarioManager::initConnections()
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::copyDescriptionToScriptRequested, this, &ScenarioManager::copySceneDescriptionToScript);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
 
+    connect(m_scriptBookmarksManager, &ScriptBookmarksManager::addBookmarkRequested, m_scenario, &ScenarioDocument::addBookmark);
+    connect(m_scriptBookmarksManager, &ScriptBookmarksManager::editBookmarkRequested, m_scenario, &ScenarioDocument::addBookmark);
+    connect(m_scriptBookmarksManager, &ScriptBookmarksManager::removeBookmarkRequested, m_scenario, &ScenarioDocument::removeBookmark);
+    connect(m_scriptBookmarksManager, &ScriptBookmarksManager::bookmarkSelected, m_textEditManager, &ScenarioTextEditManager::setCursorPosition);
+
     connect(m_textEditManager, &ScenarioTextEditManager::textModeChanged, this, &ScenarioManager::aboutRefreshCounters);
     connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateDuration);
     connect(m_textEditManager, &ScenarioTextEditManager::textChanged, [this] { aboutUpdateDuration(m_textEditManager->cursorPosition()); });
     connect(m_textEditManager, &ScenarioTextEditManager::textChanged, this, &ScenarioManager::aboutUpdateCounters);
     connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitleAndDescription);
     connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutSelectItemInNavigator, Qt::QueuedConnection);
+    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, m_scriptBookmarksManager, QOverload<int>::of(&ScriptBookmarksManager::selectBookmark), Qt::QueuedConnection);
     connect(m_textEditManager, &ScenarioTextEditManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_textEditManager, &ScenarioTextEditManager::redoRequest, this, &ScenarioManager::aboutRedo);
     connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
-    connect(m_textEditManager, &ScenarioTextEditManager::addBookmarkRequested, m_scenario, &ScenarioDocument::addBookmark);
+    connect(m_textEditManager, &ScenarioTextEditManager::addBookmarkRequested, m_scriptBookmarksManager, &ScriptBookmarksManager::addBookmark);
     connect(m_textEditManager, &ScenarioTextEditManager::removeBookmarkRequested, m_scenario, &ScenarioDocument::removeBookmark);
 
     connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));

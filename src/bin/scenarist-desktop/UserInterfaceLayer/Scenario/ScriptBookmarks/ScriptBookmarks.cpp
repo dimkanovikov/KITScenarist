@@ -3,15 +3,19 @@
 #include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 
+#include <QLabel>
 #include <QTreeView>
 #include <QVBoxLayout>
 
 using UserInterface::ScriptBookmarks;
 
 
-ScriptBookmarks::ScriptBookmarks(QWidget* _parent)
-    : QWidget(_parent),
-      m_items(new QTreeView(this))
+ScriptBookmarks::ScriptBookmarks(QWidget* _parent) :
+    QWidget(_parent),
+    m_topEmptyLabel(new QLabel(this)),
+    m_edit(new FlatButton(this)),
+    m_remove(new FlatButton(this)),
+    m_items(new QTreeView(this))
 {
     initView();
     initConnections();
@@ -21,15 +25,36 @@ ScriptBookmarks::ScriptBookmarks(QWidget* _parent)
 void ScriptBookmarks::setModel(QAbstractItemModel* _model)
 {
     m_items->setModel(_model);
+    connect(m_items->selectionModel(), &QItemSelectionModel::currentChanged,
+            this, [this] (const QModelIndex& _currentIndex) {
+        m_edit->setEnabled(_currentIndex.isValid());
+        m_remove->setEnabled(_currentIndex.isValid());
+
+        emit bookmarkSelected(_currentIndex);
+    });
+}
+
+void ScriptBookmarks::setCurrentIndex(const QModelIndex& _index)
+{
+    m_items->setCurrentIndex(_index);
 }
 
 void ScriptBookmarks::setCommentOnly(bool _isCommentOnly)
 {
-
+    m_edit->setVisible(!_isCommentOnly);
+    m_remove->setVisible(!_isCommentOnly);
 }
 
 void ScriptBookmarks::initView()
 {
+    m_topEmptyLabel->setText(tr("Bookmarks"));
+
+    m_edit->setIcons(QIcon(":/Graphics/Iconset/pencil.svg"));
+    m_edit->setToolTip(tr("Add bookmark for current cursor position"));
+
+    m_remove->setIcons(QIcon(":/Graphics/Iconset/delete.svg"));
+    m_remove->setToolTip(tr("Remove seleted bookmark"));
+
     m_items->setHeaderHidden(true);
     TreeViewItemDelegate* delegate = new TreeViewItemDelegate(m_items);
     delegate->setNeedColorize(false);
@@ -40,9 +65,9 @@ void ScriptBookmarks::initView()
     QHBoxLayout* topLayout = new QHBoxLayout;
     topLayout->setSpacing(0);
     topLayout->setContentsMargins(QMargins());
-//    topLayout->addWidget(m_types);
-//    topLayout->addWidget(m_addItem);
-//    topLayout->addWidget(m_removeItem);
+    topLayout->addWidget(m_topEmptyLabel);
+    topLayout->addWidget(m_edit);
+    topLayout->addWidget(m_remove);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(0);
@@ -54,18 +79,35 @@ void ScriptBookmarks::initView()
 
 void ScriptBookmarks::initConnections()
 {
+    connect(m_edit, &FlatButton::clicked, this, &ScriptBookmarks::notifyBookmarkEditPressed);
+    connect(m_remove, &FlatButton::clicked, this, [this] {
+        if (!m_items->currentIndex().isValid()) {
+            return;
+        }
 
+        emit removeBookmarkPressed(m_items->currentIndex());
+    });
+    connect(m_items, &QTreeView::doubleClicked, this, &ScriptBookmarks::notifyBookmarkEditPressed);
 }
 
 void ScriptBookmarks::initStyleSheet()
 {
-//    m_types->setProperty("inTopPanel", true);
-//    m_types->setProperty("topPanelLeftBordered", false);
-//    m_types->setProperty("topPanelTopBordered", false);
-//    m_addItem->setProperty("inTopPanel", true);
-//    m_addItem->setProperty("topPanelTopBordered", false);
-//    m_removeItem->setProperty("inTopPanel", true);
-//    m_removeItem->setProperty("topPanelTopBordered", false);
+    m_topEmptyLabel->setProperty("inTopPanel", true);
+    m_topEmptyLabel->setProperty("topPanelLeftBordered", false);
+    m_topEmptyLabel->setProperty("topPanelTopBordered", false);
+    m_edit->setProperty("inTopPanel", true);
+    m_edit->setProperty("topPanelTopBordered", false);
+    m_remove->setProperty("inTopPanel", true);
+    m_remove->setProperty("topPanelTopBordered", false);
 
     m_items->setProperty("mainContainer", true);
+}
+
+void ScriptBookmarks::notifyBookmarkEditPressed()
+{
+    if (!m_items->currentIndex().isValid()) {
+        return;
+    }
+
+    emit editBookmarkPressed(m_items->currentIndex());
 }

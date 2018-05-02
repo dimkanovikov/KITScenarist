@@ -371,7 +371,8 @@ SOURCES += \
     scenarist-core/BusinessLayer/Tools/RestoreFromBackupTool.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptBookmarksModel.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScriptBookmarksManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/ScriptBookmarks.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/ScriptBookmarks.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -650,7 +651,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/Tools/RestoreFromBackupTool.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptBookmarksModel.h \
     scenarist-desktop/ManagementLayer/Scenario/ScriptBookmarksManager.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/ScriptBookmarks.h
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/ScriptBookmarks.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -678,7 +680,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Onboarding/OnboardingView.ui \
     scenarist-desktop/UserInterfaceLayer/Application/MenuView.ui \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui
+    scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui
 
 
 RESOURCES += \
