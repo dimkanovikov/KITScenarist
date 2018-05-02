@@ -35,6 +35,7 @@ ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
     m_showAdditionalPanels(new FlatButton(this)),
     m_showDraft(new QAction(m_showAdditionalPanels)),
     m_showSceneDescription(new QAction(m_showAdditionalPanels)),
+    m_showScriptBookmarks(new QAction(m_showAdditionalPanels)),
     m_showScriptDictionaries(new QAction(m_showAdditionalPanels)),
     m_navigationTree(new QTreeView(this)),
     m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
@@ -131,6 +132,11 @@ void ScenarioNavigator::setDraftVisible(bool _visible)
 void ScenarioNavigator::setSceneDescriptionVisible(bool _visible)
 {
     m_showSceneDescription->setChecked(_visible);
+}
+
+void ScenarioNavigator::setScriptBookmarksVisible(bool _visible)
+{
+    m_showScriptBookmarks->setChecked(_visible);
 }
 
 void ScenarioNavigator::setScriptDictionariesVisible(bool _visible)
@@ -352,6 +358,7 @@ void ScenarioNavigator::initView()
     m_showAdditionalPanels->setPopupMode(QToolButton::MenuButtonPopup);
     m_showAdditionalPanels->addAction(m_showDraft);
     m_showAdditionalPanels->addAction(m_showSceneDescription);
+    m_showAdditionalPanels->addAction(m_showScriptBookmarks);
     m_showAdditionalPanels->addAction(m_showScriptDictionaries);
 
     m_showDraft->setObjectName("navigatorShowDraft");
@@ -363,6 +370,11 @@ void ScenarioNavigator::initView()
     m_showSceneDescription->setText(tr("Scene description"));
     m_showSceneDescription->setToolTip(tr("Show/hide scene note"));
     m_showSceneDescription->setCheckable(true);
+
+    m_showScriptBookmarks->setObjectName("navigatorShowScriptBookmars");
+    m_showScriptBookmarks->setText(tr("Script bookmarks"));
+    m_showScriptBookmarks->setToolTip(tr("Show/hide script bookmarks"));
+    m_showScriptBookmarks->setCheckable(true);
 
     m_showScriptDictionaries->setObjectName("navigatorShowScriptDictionaries");
     m_showScriptDictionaries->setText(tr("Script dictionaries"));
@@ -408,6 +420,7 @@ void ScenarioNavigator::initConnections()
     connect(m_showAdditionalPanels, &FlatButton::clicked, m_showAdditionalPanels, &FlatButton::showMenu);
     connect(m_showDraft, &QAction::toggled, this, &ScenarioNavigator::draftVisibleChanged);
     connect(m_showSceneDescription, &QAction::toggled, this, &ScenarioNavigator::sceneDescriptionVisibleChanged);
+    connect(m_showScriptBookmarks, &QAction::toggled, this, &ScenarioNavigator::scriptBookmarksVisibleChanged);
     connect(m_showScriptDictionaries, &QAction::toggled, this, &ScenarioNavigator::scriptDictionariesVisibleChanged);
     connect(m_navigationTree, SIGNAL(clicked(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
 }

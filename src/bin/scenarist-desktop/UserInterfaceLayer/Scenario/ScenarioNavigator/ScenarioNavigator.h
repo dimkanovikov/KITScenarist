@@ -92,6 +92,11 @@ namespace UserInterface
         void setSceneDescriptionVisible(bool _visible);
 
         /**
+         * @brief Установить видимость закладок сценария
+         */
+        void setScriptBookmarksVisible(bool _visible);
+
+        /**
          * @brief Установить видимость справочников сценария
          */
         void setScriptDictionariesVisible(bool _visible);
@@ -131,6 +136,11 @@ namespace UserInterface
          * @brief Показать/скрыть заметки к сцене
          */
         void sceneDescriptionVisibleChanged(bool _visible);
+
+        /**
+         * @brief Показать/скрыть закладки сценария
+         */
+        void scriptBookmarksVisibleChanged(bool _visible);
 
         /**
          * @brief Показать/скрыть справочники сценария
@@ -232,6 +242,7 @@ namespace UserInterface
         /** @{ */
         QAction* m_showDraft = nullptr;
         QAction* m_showSceneDescription = nullptr;
+        QAction* m_showScriptBookmarks = nullptr;
         QAction* m_showScriptDictionaries = nullptr;
         /** @} */
 

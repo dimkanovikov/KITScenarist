@@ -108,6 +108,11 @@ void ScenarioNavigatorManager::setSceneDescriptionVisible(bool _visible)
     m_navigator->setSceneDescriptionVisible(_visible);
 }
 
+void ScenarioNavigatorManager::setScriptBookmarksVisible(bool _visible)
+{
+    m_navigator->setScriptBookmarksVisible(_visible);
+}
+
 void ScenarioNavigatorManager::setScriptDictionariesVisible(bool _visible)
 {
     m_navigator->setScriptDictionariesVisible(_visible);
@@ -189,6 +194,7 @@ void ScenarioNavigatorManager::initConnections()
     connect(m_navigator, &ScenarioNavigator::changeItemTypeRequested, this, &ScenarioNavigatorManager::aboutChangeItemType);
     connect(m_navigator, &ScenarioNavigator::draftVisibleChanged, this, &ScenarioNavigatorManager::draftVisibleChanged);
     connect(m_navigator, &ScenarioNavigator::sceneDescriptionVisibleChanged, this, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged);
+    connect(m_navigator, &ScenarioNavigator::scriptBookmarksVisibleChanged, this, &ScenarioNavigatorManager::scriptBookmarksVisibleChanged);
     connect(m_navigator, &ScenarioNavigator::scriptDictionariesVisibleChanged, this, &ScenarioNavigatorManager::scriptDictionariesVisibleChanged);
     connect(m_navigator, &ScenarioNavigator::sceneChoosed, this, &ScenarioNavigatorManager::aboutSceneChoosed);
     connect(m_navigator, &ScenarioNavigator::undoRequest, this, &ScenarioNavigatorManager::undoRequest);

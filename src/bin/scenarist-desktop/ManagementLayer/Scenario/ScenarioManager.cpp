@@ -4,6 +4,7 @@
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioSceneDescriptionManager.h"
 #include "ScenarioTextEditManager.h"
+#include "ScriptBookmarksManager.h"
 #include "ScriptDictionariesManager.h"
 
 #include <Domain/Research.h>
@@ -49,6 +50,7 @@ using ManagementLayer::ScenarioCardsManager;
 using ManagementLayer::ScenarioNavigatorManager;
 using ManagementLayer::ScenarioSceneDescriptionManager;
 using ManagementLayer::ScenarioTextEditManager;
+using ManagementLayer::ScriptBookmarksManager;
 using ManagementLayer::ScriptDictionariesManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
@@ -80,7 +82,8 @@ namespace {
     /** @{ */
     const int DRAFT_PANEL_INDEX = 1;
     const int SCENE_DESCRIPTION_PANEL_INDEX = 2;
-    const int SCRIPT_DICTIONARIES_PANEL_INDEX = 3;
+    const int SCRIPT_BOOKMARKS_PANEL_INDEX = 3;
+    const int SCRIPT_DICTIONARIES_PANEL_INDEX = 4;
     /** @} */
 
     /**
@@ -249,6 +252,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
     m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
     m_draftNavigatorManager(new ScenarioNavigatorManager(this, m_view, IS_DRAFT)),
     m_sceneDescriptionManager(new ScenarioSceneDescriptionManager(this, m_view)),
+    m_scriptBookmarksManager(new ScriptBookmarksManager(this, m_view)),
     m_scriptDictionariesManager(new ScriptDictionariesManager(this, m_view)),
     m_textEditManager(new ScenarioTextEditManager(this, m_view)),
     m_workModeIsDraft(false)
@@ -289,6 +293,10 @@ void ScenarioManager::loadViewState()
     m_navigatorManager->setSceneDescriptionVisible(isSceneDescriptionVisible);
     m_sceneDescriptionManager->view()->setVisible(isSceneDescriptionVisible);
 
+    const bool isScriptBookmarksVisible = m_navigatorSplitter->sizes().at(SCRIPT_BOOKMARKS_PANEL_INDEX) != 0;
+    m_navigatorManager->setScriptBookmarksVisible(isScriptBookmarksVisible);
+    m_scriptBookmarksManager->view()->setVisible(isScriptBookmarksVisible);
+
     const bool isScriptDictionariesVisible = m_navigatorSplitter->sizes().at(SCRIPT_DICTIONARIES_PANEL_INDEX) != 0;
     m_navigatorManager->setScriptDictionariesVisible(isScriptDictionariesVisible);
     m_scriptDictionariesManager->view()->setVisible(isScriptDictionariesVisible);
@@ -326,6 +334,7 @@ void ScenarioManager::loadCurrentProject()
     //
     m_navigatorManager->setNavigationModel(m_scenario->model());
     m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
+    m_scriptBookmarksManager->setBookmarksModel(m_scenario->document()->bookmarksModel());
     m_scriptDictionariesManager->refresh();
     m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
     m_textEditManager->setScenarioDocument(m_scenario->document());
@@ -433,6 +442,7 @@ void ScenarioManager::closeCurrentProject()
     m_cardsManager->clear();
     m_navigatorManager->setNavigationModel(nullptr);
     m_draftNavigatorManager->setNavigationModel(nullptr);
+    m_scriptBookmarksManager->setBookmarksModel(nullptr);
     m_textEditManager->setScenarioDocument(nullptr);
 
     //
@@ -448,6 +458,7 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
     m_navigatorManager->setCommentOnly(_isCommentOnly);
     m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
     m_sceneDescriptionManager->setCommentOnly(_isCommentOnly);
+    m_scriptBookmarksManager->setCommentOnly(_isCommentOnly);
     m_scriptDictionariesManager->setCommentOnly(_isCommentOnly);
     m_textEditManager->setCommentOnly(_isCommentOnly);
 }
@@ -952,6 +963,11 @@ void ScenarioManager::setSceneDescriptionVisible(bool _visible)
     setNavigatorPanelVisible(SCENE_DESCRIPTION_PANEL_INDEX, _visible);
 }
 
+void ScenarioManager::setScriptBookmarksVisible(bool _visible)
+{
+    setNavigatorPanelVisible(SCRIPT_BOOKMARKS_PANEL_INDEX, _visible);
+}
+
 void ScenarioManager::setScriptDictionariesVisible(bool _visible)
 {
     setNavigatorPanelVisible(SCRIPT_DICTIONARIES_PANEL_INDEX, _visible);
@@ -1012,6 +1028,7 @@ void ScenarioManager::initData()
 {
     m_navigatorManager->setNavigationModel(m_scenario->model());
     m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
+    m_scriptBookmarksManager->setBookmarksModel(m_scenario->document()->bookmarksModel());
     m_textEditManager->setScenarioDocument(m_scenario->document());
 }
 
@@ -1048,14 +1065,15 @@ void ScenarioManager::initView()
     rightLayout->addLayout(topLayout);
     rightLayout->addWidget(m_viewEditors, 1);
 
-    m_navigatorSplitter->setObjectName("navigatorScriptEditSplitter");
+    m_navigatorSplitter->setObjectName("navigatorScriptEditSplitter1");
     m_navigatorSplitter->setHandleWidth(1);
     m_navigatorSplitter->setOrientation(Qt::Vertical);
     m_navigatorSplitter->addWidget(m_navigatorManager->view());
     m_navigatorSplitter->addWidget(m_draftNavigatorManager->view());
     m_navigatorSplitter->addWidget(m_sceneDescriptionManager->view());
+    m_navigatorSplitter->addWidget(m_scriptBookmarksManager->view());
     m_navigatorSplitter->addWidget(m_scriptDictionariesManager->view());
-    m_navigatorSplitter->setSizes({1, 0, 0, 0});
+    m_navigatorSplitter->setSizes({1, 0, 0, 0, 0});
 
     m_mainSplitter->setObjectName("mainScenarioEditSplitter");
     m_mainSplitter->setHandleWidth(1);
@@ -1094,6 +1112,7 @@ void ScenarioManager::initConnections()
     connect(m_navigatorManager, &ScenarioNavigatorManager::changeItemTypeRequested, this, &ScenarioManager::aboutChangeItemType);
     connect(m_navigatorManager, &ScenarioNavigatorManager::draftVisibleChanged, this, &ScenarioManager::setDraftVisible);
     connect(m_navigatorManager, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged, this, &ScenarioManager::setSceneDescriptionVisible);
+    connect(m_navigatorManager, &ScenarioNavigatorManager::scriptBookmarksVisibleChanged, this, &ScenarioManager::setScriptBookmarksVisible);
     connect(m_navigatorManager, &ScenarioNavigatorManager::scriptDictionariesVisibleChanged, this, &ScenarioManager::setScriptDictionariesVisible);
     connect(m_navigatorManager,
             static_cast<void (ScenarioNavigatorManager::*)(const QModelIndex&)>(&ScenarioNavigatorManager::sceneChoosed),
