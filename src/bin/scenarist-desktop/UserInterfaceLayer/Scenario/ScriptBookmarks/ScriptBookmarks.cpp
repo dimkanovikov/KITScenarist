@@ -50,7 +50,7 @@ void ScriptBookmarks::initView()
     m_topEmptyLabel->setText(tr("Bookmarks"));
 
     m_edit->setIcons(QIcon(":/Graphics/Iconset/pencil.svg"));
-    m_edit->setToolTip(tr("Add bookmark for current cursor position"));
+    m_edit->setToolTip(tr("Edit selected bookmark"));
 
     m_remove->setIcons(QIcon(":/Graphics/Iconset/delete.svg"));
     m_remove->setToolTip(tr("Remove seleted bookmark"));
