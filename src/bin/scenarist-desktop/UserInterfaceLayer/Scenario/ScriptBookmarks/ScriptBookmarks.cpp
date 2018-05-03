@@ -53,7 +53,7 @@ void ScriptBookmarks::initView()
     m_edit->setToolTip(tr("Edit selected bookmark"));
 
     m_remove->setIcons(QIcon(":/Graphics/Iconset/delete.svg"));
-    m_remove->setToolTip(tr("Remove seleted bookmark"));
+    m_remove->setToolTip(tr("Remove selected bookmark"));
 
     m_items->setHeaderHidden(true);
     TreeViewItemDelegate* delegate = new TreeViewItemDelegate(m_items);

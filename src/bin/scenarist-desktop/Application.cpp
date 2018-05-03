@@ -210,6 +210,15 @@ void Application::updateTranslation()
             qtTranslationSuffix = "tr";
             qtBaseTranslationSuffix = "tr";
             currentLanguage = QLocale::Turkish;
+            break;
+        }
+
+        case 13: {
+            translationSuffix = "hu";
+            qtTranslationSuffix = "hu";
+            qtBaseTranslationSuffix = "hu";
+            currentLanguage = QLocale::Turkish;
+            break;
         }
 
         default: break;
