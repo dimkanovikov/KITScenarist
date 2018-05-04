@@ -24,9 +24,6 @@
 
 namespace UserInterface {
     class StartUpView;
-    class LoginDialog;
-    class ChangePasswordDialog;
-    class RenewSubscriptionDialog;
 }
 
 class QAbstractItemModel;

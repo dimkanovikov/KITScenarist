@@ -13,8 +13,6 @@
 #include <UserInterfaceLayer/Account/RenewSubscriptionDialog.h>
 
 using UserInterface::StartUpView;
-using UserInterface::ChangePasswordDialog;
-using UserInterface::RenewSubscriptionDialog;
 using UserInterface::ProjectsList;
 
 using WAF::Animation;
