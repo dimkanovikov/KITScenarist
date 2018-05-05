@@ -3,69 +3,92 @@
 
 #include <BusinessLayer/Statistics/Reports/AbstractReport.h>
 
-#include <QStackedWidget>
+#include <QWidget>
 
 class QAbstractItemModel;
 class QSortFilterProxyModel;
 
 namespace Ui {
-	class StatisticsSettings;
+    class StatisticsSettings;
 }
 
 
 namespace UserInterface
 {
-	/**
-	 * @brief Класс виджета с настройками отчётов/графиков
-	 */
-	class StatisticsSettings : public QStackedWidget
-	{
-		Q_OBJECT
+    /**
+     * @brief Класс виджета с настройками отчётов/графиков
+     */
+    class StatisticsSettings : public QWidget
+    {
+        Q_OBJECT
 
-	public:
-		explicit StatisticsSettings(QWidget *parent = 0);
-		~StatisticsSettings();
+    public:
+        explicit StatisticsSettings(QWidget* parent = nullptr);
+        ~StatisticsSettings();
 
-		/**
-		 * @brief Задать персонажей
-		 */
-		void setCharacters(QAbstractItemModel* _characters);
+        /**
+         * @brief Установить заголовок
+         */
+        void setTitle(const QString& _title);
 
-		/**
-		 * @brief Получить параметры отчётов
-		 */
-		const BusinessLogic::StatisticsParameters& settings() const;
+        /**
+         * @brief Отобразить заданные параметры
+         */
+        void setCurrentType(int _index);
 
-	signals:
-		/**
-		 * @brief Изменились настройки
-		 */
-		void settingsChanged();
+        /**
+         * @brief Задать персонажей
+         */
+        void setCharacters(QAbstractItemModel* _characters);
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        /**
+         * @brief Получить параметры отчётов
+         */
+        const BusinessLogic::StatisticsParameters& settings() const;
 
-		/**
-		 * @brief Настроить соединения для формы
-		 */
-		void initConnections();
+    signals:
+        /**
+         * @brief Пользователь нажал кнопку выйти из настроек инструментов
+         */
+        void backPressed();
 
-	private:
-		Ui::StatisticsSettings* m_ui;
+        /**
+         * @brief Изменились настройки
+         */
+        void settingsChanged();
 
-		/**
-		 * @brief Отсортированная модель персонажей
-		 */
-		QSortFilterProxyModel* m_charactersModel;
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-		/**
-		 * @brief Параметры отчёта
-		 */
-		mutable BusinessLogic::StatisticsParameters m_settings;
-	};
+        /**
+         * @brief Настроить соединения для формы
+         */
+        void initConnections();
+
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
+
+    private:
+        /**
+         * @brief Интерфейс
+         */
+        Ui::StatisticsSettings* m_ui = nullptr;
+
+        /**
+         * @brief Отсортированная модель персонажей
+         */
+        QSortFilterProxyModel* m_charactersModel = nullptr;
+
+        /**
+         * @brief Параметры отчёта
+         */
+        mutable BusinessLogic::StatisticsParameters m_settings;
+    };
 }
 
 #endif // STATISTICSSETTINGS_H

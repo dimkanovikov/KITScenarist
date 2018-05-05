@@ -239,11 +239,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QWidgetListView/qtmodelwidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.cpp \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkCollapsibleButton.cpp \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp \
     scenarist-desktop/ManagementLayer/Statistics/StatisticsManager.cpp \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkPopupWidget.cpp \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.cpp \
@@ -498,14 +495,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.h \
     scenarist-core/DataLayer/Database/DatabaseHelper.h \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkCollapsibleButton.h \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.h \
     scenarist-desktop/ManagementLayer/Statistics/StatisticsManager.h \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkPopupWidget.h \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkPopupWidget_p.h \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkBasePopupWidget.h \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkBasePopupWidget_p.h \
-    scenarist-core/3rd_party/Widgets/Ctk/ctkPimpl.h \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.h \
     scenarist-core/BusinessLayer/Statistics/Reports/AbstractReport.h \
     scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.h \
@@ -661,7 +652,6 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Account/LoginDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
@@ -681,7 +671,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Application/MenuView.ui \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui
 
 
 RESOURCES += \

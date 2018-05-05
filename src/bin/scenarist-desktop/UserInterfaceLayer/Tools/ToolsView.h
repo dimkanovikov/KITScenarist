@@ -124,7 +124,7 @@ namespace UserInterface
         /** @} */
 
         /**
-         * @brief Кнопка "настройки инстрмента"
+         * @brief Кнопка "настройки инструмента"
          */
         FlatButton* m_settings = nullptr;
 

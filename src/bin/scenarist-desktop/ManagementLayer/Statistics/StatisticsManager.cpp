@@ -21,97 +21,97 @@ using UserInterface::StatisticsView;
 
 
 StatisticsManager::StatisticsManager(QObject* _parent, QWidget* _parentWidget) :
-	QObject(_parent),
-	m_view(new StatisticsView(_parentWidget)),
-	m_exportedScenario(0),
-	m_needUpdateScenario(true)
+    QObject(_parent),
+    m_view(new StatisticsView(_parentWidget)),
+    m_exportedScenario(0),
+    m_needUpdateScenario(true)
 {
-	initView();
-	initConnections();
+    initView();
+    initConnections();
 }
 
 QWidget* StatisticsManager::view() const
 {
-	return m_view;
+    return m_view;
 }
 
 void StatisticsManager::loadCurrentProject()
 {
-	//
-	// Очистим от старых данных
-	//
-	setExportedScenario(0);
-	m_needUpdateScenario = true;
-	m_view->setReport(QString::null);
+    //
+    // Очистим от старых данных
+    //
+    setExportedScenario(0);
+    m_needUpdateScenario = true;
+    m_view->setReport(QString::null);
 
-	//
-	// Загрузить персонажей
-	//
+    //
+    // Загрузить персонажей
+    //
     m_view->setCharacters(DataStorageLayer::StorageFacade::researchStorage()->characters());
 }
 
 void StatisticsManager::scenarioTextChanged()
 {
-	m_needUpdateScenario = true;
+    m_needUpdateScenario = true;
 }
 
 void StatisticsManager::setExportedScenario(QTextDocument* _scenario)
 {
-	if (m_exportedScenario != _scenario) {
-		m_exportedScenario = _scenario;
-		m_needUpdateScenario = false;
-	}
+    if (m_exportedScenario != _scenario) {
+        m_exportedScenario = _scenario;
+        m_needUpdateScenario = false;
+    }
 }
 
 void StatisticsManager::aboutMakeReport(const BusinessLogic::StatisticsParameters& _parameters)
 {
-	//
-	// Уведомляем пользователя, о том, что началась генерация отчёта
-	//
-	m_view->showProgress();
+    //
+    // Уведомляем пользователя, о том, что началась генерация отчёта
+    //
+    m_view->showProgress();
 
-	//
-	// Запрашиваем экспортируемый документ, если нужно
-	//
-	if (m_needUpdateScenario) {
-		emit needNewExportedScenario();
-	}
+    //
+    // Запрашиваем экспортируемый документ, если нужно
+    //
+    if (m_needUpdateScenario) {
+        emit needNewExportedScenario();
+    }
 
-	switch (_parameters.type) {
-		case BusinessLogic::StatisticsParameters::Report: {
-			//
-			// Формируем отчёт
-			//
-			const QString reportHtml = BusinessLogic::StatisticsFacade::makeReport(m_exportedScenario, _parameters);
+    switch (_parameters.type) {
+        case BusinessLogic::StatisticsParameters::Report: {
+            //
+            // Формируем отчёт
+            //
+            const QString reportHtml = BusinessLogic::StatisticsFacade::makeReport(m_exportedScenario, _parameters);
 
-			//
-			// Устанавливаем отчёт в форму
-			//
-			m_view->setReport(reportHtml);
+            //
+            // Устанавливаем отчёт в форму
+            //
+            m_view->setReport(reportHtml);
 
-			break;
-		}
+            break;
+        }
 
-		case BusinessLogic::StatisticsParameters::Plot: {
-			//
-			// Формируем данные
-			//
-			BusinessLogic::Plot plot = BusinessLogic::StatisticsFacade::makePlot(m_exportedScenario, _parameters);
+        case BusinessLogic::StatisticsParameters::Plot: {
+            //
+            // Формируем данные
+            //
+            BusinessLogic::Plot plot = BusinessLogic::StatisticsFacade::makePlot(m_exportedScenario, _parameters);
 
-			//
-			// Рисуем график по данным
-			//
-			m_view->setPlot(plot);
+            //
+            // Рисуем график по данным
+            //
+            m_view->setPlot(plot);
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
 
-	//
-	// Закрываем уведомление
-	//
-	m_view->hideProgress();
+    //
+    // Закрываем уведомление
+    //
+    m_view->hideProgress();
 }
 
 void StatisticsManager::initView()
@@ -121,7 +121,7 @@ void StatisticsManager::initView()
 
 void StatisticsManager::initConnections()
 {
-    connect(m_view, &StatisticsView::makeReport, this, &StatisticsManager::aboutMakeReport);
+    connect(m_view, &StatisticsView::makeReportRequested, this, &StatisticsManager::aboutMakeReport);
     connect(m_view, &StatisticsView::linkActivated, this, &StatisticsManager::linkActivated);
 }
 

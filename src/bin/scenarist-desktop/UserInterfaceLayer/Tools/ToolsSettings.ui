@@ -53,7 +53,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QStackedWidget" name="content">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="scriptComparePage"/>
      <widget class="QWidget" name="scriptRestoreFromBackupPage">
