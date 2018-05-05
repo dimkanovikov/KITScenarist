@@ -20,6 +20,7 @@ application/modules/research
 application/modules/cards
 application/modules/scenario
 application/modules/statistics
+application/modules/tools
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - путь, значение - название проекта (если не задано, то имя файла без расширения))
 application/recent-files/using/... - даты использования последних файлов (путь, дата)

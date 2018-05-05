@@ -162,7 +162,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -215,7 +215,7 @@
               <item row="0" column="0" colspan="2">
                <widget class="QStackedWidget" name="applicationPageStack">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="applicationPageCommon">
                  <layout class="QGridLayout" name="gridLayout_18">
@@ -473,6 +473,13 @@
                    <widget class="QCheckBox" name="applicationModuleStatistics">
                     <property name="text">
                      <string>Statistics module</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="applicationModuleTools">
+                    <property name="text">
+                     <string>Tools module</string>
                     </property>
                    </widget>
                   </item>

@@ -220,6 +220,11 @@ void SettingsManager::applicationModuleStatisticsChanged(bool _value)
     storeValue("application/modules/statistics", _value);
 }
 
+void SettingsManager::applicationModuleToolsChanged(bool _value)
+{
+    storeValue("application/modules/tools", _value);
+}
+
 void SettingsManager::researchDefaultFontChanged(const QString& _family, int _size)
 {
     storeValue("research/default-font/family", _family);
@@ -824,6 +829,12 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    m_view->setApplicationModuleTools(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "application/modules/tools",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
 
     //
     // Настройки разработки
@@ -1260,6 +1271,7 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::applicationModuleCardsChanged, this, &SettingsManager::applicationModuleCardsChanged);
     connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationModuleScenarioChanged);
     connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationModuleStatisticsChanged);
+    connect(m_view, &SettingsView::applicationModuleToolsChanged, this, &SettingsManager::applicationModuleToolsChanged);
 
     connect(m_view, &SettingsView::researchDefaultFontChanged, this, &SettingsManager::researchDefaultFontChanged);
 
@@ -1346,6 +1358,7 @@ void SettingsManager::initConnections()
     connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationSettingsUpdated);
     connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationSettingsUpdated);
     connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationSettingsUpdated);
+    connect(m_view, &SettingsView::applicationModuleToolsChanged, this, &SettingsManager::applicationSettingsUpdated);
 
     connect(m_view, &SettingsView::researchDefaultFontChanged, this, &SettingsManager::researchSettingsUpdated);
 

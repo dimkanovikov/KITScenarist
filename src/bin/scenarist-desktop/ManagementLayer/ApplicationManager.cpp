@@ -110,9 +110,12 @@ namespace {
             QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
 
     /**
-     * @brief Флаг: синхронизация недоступна
+     * @brief Флаги доступности синхронизации
      */
+    /** @{ */
+    const bool SYNC_AVAILABLE = true;
     const bool SYNC_UNAVAILABLE = false;
+    /** @} */
 
     /**
      * @brief Неактивные при старте действия
@@ -1260,6 +1263,17 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         }
 
         //
+        // Используется устаревшая версия программы
+        //
+        case Sync::AppVersionOutdated: {
+            title = tr("Project sync not available");
+            error = tr("You have outdated version of the application. Please install latest app version for restoring access to the project.\n\n"
+                       "Project didn't synchronized.");
+            disableSyncForCurrentProject = true;
+            break;
+        }
+
+        //
         // Такой email уже зарегистрирован
         //
         case Sync::EmailAlreadyRegisteredError: {
@@ -1700,6 +1714,12 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     // Настроим индикатор
     //
     if (m_projectsManager->currentProject().isRemote()) {
+        //
+        // Сбросим состояние возможности синхронизации проекта,
+        // т.к. она могла измениться, например была продлена подписка
+        //
+        m_projectsManager->setCurrentProjectSyncAvailable(SYNC_AVAILABLE);
+
         setSyncIndicator();
         m_synchronizationManager->prepareToFullSynchronization();
     }
@@ -2364,6 +2384,14 @@ void ApplicationManager::reloadApplicationSettings()
             .toInt();
     m_tabs->tab(STATISTICS_TAB_INDEX)->setVisible(showStatisticsModule);
     m_tabsSecondary->tab(STATISTICS_TAB_INDEX)->setVisible(showStatisticsModule);
+    //
+    const bool showToolsModule =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/modules/tools",
+                DataStorageLayer::SettingsStorage::ApplicationSettings)
+            .toInt();
+    m_tabs->tab(TOOLS_TAB_INDEX)->setVisible(showToolsModule);
+    m_tabsSecondary->tab(TOOLS_TAB_INDEX)->setVisible(showToolsModule);
 
     //
     // Отключим на маленьких экранах некоторые возможности

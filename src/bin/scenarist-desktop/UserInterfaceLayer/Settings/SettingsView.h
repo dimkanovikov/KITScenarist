@@ -70,6 +70,7 @@ namespace UserInterface
         void setApplicationModuleCards(bool _use);
         void setApplicationModuleScenario(bool _use);
         void setApplicationModuleStatistics(bool _use);
+        void setApplicationModuleTools(bool _use);
 
         void setResearchDefaultFont(const QString& _family, int _size);
 
@@ -155,6 +156,7 @@ namespace UserInterface
         void applicationModuleCharactersChanged(bool);
         void applicationModuleLocationsChanged(bool);
         void applicationModuleStatisticsChanged(bool);
+        void applicationModuleToolsChanged(bool);
 
         void researchDefaultFontChanged(const QString& _family, int _size);
 

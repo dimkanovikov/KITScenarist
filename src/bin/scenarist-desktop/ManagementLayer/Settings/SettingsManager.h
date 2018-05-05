@@ -73,6 +73,7 @@ namespace ManagementLayer
         void applicationModuleCardsChanged(bool _value);
         void applicationModuleScenarioChanged(bool _value);
         void applicationModuleStatisticsChanged(bool _value);
+        void applicationModuleToolsChanged(bool _value);
 
         void researchDefaultFontChanged(const QString& _family, int _size);
 
