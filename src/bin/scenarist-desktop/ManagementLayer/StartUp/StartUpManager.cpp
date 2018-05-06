@@ -301,69 +301,6 @@ void StartUpManager::buildEditMenu(QMenu* _menu)
 }
 #endif
 
-void StartUpManager::downloadUpdate(const QString &_fileTemplate)
-{
-    NetworkRequest loader;
-
-    connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
-    connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop);
-
-    loader.setRequestMethod(NetworkRequestMethod::Post);
-    loader.clearRequestAttributes();
-
-    //
-    // Языковой суффикс
-    //
-    QString localeSuffix;
-    if (QLocale().language() == QLocale::English) {
-        localeSuffix = "_en";
-    } else if (QLocale().language() == QLocale::Spanish) {
-        localeSuffix = "_es";
-    } else if (QLocale().language() == QLocale::French) {
-        localeSuffix = "_fr";
-    }
-
-    //
-    // URL до новой версии в соответствии с ОС, архитектурой и языком
-    //
-#ifdef Q_OS_WIN
-    QString updateUrl = QString("windows/%1.exe").arg(_fileTemplate);
-#elif defined Q_OS_LINUX
-    #ifdef Q_PROCESSOR_X86_32
-        QString arch = "_i386";
-    #else
-        QString arch = "_amd64";
-    #endif
-
-    QString updateUrl = QString("linux/%1%2%3.deb").arg(_fileTemplate, localeSuffix, arch);
-#elif defined Q_OS_MAC
-    QString updateUrl = QString("mac/%1%2.dmg").arg(_fileTemplate, localeSuffix);
-#endif
-
-    //
-    // Загружаем установщик
-    //
-    const QString prefixUrl = "https://kitscenarist.ru/downloads/";
-    QUrl updateInfoUrl(prefixUrl + updateUrl);
-    QByteArray response = loader.loadSync(updateInfoUrl);
-    if (response.isEmpty()) {
-        emit errorDownloadForUpdate();
-        return;
-    }
-
-    //
-    // Сохраняем установщик в файл
-    //
-    const QString tempDirPath = QDir::toNativeSeparators(QDir::tempPath());
-    m_updateFile = tempDirPath + QDir::separator() + updateInfoUrl.fileName();
-    QFile tempFile(m_updateFile);
-    if (tempFile.open(QIODevice::WriteOnly)) {
-        tempFile.write(response);
-        tempFile.close();
-        emit downloadFinishedForUpdate();
-    }
-}
-
 void StartUpManager::showUpdateDialog()
 {
     UpdateDialog dialog(m_view);
@@ -424,7 +361,10 @@ void StartUpManager::showUpdateDialog()
 #endif
                 exit(0);
             } else {
-                updateDialogText = tr("Can't install update. There are some problems with downloaded file.\n\nYou can try to reload update.");
+                updateDialogText = tr("<p>Can't install update. There are some problems with downloaded file.</p>"
+                                      "<p>You can try to reload update or load it manually "
+                                      "from <a href=\"%1\" style=\"color:#2b78da;\">official website</a>.</p>")
+                                   .arg(makeUpdateUrl(m_updateFileTemplate));
             }
         } else {
             needToShowUpdate = false;
@@ -435,6 +375,77 @@ void StartUpManager::showUpdateDialog()
     // Отменили или пропустили. Остановим загрузку
     //
     emit stopDownloadForUpdate();
+}
+
+QString StartUpManager::makeUpdateUrl(const QString& _fileTemplate)
+{
+    //
+    // Языковой суффикс
+    //
+    QString localeSuffix;
+    if (QLocale().language() == QLocale::English) {
+        localeSuffix = "_en";
+    } else if (QLocale().language() == QLocale::Spanish) {
+        localeSuffix = "_es";
+    } else if (QLocale().language() == QLocale::French) {
+        localeSuffix = "_fr";
+    }
+
+    //
+    // URL до новой версии в соответствии с ОС, архитектурой и языком
+    //
+#ifdef Q_OS_WIN
+    QString updateUrl = QString("windows/%1.exe").arg(_fileTemplate);
+#elif defined Q_OS_LINUX
+    #ifdef Q_PROCESSOR_X86_32
+        QString arch = "_i386";
+    #else
+        QString arch = "_amd64";
+    #endif
+
+    QString updateUrl = QString("linux/%1%2%3.deb").arg(_fileTemplate, localeSuffix, arch);
+#elif defined Q_OS_MAC
+    QString updateUrl = QString("mac/%1%2.dmg").arg(_fileTemplate, localeSuffix);
+#endif
+
+    //
+    // Полная ссылка
+    //
+    const QString prefixUrl = "https://kitscenarist.ru/downloads/";
+    return prefixUrl + updateUrl;
+}
+
+void StartUpManager::downloadUpdate(const QString& _fileTemplate)
+{
+    NetworkRequest loader;
+
+    connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
+    connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop);
+
+    loader.setRequestMethod(NetworkRequestMethod::Post);
+    loader.clearRequestAttributes();
+
+    //
+    // Загружаем установщик
+    //
+    const QUrl updateInfoUrl(makeUpdateUrl(_fileTemplate));
+    QByteArray response = loader.loadSync(updateInfoUrl);
+    if (response.isEmpty()) {
+        emit errorDownloadForUpdate(updateInfoUrl.toString());
+        return;
+    }
+
+    //
+    // Сохраняем установщик в файл
+    //
+    const QString tempDirPath = QDir::toNativeSeparators(QDir::tempPath());
+    m_updateFile = tempDirPath + QDir::separator() + updateInfoUrl.fileName();
+    QFile tempFile(m_updateFile);
+    if (tempFile.open(QIODevice::WriteOnly)) {
+        tempFile.write(response);
+        tempFile.close();
+        emit downloadFinishedForUpdate();
+    }
 }
 
 void StartUpManager::initConnections()

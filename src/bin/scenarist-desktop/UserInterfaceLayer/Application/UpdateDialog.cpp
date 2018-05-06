@@ -56,9 +56,11 @@ void UpdateDialog::downloadFinished()
     m_ui->download->setText(tr("Install"));
 }
 
-void UpdateDialog::showDownloadError()
+void UpdateDialog::showDownloadError(const QString& _url)
 {
-    m_ui->text->setText(tr("Error during download update.\n\nYou can try to reload update."));
+    m_ui->text->setHtml(tr("<p>Error during download update.</p>"
+                           "<p>You can try to reload update or load it manually "
+                           "from <a href=\"%1\" style=\"color:#2b78da;\">official website</a>.</p>").arg(_url));
     hideProgress();
     m_ui->download->setEnabled(true);
 }

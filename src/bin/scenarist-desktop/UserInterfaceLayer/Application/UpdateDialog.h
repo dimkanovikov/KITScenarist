@@ -49,9 +49,9 @@ namespace UserInterface {
         void downloadFinished();
 
         /**
-         * @brief Ошибка загрузки файла обновления
+         * @brief Ошибка загрузки файла обновления по заданной ссылке
          */
-        void showDownloadError();
+        void showDownloadError(const QString& _url);
 
     signals:
         /**

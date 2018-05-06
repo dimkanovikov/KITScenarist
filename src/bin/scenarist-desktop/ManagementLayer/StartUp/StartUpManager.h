@@ -163,9 +163,9 @@ namespace ManagementLayer
         void downloadFinishedForUpdate();
 
         /**
-         * @brief Не удалось загрузить файл с обновлением
+         * @brief Не удалось загрузить файл с обновлением по заданной ссылке
          */
-        void errorDownloadForUpdate();
+        void errorDownloadForUpdate(const QString& _url);
 
         /**
          * @brief Прерываем загрузку установочного файла новой версии
@@ -177,6 +177,11 @@ namespace ManagementLayer
          * @brief Покажем окно с информацией об обновлении
          */
         void showUpdateDialog();
+
+        /**
+         * @brief Сформировать ссылку на файл обновления
+         */
+        QString makeUpdateUrl(const QString& _fileTemplate);
 
         /**
          * @brief Загрузить файл с обновлением
