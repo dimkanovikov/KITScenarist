@@ -580,7 +580,7 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
         }
 
         //
-        // Дополнительные отступы
+        // Дополнительные отступы от принтера
         //
         // ... снизу
         //
@@ -605,6 +605,15 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
         if (cardRect.right() != pageRect.right()) {
             cardRect.setRight(cardRect.right() - sideMargin);
         }
+
+        //
+        // Дополнительные отступы для удобочитаемости
+        //
+        const int contentMargin = 6;
+        cardRect.setBottom(cardRect.bottom() - contentMargin);
+        cardRect.setTop(cardRect.top() + contentMargin);
+        cardRect.setLeft(cardRect.left() + contentMargin);
+        cardRect.setRight(cardRect.right() - contentMargin);
 
         //
         // Рисуем карточку
