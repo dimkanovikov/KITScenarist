@@ -276,6 +276,17 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
                     DataStorageLayer::SettingsStorage::ApplicationSettings,
                     TRUE_VALUE).toInt()
                 );
+    m_exportDialog->setPrintWatermark(
+                StorageFacade::settingsStorage()->value(
+                    QString("%1/print-watermark").arg(projectKey),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings,
+                    FALSE_VALUE).toInt()
+                );
+    m_exportDialog->setWatermark(
+                StorageFacade::settingsStorage()->value(
+                    QString("%1/watermark").arg(projectKey),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                );
 }
 
 void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
@@ -330,6 +341,14 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/print-title").arg(projectKey),
                 exportParameters.printTilte ? "1" : "0",
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                QString("%1/print-watermark").arg(projectKey),
+                exportParameters.printWatermark ? "1" : "0",
+                DataStorageLayer::SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                QString("%1/watermark").arg(projectKey),
+                exportParameters.watermark,
                 DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 

@@ -103,6 +103,16 @@ namespace UserInterface
         void setPrintTitle(bool _isChecked);
 
         /**
+         * @brief Установить необходимость печатать водяной знак
+         */
+        void setPrintWatermark(bool _isChecked);
+
+        /**
+         * @brief Установить водяной знак
+         */
+        void setWatermark(const QString& _watermark);
+
+        /**
          * @brief Получить настройки экспорта
          */
         BusinessLogic::ExportParameters exportParameters() const;

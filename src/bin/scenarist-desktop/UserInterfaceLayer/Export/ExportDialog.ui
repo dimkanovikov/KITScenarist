@@ -110,7 +110,7 @@ border: 1px solid palette(dark);
    <item>
     <widget class="QStackedWidget" name="exportParameters">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="researchExportPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -441,6 +441,13 @@ border: 1px solid palette(dark);
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="printWatermark">
+            <property name="text">
+             <string>Print watermark:</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="templateLabel">
             <property name="sizePolicy">
@@ -454,7 +461,7 @@ border: 1px solid palette(dark);
             </property>
            </widget>
           </item>
-          <item row="0" column="1" colspan="2">
+          <item row="0" column="1" colspan="3">
            <widget class="QComboBox" name="templates">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -464,27 +471,7 @@ border: 1px solid palette(dark);
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="printTitle">
-            <property name="text">
-             <string>Print Title Page</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="pageNumbering">
-            <property name="text">
-             <string>Print pages numbers</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
+          <item row="3" column="0" colspan="3">
            <widget class="QCheckBox" name="scenesNumbering">
             <property name="text">
              <string>Print scenes numbers with prefix</string>
@@ -494,21 +481,34 @@ border: 1px solid palette(dark);
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="scenesPrefix">
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="pageNumbering">
             <property name="text">
-             <string/>
+             <string>Print pages numbers</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="2">
+          <item row="1" column="0" colspan="3">
+           <widget class="QCheckBox" name="printTitle">
+            <property name="text">
+             <string>Print Title Page</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
            <widget class="QCheckBox" name="dialoguesNumbering">
             <property name="text">
              <string>Print dialogues numbers</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
+          <item row="5" column="0" colspan="3">
            <widget class="QCheckBox" name="saveReviewMarks">
             <property name="text">
              <string>Save Review Marks</string>
@@ -518,10 +518,27 @@ border: 1px solid palette(dark);
             </property>
            </widget>
           </item>
-          <item row="6" column="0" colspan="2">
+          <item row="6" column="0" colspan="3">
            <widget class="QCheckBox" name="checkPageBreaks">
             <property name="text">
              <string>Check Page Breaks</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLineEdit" name="scenesPrefix">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2" colspan="2">
+           <widget class="QLineEdit" name="watermark">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>

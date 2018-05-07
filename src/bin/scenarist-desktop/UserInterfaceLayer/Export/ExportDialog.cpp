@@ -157,6 +157,16 @@ void ExportDialog::setPrintTitle(bool _isChecked)
     m_ui->printTitle->setChecked(_isChecked);
 }
 
+void ExportDialog::setPrintWatermark(bool _isChecked)
+{
+    m_ui->printWatermark->setChecked(_isChecked);
+}
+
+void ExportDialog::setWatermark(const QString& _watermark)
+{
+    m_ui->watermark->setText(_watermark);
+}
+
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
     BusinessLogic::ExportParameters exportParameters;
@@ -176,6 +186,8 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
     exportParameters.printDialoguesNumbers = m_ui->dialoguesNumbering->isChecked();
     exportParameters.scenesPrefix = m_ui->scenesPrefix->text();
     exportParameters.saveReviewMarks = m_ui->saveReviewMarks->isChecked();
+    exportParameters.printWatermark = m_ui->printWatermark->isChecked();
+    exportParameters.watermark = m_ui->watermark->text();
 
     return exportParameters;
 }
@@ -346,6 +358,7 @@ void ExportDialog::updateParametersVisibility()
     bool showDialoguesNumbers = true;
     bool showSaveReviewMarks = true;
     bool showCheckPageBreak = true;
+    bool showPrintWatermark = m_ui->pdf->isChecked();
     //
     // Зависимость от вида
     //
@@ -372,6 +385,8 @@ void ExportDialog::updateParametersVisibility()
     m_ui->dialoguesNumbering->setVisible(showDialoguesNumbers);
     m_ui->saveReviewMarks->setVisible(showSaveReviewMarks);
     m_ui->checkPageBreaks->setVisible(showCheckPageBreak);
+    m_ui->printWatermark->setVisible(showPrintWatermark);
+    m_ui->watermark->setVisible(showPrintWatermark);
 }
 
 void ExportDialog::initView()
@@ -425,6 +440,9 @@ void ExportDialog::initConnections()
     connect(m_ui->fdx, &QRadioButton::toggled, this, &ExportDialog::updateScriptFileFormat);
     connect(m_ui->browseFile, &FlatButton::clicked, this, &ExportDialog::chooseScriptFile);
     connect(m_ui->file, &QLineEdit::textChanged, this, &ExportDialog::checkScriptExportAvailability);
+
+    connect(m_ui->scenesNumbering, &QCheckBox::toggled, m_ui->scenesPrefix, &QLineEdit::setEnabled);
+    connect(m_ui->printWatermark, &QCheckBox::toggled, m_ui->watermark, &QLineEdit::setEnabled);
 
     connect(m_ui->cancel, &FlatButton::clicked, this, &ExportDialog::reject);
     connect(m_ui->printPreview, &FlatButton::clicked, this, &ExportDialog::printPreview);
