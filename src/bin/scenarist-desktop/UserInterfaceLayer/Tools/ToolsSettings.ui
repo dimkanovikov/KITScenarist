@@ -55,7 +55,6 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="scriptComparePage"/>
      <widget class="QWidget" name="scriptRestoreFromBackupPage">
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
@@ -88,6 +87,7 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="scriptComparePage"/>
     </widget>
    </item>
   </layout>

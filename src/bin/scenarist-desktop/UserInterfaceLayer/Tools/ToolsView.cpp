@@ -119,12 +119,12 @@ void ToolsView::initView()
     //
     // Настраиваем панель со списком инструментов
     //
-    QTreeWidgetItem* versions = new QTreeWidgetItem(m_toolsTypes, { tr("Compare script versions") });
-    versions->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/wrench.svg"));
-    m_toolsTypes->addTopLevelItem(versions);
     QTreeWidgetItem* backups = new QTreeWidgetItem(m_toolsTypes, { tr("Restore script from backup") });
     backups->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/wrench.svg"));
     m_toolsTypes->addTopLevelItem(backups);
+    //    QTreeWidgetItem* versions = new QTreeWidgetItem(m_toolsTypes, { tr("Compare script versions") });
+    //    versions->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/wrench.svg"));
+    //    m_toolsTypes->addTopLevelItem(versions);
 
     m_toolsTypes->setObjectName("ToolsTypesTree");
     m_toolsTypes->expandAll();

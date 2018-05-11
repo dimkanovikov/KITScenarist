@@ -99,5 +99,5 @@ void ScriptBookmarksManager::initConnection()
 {
     connect(m_view, &ScriptBookmarks::editBookmarkPressed, this, &ScriptBookmarksManager::editBookmark);
     connect(m_view, &ScriptBookmarks::removeBookmarkPressed, this, &ScriptBookmarksManager::removeBookmark);
-    connect(m_view, &ScriptBookmarks::bookmarkSelected, this, QOverload<const QModelIndex&>::of(&ScriptBookmarksManager::selectBookmark));
+    connect(m_view, &ScriptBookmarks::bookmarkSelected, this, static_cast<void (ScriptBookmarksManager::*)(const QModelIndex&)>(&ScriptBookmarksManager::selectBookmark));
 }

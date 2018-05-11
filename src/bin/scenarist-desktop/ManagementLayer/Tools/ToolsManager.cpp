@@ -30,14 +30,14 @@ namespace {
      */
     enum class Tool {
         /**
-         * @brief Сравнение версий сценариев
-         */
-        CompareScript,
-
-        /**
          * @brief Восстановление сценария из бэкапа
          */
-        RestoreFromBackup
+        RestoreFromBackup,
+
+        /**
+         * @brief Сравнение версий сценариев
+         */
+        CompareScript
     };
 
     /**
@@ -164,14 +164,14 @@ void ToolsManager::initConnections()
 {
     connect(m_view, &ToolsView::dataRequested, [this] (int _toolType) {
         switch (static_cast<Tool>(_toolType)) {
-            case Tool::CompareScript:
-            {
-                break;
-            }
-
             case Tool::RestoreFromBackup:
             {
                 loadBackupsList();
+                break;
+            }
+
+            case Tool::CompareScript:
+            {
                 break;
             }
 

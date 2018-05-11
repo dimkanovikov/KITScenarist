@@ -1149,7 +1149,7 @@ void ScenarioManager::initConnections()
     connect(m_textEditManager, &ScenarioTextEditManager::textChanged, this, &ScenarioManager::aboutUpdateCounters);
     connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitleAndDescription);
     connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutSelectItemInNavigator, Qt::QueuedConnection);
-    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, m_scriptBookmarksManager, QOverload<int>::of(&ScriptBookmarksManager::selectBookmark), Qt::QueuedConnection);
+    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, m_scriptBookmarksManager, static_cast<void (ScriptBookmarksManager::*)(int)>(&ScriptBookmarksManager::selectBookmark), Qt::QueuedConnection);
     connect(m_textEditManager, &ScenarioTextEditManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_textEditManager, &ScenarioTextEditManager::redoRequest, this, &ScenarioManager::aboutRedo);
     connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
