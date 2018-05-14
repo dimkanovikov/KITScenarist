@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>317</height>
+    <width>400</width>
+    <height>230</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>400</width>
     <height>230</height>
    </size>
   </property>
@@ -526,7 +526,7 @@
   <customwidget>
    <class>TabBarExpanded</class>
    <extends>QWidget</extends>
-   <header>3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h</header>
+   <header location="global">3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
