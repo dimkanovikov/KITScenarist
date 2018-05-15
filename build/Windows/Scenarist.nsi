@@ -54,11 +54,18 @@
 ;--------------------------------
 ;Languages
 
-  !insertmacro MUI_LANGUAGE "English"
   !insertmacro MUI_LANGUAGE "German"
-  !insertmacro MUI_LANGUAGE "French"
+  !insertmacro MUI_LANGUAGE "English"
   !insertmacro MUI_LANGUAGE "Spanish"
+  !insertmacro MUI_LANGUAGE "French"
+  !insertmacro MUI_LANGUAGE "Hungarian"
+  !insertmacro MUI_LANGUAGE "Polish"
+  !insertmacro MUI_LANGUAGE "Portuguese"
   !insertmacro MUI_LANGUAGE "Russian"
+  !insertmacro MUI_LANGUAGE "Turkish"
+  !insertmacro MUI_LANGUAGE "Ukrainian"
+  !insertmacro MUI_LANGUAGE "Farsi"
+  !insertmacro MUI_LANGUAGE "Hebrew"
 
 ;--------------------------------
 ;Installer Sections
