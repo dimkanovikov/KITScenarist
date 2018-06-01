@@ -80,6 +80,11 @@ namespace ManagementLayer
          */
         void scrollToPosition(int _position);
 
+        /**
+         * @brief Задать, зафиксированы ли номера сцен
+         */
+        void setFixed(bool _fixed);
+
 #ifdef Q_OS_MAC
         /**
          * @brief Сформировать меню "Правка"
@@ -159,6 +164,11 @@ namespace ManagementLayer
          * @brief Пользователь хочет убрать закладку в заданном месте документа
          */
         void removeBookmarkRequested(int _position);
+
+        /**
+         * @brief Зафиксированы/расфиксированы номера сцен
+         */
+        void lockUnlockRequest();
 
     private slots:
         /**

@@ -107,7 +107,7 @@ void ScenarioCardsView::saveChanges(bool _hasChangesInText)
     m_cards->saveChanges(_hasChangesInText);
 }
 
-void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, int _number,
+void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _number,
     const QString& _title, const QString& _description, const QString& _stamp,
     const QString& _colors, bool _isEmbedded, const QString& _previousCardUuid)
 {
@@ -118,7 +118,7 @@ void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, int _nu
     }
 }
 
-void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, int _number,
+void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, const QString& _number,
     const QString& _title, const QString& _description, const QString& _stamp,
     const QString& _colors, bool _isEmbedded, bool _isAct)
 {

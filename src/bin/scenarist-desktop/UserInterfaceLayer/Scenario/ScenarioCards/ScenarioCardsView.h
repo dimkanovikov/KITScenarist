@@ -69,14 +69,14 @@ namespace UserInterface {
         /**
          * @brief Вставить карточку после заданной
          */
-        void insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        void insertCard(const QString& _uuid, bool _isFolder, const QString& _number, const QString& _title,
             const QString& _description, const QString& _stamp, const QString& _colors,
             bool _isEmbedded, const QString& _previousCardUuid);
 
         /**
          * @brief Обновить карточку с заданным uuid
          */
-        void updateCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        void updateCard(const QString& _uuid, bool _isFolder, const QString& _number, const QString& _title,
             const QString& _description, const QString& _stamp, const QString& _colors,
             bool _isEmbedded, bool _isAct);
 

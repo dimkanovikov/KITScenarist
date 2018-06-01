@@ -387,6 +387,11 @@ namespace ManagementLayer
          */
         BusinessLogic::ScenarioDocument* workingScenario() const;
 
+        /**
+         * @brief Зафиксировать номера сцен
+         */
+        void lockSceneNumbers();
+
     private:
         /**
          * @brief Представление сценария
@@ -465,6 +470,14 @@ namespace ManagementLayer
          * @brief Текущий рабочий режим
          */
         bool m_workModeIsDraft;
+
+        /**
+         * @brief Зафиксированы ли номера сцен
+         */
+        /** @{ */
+        bool m_fixedScenes = false;
+        bool m_fixedScenesDraft = false;
+        /** @} */
 
         /**
          * @brief Курсоры соавторов
