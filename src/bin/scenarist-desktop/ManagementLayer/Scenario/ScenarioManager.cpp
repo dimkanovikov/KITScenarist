@@ -1156,7 +1156,7 @@ void ScenarioManager::initConnections()
     connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
     connect(m_textEditManager, &ScenarioTextEditManager::addBookmarkRequested, m_scriptBookmarksManager, &ScriptBookmarksManager::addBookmark);
     connect(m_textEditManager, &ScenarioTextEditManager::removeBookmarkRequested, m_scenario, &ScenarioDocument::removeBookmark);
-    connect(m_textEditManager, &ScenarioTextEditManager::lockUnlockRequest, this, &ScenarioManager::lockSceneNumbers);
+    connect(m_textEditManager, &ScenarioTextEditManager::changeSceneNumbersLockingRequest, this, &ScenarioManager::changeSceneNumbersLocking);
 
     connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 
@@ -1164,13 +1164,13 @@ void ScenarioManager::initConnections()
     // Настраиваем отслеживание изменений документа
     //
     connect(m_scenario, &ScenarioDocument::textChanged, this, &ScenarioManager::scenarioChanged);
-    connect(m_scenario, &ScenarioDocument::fixedScenesChanged, [this] (bool _fixed) {
+    connect(m_scenario, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {
         m_fixedScenes = _fixed;
         if (!m_workModeIsDraft) {
             m_textEditManager->setFixed(m_fixedScenes);
         }
     });
-    connect(m_scenarioDraft, &ScenarioDocument::fixedScenesChanged, [this] (bool _fixed) {
+    connect(m_scenarioDraft, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {
         m_fixedScenesDraft = _fixed;
         if (m_workModeIsDraft) {
             m_textEditManager->setFixed(m_fixedScenes);
@@ -1219,6 +1219,14 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
             m_textEditManager->setAdditionalCursors(additionalCursors);
             prevNavigatorManager->clearSelection();
 
+            if (m_scenario->isAnySceneLocked() != m_scenarioDraft->isAnySceneLocked()) {
+                if (m_workModeIsDraft) {
+                    m_textEditManager->setFixed(m_scenarioDraft->isAnySceneLocked());
+                } else {
+                    m_textEditManager->setFixed(m_scenario->isAnySceneLocked());
+                }
+            }
+
             emit scenarioChanged();
         }
     }
@@ -1229,15 +1237,15 @@ BusinessLogic::ScenarioDocument* ScenarioManager::workingScenario() const
     return m_workModeIsDraft ? m_scenarioDraft : m_scenario;
 }
 
-void ScenarioManager::lockSceneNumbers()
+void ScenarioManager::changeSceneNumbersLocking()
 {
     bool allowedLock = true;
 
     if ((m_workModeIsDraft && m_fixedScenesDraft)
             || (!m_workModeIsDraft && m_fixedScenes)) {
-        QDialogButtonBox::StandardButton result = QLightBoxMessage::question(m_view, tr("Unlock?"),
-        tr("Do you want to unlock or lock?"),
-        QDialogButtonBox::Yes | QDialogButtonBox::No,
+        QDialogButtonBox::StandardButton result = QLightBoxMessage::question(m_view, tr("Changing scenes numbers locking"),
+        tr("Do you want to unlock scenes numbers or lock again?"),
+        QDialogButtonBox::Yes | QDialogButtonBox::No | QDialogButtonBox::Cancel,
         QDialogButtonBox::NoButton,
         {{QDialogButtonBox::Yes, tr("Unlock")},
          {QDialogButtonBox::No, tr("Lock")}});
@@ -1247,7 +1255,7 @@ void ScenarioManager::lockSceneNumbers()
         }
     }
 
-    workingScenario()->lockUnlockSceneNumbers(allowedLock);
+    workingScenario()->changeSceneNumbersLocking(allowedLock);
 
     emit scenarioChanged();
 }

@@ -390,7 +390,7 @@ namespace ManagementLayer
         /**
          * @brief Зафиксировать номера сцен
          */
-        void lockSceneNumbers();
+        void changeSceneNumbersLocking();
 
     private:
         /**

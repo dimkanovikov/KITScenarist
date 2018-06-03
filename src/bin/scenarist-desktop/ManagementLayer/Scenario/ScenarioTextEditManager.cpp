@@ -283,7 +283,7 @@ void ScenarioTextEditManager::initConnections()
 {
     connect(m_view, &ScenarioTextEditWidget::undoRequest, this, &ScenarioTextEditManager::undoRequest);
     connect(m_view, &ScenarioTextEditWidget::redoRequest, this, &ScenarioTextEditManager::redoRequest);
-    connect(m_view, &ScenarioTextEditWidget::lockUnlockRequest, this, &ScenarioTextEditManager::lockUnlockRequest);
+    connect(m_view, &ScenarioTextEditWidget::changeSceneNumbersLockingRequest, this, &ScenarioTextEditManager::changeSceneNumbersLockingRequest);
     connect(m_view, &ScenarioTextEditWidget::textModeChanged, this, &ScenarioTextEditManager::textModeChanged);
     connect(m_view, &ScenarioTextEditWidget::textChanged, this, &ScenarioTextEditManager::textChanged);
     connect(m_view, &ScenarioTextEditWidget::cursorPositionChanged, this, &ScenarioTextEditManager::cursorPositionChanged);

@@ -218,7 +218,7 @@ namespace UserInterface
         /**
          * @brief Запрос на блокировку/разблокировку номеров сцен
          */
-        void lockUnlockRequest();
+        void changeSceneNumbersLockingRequest();
 
         /**
          * @brief Изменился режим отображения сценария

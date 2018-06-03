@@ -935,7 +935,7 @@ void ScenarioTextEditWidget::initConnections()
     connect(m_review, &ScenarioReviewPanel::toggled, m_reviewView, &ScenarioReviewView::setVisible);
     connect(m_reviewView, &ScenarioReviewView::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
     connect(m_reviewView, &ScenarioReviewView::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
-    connect(m_lockUnlock, &FlatButton::clicked, this, &ScenarioTextEditWidget::lockUnlockRequest);
+    connect(m_lockUnlock, &FlatButton::clicked, this, &ScenarioTextEditWidget::changeSceneNumbersLockingRequest);
     connect(m_zenControls, &ScriptZenModeControls::quitPressed, this, &ScenarioTextEditWidget::quitFromZenMode);
 
     initEditorConnections();

@@ -168,7 +168,7 @@ namespace ManagementLayer
         /**
          * @brief Зафиксированы/расфиксированы номера сцен
          */
-        void lockUnlockRequest();
+        void changeSceneNumbersLockingRequest();
 
     private slots:
         /**
