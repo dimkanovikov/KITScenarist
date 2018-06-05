@@ -1173,7 +1173,7 @@ void ScenarioManager::initConnections()
     connect(m_scenarioDraft, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {
         m_fixedScenesDraft = _fixed;
         if (m_workModeIsDraft) {
-            m_textEditManager->setFixed(m_fixedScenes);
+            m_textEditManager->setFixed(m_fixedScenesDraft);
         }
     });
     connect(m_cardsManager, &ScenarioCardsManager::cardsChanged, this, &ScenarioManager::scenarioChanged);
@@ -1240,10 +1240,11 @@ BusinessLogic::ScenarioDocument* ScenarioManager::workingScenario() const
 void ScenarioManager::changeSceneNumbersLocking()
 {
     bool allowedLock = true;
+    QDialogButtonBox::StandardButton result = QDialogButtonBox::No;
 
     if ((m_workModeIsDraft && m_fixedScenesDraft)
             || (!m_workModeIsDraft && m_fixedScenes)) {
-        QDialogButtonBox::StandardButton result = QLightBoxMessage::question(m_view, tr("Changing scenes numbers locking"),
+        result = QLightBoxMessage::question(m_view, tr("Changing scenes numbers locking"),
         tr("Do you want to unlock scenes numbers or lock again?"),
         QDialogButtonBox::Yes | QDialogButtonBox::No | QDialogButtonBox::Cancel,
         QDialogButtonBox::NoButton,
@@ -1255,7 +1256,8 @@ void ScenarioManager::changeSceneNumbersLocking()
         }
     }
 
-    workingScenario()->changeSceneNumbersLocking(allowedLock);
-
-    emit scenarioChanged();
+    if (result != QDialogButtonBox::Cancel) {
+        workingScenario()->changeSceneNumbersLocking(allowedLock);
+        emit scenarioChanged();
+    }
 }
