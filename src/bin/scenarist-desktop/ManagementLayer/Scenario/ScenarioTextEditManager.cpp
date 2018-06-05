@@ -208,6 +208,11 @@ void ScenarioTextEditManager::scrollToPosition(int _position)
     m_view->setCursorPosition(_position, false, false);
 }
 
+void ScenarioTextEditManager::setFixed(bool _fixed)
+{
+    m_view->setFixed(_fixed);
+}
+
 #ifdef Q_OS_MAC
 void ScenarioTextEditManager::buildEditMenu(QMenu* _menu)
 {
@@ -278,6 +283,7 @@ void ScenarioTextEditManager::initConnections()
 {
     connect(m_view, &ScenarioTextEditWidget::undoRequest, this, &ScenarioTextEditManager::undoRequest);
     connect(m_view, &ScenarioTextEditWidget::redoRequest, this, &ScenarioTextEditManager::redoRequest);
+    connect(m_view, &ScenarioTextEditWidget::changeSceneNumbersLockingRequest, this, &ScenarioTextEditManager::changeSceneNumbersLockingRequest);
     connect(m_view, &ScenarioTextEditWidget::textModeChanged, this, &ScenarioTextEditManager::textModeChanged);
     connect(m_view, &ScenarioTextEditWidget::textChanged, this, &ScenarioTextEditManager::textChanged);
     connect(m_view, &ScenarioTextEditWidget::cursorPositionChanged, this, &ScenarioTextEditManager::cursorPositionChanged);
