@@ -367,7 +367,7 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
         const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
         //
         NetworkRequest dictionaryLoader;
-        connect(&dictionaryLoader, &NetworkRequest::downloadProgress, &progress, &QLightBoxProgress::setProgressValue);
+        connect(&dictionaryLoader, &NetworkRequest::downloadProgress, &progress, QOverload<int>::of(&QLightBoxProgress::setProgressValue));
         const QByteArray affFileData = dictionaryLoader.loadSync(hunspellDictionariesFolderUrl + affFileName);
         bool downloadingAffFileSuccess = affFileData.size() > 0;
         if (downloadingAffFileSuccess) {

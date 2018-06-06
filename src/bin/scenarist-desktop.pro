@@ -695,3 +695,19 @@ macx {
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
 win32-msvc*:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+
+#
+# Настраиваем вывод в консоль в Windows в нормальной кодировке
+#
+win32 {
+    QMAKE_EXTRA_TARGETS += before_build makefilehook
+
+    makefilehook.target = $(MAKEFILE)
+    makefilehook.depends = .beforebuild
+
+    PRE_TARGETDEPS += .beforebuild
+
+    before_build.target = .beforebuild
+    before_build.depends = FORCE
+    before_build.commands = chcp 1251
+}
