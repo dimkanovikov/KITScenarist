@@ -89,7 +89,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
     //
     if (m_model != _model) {
         m_model = _model;
-        connect(m_model, &BusinessLogic::ScenarioModel::rowsInserted, [=] (const QModelIndex& _parent, int _first, int _last) {
+        connect(m_model, &BusinessLogic::ScenarioModel::rowsInserted, this, [this] (const QModelIndex& _parent, int _first, int _last) {
             //
             // Пробегаем каждый добавленный элемент
             //
@@ -141,7 +141,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                     currentCard->uuid());
             }
         });
-        connect(m_model, &BusinessLogic::ScenarioModel::rowsAboutToBeRemoved, [=] (const QModelIndex& _parent, int _first, int _last) {
+        connect(m_model, &BusinessLogic::ScenarioModel::rowsAboutToBeRemoved, this, [this] (const QModelIndex& _parent, int _first, int _last) {
             for (int row = _last; row >= _first; --row) {
                 QModelIndex currentCardIndex = _parent;
                 if (_parent.isValid()) {
@@ -153,7 +153,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                 m_view->removeCard(currentCard->uuid());
             }
         });
-        connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, [=] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
+        connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, this, [this] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
             for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
                 const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
                 const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
@@ -208,7 +208,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 void ScenarioCardsManager::clear()
 {
     if (m_model != nullptr) {
-        m_model->disconnect();
+        m_model->disconnect(this);
         m_model = nullptr;
     }
     m_view->clear();

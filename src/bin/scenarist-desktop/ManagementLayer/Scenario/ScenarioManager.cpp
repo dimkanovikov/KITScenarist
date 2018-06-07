@@ -1170,6 +1170,7 @@ void ScenarioManager::initConnections()
             m_textEditManager->setFixed(m_fixedScenes);
         }
     });
+    connect(m_scenarioDraft, &ScenarioDocument::textChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_scenarioDraft, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {
         m_fixedScenesDraft = _fixed;
         if (m_workModeIsDraft) {
