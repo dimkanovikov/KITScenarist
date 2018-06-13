@@ -94,7 +94,7 @@ void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMargi
     //
     // Задаём шрифт по умолчанию для всех остальных редакторов текста
     //
-    QVector<SimpleTextEditorWidget*> editors = { m_ui->scenarioLogline, m_ui->synopsisText, m_ui->textDescription, m_ui->characterDescription, m_ui->locationDescription };
+    QVector<SimpleTextEditorWidget*> editors = { m_ui->loglineText, m_ui->synopsisText, m_ui->textDescription, m_ui->characterDescription, m_ui->locationDescription };
     for (auto* editor : editors) {
         editor->setDefaultFont(_font);
     }
@@ -191,11 +191,11 @@ void ResearchView::selectItem(const QModelIndex& _index)
     m_ui->researchNavigator->setCurrentIndex(_index);
 }
 
-void ResearchView::editScenario(const QString& _name, const QString& _logline)
+void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix)
 {
-    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->scenarioEdit);
-    ::updateText(m_ui->scenarioName, _name);
-    ::updateText(m_ui->scenarioLogline, _logline);
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->scriptEdit);
+    updateText(m_ui->scriptName, _name);
+    updateText(m_ui->scriptSceneNumbersPrefix, _scenesPrefix);
 
     //
     // Настраиваем интерфейс
@@ -208,12 +208,24 @@ void ResearchView::editTitlePage(const QString& _name, const QString& _additiona
     const QString& _genre, const QString& _author, const QString& _contacts, const QString& _year)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->titlePageEdit);
-    ::updateText(m_ui->titlePageName, _name);
-    ::updateText(m_ui->titlePageAdditionalInfo, _additionalInfo);
-    ::updateText(m_ui->titlePageGenre, _genre);
-    ::updateText(m_ui->titlePageAuthor, _author);
-    ::updateText(m_ui->titlePageContacts, _contacts);
-    ::updateText(m_ui->titlePageYear, _year);
+    updateText(m_ui->titlePageName, _name);
+    updateText(m_ui->titlePageAdditionalInfo, _additionalInfo);
+    updateText(m_ui->titlePageGenre, _genre);
+    updateText(m_ui->titlePageAuthor, _author);
+    updateText(m_ui->titlePageContacts, _contacts);
+    updateText(m_ui->titlePageYear, _year);
+
+    //
+    // Настраиваем интерфейс
+    //
+    setResearchManageButtonsVisible(false);
+    setSearchVisible(false);
+}
+
+void ResearchView::editLogline(const QString& _logline)
+{
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->loglineEdit);
+    updateTextEditorText(_logline, m_ui->loglineText->editor());
 
     //
     // Настраиваем интерфейс
@@ -351,7 +363,7 @@ void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>&
     disconnect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, this, &ResearchView::imagesGalleryImageAdded);
     disconnect(m_ui->imagesGalleryPane, &ImagesPane::imageRemoved, this, &ResearchView::imagesGalleryImageRemoved);
     m_ui->imagesGalleryPane->clear();
-    foreach (const QPixmap& image, _images) {
+    for (const QPixmap& image : _images) {
         m_ui->imagesGalleryPane->addImage(image);
     }
     connect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, this, &ResearchView::imagesGalleryImageAdded);
@@ -437,14 +449,15 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
     m_ui->researchNavigator->setContextMenuPolicy(_isCommentOnly ? Qt::PreventContextMenu : Qt::DefaultContextMenu);
     m_ui->addResearchItem->setEnabled(!_isCommentOnly);
     m_ui->removeResearchItem->setEnabled(!_isCommentOnly);
-    m_ui->scenarioName->setReadOnly(_isCommentOnly);
-    m_ui->scenarioLogline->setReadOnly(_isCommentOnly);
+    m_ui->scriptName->setReadOnly(_isCommentOnly);
+    m_ui->scriptSceneNumbersPrefix->setReadOnly(_isCommentOnly);
     m_ui->titlePageName->setReadOnly(_isCommentOnly);
     m_ui->titlePageAdditionalInfo->lineEdit()->setReadOnly(_isCommentOnly);
     m_ui->titlePageAuthor->setReadOnly(_isCommentOnly);
     m_ui->titlePageContacts->setReadOnly(_isCommentOnly);
     m_ui->titlePageGenre->setReadOnly(_isCommentOnly);
     m_ui->titlePageYear->setReadOnly(_isCommentOnly);
+    m_ui->loglineText->setReadOnly(_isCommentOnly);
     m_ui->synopsisText->setReadOnly(_isCommentOnly);
     m_ui->characterName->setReadOnly(_isCommentOnly);
     m_ui->characterRealName->setReadOnly(_isCommentOnly);
@@ -646,7 +659,7 @@ void ResearchView::initView()
 
     m_ui->search->setIcons(m_ui->search->icon());
 
-    m_ui->scenarioLogline->setToolbarVisible(false);
+    m_ui->loglineText->setToolbarVisible(false);
 
     m_ui->synopsisText->setUsePageMode(true);
 
@@ -767,26 +780,26 @@ void ResearchView::initConnections()
     //
     // Внутренние соединения формы
     //
-    connect(m_ui->scenarioName, &QLineEdit::textChanged, [=] {
-        ::updateText(m_ui->titlePageName, m_ui->scenarioName->text());
+    connect(m_ui->scriptName, &QLineEdit::textChanged, this, [this] {
+        ::updateText(m_ui->titlePageName, m_ui->scriptName->text());
     });
-    connect(m_ui->scenarioLogline, &SimpleTextEditorWidget::textChanged, [=] {
-        const QString textToSplit = m_ui->scenarioLogline->toPlainText().simplified();
+    connect(m_ui->titlePageName, &QLineEdit::textChanged, this, [this] {
+        ::updateText(m_ui->scriptName, m_ui->titlePageName->text());
+    });
+    connect(m_ui->loglineText, &SimpleTextEditorWidget::textChanged, [=] {
+        const QString textToSplit = m_ui->loglineText->toPlainText().simplified();
         const int wordsCount = textToSplit.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"), QString::SkipEmptyParts).size();
-        m_ui->scenarioLoglineWords->setVisible(wordsCount > 0);
-        m_ui->scenarioLoglineWordsLabel->setVisible(wordsCount > 0);
-        m_ui->scenarioLoglineWords->setText(QString::number(wordsCount));
+        m_ui->scriptLoglineWords->setVisible(wordsCount > 0);
+        m_ui->scriptLoglineWordsLabel->setVisible(wordsCount > 0);
+        m_ui->scriptLoglineWords->setText(QString::number(wordsCount));
         const QString color =
                 wordsCount <= 25
                 ? "green"
                 : wordsCount <= 30
                   ? "palette(text)"
                   : "red";
-        m_ui->scenarioLoglineWords->setStyleSheet("color: " + color);
-        m_ui->scenarioLoglineWordsLabel->setStyleSheet("color: " + color);
-    });
-    connect(m_ui->titlePageName, &QLineEdit::textChanged, [=] {
-        ::updateText(m_ui->scenarioName, m_ui->titlePageName->text());
+        m_ui->scriptLoglineWords->setStyleSheet("color: " + color);
+        m_ui->scriptLoglineWordsLabel->setStyleSheet("color: " + color);
     });
     //
     // ... загрузка ссылки
@@ -827,14 +840,12 @@ void ResearchView::initConnections()
     //
     // ... сценарий
     //
-    connect(m_ui->scenarioName, &QLineEdit::textChanged, this, &ResearchView::scenarioNameChanged);
-    connect(m_ui->scenarioLogline, &SimpleTextEditorWidget::textChanged, [=]{
-        emit scenarioLoglineChanged(TextEditHelper::removeDocumentTags(m_ui->scenarioLogline->toHtml()));
-    });
+    connect(m_ui->scriptName, &QLineEdit::textChanged, this, &ResearchView::scriptNameChanged);
+    connect(m_ui->scriptSceneNumbersPrefix, &QLineEdit::textChanged, this, &ResearchView::scriptSceneNumbersPrefixChanged);
     //
     // ... титульная страница
     //
-    connect(m_ui->titlePageName, &QLineEdit::textChanged, this, &ResearchView::scenarioNameChanged);
+    connect(m_ui->titlePageName, &QLineEdit::textChanged, this, &ResearchView::scriptNameChanged);
     connect(m_ui->titlePageAdditionalInfo, &QComboBox::editTextChanged, this, &ResearchView::titlePageAdditionalInfoChanged);
     connect(m_ui->titlePageGenre, &QLineEdit::textChanged, this, &ResearchView::titlePageGenreChanged);
     connect(m_ui->titlePageAuthor, &QLineEdit::textChanged, this, &ResearchView::titlePageAuthorChanged);
@@ -842,6 +853,12 @@ void ResearchView::initConnections()
         emit titlePageContactsChanged(m_ui->titlePageContacts->toPlainText());
     });
     connect(m_ui->titlePageYear, &QLineEdit::textChanged, this, &ResearchView::titlePageYearChanged);
+    //
+    // ... логлайн
+    //
+    connect(m_ui->loglineText, &SimpleTextEditorWidget::textChanged, [=]{
+        emit loglineTextChanged(TextEditHelper::removeDocumentTags(m_ui->loglineText->toHtml()));
+    });
     //
     // ... синопсис
     //

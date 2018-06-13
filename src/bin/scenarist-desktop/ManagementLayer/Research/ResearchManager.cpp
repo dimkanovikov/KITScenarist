@@ -90,12 +90,13 @@ void ResearchManager::loadCurrentProject()
 void ResearchManager::loadScenarioData()
 {
     m_scenarioData.insert(ScenarioData::NAME_KEY, StorageFacade::scenarioDataStorage()->name());
-    m_scenarioData.insert(ScenarioData::LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
+    m_scenarioData.insert(ScenarioData::SCENE_NUMBERS_PREFIX_KEY, StorageFacade::scenarioDataStorage()->sceneNumbersPrefix());
     m_scenarioData.insert(ScenarioData::ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
     m_scenarioData.insert(ScenarioData::GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
     m_scenarioData.insert(ScenarioData::AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
     m_scenarioData.insert(ScenarioData::CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
     m_scenarioData.insert(ScenarioData::YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
+    m_scenarioData.insert(ScenarioData::LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
     m_scenarioData.insert(ScenarioData::SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
 
     if (m_view->currentResearchIndex().isValid()) {
@@ -168,12 +169,13 @@ void ResearchManager::saveResearch()
     //
     if (!m_scenarioData.isEmpty()) {
         StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(ScenarioData::NAME_KEY));
-        StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(ScenarioData::LOGLINE_KEY));
+        StorageFacade::scenarioDataStorage()->setSceneNumbersPrefix(m_scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY));
         StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY));
         StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(ScenarioData::GENRE_KEY));
         StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(ScenarioData::AUTHOR_KEY));
         StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(ScenarioData::CONTACTS_KEY));
         StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(ScenarioData::YEAR_KEY));
+        StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(ScenarioData::LOGLINE_KEY));
         StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
     }
 
@@ -349,10 +351,10 @@ void ResearchManager::editResearch(const QModelIndex& _index)
             // В зависимости от типа элемента загрузим необходимые данные в редактор
             //
             switch (research->type()) {
-                case Research::Scenario: {
-                    m_view->editScenario(
+                case Research::Script: {
+                    m_view->editScript(
                         m_scenarioData.value(ScenarioData::NAME_KEY),
-                        m_scenarioData.value(ScenarioData::LOGLINE_KEY));
+                        m_scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY));
                     break;
                 }
 
@@ -364,6 +366,11 @@ void ResearchManager::editResearch(const QModelIndex& _index)
                         m_scenarioData.value(ScenarioData::AUTHOR_KEY),
                         m_scenarioData.value(ScenarioData::CONTACTS_KEY),
                         m_scenarioData.value(ScenarioData::YEAR_KEY));
+                    break;
+                }
+
+                case Research::Logline: {
+                    m_view->editLogline(m_scenarioData.value(ScenarioData::LOGLINE_KEY));
                     break;
                 }
 
@@ -582,7 +589,7 @@ void ResearchManager::initView()
 
 void ResearchManager::initConnections()
 {
-    connect(m_model, &ResearchModel::itemMoved, [=] (const QModelIndex& _index) {
+    connect(m_model, &ResearchModel::itemMoved, this, [this] (const QModelIndex& _index) {
         m_view->selectItem(_index);
         emit researchChanged();
     });
@@ -593,38 +600,41 @@ void ResearchManager::initConnections()
     connect(m_view, &ResearchView::refeshResearchSubtreeRequested, this, &ResearchManager::refreshResearchSubtree);
     connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
 
-    connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
+    connect(m_view, &ResearchView::scriptNameChanged, this, [this] (const QString& _name){
         emit scenarioNameChanged(_name);
         updateScenarioData(ScenarioData::NAME_KEY, _name);
     });
-    connect(m_view, &ResearchView::scenarioLoglineChanged, [=](const QString& _logline){
-        updateScenarioData(ScenarioData::LOGLINE_KEY, _logline);
+    connect(m_view, &ResearchView::scriptSceneNumbersPrefixChanged, this, [this] (const QString& _sceneNumbersPrefix) {
+        updateScenarioData(ScenarioData::SCENE_NUMBERS_PREFIX_KEY, _sceneNumbersPrefix);
     });
-    connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, [=](const QString& _additionalInfo){
+    connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, this, [this] (const QString& _additionalInfo){
         updateScenarioData(ScenarioData::ADDITIONAL_INFO_KEY, _additionalInfo);
     });
-    connect(m_view, &ResearchView::titlePageGenreChanged, [=](const QString& _genre){
+    connect(m_view, &ResearchView::titlePageGenreChanged, this, [this] (const QString& _genre){
         updateScenarioData(ScenarioData::GENRE_KEY, _genre);
     });
-    connect(m_view, &ResearchView::titlePageAuthorChanged, [=](const QString& _author){
+    connect(m_view, &ResearchView::titlePageAuthorChanged, this, [this] (const QString& _author){
         updateScenarioData(ScenarioData::AUTHOR_KEY, _author);
     });
-    connect(m_view, &ResearchView::titlePageContactsChanged, [=](const QString& _contacts){
+    connect(m_view, &ResearchView::titlePageContactsChanged, this, [this] (const QString& _contacts){
         updateScenarioData(ScenarioData::CONTACTS_KEY, _contacts);
     });
-    connect(m_view, &ResearchView::titlePageYearChanged, [=](const QString& _year){
+    connect(m_view, &ResearchView::titlePageYearChanged, this, [this] (const QString& _year){
         updateScenarioData(ScenarioData::YEAR_KEY, _year);
     });
-    connect(m_view, &ResearchView::synopsisTextChanged, [=](const QString& _synopsis){
+    connect(m_view, &ResearchView::loglineTextChanged, this, [this] (const QString& _logline){
+        updateScenarioData(ScenarioData::LOGLINE_KEY, _logline);
+    });
+    connect(m_view, &ResearchView::synopsisTextChanged, this, [this] (const QString& _synopsis){
         updateScenarioData(ScenarioData::SYNOPSIS_KEY, _synopsis);
     });
 
     //
     // ... персонаж
     //
-    connect(m_view, &ResearchView::characterNameChanged, [=] (const QString& _name) {
+    connect(m_view, &ResearchView::characterNameChanged, this, [this] (const QString& _name) {
         const QString newName = TextEditHelper::smartToUpper(_name);
-        if (m_currentResearch != 0
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Character
             && m_currentResearch->name() != newName) {
             const QString oldName = m_currentResearch->name();
@@ -647,16 +657,16 @@ void ResearchManager::initConnections()
             emit characterNameChanged(oldName, newName);
         }
     });
-    connect(m_view, &ResearchView::characterRealNameChanged, [=] (const QString& _name) {
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::characterRealNameChanged, this, [this] (const QString& _name) {
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Character) {
             auto* researchCharacter = dynamic_cast<ResearchCharacter*>(m_currentResearch);
             researchCharacter->setRealName(_name);
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::characterDescriptionChanged, [=] (const QString& _description) {
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::characterDescriptionChanged, this, [this] (const QString& _description) {
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Character) {
             auto* researchCharacter = dynamic_cast<ResearchCharacter*>(m_currentResearch);
             researchCharacter->setDescriptionText(_description);
@@ -666,9 +676,9 @@ void ResearchManager::initConnections()
     //
     // ... локация
     //
-    connect(m_view, &ResearchView::locationNameChanged, [=] (const QString& _name) {
+    connect(m_view, &ResearchView::locationNameChanged, this, [this] (const QString& _name) {
         const QString newName = TextEditHelper::smartToUpper(_name);
-        if (m_currentResearch != 0
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Location
             && m_currentResearch->name() != newName) {
             const QString oldName = m_currentResearch->name();
@@ -691,8 +701,8 @@ void ResearchManager::initConnections()
             emit locationNameChanged(oldName, newName);
         }
     });
-    connect(m_view, &ResearchView::locationDescriptionChanged, [=] (const QString& _description) {
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::locationDescriptionChanged, this, [this] (const QString& _description) {
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Location
             && m_currentResearch->description() != _description) {
             m_currentResearch->setDescription(_description);
@@ -702,8 +712,8 @@ void ResearchManager::initConnections()
     //
     // ... текстовый элемент
     //
-    connect(m_view, &ResearchView::textNameChanged, [=](const QString& _name){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::textNameChanged, this, [this] (const QString& _name){
+        if (m_currentResearch != nullptr
             && (m_currentResearch->type() == Research::Folder
                 || m_currentResearch->type() == Research::Text)
             && m_currentResearch->name() != _name) {
@@ -712,8 +722,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::textDescriptionChanged, [=](const QString& _description){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::textDescriptionChanged, this, [this] (const QString& _description){
+        if (m_currentResearch != nullptr
             && (m_currentResearch->type() == Research::Folder
                 || m_currentResearch->type() == Research::Text)
             && m_currentResearch->description() != _description) {
@@ -724,8 +734,8 @@ void ResearchManager::initConnections()
     //
     // ... ссылка
     //
-    connect(m_view, &ResearchView::urlNameChanged, [=](const QString& _name){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::urlNameChanged, this, [this] (const QString& _name){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Url
             && m_currentResearch->name() != _name) {
             m_currentResearch->setName(_name);
@@ -733,8 +743,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::urlLinkChanged, [=](const QString& _urlLink){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::urlLinkChanged, this, [this] (const QString& _urlLink){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Url
             && m_currentResearch->url() != _urlLink) {
             m_currentResearch->setUrl(_urlLink);
@@ -742,8 +752,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::urlContentChanged, [=](const QString& _html){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::urlContentChanged, this, [this] (const QString& _html){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Url
             && m_currentResearch->description() != _html) {
             m_currentResearch->setDescription(_html);
@@ -753,8 +763,8 @@ void ResearchManager::initConnections()
     //
     // ... галерея изображений
     //
-    connect(m_view, &ResearchView::imagesGalleryNameChanged, [=](const QString& _name){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::imagesGalleryNameChanged, this, [this] (const QString& _name){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::ImagesGallery
             && m_currentResearch->name() != _name) {
             m_currentResearch->setName(_name);
@@ -762,8 +772,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::imagesGalleryImageAdded, [=](const QPixmap& _image, int _sortOrder){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::imagesGalleryImageAdded, this, [this] (const QPixmap& _image, int _sortOrder){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::ImagesGallery) {
             //
             // Создаём новый элемент
@@ -776,8 +786,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::imagesGalleryImageRemoved, [=](const QPixmap&, int _sortOrder){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::imagesGalleryImageRemoved, this, [this] (const QPixmap&, int _sortOrder){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::ImagesGallery) {
             //
             // Получим ребёнка, которого удаляют
@@ -801,8 +811,8 @@ void ResearchManager::initConnections()
     //
     // ... изображение
     //
-    connect(m_view, &ResearchView::imageNameChanged, [=](const QString& _name){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::imageNameChanged, this, [this] (const QString& _name){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Image
             && m_currentResearch->name() != _name) {
             m_currentResearch->setName(_name);
@@ -810,8 +820,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::imagePreviewChanged, [=](const QPixmap& _image){
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::imagePreviewChanged, this, [this] (const QPixmap& _image){
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::Image) {
             m_currentResearch->setImage(_image);
             emit researchChanged();
@@ -820,8 +830,8 @@ void ResearchManager::initConnections()
     //
     // ... ментальная карта
     //
-    connect(m_view, &ResearchView::mindMapNameChanged, [=] (const QString& _name) {
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::mindMapNameChanged, this, [this] (const QString& _name) {
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::MindMap
             && m_currentResearch->name() != _name) {
             m_currentResearch->setName(_name);
@@ -829,8 +839,8 @@ void ResearchManager::initConnections()
             emit researchChanged();
         }
     });
-    connect(m_view, &ResearchView::mindMapChanged, [=] (const QString& _xml) {
-        if (m_currentResearch != 0
+    connect(m_view, &ResearchView::mindMapChanged, this, [this] (const QString& _xml) {
+        if (m_currentResearch != nullptr
             && m_currentResearch->type() == Research::MindMap) {
             m_currentResearch->setDescription(_xml);
             emit researchChanged();

@@ -474,7 +474,7 @@ border: 1px solid palette(dark);
           <item row="3" column="0" colspan="3">
            <widget class="QCheckBox" name="scenesNumbering">
             <property name="text">
-             <string>Print scenes numbers with prefix</string>
+             <string>Print scenes numbers</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -522,13 +522,6 @@ border: 1px solid palette(dark);
            <widget class="QCheckBox" name="checkPageBreaks">
             <property name="text">
              <string>Check Page Breaks</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QLineEdit" name="scenesPrefix">
-            <property name="text">
-             <string/>
             </property>
            </widget>
           </item>

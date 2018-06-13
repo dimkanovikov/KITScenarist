@@ -142,11 +142,6 @@ void ExportDialog::setDialoguesNumbering(bool _isChecked)
     m_ui->dialoguesNumbering->setChecked(_isChecked);
 }
 
-void ExportDialog::setScenesPrefix(const QString& _prefix)
-{
-    m_ui->scenesPrefix->setText(_prefix);
-}
-
 void ExportDialog::setSaveReviewMarks(bool _save)
 {
     m_ui->saveReviewMarks->setChecked(_save);
@@ -184,7 +179,6 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
     exportParameters.printPagesNumbers = m_ui->pageNumbering->isChecked();
     exportParameters.printScenesNumbers = m_ui->scenesNumbering->isChecked();
     exportParameters.printDialoguesNumbers = m_ui->dialoguesNumbering->isChecked();
-    exportParameters.scenesPrefix = m_ui->scenesPrefix->text();
     exportParameters.saveReviewMarks = m_ui->saveReviewMarks->isChecked();
     exportParameters.printWatermark = m_ui->printWatermark->isChecked();
     exportParameters.watermark = m_ui->watermark->text();
@@ -441,7 +435,6 @@ void ExportDialog::initConnections()
     connect(m_ui->browseFile, &FlatButton::clicked, this, &ExportDialog::chooseScriptFile);
     connect(m_ui->file, &QLineEdit::textChanged, this, &ExportDialog::checkScriptExportAvailability);
 
-    connect(m_ui->scenesNumbering, &QCheckBox::toggled, m_ui->scenesPrefix, &QLineEdit::setEnabled);
     connect(m_ui->printWatermark, &QCheckBox::toggled, m_ui->watermark, &QLineEdit::setEnabled);
 
     connect(m_ui->cancel, &FlatButton::clicked, this, &ExportDialog::reject);

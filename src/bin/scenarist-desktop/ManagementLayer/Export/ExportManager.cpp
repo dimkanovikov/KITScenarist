@@ -79,6 +79,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
         //
         BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
         exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+        exportParameters.scenesPrefix = _scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
         exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
         exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
         exportParameters.scriptAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
@@ -105,15 +106,15 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                 //
                 // Определим экспортирующего
                 //
-                BusinessLogic::AbstractExporter* exporter = 0;
+                QSharedPointer<BusinessLogic::AbstractExporter> exporter;
                 if (m_exportDialog->exportFormat() == "docx") {
-                    exporter = new BusinessLogic::DocxExporter;
+                    exporter.reset(new BusinessLogic::DocxExporter);
                 } else if (m_exportDialog->exportFormat() == "pdf") {
-                    exporter = new BusinessLogic::PdfExporter;
+                    exporter.reset(new BusinessLogic::PdfExporter);
                 } else if (m_exportDialog->exportFormat() == "fdx") {
-                    exporter = new BusinessLogic::FdxExporter;
+                    exporter.reset(new BusinessLogic::FdxExporter);
                 } else {
-                    exporter = new BusinessLogic::FountainExporter;
+                    exporter.reset(new BusinessLogic::FountainExporter);
                 }
 
                 //
@@ -124,8 +125,6 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
                 } else {
                     exporter->exportTo(_scenario, exportParameters);
                 }
-                delete exporter;
-                exporter = nullptr;
             }
             //
             // Если невозможно записать в файл
@@ -180,6 +179,7 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
     //
     BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
     exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+    exportParameters.scenesPrefix = _scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
     exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
     exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
     exportParameters.scriptAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
@@ -259,11 +259,6 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
                     DataStorageLayer::SettingsStorage::ApplicationSettings,
                     FALSE_VALUE).toInt()
                 );
-    m_exportDialog->setScenesPrefix(
-                StorageFacade::settingsStorage()->value(
-                    QString("%1/scenes-prefix").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                );
     m_exportDialog->setSaveReviewMarks(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/save-review-marks").arg(projectKey),
@@ -329,10 +324,6 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/dialogues-numbering").arg(projectKey),
                 exportParameters.printDialoguesNumbers ? "1" : "0",
-                DataStorageLayer::SettingsStorage::ApplicationSettings);
-    StorageFacade::settingsStorage()->setValue(
-                QString("%1/scenes-prefix").arg(projectKey),
-                exportParameters.scenesPrefix,
                 DataStorageLayer::SettingsStorage::ApplicationSettings);
     StorageFacade::settingsStorage()->setValue(
                 QString("%1/save-review-marks").arg(projectKey),

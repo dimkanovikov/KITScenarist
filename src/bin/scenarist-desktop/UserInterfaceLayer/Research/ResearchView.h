@@ -54,7 +54,7 @@ namespace UserInterface
         /**
          * @brief Включить режим редактирования сценария
          */
-        void editScenario(const QString& _name, const QString& _logline);
+        void editScript(const QString& _name, const QString& _scenesPrefix);
 
         /**
          * @brief Включить режим редактирования титульной страницы
@@ -62,6 +62,11 @@ namespace UserInterface
         void editTitlePage(const QString& _name, const QString& _additionalInfo,
             const QString& _genre, const QString& _author, const QString& _contacts,
             const QString& _year);
+
+        /**
+         * @brief Включить режим редактирования логлайна
+         */
+        void editLogline(const QString& _logline);
 
         /**
          * @brief Включить режим редактирования синопсиса
@@ -168,13 +173,14 @@ namespace UserInterface
          * @brief Сигналы об изменении данных
          */
         /** @{ */
-        void scenarioNameChanged(const QString& _name);
-        void scenarioLoglineChanged(const QString& _logline);
+        void scriptNameChanged(const QString& _name);
+        void scriptSceneNumbersPrefixChanged(const QString& _sceneNumbersPrefix);
         void titlePageAdditionalInfoChanged(const QString& _additionalInfo);
         void titlePageGenreChanged(const QString& _genre);
         void titlePageAuthorChanged(const QString& _author);
         void titlePageContactsChanged(const QString& _contacts);
         void titlePageYearChanged(const QString& _year);
+        void loglineTextChanged(const QString& _synopsis);
         void synopsisTextChanged(const QString& _synopsis);
         void characterNameChanged(const QString& _name);
         void characterRealNameChanged(const QString& _name);

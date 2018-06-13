@@ -88,11 +88,6 @@ namespace UserInterface
         void setDialoguesNumbering(bool _isChecked);
 
         /**
-         * @brief Установить приставку сцен
-         */
-        void setScenesPrefix(const QString& _prefix);
-
-        /**
          * @brief Установить необходимость сохранения редакторских пометок
          */
         void setSaveReviewMarks(bool _save);
