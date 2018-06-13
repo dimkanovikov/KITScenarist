@@ -16,6 +16,7 @@
 #include <UserInterfaceLayer/Research/ResearchItemDialog.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
+#include <3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
@@ -23,6 +24,7 @@
 #include <QMenu>
 #include <QSplitter>
 #include <QWidget>
+#include <QWidgetAction>
 
 using ManagementLayer::ResearchManager;
 using BusinessLogic::ResearchModel;
@@ -517,6 +519,7 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
     }
 
     ResearchModelItem* researchItem = m_model->itemForIndex(_index);
+    bool showColor = false;
     bool showAdd = false;
     bool showRemove = false;
     bool showUpdate = false;
@@ -541,6 +544,7 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
         case Research::MindMap:
         case Research::Character:
         case Research::Location: {
+            showColor = true;
             showAdd = true;
             showRemove = true;
             break;
@@ -551,12 +555,41 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
         }
     }
 
-    if (showAdd || showRemove) {
+    if (showColor || showAdd || showRemove) {
         QMenu menu(m_view);
+        //
+        // Цвет
+        //
+        QAction* colorAction = menu.addAction(tr("Color"));
+        QAction* removeColorAction = nullptr;
+        GoogleColorsPane* colorsPane = nullptr;
+        {
+            colorAction->setVisible(showColor);
+            QMenu* colorMenu = new QMenu(m_view);
+            removeColorAction = colorMenu->addAction(tr("Clear"));
+            colorsPane = new GoogleColorsPane(colorMenu);
+            QWidgetAction* wa = new QWidgetAction(colorMenu);
+            colorsPane->setCurrentColor(researchItem->color());
+            wa->setDefaultWidget(colorsPane);
+            colorMenu->addAction(wa);
+            colorAction->setMenu(colorMenu);
+
+            connect(colorsPane, &GoogleColorsPane::selected, &menu, &QMenu::close);
+        }
+        menu.addSeparator();
+        //
+        // Добавить
+        //
         QAction* addAction = menu.addAction(tr("Add New"));
         addAction->setVisible(showAdd);
+        //
+        // Удалить
+        //
         QAction* removeAction = menu.addAction(tr("Remove"));
         removeAction->setVisible(showRemove);
+        //
+        // Обновить список (зависит от контекста)
+        //
         QAction* updateAction =
                 menu.addAction(researchItem->research()->type() == Research::CharactersRoot
                                ? tr("Find All Characters from Script")
@@ -570,6 +603,12 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
             removeResearch(_index);
         } else if (toggledAction == updateAction) {
             refreshResearchSubtree(_index);
+        } else if (toggledAction == removeColorAction) {
+            researchItem->research()->setColor(QColor());
+        } else {
+            if (colorsPane->currentColor().isValid()) {
+                researchItem->research()->setColor(colorsPane->currentColor());
+            }
         }
     }
 }
