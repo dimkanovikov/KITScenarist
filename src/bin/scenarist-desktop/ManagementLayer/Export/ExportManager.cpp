@@ -346,7 +346,7 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 void ExportManager::aboutExportStyleChanged(const QString& _styleName)
 {
     StorageFacade::settingsStorage()->setValue("export/style", _styleName,
-                                                                 DataStorageLayer::SettingsStorage::ApplicationSettings);
+                                               DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
 void ExportManager::aboutPrintPreview()

@@ -124,7 +124,23 @@ void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 
 void ExportDialog::setCurrentStyle(const QString& _styleName)
 {
-    m_ui->templates->setCurrentText(_styleName);
+    //
+    // Сбрасываем последний установленный шаблон
+    //
+    m_ui->templates->setCurrentIndex(-1);
+
+    //
+    // Если название шаблона задано, то установим его
+    //
+    if (!_styleName.isEmpty()) {
+        m_ui->templates->setCurrentText(_styleName);
+    }
+    //
+    // В противном случае выбираем первый из списка
+    //
+    else {
+        m_ui->templates->setCurrentIndex(0);
+    }
 }
 
 void ExportDialog::setPageNumbering(bool _isChecked)
