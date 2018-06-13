@@ -85,6 +85,11 @@ namespace ManagementLayer
          */
         void setFixed(bool _fixed);
 
+        /**
+         * @brief Установить префикс номеров сцен
+         */
+        void setSceneNumbersPrefix(const QString& _prefix);
+
 #ifdef Q_OS_MAC
         /**
          * @brief Сформировать меню "Правка"

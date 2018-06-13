@@ -118,6 +118,11 @@ void ScenarioNavigatorManager::setScriptDictionariesVisible(bool _visible)
     m_navigator->setScriptDictionariesVisible(_visible);
 }
 
+void ScenarioNavigatorManager::setSceneNumbersPrefix(const QString& _prefix)
+{
+    m_navigator->setSceneNumbersPrefix(_prefix);
+}
+
 void ScenarioNavigatorManager::setCommentOnly(bool _isCommentOnly)
 {
     m_navigator->setCommentOnly(_isCommentOnly);

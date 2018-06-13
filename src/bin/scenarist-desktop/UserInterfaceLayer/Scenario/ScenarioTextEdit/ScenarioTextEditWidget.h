@@ -65,6 +65,11 @@ namespace UserInterface
         void setShowScenesNumbers(bool _show);
 
         /**
+         * @brief Задать префикс номеров сцен
+         */
+        void setSceneNumbersPrefix(const QString& _prefix);
+
+        /**
          * @brief Включить/выключить отображение номеров реплик
          */
         void setShowDialoguesNumbers(bool _show);

@@ -199,6 +199,11 @@ QString ResearchManager::scenarioName() const
     return m_scenarioData.value(ScenarioData::NAME_KEY);
 }
 
+QString ResearchManager::sceneNumbersPrefix() const
+{
+    return m_scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
+}
+
 QMap<QString, QString> ResearchManager::scenarioData() const
 {
     return m_scenarioData;
@@ -601,10 +606,11 @@ void ResearchManager::initConnections()
     connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
 
     connect(m_view, &ResearchView::scriptNameChanged, this, [this] (const QString& _name){
-        emit scenarioNameChanged(_name);
+        emit scriptNameChanged(_name);
         updateScenarioData(ScenarioData::NAME_KEY, _name);
     });
     connect(m_view, &ResearchView::scriptSceneNumbersPrefixChanged, this, [this] (const QString& _sceneNumbersPrefix) {
+        emit sceneNumbersPrefixChanged(_sceneNumbersPrefix);
         updateScenarioData(ScenarioData::SCENE_NUMBERS_PREFIX_KEY, _sceneNumbersPrefix);
     });
     connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, this, [this] (const QString& _additionalInfo){

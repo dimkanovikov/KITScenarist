@@ -93,6 +93,11 @@ void ScenarioNavigator::setSceneDescriptionHeight(int _height)
     m_navigationTreeDelegate->setSceneDescriptionHeight(_height);
 }
 
+void ScenarioNavigator::setSceneNumbersPrefix(const QString& _prefix)
+{
+    m_navigationTreeDelegate->setSceneNumbersPrefix(_prefix);
+}
+
 void ScenarioNavigator::resetView()
 {
     m_navigationTree->setItemDelegate(0);

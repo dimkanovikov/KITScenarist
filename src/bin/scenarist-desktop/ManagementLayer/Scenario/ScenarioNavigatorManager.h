@@ -71,6 +71,11 @@ namespace ManagementLayer
         void setScriptDictionariesVisible(bool _visible);
 
         /**
+         * @brief Установить префикс номеров сцен
+         */
+        void setSceneNumbersPrefix(const QString& _prefix);
+
+        /**
          * @brief Установить режим работы со сценарием
          */
         void setCommentOnly(bool _isCommentOnly);

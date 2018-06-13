@@ -64,6 +64,11 @@ namespace UserInterface
         void setSceneDescriptionHeight(int _height);
 
         /**
+         * @brief Установить префикс номеров сцен
+         */
+        void setSceneNumbersPrefix(const QString& _prefix);
+
+        /**
          * @brief Пересоздать делегат отображения элементов в навигаторе
          * @note Приходится именно пересоздавать навигатор, т.к. другого рабочего способа для
          *		 обновления делегата не нашёл. Проблемы возникают при изменении размера виджета,

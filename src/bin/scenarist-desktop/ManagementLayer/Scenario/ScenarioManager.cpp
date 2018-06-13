@@ -469,6 +469,13 @@ bool ScenarioManager::workModeIsDraft() const
     return m_workModeIsDraft;
 }
 
+void ScenarioManager::setSceneNumbersPrefix(const QString& _prefix)
+{
+    m_navigatorManager->setSceneNumbersPrefix(_prefix);
+    m_draftNavigatorManager->setSceneNumbersPrefix(_prefix);
+    m_textEditManager->setSceneNumbersPrefix(_prefix);
+}
+
 #ifdef Q_OS_MAC
 void ScenarioManager::buildScriptEditMenu(QMenu* _menu)
 {

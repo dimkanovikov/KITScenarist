@@ -213,6 +213,11 @@ void ScenarioTextEditManager::setFixed(bool _fixed)
     m_view->setFixed(_fixed);
 }
 
+void ScenarioTextEditManager::setSceneNumbersPrefix(const QString& _prefix)
+{
+    m_view->setSceneNumbersPrefix(_prefix);
+}
+
 #ifdef Q_OS_MAC
 void ScenarioTextEditManager::buildEditMenu(QMenu* _menu)
 {

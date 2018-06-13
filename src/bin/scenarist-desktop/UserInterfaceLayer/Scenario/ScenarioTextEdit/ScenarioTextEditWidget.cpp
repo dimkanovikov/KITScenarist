@@ -140,6 +140,11 @@ void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
     m_editor->setShowSceneNumbers(_show);
 }
 
+void ScenarioTextEditWidget::setSceneNumbersPrefix(const QString& _prefix)
+{
+    m_editor->setSceneNumbersPrefix(_prefix);
+}
+
 void ScenarioTextEditWidget::setShowDialoguesNumbers(bool _show)
 {
     m_editor->setShowDialoguesNumbers(_show);

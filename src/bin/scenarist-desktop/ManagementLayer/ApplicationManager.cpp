@@ -1793,6 +1793,11 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     updateWindowTitle();
 
     //
+    // Установим параметры между менеджерами
+    //
+    m_scenarioManager->setSceneNumbersPrefix(m_researchManager->sceneNumbersPrefix());
+
+    //
     // Обновим информацию о последнем изменении
     //
     aboutUpdateLastChangeInfo();
@@ -2092,7 +2097,8 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::shareRemoteProjectRequested, this, &ApplicationManager::shareRemoteProject);
     connect(m_startUpManager, &StartUpManager::unshareRemoteProjectRequested, this, &ApplicationManager::unshareRemoteProject);
 
-    connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
+    connect(m_researchManager, &ResearchManager::scriptNameChanged, this, &ApplicationManager::updateWindowTitle);
+    connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);
     connect(m_researchManager, &ResearchManager::characterNameChanged, m_scenarioManager, &ScenarioManager::aboutCharacterNameChanged);
     connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
     connect(m_researchManager, &ResearchManager::locationNameChanged, m_scenarioManager, &ScenarioManager::aboutLocationNameChanged);

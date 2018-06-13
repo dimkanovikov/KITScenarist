@@ -89,6 +89,11 @@ namespace ManagementLayer
         QString scenarioName() const;
 
         /**
+         * @brief Получить префикс номеров сцен
+         */
+        QString sceneNumbersPrefix() const;
+
+        /**
          * @brief Получить данные о сценарии
          */
         QMap<QString, QString> scenarioData() const;
@@ -97,7 +102,12 @@ namespace ManagementLayer
         /**
          * @brief Было изменено название проекта
          */
-        void scenarioNameChanged(const QString& _name);
+        void scriptNameChanged(const QString& _name);
+
+        /**
+         * @brief Был изменён префикс номеров сцен
+         */
+        void sceneNumbersPrefixChanged(const QString& _prefix);
 
         /**
          * @brief Была изменена разработка
