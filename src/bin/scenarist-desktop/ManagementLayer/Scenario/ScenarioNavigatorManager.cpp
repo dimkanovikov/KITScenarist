@@ -159,9 +159,13 @@ void ScenarioNavigatorManager::aboutRemoveItems(const QModelIndexList& _indexes)
     emit removeItems(removeIndexes);
 }
 
-void ScenarioNavigatorManager::aboutSetItemColors(const QModelIndex& _index, const QString& _colors)
+void ScenarioNavigatorManager::aboutSetItemColors(const QModelIndexList& _indexes, const QString& _colors)
 {
-    emit setItemColors(m_scenarioModelProxy->mapToSource(_index), _colors);
+    QModelIndexList mappedIndexes;
+    for (auto index : _indexes) {
+        mappedIndexes.append(m_scenarioModelProxy->mapToSource(index));
+    }
+    emit setItemsColors(mappedIndexes, _colors);
 }
 
 void ScenarioNavigatorManager::aboutChangeItemType(const QModelIndex& _index, int _type)
@@ -195,7 +199,7 @@ void ScenarioNavigatorManager::initConnections()
 
     connect(m_navigator, &ScenarioNavigator::addItem, this, &ScenarioNavigatorManager::aboutAddItem);
     connect(m_navigator, &ScenarioNavigator::removeItems, this, &ScenarioNavigatorManager::aboutRemoveItems);
-    connect(m_navigator, &ScenarioNavigator::setItemColors, this, &ScenarioNavigatorManager::aboutSetItemColors);
+    connect(m_navigator, &ScenarioNavigator::setItemsColors, this, &ScenarioNavigatorManager::aboutSetItemColors);
     connect(m_navigator, &ScenarioNavigator::changeItemTypeRequested, this, &ScenarioNavigatorManager::aboutChangeItemType);
     connect(m_navigator, &ScenarioNavigator::draftVisibleChanged, this, &ScenarioNavigatorManager::draftVisibleChanged);
     connect(m_navigator, &ScenarioNavigator::sceneDescriptionVisibleChanged, this, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged);

@@ -1,6 +1,7 @@
 #ifndef SCENARIOCARDSMANAGER_H
 #define SCENARIOCARDSMANAGER_H
 
+#include <QModelIndexList>
 #include <QObject>
 
 class QPrinter;
@@ -118,7 +119,7 @@ namespace ManagementLayer
         /**
          * @brief Изменились цвета карточки
          */
-        void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
+        void cardColorsChanged(const QModelIndexList& _index, const QString& _colors);
 
         /**
          * @brief Изменился штамп карточки

@@ -95,7 +95,7 @@ namespace ManagementLayer
         /**
          * @brief Запрос на установку цвета элемента
          */
-        void setItemColors(const QModelIndex& _indexes, const QString& _colors);
+        void setItemsColors(const QModelIndexList& _indexes, const QString& _colors);
 
         /**
          * @brief Запрос на изменения типа текущего элемента
@@ -152,7 +152,7 @@ namespace ManagementLayer
         /**
          * @brief Установить цвета элемента
          */
-        void aboutSetItemColors(const QModelIndex& _index, const QString& _colors);
+        void aboutSetItemColors(const QModelIndexList& _indexes, const QString& _colors);
 
         /**
          * @brief Сменить тип элемента

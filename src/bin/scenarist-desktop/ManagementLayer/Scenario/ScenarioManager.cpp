@@ -929,12 +929,14 @@ void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
     m_textEditManager->removeScenarioText(from, to);
 }
 
-void ScenarioManager::aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors)
+void ScenarioManager::aboutSetItemsColors(const QModelIndexList& _indexes, const QString& _colors)
 {
     setWorkingMode(sender());
 
-    const int position = workingScenario()->itemStartPosition(_itemIndex);
-    workingScenario()->setItemColorsAtPosition(position, _colors);
+    for (auto index : _indexes) {
+        const int position = workingScenario()->itemStartPosition(index);
+        workingScenario()->setItemColorsAtPosition(position, _colors);
+    }
     m_textEditManager->view()->update();
 
     emit scenarioChanged();
@@ -1107,7 +1109,7 @@ void ScenarioManager::initConnections()
     connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);
-    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemsColors);
     connect(m_cardsManager, &ScenarioCardsManager::cardStampChanged, this, &ScenarioManager::aboutSetItemStamp);
     connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
     connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
@@ -1116,7 +1118,7 @@ void ScenarioManager::initConnections()
 
     connect(m_navigatorManager, &ScenarioNavigatorManager::addItem, this, &ScenarioManager::aboutAddItem);
     connect(m_navigatorManager, &ScenarioNavigatorManager::removeItems, this, &ScenarioManager::aboutRemoveItems);
-    connect(m_navigatorManager, &ScenarioNavigatorManager::setItemColors, this, &ScenarioManager::aboutSetItemColors);
+    connect(m_navigatorManager, &ScenarioNavigatorManager::setItemsColors, this, &ScenarioManager::aboutSetItemsColors);
     connect(m_navigatorManager, &ScenarioNavigatorManager::changeItemTypeRequested, this, &ScenarioManager::aboutChangeItemType);
     connect(m_navigatorManager, &ScenarioNavigatorManager::draftVisibleChanged, this, &ScenarioManager::setDraftVisible);
     connect(m_navigatorManager, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged, this, &ScenarioManager::setSceneDescriptionVisible);
@@ -1133,12 +1135,14 @@ void ScenarioManager::initConnections()
     connect(m_navigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_navigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
-    connect(m_draftNavigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
-    connect(m_draftNavigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
-    connect(m_draftNavigatorManager, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
+    connect(m_draftNavigatorManager, &ScenarioNavigatorManager::addItem, this, &ScenarioManager::aboutAddItem);
+    connect(m_draftNavigatorManager, &ScenarioNavigatorManager::removeItems, this, &ScenarioManager::aboutRemoveItems);
+    connect(m_draftNavigatorManager, &ScenarioNavigatorManager::setItemsColors, this, &ScenarioManager::aboutSetItemsColors);
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::changeItemTypeRequested, this, &ScenarioManager::aboutChangeItemType);
-    connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
-    connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
+    connect(m_draftNavigatorManager, QOverload<const QModelIndex&>::of(&ScenarioNavigatorManager::sceneChoosed),
+            this, QOverload<const QModelIndex&>::of(&ScenarioManager::aboutMoveCursorToItem));
+    connect(m_draftNavigatorManager, QOverload<int>::of(&ScenarioNavigatorManager::sceneChoosed),
+            this, QOverload<int>::of(&ScenarioManager::aboutMoveCursorToItem));
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 

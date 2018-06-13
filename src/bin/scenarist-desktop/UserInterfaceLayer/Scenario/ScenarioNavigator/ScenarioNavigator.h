@@ -21,7 +21,7 @@ namespace UserInterface
         Q_OBJECT
 
     public:
-        explicit ScenarioNavigator(QWidget *parent = 0);
+        explicit ScenarioNavigator(QWidget* _parent = nullptr);
 
         /**
          * @brief Установить количество сцен
@@ -125,7 +125,7 @@ namespace UserInterface
         /**
          * @brief Запрос на установку цветов текущего элемента
          */
-        void setItemColors(const QModelIndex& _index, const QString& _colors);
+        void setItemsColors(const QModelIndexList& _index, const QString& _colors);
 
         /**
          * @brief Запрос на изменения типа текущего элемента

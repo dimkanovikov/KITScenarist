@@ -319,7 +319,7 @@ namespace ManagementLayer
         /**
          * @brief Установить цвет элемента
          */
-        void aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors);
+        void aboutSetItemsColors(const QModelIndexList& _indexes, const QString& _colors);
 
         /**
          * @brief Установить штамп элемента

@@ -350,7 +350,7 @@ void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString&
 {
     if (!_uuid.isEmpty()) {
         const QModelIndex index = m_model->indexForUuid(_uuid);
-        emit cardColorsChanged(index, _colors);
+        emit cardColorsChanged({ index }, _colors);
     }
 }
 
