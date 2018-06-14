@@ -115,6 +115,16 @@ namespace ManagementLayer
          */
         void setSceneNumbersPrefix(const QString& _prefix);
 
+        /**
+         * @brief Установить стартовый номер сцен
+         */
+        void setSceneStartNumber(int _startNumber);
+
+        /**
+         * @brief Пользователь хочет переименовать номер сцены
+         */
+        void renameSceneNumberRequested(const QString& _newName, int _position);
+
 #ifdef Q_OS_MAC
         /**
          * @brief Сформировать меню "Правка" для редактора сценария

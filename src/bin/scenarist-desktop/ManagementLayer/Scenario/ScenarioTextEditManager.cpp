@@ -296,4 +296,5 @@ void ScenarioTextEditManager::initConnections()
     connect(m_view, &ScenarioTextEditWidget::quitFromZenMode, this, &ScenarioTextEditManager::quitFromZenMode);
     connect(m_view, &ScenarioTextEditWidget::addBookmarkRequested, this, &ScenarioTextEditManager::addBookmarkRequested);
     connect(m_view, &ScenarioTextEditWidget::removeBookmarkRequested, this, &ScenarioTextEditManager::removeBookmarkRequested);
+    connect(m_view, &ScenarioTextEditWidget::renameSceneNumberRequested, this, &ScenarioTextEditManager::renameSceneNumberRequested);
 }
