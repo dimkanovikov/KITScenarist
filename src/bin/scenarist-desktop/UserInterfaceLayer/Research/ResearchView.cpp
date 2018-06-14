@@ -191,11 +191,16 @@ void ResearchView::selectItem(const QModelIndex& _index)
     m_ui->researchNavigator->setCurrentIndex(_index);
 }
 
-void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix)
+void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix, const QString& _startSceneNumber)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->scriptEdit);
     updateText(m_ui->scriptName, _name);
     updateText(m_ui->scriptSceneNumbersPrefix, _scenesPrefix);
+
+    //
+    // Мы умные программисты считаем с 0. Но обычным пользователям надо с 1
+    //
+    updateText(m_ui->scriptStartNumber, QString::number(_startSceneNumber.toInt() + 1));
 
     //
     // Настраиваем интерфейс
@@ -698,6 +703,8 @@ void ResearchView::initView()
 
     m_ui->searchWidget->setEditor(m_ui->textDescription->editor());
     m_ui->searchWidget->hide();
+
+    m_ui->scriptStartNumber->setValidator(new QIntValidator(this));
 }
 
 void ResearchView::initConnections()
@@ -842,6 +849,13 @@ void ResearchView::initConnections()
     //
     connect(m_ui->scriptName, &QLineEdit::textChanged, this, &ResearchView::scriptNameChanged);
     connect(m_ui->scriptSceneNumbersPrefix, &QLineEdit::textChanged, this, &ResearchView::scriptSceneNumbersPrefixChanged);
+
+    //
+    // Мы, умные программисты, считаем с 0. Но пользователи с 1
+    //
+    connect(m_ui->scriptStartNumber, &QLineEdit::textChanged, this, [this] (const QString& _startNumber) {
+        emit scriptStartSceneNumber(QString::number(_startNumber.toInt() - 1));
+    });
     //
     // ... титульная страница
     //

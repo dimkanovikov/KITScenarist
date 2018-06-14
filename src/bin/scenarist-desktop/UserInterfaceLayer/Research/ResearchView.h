@@ -54,7 +54,7 @@ namespace UserInterface
         /**
          * @brief Включить режим редактирования сценария
          */
-        void editScript(const QString& _name, const QString& _scenesPrefix);
+        void editScript(const QString& _name, const QString& _scenesPrefix, const QString& _sceneSceneNumber);
 
         /**
          * @brief Включить режим редактирования титульной страницы
@@ -175,6 +175,7 @@ namespace UserInterface
         /** @{ */
         void scriptNameChanged(const QString& _name);
         void scriptSceneNumbersPrefixChanged(const QString& _sceneNumbersPrefix);
+        void scriptStartSceneNumber(const QString& _startSceneNumber);
         void titlePageAdditionalInfoChanged(const QString& _additionalInfo);
         void titlePageGenreChanged(const QString& _genre);
         void titlePageAuthorChanged(const QString& _author);

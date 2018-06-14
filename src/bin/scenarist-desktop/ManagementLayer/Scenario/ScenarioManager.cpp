@@ -476,6 +476,12 @@ void ScenarioManager::setSceneNumbersPrefix(const QString& _prefix)
     m_textEditManager->setSceneNumbersPrefix(_prefix);
 }
 
+void ScenarioManager::setSceneStartNumber(int _startNumber)
+{
+    m_scenario->setSceneStartNumber(_startNumber);
+    m_scenarioDraft->setSceneStartNumber(_startNumber);
+}
+
 #ifdef Q_OS_MAC
 void ScenarioManager::buildScriptEditMenu(QMenu* _menu)
 {
