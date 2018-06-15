@@ -260,6 +260,11 @@ namespace UserInterface
          */
         void removeBookmarkRequested(int _position);
 
+        /**
+         * @brief Пользователь хочет переименовать номер сцены
+         */
+        void renameSceneNumberRequested(const QString& _newName, int _position);
+
     private slots:
         /**
          * @brief Обновить текущий режим (поэпизодник или текст)

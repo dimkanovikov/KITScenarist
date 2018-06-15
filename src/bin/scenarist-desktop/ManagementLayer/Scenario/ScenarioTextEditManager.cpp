@@ -5,6 +5,8 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -279,6 +281,14 @@ void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(qreal _zoomRange)
                 DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
+void ScenarioTextEditManager::renameSceneNumber(const QString& _oldSceneNumber, int _position)
+{
+    QString newSceneNumber = QLightBoxInputDialog::getText(m_view, tr("Enter new scene number"), tr("New scene number"), _oldSceneNumber);
+    if (!newSceneNumber.isEmpty()) {
+        emit renameSceneNumberRequested(newSceneNumber, _position);
+    }
+}
+
 void ScenarioTextEditManager::initView()
 {
 
@@ -296,4 +306,5 @@ void ScenarioTextEditManager::initConnections()
     connect(m_view, &ScenarioTextEditWidget::quitFromZenMode, this, &ScenarioTextEditManager::quitFromZenMode);
     connect(m_view, &ScenarioTextEditWidget::addBookmarkRequested, this, &ScenarioTextEditManager::addBookmarkRequested);
     connect(m_view, &ScenarioTextEditWidget::removeBookmarkRequested, this, &ScenarioTextEditManager::removeBookmarkRequested);
+    connect(m_view, &ScenarioTextEditWidget::renameSceneNumberRequested, this, &ScenarioTextEditManager::renameSceneNumber);
 }

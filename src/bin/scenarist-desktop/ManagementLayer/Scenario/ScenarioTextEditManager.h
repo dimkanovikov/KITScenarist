@@ -175,11 +175,21 @@ namespace ManagementLayer
          */
         void changeSceneNumbersLockingRequest();
 
+        /**
+         * @brief Пользователь хочет переименовать номер сцены
+         */
+        void renameSceneNumberRequested(const QString& _newSceneNumber, int _position);
+
     private slots:
         /**
          * @brief Реакция на изменение коэффициента масштабирования редактора сценария
          */
         void aboutTextEditZoomRangeChanged(qreal _zoomRange);
+
+        /**
+         * @brief Переименовать номер сцены
+         */
+        void renameSceneNumber(const QString& _oldSceneNumber, int _position);
 
     private:
         /**

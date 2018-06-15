@@ -1168,6 +1168,13 @@ void ScenarioManager::initConnections()
     connect(m_textEditManager, &ScenarioTextEditManager::addBookmarkRequested, m_scriptBookmarksManager, &ScriptBookmarksManager::addBookmark);
     connect(m_textEditManager, &ScenarioTextEditManager::removeBookmarkRequested, m_scenario, &ScenarioDocument::removeBookmark);
     connect(m_textEditManager, &ScenarioTextEditManager::changeSceneNumbersLockingRequest, this, &ScenarioManager::changeSceneNumbersLocking);
+    connect(m_textEditManager, &ScenarioTextEditManager::renameSceneNumberRequested, this, [this] (const QString& _newSceneNumber, int _position) {
+        if (m_workModeIsDraft) {
+            m_scenarioDraft->setNewSceneNumber(_newSceneNumber, _position);
+        } else {
+            m_scenario->setNewSceneNumber(_newSceneNumber, _position);
+        }
+    });
 
     connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 
