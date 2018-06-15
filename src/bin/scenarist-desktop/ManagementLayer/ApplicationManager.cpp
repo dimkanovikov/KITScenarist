@@ -1796,6 +1796,7 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     // Установим параметры между менеджерами
     //
     m_scenarioManager->setSceneNumbersPrefix(m_researchManager->sceneNumbersPrefix());
+    m_scenarioManager->setSceneStartNumber(m_researchManager->sceneStartNumber());
 
     //
     // Обновим информацию о последнем изменении
@@ -2099,6 +2100,7 @@ void ApplicationManager::initConnections()
 
     connect(m_researchManager, &ResearchManager::scriptNameChanged, this, &ApplicationManager::updateWindowTitle);
     connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);
+    connect(m_researchManager, &ResearchManager::sceneStartNumberChanged, m_scenarioManager, &ScenarioManager::setSceneStartNumber);
     connect(m_researchManager, &ResearchManager::characterNameChanged, m_scenarioManager, &ScenarioManager::aboutCharacterNameChanged);
     connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
     connect(m_researchManager, &ResearchManager::locationNameChanged, m_scenarioManager, &ScenarioManager::aboutLocationNameChanged);
@@ -2110,6 +2112,7 @@ void ApplicationManager::initConnections()
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
     connect(m_scenarioManager, &ScenarioManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
+    connect(m_scenarioManager, &ScenarioManager::scriptFixedScenesChanged, m_researchManager, &ResearchManager::setSceneStartNumberEnabled);
 
     connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
     connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
