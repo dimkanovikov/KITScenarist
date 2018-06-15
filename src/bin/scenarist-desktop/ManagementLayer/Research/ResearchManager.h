@@ -99,6 +99,11 @@ namespace ManagementLayer
         int sceneStartNumber() const;
 
         /**
+         * @brief Разрешить или запретить изменение начального номера сцен
+         */
+        void changeSceneStartNumberEnabled(bool _disabled);
+
+        /**
          * @brief Получить данные о сценарии
          */
         QMap<QString, QString> scenarioData() const;

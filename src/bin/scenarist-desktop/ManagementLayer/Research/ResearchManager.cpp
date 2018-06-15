@@ -213,6 +213,11 @@ int ResearchManager::sceneStartNumber() const
     return m_scenarioData.value(ScenarioData::SCENE_START_NUMBER).toInt();
 }
 
+void ResearchManager::changeSceneStartNumberEnabled(bool _disabled)
+{
+    m_view->changeSceneStartNumberEnabled(_disabled);
+}
+
 QMap<QString, QString> ResearchManager::scenarioData() const
 {
     return m_scenarioData;
@@ -660,7 +665,7 @@ void ResearchManager::initConnections()
         emit sceneNumbersPrefixChanged(_sceneNumbersPrefix);
         updateScenarioData(ScenarioData::SCENE_NUMBERS_PREFIX_KEY, _sceneNumbersPrefix);
     });
-    connect(m_view, &ResearchView::scriptStartSceneNumber, this, [this] (const QString& _startSceneNumber) {
+    connect(m_view, &ResearchView::scriptSceneStartNumber, this, [this] (const QString& _startSceneNumber) {
         int startNumber = _startSceneNumber.toInt();
         emit sceneStartNumberChanged(startNumber);
         updateScenarioData(ScenarioData::SCENE_START_NUMBER, _startSceneNumber);

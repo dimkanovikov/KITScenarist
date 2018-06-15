@@ -143,6 +143,11 @@ namespace UserInterface
          */
         void setExpandedIndexes(const QStringList& _indexes);
 
+        /**
+         * @brief Включить или отключить поле стартового номера сценария
+         */
+        void changeSceneStartNumberEnabled(bool _disabled);
+
     signals:
         /**
          * @brief Нажата кнопка добавления элемента разработки
@@ -175,7 +180,7 @@ namespace UserInterface
         /** @{ */
         void scriptNameChanged(const QString& _name);
         void scriptSceneNumbersPrefixChanged(const QString& _sceneNumbersPrefix);
-        void scriptStartSceneNumber(const QString& _startSceneNumber);
+        void scriptSceneStartNumber(const QString& _startSceneNumber);
         void titlePageAdditionalInfoChanged(const QString& _additionalInfo);
         void titlePageGenreChanged(const QString& _genre);
         void titlePageAuthorChanged(const QString& _author);

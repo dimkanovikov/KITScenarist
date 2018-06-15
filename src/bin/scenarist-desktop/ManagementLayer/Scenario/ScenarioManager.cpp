@@ -479,7 +479,6 @@ void ScenarioManager::setSceneNumbersPrefix(const QString& _prefix)
 void ScenarioManager::setSceneStartNumber(int _startNumber)
 {
     m_scenario->setSceneStartNumber(_startNumber);
-    m_scenarioDraft->setSceneStartNumber(_startNumber);
 }
 
 #ifdef Q_OS_MAC
@@ -1186,6 +1185,7 @@ void ScenarioManager::initConnections()
         if (!m_workModeIsDraft) {
             m_textEditManager->setFixed(m_fixedScenes);
         }
+        emit scriptFixedScenesChanged(_fixed);
     });
     connect(m_scenarioDraft, &ScenarioDocument::textChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_scenarioDraft, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {

@@ -539,6 +539,11 @@ void ResearchView::setExpandedIndexes(const QStringList& _indexes)
     }
 }
 
+void ResearchView::changeSceneStartNumberEnabled(bool _disabled)
+{
+    m_ui->scriptStartNumber->setEnabled(!_disabled);
+}
+
 bool ResearchView::event(QEvent* _event)
 {
     if (_event->type() == QEvent::PaletteChange) {
@@ -854,7 +859,7 @@ void ResearchView::initConnections()
     // Мы, умные программисты, считаем с 0. Но пользователи с 1
     //
     connect(m_ui->scriptStartNumber, &QLineEdit::textChanged, this, [this] (const QString& _startNumber) {
-        emit scriptStartSceneNumber(QString::number(_startNumber.toInt() - 1));
+        emit scriptSceneStartNumber(QString::number(_startNumber.toInt() - 1));
     });
     //
     // ... титульная страница

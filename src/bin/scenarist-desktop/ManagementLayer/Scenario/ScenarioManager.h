@@ -232,6 +232,11 @@ namespace ManagementLayer
          */
         void linkActivated(const QUrl& _url);
 
+        /**
+         * @brief У сценария зафиксировались или расфиксировались номера сцен
+         */
+        void scriptFixedScenesChanged(bool _fixed);
+
     private slots:
         /**
          * @brief Отменить последнее действие
