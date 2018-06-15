@@ -296,11 +296,6 @@ namespace UserInterface
          */
         void aboutStyleChanged();
 
-        /**
-         * @brief Переименовать номер сцены
-         */
-        void renameSceneNumber(const QString& _oldSceneNumber, int _position);
-
     private:
         /**
          * @brief Настроить представление

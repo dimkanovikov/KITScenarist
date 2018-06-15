@@ -14,7 +14,6 @@
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
-#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -786,14 +785,6 @@ void ScenarioTextEditWidget::aboutStyleChanged()
     emit textChanged();
 }
 
-void ScenarioTextEditWidget::renameSceneNumber(const QString &_oldSceneNumber, int _position)
-{
-    QString newSceneNumber = QLightBoxInputDialog::getText(this, tr("Enter new scene number"), tr("New scene number"), _oldSceneNumber);
-    if (!newSceneNumber.isEmpty()) {
-        emit renameSceneNumberRequested(newSceneNumber, _position);
-    }
-}
-
 void ScenarioTextEditWidget::initView()
 {
     m_outline->setObjectName("scenarioOutlineMode");
@@ -968,7 +959,7 @@ void ScenarioTextEditWidget::initEditorConnections()
     connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
     connect(m_editor, &ScenarioTextEdit::addBookmarkRequested, this, &ScenarioTextEditWidget::addBookmarkRequested);
     connect(m_editor, &ScenarioTextEdit::removeBookmarkRequested, this, &ScenarioTextEditWidget::removeBookmarkRequested);
-    connect(m_editor, &ScenarioTextEdit::renameSceneNumberRequested, this, &ScenarioTextEditWidget::renameSceneNumber);
+    connect(m_editor, &ScenarioTextEdit::renameSceneNumberRequested, this, &ScenarioTextEditWidget::renameSceneNumberRequested);
     connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
     connect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setReviewContextMenuActions);
 
@@ -988,7 +979,7 @@ void ScenarioTextEditWidget::removeEditorConnections()
     disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
     disconnect(m_editor, &ScenarioTextEdit::addBookmarkRequested, this, &ScenarioTextEditWidget::addBookmarkRequested);
     disconnect(m_editor, &ScenarioTextEdit::removeBookmarkRequested, this, &ScenarioTextEditWidget::removeBookmarkRequested);
-    disconnect(m_editor, &ScenarioTextEdit::renameSceneNumberRequested, this, &ScenarioTextEditWidget::renameSceneNumber);
+    disconnect(m_editor, &ScenarioTextEdit::renameSceneNumberRequested, this, &ScenarioTextEditWidget::renameSceneNumberRequested);
     disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
     disconnect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setReviewContextMenuActions);
 }

@@ -186,6 +186,11 @@ namespace ManagementLayer
          */
         void aboutTextEditZoomRangeChanged(qreal _zoomRange);
 
+        /**
+         * @brief Переименовать номер сцены
+         */
+        void renameSceneNumber(const QString& _oldSceneNumber, int _position);
+
     private:
         /**
          * @brief Настроить представление
