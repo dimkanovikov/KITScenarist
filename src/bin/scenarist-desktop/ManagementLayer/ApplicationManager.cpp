@@ -2112,7 +2112,7 @@ void ApplicationManager::initConnections()
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
     connect(m_scenarioManager, &ScenarioManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
-    connect(m_scenarioManager, &ScenarioManager::scriptFixedScenesChanged, m_researchManager, &ResearchManager::changeSceneStartNumberEnabled);
+    connect(m_scenarioManager, &ScenarioManager::scriptFixedScenesChanged, m_researchManager, &ResearchManager::setSceneStartNumberEnabled);
 
     connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
     connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);

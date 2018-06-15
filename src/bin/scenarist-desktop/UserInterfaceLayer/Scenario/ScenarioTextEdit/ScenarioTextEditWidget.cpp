@@ -959,6 +959,7 @@ void ScenarioTextEditWidget::initEditorConnections()
     connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
     connect(m_editor, &ScenarioTextEdit::addBookmarkRequested, this, &ScenarioTextEditWidget::addBookmarkRequested);
     connect(m_editor, &ScenarioTextEdit::removeBookmarkRequested, this, &ScenarioTextEditWidget::removeBookmarkRequested);
+    connect(m_editor, &ScenarioTextEdit::renameSceneNumberRequested, this, &ScenarioTextEditWidget::renameSceneNumberRequested);
     connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
     connect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setReviewContextMenuActions);
 
@@ -978,6 +979,7 @@ void ScenarioTextEditWidget::removeEditorConnections()
     disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextEditWidget::textChanged);
     disconnect(m_editor, &ScenarioTextEdit::addBookmarkRequested, this, &ScenarioTextEditWidget::addBookmarkRequested);
     disconnect(m_editor, &ScenarioTextEdit::removeBookmarkRequested, this, &ScenarioTextEditWidget::removeBookmarkRequested);
+    disconnect(m_editor, &ScenarioTextEdit::renameSceneNumberRequested, this, &ScenarioTextEditWidget::renameSceneNumberRequested);
     disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextEditWidget::zoomRangeChanged);
     disconnect(m_review, &ScenarioReviewPanel::contextMenuActionsUpdated, m_editor, &ScenarioTextEdit::setReviewContextMenuActions);
 }

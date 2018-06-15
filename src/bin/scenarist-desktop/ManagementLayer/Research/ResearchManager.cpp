@@ -213,7 +213,7 @@ int ResearchManager::sceneStartNumber() const
     return m_scenarioData.value(ScenarioData::SCENE_START_NUMBER).toInt();
 }
 
-void ResearchManager::changeSceneStartNumberEnabled(bool _disabled)
+void ResearchManager::setSceneStartNumberEnabled(bool _disabled)
 {
     m_view->changeSceneStartNumberEnabled(_disabled);
 }

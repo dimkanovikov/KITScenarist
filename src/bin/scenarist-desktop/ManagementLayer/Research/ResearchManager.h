@@ -101,7 +101,7 @@ namespace ManagementLayer
         /**
          * @brief Разрешить или запретить изменение начального номера сцен
          */
-        void changeSceneStartNumberEnabled(bool _disabled);
+        void setSceneStartNumberEnabled(bool _disabled);
 
         /**
          * @brief Получить данные о сценарии
