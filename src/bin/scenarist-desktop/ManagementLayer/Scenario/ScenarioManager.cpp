@@ -1129,14 +1129,10 @@ void ScenarioManager::initConnections()
     connect(m_navigatorManager, &ScenarioNavigatorManager::sceneDescriptionVisibleChanged, this, &ScenarioManager::setSceneDescriptionVisible);
     connect(m_navigatorManager, &ScenarioNavigatorManager::scriptBookmarksVisibleChanged, this, &ScenarioManager::setScriptBookmarksVisible);
     connect(m_navigatorManager, &ScenarioNavigatorManager::scriptDictionariesVisibleChanged, this, &ScenarioManager::setScriptDictionariesVisible);
-    connect(m_navigatorManager,
-            static_cast<void (ScenarioNavigatorManager::*)(const QModelIndex&)>(&ScenarioNavigatorManager::sceneChoosed),
-            this,
-            static_cast<void (ScenarioManager::*)(const QModelIndex&)>(&ScenarioManager::aboutMoveCursorToItem));
-    connect(m_navigatorManager,
-            static_cast<void (ScenarioNavigatorManager::*)(int)>(&ScenarioNavigatorManager::sceneChoosed),
-            this,
-            static_cast<void (ScenarioManager::*)(int)>(&ScenarioManager::aboutMoveCursorToItem));
+    connect(m_navigatorManager, static_cast<void (ScenarioNavigatorManager::*)(const QModelIndex&)>(&ScenarioNavigatorManager::sceneChoosed),
+            this, static_cast<void (ScenarioManager::*)(const QModelIndex&)>(&ScenarioManager::aboutMoveCursorToItem));
+    connect(m_navigatorManager, static_cast<void (ScenarioNavigatorManager::*)(int)>(&ScenarioNavigatorManager::sceneChoosed),
+            this, static_cast<void (ScenarioManager::*)(int)>(&ScenarioManager::aboutMoveCursorToItem));
     connect(m_navigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_navigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
@@ -1144,10 +1140,10 @@ void ScenarioManager::initConnections()
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::removeItems, this, &ScenarioManager::aboutRemoveItems);
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::setItemsColors, this, &ScenarioManager::aboutSetItemsColors);
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::changeItemTypeRequested, this, &ScenarioManager::aboutChangeItemType);
-    connect(m_draftNavigatorManager, QOverload<const QModelIndex&>::of(&ScenarioNavigatorManager::sceneChoosed),
-            this, QOverload<const QModelIndex&>::of(&ScenarioManager::aboutMoveCursorToItem));
-    connect(m_draftNavigatorManager, QOverload<int>::of(&ScenarioNavigatorManager::sceneChoosed),
-            this, QOverload<int>::of(&ScenarioManager::aboutMoveCursorToItem));
+    connect(m_draftNavigatorManager, static_cast<void (ScenarioNavigatorManager::*)(const QModelIndex&)>(&ScenarioNavigatorManager::sceneChoosed),
+            this, static_cast<void (ScenarioManager::*)(const QModelIndex&)>(&ScenarioManager::aboutMoveCursorToItem));
+    connect(m_draftNavigatorManager, static_cast<void (ScenarioNavigatorManager::*)(int)>(&ScenarioNavigatorManager::sceneChoosed),
+            this, static_cast<void (ScenarioManager::*)(int)>(&ScenarioManager::aboutMoveCursorToItem));
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
     connect(m_draftNavigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 

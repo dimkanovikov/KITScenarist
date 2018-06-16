@@ -53,7 +53,7 @@ namespace UserInterface
         /**
          * @brief Переопределяем для фокусировки на виджете вводе заголовка при отображении
          */
-        QWidget* focusedOnExec() const;
+        QWidget* focusedOnExec() const override;
 
 	private:
 		/**
