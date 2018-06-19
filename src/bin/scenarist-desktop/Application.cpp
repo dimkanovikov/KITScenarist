@@ -72,7 +72,7 @@ Application::Application(int& _argc, char** _argv) :
     //
     m_idleTimer.setInterval(3000);
     connect(&m_idleTimer, &QTimer::timeout, [=] {
-        if (m_applicationManager != 0) {
+        if (m_applicationManager != nullptr) {
             postEvent(m_applicationManager, new QEvent(QEvent::User));
         }
     });
