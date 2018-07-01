@@ -327,8 +327,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>528</width>
-           <height>469</height>
+           <width>529</width>
+           <height>435</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
@@ -430,7 +430,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="label_15">
                <property name="text">
-                <string>mm:</string>
+                <string>In full page width, mm:</string>
                </property>
               </widget>
              </item>
@@ -465,6 +465,47 @@
                </property>
                <property name="maximum">
                 <double>100.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QDoubleSpinBox" name="leftIndentSplitted">
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <double>100.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QDoubleSpinBox" name="rightIndentSplitted">
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <double>100.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Right:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>Left:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>In splitted mode, mm:</string>
                </property>
               </widget>
              </item>
