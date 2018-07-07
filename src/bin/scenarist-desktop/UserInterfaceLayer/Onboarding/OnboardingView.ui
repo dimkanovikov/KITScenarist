@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>613</width>
-    <height>459</height>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -254,6 +254,13 @@ font-weight: 600;</string>
         <widget class="QRadioButton" name="hungarian">
          <property name="text">
           <string>Magyar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QRadioButton" name="italian">
+         <property name="text">
+          <string>Italiano</string>
          </property>
         </widget>
        </item>
@@ -661,8 +668,8 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>257</width>
-            <height>393</height>
+            <width>266</width>
+            <height>455</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
