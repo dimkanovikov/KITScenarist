@@ -154,8 +154,10 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
         m_blockStyle.setTopSpace(m_ui->topSpace->value());
         m_blockStyle.setBottomSpace(m_ui->bottomSpace->value());
         m_blockStyle.setLeftMargin(m_ui->leftIndent->value());
+        m_blockStyle.setLeftMarginSplitted(m_ui->leftIndentSplitted->value());
         m_blockStyle.setTopMargin(m_ui->topIndent->value());
         m_blockStyle.setRightMargin(m_ui->rightIndent->value());
+        m_blockStyle.setRightMarginSplitted(m_ui->rightIndentSplitted->value());
         m_blockStyle.setBottomMargin(m_ui->bottomIndent->value());
 
         ScenarioBlockStyle::LineSpacing lineSpacing;
@@ -237,8 +239,10 @@ void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
         m_ui->topSpace->setValue(activatedBlockStyle.topSpace());
         m_ui->bottomSpace->setValue(activatedBlockStyle.bottomSpace());
         m_ui->leftIndent->setValue(activatedBlockStyle.leftMargin());
+        m_ui->leftIndentSplitted->setValue(activatedBlockStyle.leftMarginSplitted());
         m_ui->topIndent->setValue(activatedBlockStyle.topMargin());
         m_ui->rightIndent->setValue(activatedBlockStyle.rightMargin());
+        m_ui->rightIndentSplitted->setValue(activatedBlockStyle.rightMarginSplitted());
         m_ui->bottomIndent->setValue(activatedBlockStyle.bottomMargin());
         //
         // Настроим текущий тип вертикальных отступов блока
