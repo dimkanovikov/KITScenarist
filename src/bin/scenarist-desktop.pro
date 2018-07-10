@@ -369,7 +369,10 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptBookmarksModel.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScriptBookmarksManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/ScriptBookmarks.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.cpp \
+    scenarist-core/Domain/ScriptVersion.cpp \
+    scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.cpp \
+    scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -643,7 +646,10 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptBookmarksModel.h \
     scenarist-desktop/ManagementLayer/Scenario/ScriptBookmarksManager.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/ScriptBookmarks.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.h
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.h \
+    scenarist-core/Domain/ScriptVersion.h \
+    scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.h \
+    scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

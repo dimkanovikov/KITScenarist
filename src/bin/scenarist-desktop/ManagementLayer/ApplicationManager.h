@@ -96,6 +96,11 @@ namespace ManagementLayer
         void aboutSave();
 
         /**
+         * @brief Сохранить версию сценария
+         */
+        void aboutSaveVersion();
+
+        /**
          * @brief Сохранить настройки текущего проекта
          */
         void saveCurrentProjectSettings(const QString& _projectPath);

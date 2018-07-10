@@ -17,11 +17,12 @@ namespace {
      * @brief Номера пунктов меню
      */
     /** @{ */
-    const int SAVE_MENU_INDEX = 2;
-    const int SAVE_AS_MENU_INDEX = 3;
-    const int IMPORT_MENU_INDEX = 5;
-    const int EXPORT_MENU_INDEX = 6;
-    const int PRINT_PREVIEW_MENU_INDEX = 7;
+    const int kSaveMenuIndex = 2;
+    const int kSaveVersionMenuIndex = 3;
+    const int kSaveAsMenuIndex = 4;
+    const int kImportMenuIndex = 6;
+    const int kExportMenuIndex = 7;
+    const int kPrintPreviewMenuIndex = 8;
     /** @} */
 
     /**
@@ -108,21 +109,23 @@ void MenuView::setMenuItemEnabled(int _index, bool _enabled)
 void MenuView::disableProjectActions()
 {
     const bool disabled = false;
-    setMenuItemEnabled(SAVE_MENU_INDEX, disabled);
-    setMenuItemEnabled(SAVE_AS_MENU_INDEX, disabled);
-    setMenuItemEnabled(IMPORT_MENU_INDEX, disabled);
-    setMenuItemEnabled(EXPORT_MENU_INDEX, disabled);
-    setMenuItemEnabled(PRINT_PREVIEW_MENU_INDEX, disabled);
+    setMenuItemEnabled(kSaveMenuIndex, disabled);
+    setMenuItemEnabled(kSaveVersionMenuIndex, disabled);
+    setMenuItemEnabled(kSaveAsMenuIndex, disabled);
+    setMenuItemEnabled(kImportMenuIndex, disabled);
+    setMenuItemEnabled(kExportMenuIndex, disabled);
+    setMenuItemEnabled(kPrintPreviewMenuIndex, disabled);
 }
 
 void MenuView::enableProjectActions()
 {
     const bool enabled = true;
-    setMenuItemEnabled(SAVE_MENU_INDEX, enabled);
-    setMenuItemEnabled(SAVE_AS_MENU_INDEX, enabled);
-    setMenuItemEnabled(IMPORT_MENU_INDEX, enabled);
-    setMenuItemEnabled(EXPORT_MENU_INDEX, enabled);
-    setMenuItemEnabled(PRINT_PREVIEW_MENU_INDEX, enabled);
+    setMenuItemEnabled(kSaveMenuIndex, enabled);
+    setMenuItemEnabled(kSaveVersionMenuIndex, enabled);
+    setMenuItemEnabled(kSaveAsMenuIndex, enabled);
+    setMenuItemEnabled(kImportMenuIndex, enabled);
+    setMenuItemEnabled(kExportMenuIndex, enabled);
+    setMenuItemEnabled(kPrintPreviewMenuIndex, enabled);
 }
 
 void MenuView::enableProgressLoginLabel(int _dots, bool _firstUpdate)
@@ -239,6 +242,7 @@ void MenuView::initView()
     m_menuButtons << m_ui->createProject
                   << m_ui->openProject
                   << m_ui->saveProject
+                  << m_ui->saveVersion
                   << m_ui->saveProjectAs
                   << nullptr // тут у оригинального меню разделитель
                   << m_ui->importProject
@@ -262,6 +266,7 @@ void MenuView::initMenuButtons()
     updateButton(m_ui->createProject);
     updateButton(m_ui->openProject);
     updateButton(m_ui->saveProject);
+    updateButton(m_ui->saveVersion);
     updateButton(m_ui->saveProjectAs);
     updateButton(m_ui->importProject);
     updateButton(m_ui->exportProject);
@@ -301,12 +306,12 @@ void MenuView::initConnections()
     connect(m_ui->renewSubscription, &QPushButton::clicked, this, &MenuView::renewSubscriptionClicked);
     connect(m_ui->logout, &QPushButton::clicked, this, &MenuView::logoutClicked);
 
-    connect(m_ui->help, &QPushButton::clicked, [this] {
+    connect(m_ui->help, &QPushButton::clicked, this, [] {
         const QString url = QString("https://kitscenarist.ru/%1help/").arg(urlLanguage());
         QDesktopServices::openUrl(QUrl(url));
     });
 
-    connect(m_ui->appUrl, &ClickableLabel::clicked, [this] {
+    connect(m_ui->appUrl, &ClickableLabel::clicked, this, [] {
         const QString url = QString("https://kitscenarist.ru/%1").arg(urlLanguage());
         QDesktopServices::openUrl(QUrl(url));
     });
@@ -321,6 +326,7 @@ void MenuView::initStyleSheet()
     m_ui->createProject->setProperty("menuButton", true);
     m_ui->openProject->setProperty("menuButton", true);
     m_ui->saveProject->setProperty("menuButton", true);
+    m_ui->saveVersion->setProperty("menuButton", true);
     m_ui->saveProjectAs->setProperty("menuButton", true);
     m_ui->importProject->setProperty("menuButton", true);
     m_ui->importProject->setProperty("menuButtonTopBordered", true);

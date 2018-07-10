@@ -75,8 +75,8 @@ namespace {
      * @brief Номера пунктов меню
      */
     /** @{ */
-    const int IMPORT_MENU_INDEX = 5;
-    const int PRINT_PREVIEW_MENU_INDEX = 7;
+    const int kImportMenuIndex = 5;
+    const int kPrintPreviewMenuIndex = 7;
     const int TWO_PANEL_MODE_MENU_INDEX = 9;
     /** @} */
 
@@ -701,6 +701,11 @@ void ApplicationManager::aboutSave()
         m_synchronizationManager->aboutWorkSyncScenario();
         m_synchronizationManager->aboutWorkSyncData();
     }
+}
+
+void ApplicationManager::aboutSaveVersion()
+{
+    qDebug("save version");
 }
 
 void ApplicationManager::saveCurrentProjectSettings(const QString& _projectPath)
@@ -1706,7 +1711,7 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     // Настроим режим работы со сценарием
     //
     const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-    m_menuManager->setMenuItemEnabled(IMPORT_MENU_INDEX, !isCommentOnly);
+    m_menuManager->setMenuItemEnabled(kImportMenuIndex, !isCommentOnly);
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
 
@@ -2011,7 +2016,8 @@ QMenu* ApplicationManager::createMenu()
     QAction* saveProject = menu->addAction(tr("Save"));
     saveProject->setShortcut(QKeySequence::Save);
     m_view->addAction(saveProject);
-    QAction* saveProjectAs = menu->addAction(tr("Save As..."));
+    QAction* saveVersion = menu->addAction(tr("Save version..."));
+    QAction* saveProjectAs = menu->addAction(tr("Save as..."));
 
     menu->addSeparator();
     // ... импорт
@@ -2019,12 +2025,12 @@ QMenu* ApplicationManager::createMenu()
     // ... экспорт
     QAction* exportTo = menu->addAction(tr("Export to..."));
     // ... предварительный просмотр
-    QAction* printPreview = menu->addAction(tr("Print Preview"));
+    QAction* printPreview = menu->addAction(tr("Print preview"));
     printPreview->setShortcut(QKeySequence(Qt::Key_F12));
     m_view->addAction(printPreview);
 
     menu->addSeparator();
-    QAction* twoPanelMode = menu->addAction(tr("Two Panel Mode"));
+    QAction* twoPanelMode = menu->addAction(tr("Two panel mode"));
     twoPanelMode->setCheckable(true);
     twoPanelMode->setShortcut(QKeySequence(Qt::Key_F2));
     m_view->addAction(twoPanelMode);
@@ -2032,13 +2038,14 @@ QMenu* ApplicationManager::createMenu()
     //
     // Настроим соединения
     //
-    connect(createNewProject, SIGNAL(triggered()), this, SLOT(aboutCreateNew()));
-    connect(openProject, SIGNAL(triggered()), this, SLOT(aboutLoad()));
-    connect(saveProject, SIGNAL(triggered()), this, SLOT(aboutSave()));
-    connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
-    connect(import, SIGNAL(triggered()), this, SLOT(aboutImport()));
-    connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExport()));
-    connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
+    connect(createNewProject, &QAction::triggered, this, &ApplicationManager::aboutCreateNew);
+    connect(openProject, &QAction::triggered, this, [this] { aboutLoad(); });
+    connect(saveProject, &QAction::triggered, this, &ApplicationManager::aboutSave);
+    connect(saveVersion, &QAction::triggered, this, &ApplicationManager::aboutSaveVersion);
+    connect(saveProjectAs, &QAction::triggered, this, &ApplicationManager::aboutSaveAs);
+    connect(import, &QAction::triggered, this, &ApplicationManager::aboutImport);
+    connect(exportTo, &QAction::triggered, this, &ApplicationManager::aboutExport);
+    connect(printPreview, &QAction::triggered, this, &ApplicationManager::aboutPrintPreview);
     connect(twoPanelMode, &QAction::triggered, m_settingsManager, &SettingsManager::setUseTwoPanelMode);
 
 #ifdef Q_OS_MAC
