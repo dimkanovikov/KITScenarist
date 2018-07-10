@@ -20,6 +20,8 @@
 
 #include <3rd_party/Helpers/Validators.h>
 
+#include <QStyle>
+
 using UserInterface::LoginDialog;
 
 namespace {

@@ -3,6 +3,7 @@
 
 #include <3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h>
 
+#include <QButtonGroup>
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QTimer>

@@ -10,6 +10,7 @@
 #include <3rd_party/Helpers/FileHelper.h>
 #include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
 
+#include <QButtonGroup>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QStandardPaths>

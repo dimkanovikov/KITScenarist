@@ -93,7 +93,7 @@ void ResearchManager::loadScenarioData()
 {
     m_scenarioData.insert(ScenarioData::NAME_KEY, StorageFacade::scenarioDataStorage()->name());
     m_scenarioData.insert(ScenarioData::SCENE_NUMBERS_PREFIX_KEY, StorageFacade::scenarioDataStorage()->sceneNumbersPrefix());
-    m_scenarioData.insert(ScenarioData::SCENE_START_NUMBER, StorageFacade::scenarioDataStorage()->sceneStartNumber());
+    m_scenarioData.insert(ScenarioData::SCENE_START_NUMBER_KEY, StorageFacade::scenarioDataStorage()->sceneStartNumber());
     m_scenarioData.insert(ScenarioData::ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
     m_scenarioData.insert(ScenarioData::GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
     m_scenarioData.insert(ScenarioData::AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
@@ -173,7 +173,7 @@ void ResearchManager::saveResearch()
     if (!m_scenarioData.isEmpty()) {
         StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(ScenarioData::NAME_KEY));
         StorageFacade::scenarioDataStorage()->setSceneNumbersPrefix(m_scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY));
-        StorageFacade::scenarioDataStorage()->setSceneStartNumber(m_scenarioData.value(ScenarioData::SCENE_START_NUMBER));
+        StorageFacade::scenarioDataStorage()->setSceneStartNumber(m_scenarioData.value(ScenarioData::SCENE_START_NUMBER_KEY));
         StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY));
         StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(ScenarioData::GENRE_KEY));
         StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(ScenarioData::AUTHOR_KEY));
@@ -210,7 +210,7 @@ QString ResearchManager::sceneNumbersPrefix() const
 
 int ResearchManager::sceneStartNumber() const
 {
-    return m_scenarioData.value(ScenarioData::SCENE_START_NUMBER).toInt();
+    return m_scenarioData.value(ScenarioData::SCENE_START_NUMBER_KEY).toInt();
 }
 
 void ResearchManager::setSceneStartNumberEnabled(bool _disabled)
@@ -374,7 +374,7 @@ void ResearchManager::editResearch(const QModelIndex& _index)
                     m_view->editScript(
                         m_scenarioData.value(ScenarioData::NAME_KEY),
                         m_scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY),
-                        m_scenarioData.value(ScenarioData::SCENE_START_NUMBER));
+                        m_scenarioData.value(ScenarioData::SCENE_START_NUMBER_KEY));
                     break;
                 }
 
@@ -668,7 +668,7 @@ void ResearchManager::initConnections()
     connect(m_view, &ResearchView::scriptSceneStartNumber, this, [this] (const QString& _startSceneNumber) {
         int startNumber = _startSceneNumber.toInt();
         emit sceneStartNumberChanged(startNumber);
-        updateScenarioData(ScenarioData::SCENE_START_NUMBER, _startSceneNumber);
+        updateScenarioData(ScenarioData::SCENE_START_NUMBER_KEY, _startSceneNumber);
     });
     connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, this, [this] (const QString& _additionalInfo){
         updateScenarioData(ScenarioData::ADDITIONAL_INFO_KEY, _additionalInfo);

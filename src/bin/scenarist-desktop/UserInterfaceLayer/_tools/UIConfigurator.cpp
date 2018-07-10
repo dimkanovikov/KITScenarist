@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QPalette>
 #include <QStandardPaths>
+#include <QStyle>
 #include <QStyleFactory>
 
 
