@@ -326,6 +326,10 @@ void MenuView::initConnections()
         const QString url = QString("https://kitscenarist.ru/%1").arg(urlLanguage());
         QDesktopServices::openUrl(QUrl(url));
     });
+    connect(m_ui->digipitchUrl, &ClickableLabel::clicked, this, [] {
+        const QString url = "https://digipitch.com";
+        QDesktopServices::openUrl(QUrl(url));
+    });
     connect(m_ui->aboutApp, &ClickableLabel::clicked, this, &MenuView::aboutAppClicked);
     connect(m_ui->update, &QPushButton::clicked, this, &MenuView::updateClicked);
 }

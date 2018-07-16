@@ -5,7 +5,7 @@
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>CFBundleDisplyName</key>
-    <string>KIT Scenarist</string>
+    <string>KIT Scenarist for Digipitch</string>
     <key>CFBundleIconFile</key>
     <string>logo.icns</string>
     <key>CFBundlePackageType</key>

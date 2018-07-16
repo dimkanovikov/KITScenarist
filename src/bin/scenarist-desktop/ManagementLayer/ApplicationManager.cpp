@@ -2444,6 +2444,6 @@ void ApplicationManager::updateWindowTitle()
 #ifdef Q_OS_MAC
     m_view->setWindowTitle(projectFileName);
 #else
-    m_view->setWindowTitle(tr("%1[*] - KIT Scenarist").arg(projectFileName));
+    m_view->setWindowTitle(tr("%1[*] - KIT Scenarist for Digipitch").arg(projectFileName));
 #endif
 }

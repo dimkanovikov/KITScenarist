@@ -18,7 +18,7 @@ ApplicationView::ApplicationView(QWidget *_parent) :
     QWidget(_parent, Qt::Window)
 {
     setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
-    setWindowTitle(tr("KIT Scenarist"));
+    setWindowTitle(tr("KIT Scenarist for Digipitch"));
 
     static UIConfigurator* s_uiConfigurator = new UIConfigurator(this);
     QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+Shift+1"), this);

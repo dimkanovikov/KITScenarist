@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KIT Scenarist. Setup of basic features.</string>
+   <string>KIT Scenarist for Digipitch. Setup of basic features.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
