@@ -253,6 +253,11 @@ bool MenuManager::isOnLoginDialog() const
     return m_loginDialog->isVisible() || m_changePasswordDialog->isVisible();
 }
 
+void MenuManager::showUpdateButton(const QString& _newVersion)
+{
+    m_view->showUpdateButton(_newVersion);
+}
+
 void MenuManager::initView()
 {
     m_view->hide();
@@ -260,7 +265,7 @@ void MenuManager::initView()
 
 void MenuManager::initConnections()
 {
-    connect(m_view, &MenuView::loginPressed, m_loginDialog, &LoginDialog::showPrepared);
+    connect(m_view, &MenuView::loginClicked, m_loginDialog, &LoginDialog::showPrepared);
     connect(m_view, &MenuView::userNameChanged, this, &MenuManager::userNameChangeRequested);
     connect(m_view, &MenuView::getSubscriptionInfoClicked, this, &MenuManager::getSubscriptionInfoRequested);
     connect(m_view, &MenuView::renewSubscriptionClicked, m_renewSubscriptionDialog, &RenewSubscriptionDialog::showPrepared);
@@ -292,10 +297,11 @@ void MenuManager::initConnections()
         QTimer::singleShot(3000, this, &MenuManager::getSubscriptionInfoRequested);
     });
 
-    connect(m_view, &MenuView::aboutAppPressed, [this] {
+    connect(m_view, &MenuView::aboutAppClicked, [this] {
         UserInterface::AboutDialog dlg(m_view);
         dlg.exec();
     });
 
     connect(m_view, &MenuView::hideRequested, [this] { WAF::Animation::sideSlideOut(m_view); });
+    connect(m_view, &MenuView::updateClicked, this, &MenuManager::updateRequested);
 }

@@ -2090,6 +2090,7 @@ void ApplicationManager::initConnections()
     connect(m_menuManager, &MenuManager::userNameChangeRequested, m_synchronizationManager, &SynchronizationManager::changeUserName);
     connect(m_menuManager, &MenuManager::getSubscriptionInfoRequested, m_synchronizationManager, &SynchronizationManager::loadSubscriptionInfo);
     connect(m_menuManager, &MenuManager::passwordChangeRequested, m_synchronizationManager, &SynchronizationManager::changePassword);
+    connect(m_menuManager, &MenuManager::updateRequested, m_startUpManager, &StartUpManager::showUpdateDialog);
 
     connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::aboutCreateNew);
     connect(m_startUpManager, &StartUpManager::openProjectRequested, [=] { aboutLoad(); });
@@ -2104,6 +2105,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::removeRemoteProjectRequested, this, &ApplicationManager::removeRemoteProject);
     connect(m_startUpManager, &StartUpManager::shareRemoteProjectRequested, this, &ApplicationManager::shareRemoteProject);
     connect(m_startUpManager, &StartUpManager::unshareRemoteProjectRequested, this, &ApplicationManager::unshareRemoteProject);
+    connect(m_startUpManager, &StartUpManager::updatePublished, m_menuManager, &MenuManager::showUpdateButton);
 
     connect(m_researchManager, &ResearchManager::scriptNameChanged, this, &ApplicationManager::updateWindowTitle);
     connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);

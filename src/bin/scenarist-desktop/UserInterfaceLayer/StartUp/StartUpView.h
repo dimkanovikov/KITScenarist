@@ -39,11 +39,6 @@ namespace UserInterface
         void setRecentProjectName(int _index, const QString& _name);
 
         /**
-         * @brief Обновить информацию о доступности обновлений
-         */
-        void setUpdateInfo(const QString& _updateInfo);
-
-        /**
          * @brief Установить видимость списка облачных проектов
          */
         void setRemoteProjectsVisible(bool _visible);

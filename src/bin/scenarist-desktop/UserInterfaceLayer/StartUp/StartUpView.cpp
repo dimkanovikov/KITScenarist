@@ -58,12 +58,6 @@ void StartUpView::setRecentProjectName(int _index, const QString& _name)
     m_ui->recentFiles->setProjectName(_index, _name);
 }
 
-void StartUpView::setUpdateInfo(const QString& _updateInfo)
-{
-    m_ui->updateInfo->setText(_updateInfo);
-    m_ui->updateInfo->show();
-}
-
 void StartUpView::setRemoteProjectsVisible(bool _visible)
 {
     m_ui->remoteProjects->setVisible(_visible);
@@ -107,19 +101,6 @@ void StartUpView::aboutFilesSourceChanged()
 
 void StartUpView::initView()
 {
-    QFont versionFont = m_ui->version->font();
-#ifdef Q_OS_LINUX
-    versionFont.setPointSize(10);
-#elif defined Q_OS_MAC
-    versionFont.setPointSize(12);
-#endif
-    m_ui->version->setFont(versionFont);
-    m_ui->version_2->setFont(versionFont);
-
-    m_ui->version->setText(QApplication::applicationVersion());
-
-    m_ui->updateInfo->hide();
-
     m_ui->remoteProjects->hide();
 
     m_ui->filesSources->setCurrentWidget(m_ui->recentFilesPage);
@@ -129,7 +110,6 @@ void StartUpView::initView()
 
 void StartUpView::initConnections()
 {
-    connect(m_ui->updateInfo, &QLabel::linkActivated, this, &StartUpView::updateRequested);
     connect(m_ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
     connect(m_ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
     connect(m_ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));

@@ -100,16 +100,21 @@ namespace UserInterface
          */
         void showAccountPage();
 
+        /**
+         * @brief Показать информацию о том, что доступна новая версия
+         */
+        void showUpdateButton(const QString& _newVersion);
+
     signals:
         /**
          * @brief Пользователь хочет авторизоваться
          */
-        void loginPressed();
+        void loginClicked();
 
         /**
          * @brief Пользователь хочет открыть личный кабинет
          */
-        void accountPressed();
+        void accountClicked();
 
         /**
          * @brief Пользователь решил сменить свое имя
@@ -139,12 +144,17 @@ namespace UserInterface
         /**
          * @brief Пользователь хочет посмотреть информацию о приложении
          */
-        void aboutAppPressed();
+        void aboutAppClicked();
 
         /**
          * @brief Запрос на скрытие меню
          */
         void hideRequested();
+
+        /**
+         * @brief Пользователь хочет обновиться, нажав на кнопку обновления
+         */
+        void updateClicked();
 
     protected:
         /**

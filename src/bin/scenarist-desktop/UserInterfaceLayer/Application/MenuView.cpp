@@ -220,6 +220,13 @@ void MenuView::showAccountPage()
     WAF::StackedWidgetAnimation::slide(m_ui->menuContent, m_ui->menuAccount, WAF::FromRightToLeft);
 }
 
+void MenuView::showUpdateButton(const QString& _newVersion)
+{
+    Q_UNUSED(_newVersion);
+
+    m_ui->update->show();
+}
+
 bool MenuView::event(QEvent* _event)
 {
     if (_event->type() == QEvent::PaletteChange) {
@@ -234,8 +241,8 @@ void MenuView::initView()
     m_ui->avatar->setAttribute(Qt::WA_TransparentForMouseEvents);
     m_ui->login->setAttribute(Qt::WA_TransparentForMouseEvents);
     m_ui->loginInfo->setAttribute(Qt::WA_TransparentForMouseEvents);
-    m_ui->account->setVisible(false);
-    m_ui->email->setVisible(false);
+    m_ui->account->hide();
+    m_ui->email->hide();
 
     m_ui->menuContent->setCurrentWidget(m_ui->menuActions);
 
@@ -250,33 +257,37 @@ void MenuView::initView()
                   << m_ui->printPreview;
 
     m_ui->version->setText(QApplication::applicationVersion());
+    m_ui->update->hide();
 }
 
 void MenuView::initMenuButtons()
 {
-    auto updateButton = [this] (QAbstractButton* _button) {
+
+    auto updateButton = [] (QAbstractButton* _button, const QColor& _color) {
         const QString text = _button->text().simplified();
         _button->setText("   " + text);
 
         QIcon icon = _button->icon();
-        ImageHelper::setIconColor(icon, palette().text().color());
+        ImageHelper::setIconColor(icon, _color);
         _button->setIcon(icon);
     };
 
-    updateButton(m_ui->createProject);
-    updateButton(m_ui->openProject);
-    updateButton(m_ui->saveProject);
-    updateButton(m_ui->saveVersion);
-    updateButton(m_ui->saveProjectAs);
-    updateButton(m_ui->importProject);
-    updateButton(m_ui->exportProject);
-    updateButton(m_ui->printPreview);
-    updateButton(m_ui->help);
+    const auto textColor = palette().text().color();
+    updateButton(m_ui->createProject, textColor);
+    updateButton(m_ui->openProject, textColor);
+    updateButton(m_ui->saveProject, textColor);
+    updateButton(m_ui->saveVersion, textColor);
+    updateButton(m_ui->saveProjectAs, textColor);
+    updateButton(m_ui->importProject, textColor);
+    updateButton(m_ui->exportProject, textColor);
+    updateButton(m_ui->printPreview, textColor);
+    updateButton(m_ui->help, textColor);
+    updateButton(m_ui->update, palette().highlightedText().color());
 
-    updateButton(m_ui->getSubscriptionInfo);
-    updateButton(m_ui->renewSubscription);
-    updateButton(m_ui->changePassword);
-    updateButton(m_ui->logout);
+    updateButton(m_ui->getSubscriptionInfo, textColor);
+    updateButton(m_ui->renewSubscription, textColor);
+    updateButton(m_ui->changePassword, textColor);
+    updateButton(m_ui->logout, textColor);
 }
 
 void MenuView::initConnections()
@@ -286,7 +297,7 @@ void MenuView::initConnections()
         // Если пользователь не авторизован, отправим запрос на авторизацию
         //
         if (m_ui->login->isVisible()) {
-            emit loginPressed();
+            emit loginClicked();
         }
         //
         // А если авторизован, то покажем меню или личный кабинет
@@ -315,7 +326,8 @@ void MenuView::initConnections()
         const QString url = QString("https://kitscenarist.ru/%1").arg(urlLanguage());
         QDesktopServices::openUrl(QUrl(url));
     });
-    connect(m_ui->aboutApp, &ClickableLabel::clicked, this, &MenuView::aboutAppPressed);
+    connect(m_ui->aboutApp, &ClickableLabel::clicked, this, &MenuView::aboutAppClicked);
+    connect(m_ui->update, &QPushButton::clicked, this, &MenuView::updateClicked);
 }
 
 void MenuView::initStyleSheet()
@@ -334,6 +346,8 @@ void MenuView::initStyleSheet()
     m_ui->printPreview->setProperty("menuButton", true);
     m_ui->help->setProperty("menuButton", true);
     m_ui->help->setProperty("menuButtonTopBordered", true);
+    m_ui->update->setProperty("menuButton", true);
+    m_ui->update->setProperty("menuUpdateButton", true);
 
     m_ui->userName->setProperty("editableLabel", true);
     m_ui->getSubscriptionInfo->setProperty("isUpdateButton", true);

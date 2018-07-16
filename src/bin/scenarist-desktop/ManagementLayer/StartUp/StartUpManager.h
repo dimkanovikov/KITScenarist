@@ -84,6 +84,11 @@ namespace ManagementLayer
          */
         void setRemoteProjectName(int _index, const QString& _name);
 
+        /**
+         * @brief Отобразить диалог обновления
+         */
+        void showUpdateDialog();
+
 #ifdef Q_OS_MAC
         /**
          * @brief Сформировать меню "Правка" с фиктивным содержанием
@@ -153,6 +158,11 @@ namespace ManagementLayer
         void unshareRemoteProjectRequested(const QModelIndex& _remoteProjectIndex, const QString& _userEmail);
 
         /**
+         * @brief Доступно обновление приложения
+         */
+        void updatePublished(const QString& _newVersion);
+
+        /**
          * @brief Прогресс загрузки установочного файла новой версии
          */
         void downloadProgressForUpdate(int);
@@ -176,7 +186,7 @@ namespace ManagementLayer
         /**
          * @brief Покажем окно с информацией об обновлении
          */
-        void showUpdateDialog();
+        void showUpdateDialogImpl();
 
         /**
          * @brief Сформировать ссылку на файл обновления

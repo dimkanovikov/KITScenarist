@@ -139,6 +139,11 @@ namespace ManagementLayer
          */
         bool isOnLoginDialog() const;
 
+        /**
+         * @brief Показать информацию о том, что доступна новая версия
+         */
+        void showUpdateButton(const QString& _newVersion);
+
     signals:
         /**
          * @brief Пользователь хочет авторизоваться
@@ -185,6 +190,11 @@ namespace ManagementLayer
          * @brief Пользователь хочет выйти
          */
         void logoutRequested();
+
+        /**
+         * @brief Пользователь хочет обновиться
+         */
+        void updateRequested();
 
     private:
         /**

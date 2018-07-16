@@ -243,7 +243,7 @@ void StartUpManager::checkNewVersion()
             //
             // Есть новая версия, которая не совпадает с нашей. Покажем диалог
             //
-            showUpdateDialog();
+            showUpdateDialogImpl();
         }
 
 
@@ -252,9 +252,7 @@ void StartUpManager::checkNewVersion()
             // Если оказались здесь, значит либо отменили установку, либо пропустили обновление.
             // Будем показывать пользователю кнопку-ссылку на обновление
             //
-            QString updateInfo = tr("Released version %1. "
-                                    "<a href=\"#\" style=\"color:#2b78da;\">Install</a>").arg(m_updateVersion);
-            m_view->setUpdateInfo(updateInfo);
+            emit updatePublished(m_updateVersion);
         }
     }
 }
@@ -289,6 +287,11 @@ void StartUpManager::setRemoteProjectName(int _index, const QString& _name)
     m_view->setRemoteProjectName(_index, _name);
 }
 
+void StartUpManager::showUpdateDialog()
+{
+    showUpdateDialogImpl();
+}
+
 #ifdef Q_OS_MAC
 void StartUpManager::buildEditMenu(QMenu* _menu)
 {
@@ -301,7 +304,7 @@ void StartUpManager::buildEditMenu(QMenu* _menu)
 }
 #endif
 
-void StartUpManager::showUpdateDialog()
+void StartUpManager::showUpdateDialogImpl()
 {
     UpdateDialog dialog(m_view);
 
@@ -453,7 +456,7 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::createProjectClicked, this, &StartUpManager::createProjectRequested);
     connect(m_view, &StartUpView::openProjectClicked, this, &StartUpManager::openProjectRequested);
     connect(m_view, &StartUpView::helpClicked, this, &StartUpManager::helpRequested);
-    connect(m_view, &StartUpView::updateRequested, this, &StartUpManager::showUpdateDialog);
+    connect(m_view, &StartUpView::updateRequested, this, &StartUpManager::showUpdateDialogImpl);
 
     connect(m_view, &StartUpView::openRecentProjectClicked, this, &StartUpManager::openRecentProjectRequested);
     connect(m_view, &StartUpView::hideRecentProjectRequested, this, &StartUpManager::hideRecentProjectRequested);

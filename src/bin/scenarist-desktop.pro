@@ -372,7 +372,8 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.cpp \
     scenarist-core/Domain/ScriptVersion.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.cpp \
-    scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp
+    scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp \
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -649,7 +650,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.h \
     scenarist-core/Domain/ScriptVersion.h \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.h \
-    scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.h
+    scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.h \
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -678,7 +680,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Application/AboutDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui
+    scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.ui
 
 
 RESOURCES += \
