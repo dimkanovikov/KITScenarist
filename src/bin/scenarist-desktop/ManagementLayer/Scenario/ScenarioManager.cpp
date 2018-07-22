@@ -18,6 +18,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+#include <BusinessLayer/ScenarioDocument/ScriptTextCursor.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -55,6 +56,7 @@ using ManagementLayer::ScriptBookmarksManager;
 using ManagementLayer::ScriptDictionariesManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
+using BusinessLogic::ScriptTextCursor;
 
 namespace {
 
@@ -204,7 +206,7 @@ namespace {
      * @brief Обновить цвета текста и фона блоков для заданного документа
      */
     static void updateDocumentBlocksColors(QTextDocument* _document) {
-        QTextCursor cursor(_document);
+        ScriptTextCursor cursor(_document);
         cursor.beginEditBlock();
         do {
             cursor.movePosition(QTextCursor::StartOfBlock);
@@ -221,7 +223,7 @@ namespace {
                         cursor.setPosition(cursor.position() + range.length, QTextCursor::KeepAnchor);
                         cursor.mergeCharFormat(blockStyle.charFormat());
                         cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                        cursor.mergeBlockFormat(blockStyle.blockFormat());
+                        cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
                     }
                 }
                 cursor.movePosition(QTextCursor::EndOfBlock);
@@ -233,7 +235,7 @@ namespace {
                 cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
                 cursor.mergeCharFormat(blockStyle.charFormat());
                 cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                cursor.mergeBlockFormat(blockStyle.blockFormat());
+                cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
             }
             cursor.movePosition(QTextCursor::NextBlock);
         } while (!cursor.atEnd());

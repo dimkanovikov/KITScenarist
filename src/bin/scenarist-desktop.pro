@@ -373,7 +373,8 @@ SOURCES += \
     scenarist-core/Domain/ScriptVersion.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp \
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -651,7 +652,8 @@ HEADERS += \
     scenarist-core/Domain/ScriptVersion.h \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h \
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
