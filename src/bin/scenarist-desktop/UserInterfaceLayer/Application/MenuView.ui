@@ -510,7 +510,7 @@
           <item>
            <widget class="MenuButton" name="update">
             <property name="text">
-             <string>Download Update</string>
+             <string>DOWNLOAD UPDATE</string>
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">

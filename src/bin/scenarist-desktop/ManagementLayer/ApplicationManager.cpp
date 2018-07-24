@@ -24,8 +24,16 @@
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/DatabaseHistoryStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
+#include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
+
+#include <UserInterfaceLayer/Application/ApplicationView.h>
+#include <UserInterfaceLayer/Application/MenuView.h>
+#include <UserInterfaceLayer/Project/AddProjectDialog.h>
+#include <UserInterfaceLayer/Project/ProjectVersionDialog.h>
+#include <UserInterfaceLayer/Project/ShareDialog.h>
+#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <3rd_party/Helpers/TextUtils.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -34,12 +42,6 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
-
-#include <UserInterfaceLayer/Application/ApplicationView.h>
-#include <UserInterfaceLayer/Application/MenuView.h>
-#include <UserInterfaceLayer/Project/AddProjectDialog.h>
-#include <UserInterfaceLayer/Project/ShareDialog.h>
-#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <QApplication>
 #include <QComboBox>
@@ -705,7 +707,12 @@ void ApplicationManager::aboutSave()
 
 void ApplicationManager::aboutSaveVersion()
 {
-    qDebug("save version");
+    UserInterface::ProjectVersionDialog versionDialog(m_view);
+    if (versionDialog.exec() == QLightBoxDialog::Accepted) {
+        DataStorageLayer::StorageFacade::scriptVersionStorage()->storeScriptVersion(
+            versionDialog.versionDateTime(), versionDialog.versionColor(), versionDialog.versionName(),
+            versionDialog.versionDescription());
+    }
 }
 
 void ApplicationManager::saveCurrentProjectSettings(const QString& _projectPath)
