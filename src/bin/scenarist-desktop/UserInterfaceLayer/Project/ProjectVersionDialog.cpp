@@ -1,6 +1,8 @@
 #include "ProjectVersionDialog.h"
 #include "ui_ProjectVersionDialog.h"
 
+#include <Domain/ScriptVersion.h>
+
 #include <QCalendarWidget>
 #include <QPushButton>
 
@@ -13,12 +15,31 @@ ProjectVersionDialog::ProjectVersionDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
+    m_ui->color->setColorsPane(ColoredToolButton::Google);
+
     initStyleSheet();
 }
 
 ProjectVersionDialog::~ProjectVersionDialog()
 {
     delete m_ui;
+}
+
+void ProjectVersionDialog::setPreviousVersions(Domain::ScriptVersionsTable* _versions)
+{
+    //
+    // Если это не первая версия, запрещаем цвета, которые уже были установлены ранее
+    //
+    for (const auto& versionObject : _versions->toList()) {
+        const auto version = dynamic_cast<Domain::ScriptVersion*>(versionObject);
+        m_ui->color->disableColor(version->color());
+        m_ui->dateTime->setMinimumDateTime(version->datetime());
+    }
+
+    //
+    // Устанавливаем следующий разрешённый цвет
+    //
+    m_ui->color->selectFirstEnabledColor();
 }
 
 QDateTime ProjectVersionDialog::versionDateTime() const
@@ -51,8 +72,6 @@ void ProjectVersionDialog::initView()
     m_ui->dateTime->setDateTime(QDateTime::currentDateTime());
     m_ui->dateTime->calendarWidget()->setFixedSize(m_ui->dateTime->calendarWidget()->sizeHint() * 1.2);
 
-    m_ui->color->setColorsPane(ColoredToolButton::WordHighlight);
-    m_ui->color->setColor(QColor("#ffff00"));
     m_ui->buttons->button(QDialogButtonBox::Save)->setEnabled(false);
     m_ui->description->setToolbarVisible(false);
 }

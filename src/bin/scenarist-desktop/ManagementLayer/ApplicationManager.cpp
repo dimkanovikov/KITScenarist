@@ -705,13 +705,16 @@ void ApplicationManager::aboutSave()
     }
 }
 
-void ApplicationManager::aboutSaveVersion()
+void ApplicationManager::aboutStartNewVersion()
 {
     UserInterface::ProjectVersionDialog versionDialog(m_view);
+    versionDialog.setPreviousVersions(DataStorageLayer::StorageFacade::scriptVersionStorage()->all());
     if (versionDialog.exec() == QLightBoxDialog::Accepted) {
         DataStorageLayer::StorageFacade::scriptVersionStorage()->storeScriptVersion(
             versionDialog.versionDateTime(), versionDialog.versionColor(), versionDialog.versionName(),
             versionDialog.versionDescription());
+
+        updateWindowTitle();
     }
 }
 
@@ -2023,10 +2026,11 @@ QMenu* ApplicationManager::createMenu()
     QAction* saveProject = menu->addAction(tr("Save"));
     saveProject->setShortcut(QKeySequence::Save);
     m_view->addAction(saveProject);
-    QAction* saveVersion = menu->addAction(tr("Save version..."));
     QAction* saveProjectAs = menu->addAction(tr("Save as..."));
 
     menu->addSeparator();
+    // ... начать новую версию
+    QAction* newVersion = menu->addAction(tr("New script version..."));
     // ... импорт
     QAction* import = menu->addAction(tr("Import..."));
     // ... экспорт
@@ -2048,7 +2052,7 @@ QMenu* ApplicationManager::createMenu()
     connect(createNewProject, &QAction::triggered, this, &ApplicationManager::aboutCreateNew);
     connect(openProject, &QAction::triggered, this, [this] { aboutLoad(); });
     connect(saveProject, &QAction::triggered, this, &ApplicationManager::aboutSave);
-    connect(saveVersion, &QAction::triggered, this, &ApplicationManager::aboutSaveVersion);
+    connect(newVersion, &QAction::triggered, this, &ApplicationManager::aboutStartNewVersion);
     connect(saveProjectAs, &QAction::triggered, this, &ApplicationManager::aboutSaveAs);
     connect(import, &QAction::triggered, this, &ApplicationManager::aboutImport);
     connect(exportTo, &QAction::triggered, this, &ApplicationManager::aboutExport);
@@ -2442,8 +2446,9 @@ void ApplicationManager::updateWindowTitle()
     }
 
     const QString projectFileName =
-            QString("%1 %2")
+            QString("%1 - %2 %3")
             .arg(ProjectsManager::currentProject().name())
+            .arg(DataStorageLayer::StorageFacade::scriptVersionStorage()->currentVersionName())
             .arg(TextUtils::directedText((m_projectsManager->currentProject().isLocal()
                                           ? tr("on local computer")
                                           : tr("in cloud")),

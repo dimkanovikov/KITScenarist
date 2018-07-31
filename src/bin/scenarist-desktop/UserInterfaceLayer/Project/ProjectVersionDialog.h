@@ -3,6 +3,10 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
+namespace Domain {
+    class ScriptVersionsTable;
+}
+
 namespace Ui {
     class ProjectVersionDialog;
 }
@@ -20,6 +24,11 @@ namespace UserInterface
     public:
         explicit ProjectVersionDialog(QWidget *parent = nullptr);
         ~ProjectVersionDialog();
+
+        /**
+         * @brief Установить список предыдущих версий
+         */
+        void setPreviousVersions(Domain::ScriptVersionsTable* _versions);
 
         /**
          * @brief Дата и время версии

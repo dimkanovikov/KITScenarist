@@ -258,9 +258,9 @@
            </widget>
           </item>
           <item>
-           <widget class="MenuButton" name="saveVersion">
+           <widget class="MenuButton" name="saveProjectAs">
             <property name="text">
-             <string>Save current project version...</string>
+             <string>Save current project as...</string>
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
@@ -275,13 +275,13 @@
            </widget>
           </item>
           <item>
-           <widget class="MenuButton" name="saveProjectAs">
+           <widget class="MenuButton" name="startNewVersion">
             <property name="text">
-             <string>Save current project as...</string>
+             <string>Start new version...</string>
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Icons/empty.png</normaloff>:/Graphics/Icons/empty.png</iconset>
+              <normaloff>:/Graphics/Iconset/playlist-plus.svg</normaloff>:/Graphics/Iconset/playlist-plus.svg</iconset>
             </property>
             <property name="iconSize">
              <size>

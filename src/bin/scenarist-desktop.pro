@@ -374,7 +374,8 @@ SOURCES += \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.cpp
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.cpp \
+    scenarist-core/3rd_party/Widgets/ColoredToolButton/ColorsPane.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
