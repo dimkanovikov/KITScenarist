@@ -229,6 +229,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 15: {
+            translationSuffix = "az";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Azerbaijani;
+            break;
+        }
+
         default: break;
     }
 
@@ -311,7 +319,7 @@ bool Application::event(QEvent* _event)
     bool result = true;
     if (_event->type() == QEvent::FileOpen) {
         QFileOpenEvent* fileOpenEvent = static_cast<QFileOpenEvent*>(_event);
-        if (m_applicationManager != 0) {
+        if (m_applicationManager != nullptr) {
             m_applicationManager->openFile(::preparePath(fileOpenEvent->file()));
         } else {
             m_fileToOpen = ::preparePath(fileOpenEvent->file());
