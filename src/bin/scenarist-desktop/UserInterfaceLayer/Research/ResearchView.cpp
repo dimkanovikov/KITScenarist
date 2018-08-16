@@ -251,6 +251,18 @@ void ResearchView::editSynopsis(const QString& _synopsis)
     setSearchVisible(false);
 }
 
+void ResearchView::editVersions(QAbstractItemModel* _versions)
+{
+    m_ui->versions->setModel(_versions);
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->versionsEdit);
+
+    //
+    // Настраиваем интерфейс
+    //
+    setResearchManageButtonsVisible(false);
+    setSearchVisible(false);
+}
+
 void ResearchView::editCharactersRoot()
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->charactersRootEdit);
@@ -1023,6 +1035,7 @@ void ResearchView::initStyleSheet()
 
     m_ui->researchNavigator->setProperty("mainContainer", true);
     m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
+    m_ui->versions->setProperty("mainContainer", true);
 
     m_ui->textName->setProperty("editableLabel", true);
     m_ui->urlName->setProperty("editableLabel", true);

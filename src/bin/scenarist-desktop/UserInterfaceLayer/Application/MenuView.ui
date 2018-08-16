@@ -509,6 +509,12 @@
           </item>
           <item>
            <widget class="MenuButton" name="update">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
              <string>DOWNLOAD UPDATE</string>
             </property>

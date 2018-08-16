@@ -375,7 +375,9 @@ SOURCES += \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.cpp \
-    scenarist-core/3rd_party/Widgets/ColoredToolButton/ColorsPane.cpp
+    scenarist-core/3rd_party/Widgets/ColoredToolButton/ColorsPane.cpp \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.cpp \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersions.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -654,7 +656,9 @@ HEADERS += \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.h
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.h \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.h \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersions.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -684,7 +688,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.ui \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.ui
 
 
 RESOURCES += \

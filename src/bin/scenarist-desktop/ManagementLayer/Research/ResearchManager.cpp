@@ -1,12 +1,14 @@
 #include "ResearchManager.h"
 
-#include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
+#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
+#include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
 
 #include <Domain/Research.h>
 #include <Domain/ScenarioData.h>
+#include <Domain/ScriptVersion.h>
 
 #include <BusinessLayer/Research/ResearchModel.h>
 #include <BusinessLayer/Research/ResearchModelItem.h>
@@ -396,6 +398,11 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 
                 case Research::Synopsis: {
                     m_view->editSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
+                    break;
+                }
+
+                case Research::Versions: {
+                    m_view->editVersions(DataStorageLayer::StorageFacade::scriptVersionStorage()->all());
                     break;
                 }
 
