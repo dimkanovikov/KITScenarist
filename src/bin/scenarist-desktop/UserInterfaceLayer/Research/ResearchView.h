@@ -216,6 +216,11 @@ namespace UserInterface
         void mindMapChanged(const QString& _xml);
         /** @{ */
 
+        /**
+         * @brief Запрос на удаление версии сценария
+         */
+        void removeScriptVersionRequested(const QModelIndex& _projectIndex);
+
     protected:
         /**
          * @brief Переопределяем для обновления цвета иконок, при смене палитры

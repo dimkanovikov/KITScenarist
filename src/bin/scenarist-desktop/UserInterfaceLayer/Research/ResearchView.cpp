@@ -897,6 +897,10 @@ void ResearchView::initConnections()
         emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
     });
     //
+    // ... версии
+    //
+    connect(m_ui->versions, &ScriptVersions::removeRequested, this, &ResearchView::removeScriptVersionRequested);
+    //
     // ... персонаж
     //
     connect(m_ui->characterName, &AcceptebleLineEdit::textAccepted, this, &ResearchView::characterNameChanged);

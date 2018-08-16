@@ -698,7 +698,18 @@ void ResearchManager::initConnections()
     connect(m_view, &ResearchView::synopsisTextChanged, this, [this] (const QString& _synopsis){
         updateScenarioData(ScenarioData::SYNOPSIS_KEY, _synopsis);
     });
-
+    //
+    // ... версии
+    //
+    connect(m_view, &ResearchView::removeScriptVersionRequested, this, [this] (const QModelIndex& index) {
+        auto scriptVersionModel = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
+        Domain::ScriptVersion* scriptVersion = dynamic_cast<Domain::ScriptVersion*>(scriptVersionModel->itemForIndex(index));
+        if (QLightBoxMessage::question(m_view, QString(), tr("Do you really want to delete script version named <b>%1</b>?")
+                                                          .arg(scriptVersion->name()))
+            == QDialogButtonBox::Yes) {
+            DataStorageLayer::StorageFacade::scriptVersionStorage()->removeScriptVersion(scriptVersion);
+        }
+    });
     //
     // ... персонаж
     //
