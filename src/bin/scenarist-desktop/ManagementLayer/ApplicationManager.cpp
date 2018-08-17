@@ -710,10 +710,19 @@ void ApplicationManager::aboutStartNewVersion()
     UserInterface::ProjectVersionDialog versionDialog(m_view);
     versionDialog.setPreviousVersions(DataStorageLayer::StorageFacade::scriptVersionStorage()->all());
     if (versionDialog.exec() == QLightBoxDialog::Accepted) {
+        //
+        // Сперва сохраним текст сценария
+        //
+        m_scenarioManager->saveCurrentProject();
+        //
+        // А уж потом положим версию в базу данных
+        //
         DataStorageLayer::StorageFacade::scriptVersionStorage()->storeScriptVersion(
-            versionDialog.versionDateTime(), versionDialog.versionColor(), versionDialog.versionName(),
-            versionDialog.versionDescription());
-
+            DataStorageLayer::StorageFacade::username(), versionDialog.versionDateTime(), versionDialog.versionColor(),
+            versionDialog.versionName(), versionDialog.versionDescription(), m_scenarioManager->scenario()->save());
+        //
+        // И обнови заголовок окна, чтобы отразить в нём новую версию
+        //
         updateWindowTitle();
     }
 }

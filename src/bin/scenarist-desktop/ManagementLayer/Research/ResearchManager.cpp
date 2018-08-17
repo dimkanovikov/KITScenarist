@@ -125,6 +125,7 @@ void ResearchManager::closeCurrentProject()
 {
     m_scenarioData.clear();
     m_model->clear();
+    m_view->clear();
 }
 
 void ResearchManager::saveCurrentProjectSettings(const QString& _projectPath)

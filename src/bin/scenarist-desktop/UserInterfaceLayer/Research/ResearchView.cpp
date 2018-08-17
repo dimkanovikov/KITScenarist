@@ -82,6 +82,7 @@ ResearchView::~ResearchView()
 void ResearchView::clear()
 {
     m_textDocumentsParameters.clear();
+    m_ui->versions->setModel(nullptr);
 }
 
 void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font)
@@ -899,7 +900,7 @@ void ResearchView::initConnections()
     //
     // ... версии
     //
-    connect(m_ui->versions, &ScriptVersions::removeRequested, this, &ResearchView::removeScriptVersionRequested);
+    connect(m_ui->versions, &ScriptVersionsList::removeRequested, this, &ResearchView::removeScriptVersionRequested);
     //
     // ... персонаж
     //
