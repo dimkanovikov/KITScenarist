@@ -76,6 +76,11 @@ namespace UserInterface
          */
         void setBackupsModel(QAbstractItemModel* _model);
 
+        /**
+         * @brief Установить список версий сценария
+         */
+        void setScriptVersionsModel(QAbstractItemModel* _model);
+
     signals:
         /**
          * @brief Необходимо загрузить данные для заданного инструмента
@@ -86,6 +91,11 @@ namespace UserInterface
          * @brief Пользователь выбрал бэкап для восстановления
          */
         void backupSelected(const QModelIndex& _backupItemIndex);
+
+        /**
+         * @brief Выбраны версии для сравнения
+         */
+        void versionsForCompareSelected(int _firstVersionIndex, int _secondVersionIndex);
 
         /**
          * @brief Пользователь хочет применить текущий сценарий
