@@ -239,7 +239,7 @@ void StatisticsView::printReport()
     printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
     QPrintPreviewDialog printDialog(&printer, this);
     printDialog.setWindowState(Qt::WindowMaximized);
-    connect(&printDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
+    connect(&printDialog, &QPrintPreviewDialog::paintRequested, this, &StatisticsView::print);
 
     //
     // Вызываем диалог предварительного просмотра и печати
