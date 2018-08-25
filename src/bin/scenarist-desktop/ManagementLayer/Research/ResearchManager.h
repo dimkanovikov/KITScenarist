@@ -125,6 +125,11 @@ namespace ManagementLayer
         void sceneStartNumberChanged(int _startNumber);
 
         /**
+         * @brief Изменился список версий проекта
+         */
+        void versionsChanged();
+
+        /**
          * @brief Была изменена разработка
          */
         void researchChanged();

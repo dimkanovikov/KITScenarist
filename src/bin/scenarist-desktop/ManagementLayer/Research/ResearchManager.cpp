@@ -709,6 +709,7 @@ void ResearchManager::initConnections()
                                                           .arg(scriptVersion->name()))
             == QDialogButtonBox::Yes) {
             DataStorageLayer::StorageFacade::scriptVersionStorage()->removeScriptVersion(scriptVersion);
+            emit versionsChanged();
         }
     });
     //

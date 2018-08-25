@@ -1,14 +1,17 @@
 #include "ToolsManager.h"
 
 #include <Domain/Scenario.h>
+#include <Domain/ScriptVersion.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+#include <BusinessLayer/Tools/CompareScriptVersionsTool.h>
 #include <BusinessLayer/Tools/RestoreFromBackupTool.h>
 
 #include <ManagementLayer/Project/ProjectsManager.h>
 
+#include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
@@ -142,13 +145,34 @@ void ToolsManager::loadBackup(const QModelIndex& _backupItemIndex)
     QtConcurrent::run(m_restoreFromBackupTool, &RestoreFromBackupTool::loadBackup, backupDateTime);
 }
 
-void ToolsManager::showBackup(const QString& _backup)
+void ToolsManager::loadScriptVersions()
+{
+    m_view->showPlaceholderText(tr("Choose versions to compare"));
+
+    m_view->setScriptVersionsModel(DataStorageLayer::StorageFacade::scriptVersionStorage()->all());
+}
+
+void ToolsManager::compareVersions(int firstVersionIndex, int secondVersionIndex)
+{
+    const auto versions = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
+    const auto firstVersion
+            = versions->data(versions->index(firstVersionIndex, ScriptVersionsTable::kScriptText),
+                             Qt::DisplayRole).toString();
+    const auto secondVersion
+            = versions->data(versions->index(secondVersionIndex, ScriptVersionsTable::kScriptText),
+                             Qt::DisplayRole).toString();
+
+   const QString script = BusinessLogic::CompareScriptVersionsTool::compareScripts(firstVersion, secondVersion);
+   showScript(script);
+}
+
+void ToolsManager::showScript(const QString& _script)
 {
     Domain::Scenario* scenario = m_script->scenario();
     if (scenario == nullptr) {
         scenario = new Domain::Scenario(Domain::Identifier(), QString(), QString(), false);
     }
-    scenario->setText(_backup);
+    scenario->setText(_script);
     m_script->load(scenario);
 
     m_view->showScript();
@@ -172,6 +196,7 @@ void ToolsManager::initConnections()
 
             case Tool::CompareScript:
             {
+                loadScriptVersions();
                 break;
             }
 
@@ -179,9 +204,10 @@ void ToolsManager::initConnections()
         }
     });
     connect(m_view, &ToolsView::backupSelected, this, &ToolsManager::loadBackup);
+    connect(m_view, &ToolsView::versionsForCompareSelected, this, &ToolsManager::compareVersions);
     connect(m_view, &ToolsView::applyScriptRequested, this, [this] { emit applyScriptRequested(m_script->save()); });
 
     connect(m_restoreFromBackupTool, &RestoreFromBackupTool::backupInfoLoaded, this, &ToolsManager::showBackupInfo);
     connect(m_restoreFromBackupTool, &RestoreFromBackupTool::backupInfoNotLoaded, m_view, [this] { m_view->setBackupsModel(nullptr); });
-    connect(m_restoreFromBackupTool, &RestoreFromBackupTool::backupLoaded, this, &ToolsManager::showBackup);
+    connect(m_restoreFromBackupTool, &RestoreFromBackupTool::backupLoaded, this, &ToolsManager::showScript);
 }

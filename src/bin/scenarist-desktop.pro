@@ -377,7 +377,8 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.cpp \
     scenarist-core/3rd_party/Widgets/ColoredToolButton/ColorsPane.cpp \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.cpp \
-    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.cpp
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.cpp \
+    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -658,7 +659,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.h \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.h \
-    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h \
+    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
