@@ -220,9 +220,9 @@ void ScenarioTextEditWidget::setTextEditZoomRange(qreal _zoomRange)
 void ScenarioTextEditWidget::setFixed(bool _fixed)
 {
     if (_fixed) {
-        m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock-open.svg"));
-    } else {
         m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock.svg"));
+    } else {
+        m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock-open.svg"));
     }
 }
 
@@ -834,7 +834,7 @@ void ScenarioTextEditWidget::initView()
     m_reviewView->hide();
 
     m_lockUnlock->setObjectName("scenarioLockUnlock");
-    m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock.svg"));
+    m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock-open.svg"));
     m_lockUnlock->setToolTip(tr("Lock/unlock scene numbers"));
 
     m_zenControls->setEditor(m_editor);
