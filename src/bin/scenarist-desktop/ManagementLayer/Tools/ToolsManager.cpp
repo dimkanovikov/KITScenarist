@@ -11,6 +11,7 @@
 
 #include <ManagementLayer/Project/ProjectsManager.h>
 
+#include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
@@ -154,16 +155,26 @@ void ToolsManager::loadScriptVersions()
 
 void ToolsManager::compareVersions(int firstVersionIndex, int secondVersionIndex)
 {
-    const auto versions = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
-    const auto firstVersion
-            = versions->data(versions->index(firstVersionIndex, ScriptVersionsTable::kScriptText),
-                             Qt::DisplayRole).toString();
-    const auto secondVersion
-            = versions->data(versions->index(secondVersionIndex, ScriptVersionsTable::kScriptText),
-                             Qt::DisplayRole).toString();
+    auto scriptVersion = [] (int versionIndex) {
+        const auto versions = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
+        if (versionIndex < versions->rowCount()) {
+            return versions->data(versions->index(versionIndex, ScriptVersionsTable::kScriptText),
+                                  Qt::DisplayRole).toString();
+        }
+        return DataStorageLayer::StorageFacade::scenarioStorage()->current()->text();
+    };
 
-   const QString script = BusinessLogic::CompareScriptVersionsTool::compareScripts(firstVersion, secondVersion);
-   showScript(script);
+    //
+    // Скорректируем индексы, т.к. версии в БД хранятся со смещением относительно отображаемых
+    // из-за добавленной первой версии
+    //
+    const auto firstVersion = scriptVersion(firstVersionIndex + 1);
+    const auto secondVersion = scriptVersion(secondVersionIndex + 1);
+    //
+    // Сравниваем таким образом, чтобы первый сценарий был тем, что добавлено с момента второй версии
+    //
+    const QString script = BusinessLogic::CompareScriptVersionsTool::compareScripts(secondVersion, firstVersion);
+    showScript(script);
 }
 
 void ToolsManager::showScript(const QString& _script)

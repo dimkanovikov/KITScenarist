@@ -87,7 +87,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="scriptComparePage">
+     <widget class="QFrame" name="scriptComparePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLabel" name="label">

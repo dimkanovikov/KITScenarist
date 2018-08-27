@@ -105,4 +105,5 @@ void ToolsSettings::initStyleSheet()
     m_ui->back->setProperty("inTopPanel", true);
 
     m_ui->backups->setProperty("mainContainer", true);
+    m_ui->scriptComparePage->setProperty("mainContainer", true);
 }
