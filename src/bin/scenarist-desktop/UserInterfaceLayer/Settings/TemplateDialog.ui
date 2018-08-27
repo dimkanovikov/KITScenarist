@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>814</width>
-    <height>681</height>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -259,6 +259,67 @@
         </property>
        </widget>
       </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_23">
+        <property name="text">
+         <string>Split page, %:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_24">
+          <property name="text">
+           <string>Left page side:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="leftPageSide">
+          <property name="minimum">
+           <number>20</number>
+          </property>
+          <property name="maximum">
+           <number>80</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_25">
+          <property name="text">
+           <string>Right page side:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="rightPageSide">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="minimum">
+           <number>20</number>
+          </property>
+          <property name="maximum">
+           <number>80</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
@@ -327,8 +388,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>529</width>
-           <height>435</height>
+           <width>517</width>
+           <height>391</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
@@ -773,16 +834,25 @@
  <tabstops>
   <tabstop>name</tabstop>
   <tabstop>description</tabstop>
+  <tabstop>pageFormatA4</tabstop>
+  <tabstop>pageFormatLetter</tabstop>
   <tabstop>leftField</tabstop>
   <tabstop>topField</tabstop>
   <tabstop>rightField</tabstop>
   <tabstop>bottomField</tabstop>
   <tabstop>numberingVerticalAlignment</tabstop>
   <tabstop>numberingHorizontalAlignment</tabstop>
+  <tabstop>leftPageSide</tabstop>
+  <tabstop>rightPageSide</tabstop>
   <tabstop>blockStyles</tabstop>
   <tabstop>isActive</tabstop>
+  <tabstop>scrollArea</tabstop>
   <tabstop>fontFamily</tabstop>
   <tabstop>fontSize</tabstop>
+  <tabstop>bold</tabstop>
+  <tabstop>italic</tabstop>
+  <tabstop>underline</tabstop>
+  <tabstop>uppercase</tabstop>
   <tabstop>alignment</tabstop>
   <tabstop>spacingType</tabstop>
   <tabstop>topSpace</tabstop>
@@ -791,8 +861,11 @@
   <tabstop>bottomIndent</tabstop>
   <tabstop>leftIndent</tabstop>
   <tabstop>rightIndent</tabstop>
+  <tabstop>leftIndentSplitted</tabstop>
+  <tabstop>rightIndentSplitted</tabstop>
   <tabstop>lineSpacing</tabstop>
   <tabstop>lineSpacingValue</tabstop>
+  <tabstop>framingBrackets</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -718,7 +718,7 @@ void ApplicationManager::aboutStartNewVersion()
         // А уж потом положим версию в базу данных
         //
         DataStorageLayer::StorageFacade::scriptVersionStorage()->storeScriptVersion(
-            DataStorageLayer::StorageFacade::username(), versionDialog.versionDateTime(), versionDialog.versionColor(),
+            DataStorageLayer::StorageFacade::userName(), versionDialog.versionDateTime(), versionDialog.versionColor(),
             versionDialog.versionName(), versionDialog.versionDescription(), m_scenarioManager->scenario()->save());
         //
         // И обнови заголовок окна, чтобы отразить в нём новую версию
