@@ -145,8 +145,9 @@ font-weight: 600;</string>
     <widget class="QLabel" name="translators">
      <property name="text">
       <string>Our heroes, who help us to create international versions:
+Azərbaycan: Tarlan Rasulzadeh
 Deutsch: Michael Krämer
-English: Dimka Novikov
+English: Eric Wayne &amp; Soyung Key
 Español: Felipe Vece, Pedro Terrero
 Français: Felipe Vece, Antonio, Armand Robin
 Italiano: Luca Giliberto

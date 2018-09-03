@@ -26,7 +26,11 @@ TemplateDialog::TemplateDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
-    connect(this, &TemplateDialog::showed, [=] { m_ui->blockStyles->setCurrentRow(0); });
+    connect(this, &TemplateDialog::showed, this, [this] { m_ui->blockStyles->setCurrentRow(0); });
+    connect(m_ui->leftPageSide, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
+            [this] (int _value) { m_ui->rightPageSide->setValue(100 - _value); });
+    connect(m_ui->rightPageSide, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
+            [this] (int _value) { m_ui->leftPageSide->setValue(100 - _value); });
 
     initStyleSheet();
 }
@@ -70,6 +74,7 @@ void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& 
         horizontalAlignIndex = 1;
     }
     m_ui->numberingHorizontalAlignment->setCurrentIndex(horizontalAlignIndex);
+    m_ui->leftPageSide->setValue(m_template.splitterLeftSidePercents());
 
     //
     // Очистим последний выбранный стиль блока
@@ -116,6 +121,7 @@ BusinessLogic::ScenarioTemplate TemplateDialog::scenarioTemplate()
         case 2: numberingAlignment |= Qt::AlignRight;
     }
     m_template.setNumberingAlignment(numberingAlignment);
+    m_template.setSplitterLeftSidePercents(m_ui->leftPageSide->value());
 
     //
     // Возвратим настроенный шаблон

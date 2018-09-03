@@ -18,6 +18,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+#include <BusinessLayer/ScenarioDocument/ScriptTextCursor.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -40,6 +41,7 @@
 #include <QLabel>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QTextTable>
 #include <QTimer>
 #include <QSet>
 #include <QSplitter>
@@ -55,6 +57,7 @@ using ManagementLayer::ScriptBookmarksManager;
 using ManagementLayer::ScriptDictionariesManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
+using BusinessLogic::ScriptTextCursor;
 
 namespace {
 
@@ -204,12 +207,12 @@ namespace {
      * @brief Обновить цвета текста и фона блоков для заданного документа
      */
     static void updateDocumentBlocksColors(QTextDocument* _document) {
-        QTextCursor cursor(_document);
+        ScriptTextCursor cursor(_document);
         cursor.beginEditBlock();
         do {
             cursor.movePosition(QTextCursor::StartOfBlock);
-            ScenarioBlockStyle blockStyle =
-                BusinessLogic::ScenarioTemplateFacade::getTemplate().blockStyle(cursor.block());
+            ScenarioBlockStyle blockStyle
+                    = BusinessLogic::ScenarioTemplateFacade::getTemplate().blockStyle(cursor.block());
             //
             // Если в блоке есть выделения, обновляем цвет только тех частей, которые не входят в выделения
             //
@@ -221,7 +224,7 @@ namespace {
                         cursor.setPosition(cursor.position() + range.length, QTextCursor::KeepAnchor);
                         cursor.mergeCharFormat(blockStyle.charFormat());
                         cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                        cursor.mergeBlockFormat(blockStyle.blockFormat());
+                        cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
                     }
                 }
                 cursor.movePosition(QTextCursor::EndOfBlock);
@@ -233,9 +236,40 @@ namespace {
                 cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
                 cursor.mergeCharFormat(blockStyle.charFormat());
                 cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                cursor.mergeBlockFormat(blockStyle.blockFormat());
+                cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
             }
             cursor.movePosition(QTextCursor::NextBlock);
+        } while (!cursor.atEnd());
+        cursor.endEditBlock();
+    }
+
+    /**
+     * @brief Обновить таблицы в документе
+     */
+    static void updateDocumentTables(QTextDocument* _document) {
+        //
+        // Сформируем новый стиль для таблицы, т.к. могла смениться ширина
+        //
+        const qreal tableWidth = 100;
+        const qreal leftColumnWidth = BusinessLogic::ScenarioTemplateFacade::getTemplate().splitterLeftSidePercents();
+        const qreal rightColumnWidth = tableWidth - leftColumnWidth;
+        QTextTableFormat tableFormat;
+        tableFormat.setWidth(QTextLength{QTextLength::PercentageLength, tableWidth});
+        tableFormat.setColumnWidthConstraints({ QTextLength{QTextLength::PercentageLength, leftColumnWidth},
+                                                QTextLength{QTextLength::PercentageLength, rightColumnWidth} });
+        tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+        //
+        // Применим формат для всех табличек
+        //
+        ScriptTextCursor cursor(_document);
+        cursor.beginEditBlock();
+        do {
+            if (cursor.isBlockInTable()) {
+                auto table = cursor.currentTable();
+                table->setFormat(tableFormat);
+            }
+            cursor.movePosition(QTextCursor::NextBlock);
+            cursor.movePosition(QTextCursor::EndOfBlock);
         } while (!cursor.atEnd());
         cursor.endEditBlock();
     }
@@ -499,8 +533,10 @@ void ScenarioManager::aboutTextEditSettingsUpdated()
 
     m_textEditManager->reloadTextEditSettings();
 
-    ::updateDocumentBlocksColors(m_scenario->document());
-    ::updateDocumentBlocksColors(m_scenarioDraft->document());
+    updateDocumentBlocksColors(m_scenario->document());
+    updateDocumentBlocksColors(m_scenarioDraft->document());
+    updateDocumentTables(m_scenario->document());
+    updateDocumentTables(m_scenarioDraft->document());
 
     //
     // Корректируем текст, т.к. могли измениться настройки отображения, или используемого шаблона

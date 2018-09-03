@@ -96,9 +96,9 @@ namespace ManagementLayer
         void aboutSave();
 
         /**
-         * @brief Сохранить версию сценария
+         * @brief Начать новую версию сценария
          */
-        void aboutSaveVersion();
+        void aboutStartNewVersion();
 
         /**
          * @brief Сохранить настройки текущего проекта

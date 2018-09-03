@@ -373,7 +373,12 @@ SOURCES += \
     scenarist-core/Domain/ScriptVersion.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.cpp \
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.cpp \
+    scenarist-core/3rd_party/Widgets/ColoredToolButton/ColorsPane.cpp \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.cpp \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.cpp \
+    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -651,7 +656,11 @@ HEADERS += \
     scenarist-core/Domain/ScriptVersion.h \
     scenarist-core/DataLayer/DataMappingLayer/ScriptVersionMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/ScriptVersionStorage.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.h \
+    scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.h \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.h \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h \
+    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -681,7 +690,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Tools/ToolsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.ui \
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.ui
 
 
 RESOURCES += \

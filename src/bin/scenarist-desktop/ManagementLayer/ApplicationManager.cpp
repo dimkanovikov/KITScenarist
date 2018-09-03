@@ -24,8 +24,16 @@
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/DatabaseHistoryStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
+#include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
+
+#include <UserInterfaceLayer/Application/ApplicationView.h>
+#include <UserInterfaceLayer/Application/MenuView.h>
+#include <UserInterfaceLayer/Project/AddProjectDialog.h>
+#include <UserInterfaceLayer/Project/ProjectVersionDialog.h>
+#include <UserInterfaceLayer/Project/ShareDialog.h>
+#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <3rd_party/Helpers/TextUtils.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -34,12 +42,6 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
-
-#include <UserInterfaceLayer/Application/ApplicationView.h>
-#include <UserInterfaceLayer/Application/MenuView.h>
-#include <UserInterfaceLayer/Project/AddProjectDialog.h>
-#include <UserInterfaceLayer/Project/ShareDialog.h>
-#include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
 #include <QApplication>
 #include <QComboBox>
@@ -703,9 +705,26 @@ void ApplicationManager::aboutSave()
     }
 }
 
-void ApplicationManager::aboutSaveVersion()
+void ApplicationManager::aboutStartNewVersion()
 {
-    qDebug("save version");
+    UserInterface::ProjectVersionDialog versionDialog(m_view);
+    versionDialog.setPreviousVersions(DataStorageLayer::StorageFacade::scriptVersionStorage()->all());
+    if (versionDialog.exec() == QLightBoxDialog::Accepted) {
+        //
+        // Сперва сохраним текст сценария
+        //
+        m_scenarioManager->saveCurrentProject();
+        //
+        // А уж потом положим версию в базу данных
+        //
+        DataStorageLayer::StorageFacade::scriptVersionStorage()->storeScriptVersion(
+            DataStorageLayer::StorageFacade::userName(), versionDialog.versionDateTime(), versionDialog.versionColor(),
+            versionDialog.versionName(), versionDialog.versionDescription(), m_scenarioManager->scenario()->save());
+        //
+        // И обнови заголовок окна, чтобы отразить в нём новую версию
+        //
+        updateWindowTitle();
+    }
 }
 
 void ApplicationManager::saveCurrentProjectSettings(const QString& _projectPath)
@@ -2016,10 +2035,11 @@ QMenu* ApplicationManager::createMenu()
     QAction* saveProject = menu->addAction(tr("Save"));
     saveProject->setShortcut(QKeySequence::Save);
     m_view->addAction(saveProject);
-    QAction* saveVersion = menu->addAction(tr("Save version..."));
     QAction* saveProjectAs = menu->addAction(tr("Save as..."));
 
     menu->addSeparator();
+    // ... начать новую версию
+    QAction* newVersion = menu->addAction(tr("New script version..."));
     // ... импорт
     QAction* import = menu->addAction(tr("Import..."));
     // ... экспорт
@@ -2041,7 +2061,7 @@ QMenu* ApplicationManager::createMenu()
     connect(createNewProject, &QAction::triggered, this, &ApplicationManager::aboutCreateNew);
     connect(openProject, &QAction::triggered, this, [this] { aboutLoad(); });
     connect(saveProject, &QAction::triggered, this, &ApplicationManager::aboutSave);
-    connect(saveVersion, &QAction::triggered, this, &ApplicationManager::aboutSaveVersion);
+    connect(newVersion, &QAction::triggered, this, &ApplicationManager::aboutStartNewVersion);
     connect(saveProjectAs, &QAction::triggered, this, &ApplicationManager::aboutSaveAs);
     connect(import, &QAction::triggered, this, &ApplicationManager::aboutImport);
     connect(exportTo, &QAction::triggered, this, &ApplicationManager::aboutExport);
@@ -2110,6 +2130,7 @@ void ApplicationManager::initConnections()
     connect(m_researchManager, &ResearchManager::scriptNameChanged, this, &ApplicationManager::updateWindowTitle);
     connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);
     connect(m_researchManager, &ResearchManager::sceneStartNumberChanged, m_scenarioManager, &ScenarioManager::setSceneStartNumber);
+    connect(m_researchManager, &ResearchManager::versionsChanged, this, &ApplicationManager::updateWindowTitle);
     connect(m_researchManager, &ResearchManager::characterNameChanged, m_scenarioManager, &ScenarioManager::aboutCharacterNameChanged);
     connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
     connect(m_researchManager, &ResearchManager::locationNameChanged, m_scenarioManager, &ScenarioManager::aboutLocationNameChanged);
@@ -2435,8 +2456,9 @@ void ApplicationManager::updateWindowTitle()
     }
 
     const QString projectFileName =
-            QString("%1 %2")
+            QString("%1 - %2 %3")
             .arg(ProjectsManager::currentProject().name())
+            .arg(DataStorageLayer::StorageFacade::scriptVersionStorage()->currentVersionName())
             .arg(TextUtils::directedText((m_projectsManager->currentProject().isLocal()
                                           ? tr("on local computer")
                                           : tr("in cloud")),
