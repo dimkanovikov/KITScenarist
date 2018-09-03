@@ -92,6 +92,10 @@ bool SettingsTemplatesManager::editTemplate(const QString& _templateName)
         // Сохраняем изменённый шаблон
         //
         ScenarioTemplate editedTemplate = m_view->scenarioTemplate();
+        if (editedTemplate.isDefault()) {
+            return false;
+        }
+
         ScenarioTemplateFacade::saveTemplate(editedTemplate);
         success = true;
 

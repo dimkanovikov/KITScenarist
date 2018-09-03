@@ -4,7 +4,7 @@ application/current-app-review-version - номер версии, которая
 application/uuid - уникальный идентификатор установленной пользователем копии программы
 application/app-was-configured - был ли показан диалог первоначальной настройки приложения (0 - не был показан, 1 - был показан)
 application/language - язык приложения (0 - русский, 1 - испанский и т.д.)
-application/user-name - имя пользователя для авторизации на сайте сценариста
+application/username - имя пользователя для авторизации на сайте сценариста
 application/password - пароль пользователя
 application/remote-projects - список проектов из облака в виде xml кодированного в base64 (для автономного режима)
 application/project-files - путь к папке файлов проекта (сохранить/открыть)

@@ -82,6 +82,7 @@ ResearchView::~ResearchView()
 void ResearchView::clear()
 {
     m_textDocumentsParameters.clear();
+    m_ui->versions->setModel(nullptr);
 }
 
 void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font)
@@ -243,6 +244,18 @@ void ResearchView::editSynopsis(const QString& _synopsis)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->synopsisEdit);
     updateTextEditorText(_synopsis, m_ui->synopsisText->editor());
+
+    //
+    // Настраиваем интерфейс
+    //
+    setResearchManageButtonsVisible(false);
+    setSearchVisible(false);
+}
+
+void ResearchView::editVersions(QAbstractItemModel* _versions)
+{
+    m_ui->versions->setModel(_versions);
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->versionsEdit);
 
     //
     // Настраиваем интерфейс
@@ -885,6 +898,10 @@ void ResearchView::initConnections()
         emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
     });
     //
+    // ... версии
+    //
+    connect(m_ui->versions, &ScriptVersionsList::removeRequested, this, &ResearchView::removeScriptVersionRequested);
+    //
     // ... персонаж
     //
     connect(m_ui->characterName, &AcceptebleLineEdit::textAccepted, this, &ResearchView::characterNameChanged);
@@ -1023,6 +1040,7 @@ void ResearchView::initStyleSheet()
 
     m_ui->researchNavigator->setProperty("mainContainer", true);
     m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
+    m_ui->versions->setProperty("mainContainer", true);
 
     m_ui->textName->setProperty("editableLabel", true);
     m_ui->urlName->setProperty("editableLabel", true);

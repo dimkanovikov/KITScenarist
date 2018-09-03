@@ -19,7 +19,7 @@ namespace UserInterface
         Q_OBJECT
 
     public:
-        explicit ToolsSettings(QWidget *parent = 0);
+        explicit ToolsSettings(QWidget* _parent = nullptr);
         ~ToolsSettings();
 
         /**
@@ -37,6 +37,11 @@ namespace UserInterface
          */
         void setBackupsModel(QAbstractItemModel* _model);
 
+        /**
+         * @brief Установить список версий
+         */
+        void setScriptVersionsModel(QAbstractItemModel* _model);
+
     signals:
         /**
          * @brief Пользователь нажал кнопку выйти из настроек инструментов
@@ -47,6 +52,11 @@ namespace UserInterface
          * @brief Пользователь выбрал бэкап для восстановления
          */
         void backupSelected(const QModelIndex& _backupItemIndex);
+
+        /**
+         * @brief Выбраны версии для сравнения
+         */
+        void versionsForCompareSelected(int _firstVersionIndex, int _secondVersionIndex);
 
     private:
         /**

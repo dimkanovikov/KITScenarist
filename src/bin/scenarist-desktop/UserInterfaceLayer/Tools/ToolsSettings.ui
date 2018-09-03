@@ -87,7 +87,43 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="scriptComparePage"/>
+     <widget class="QFrame" name="scriptComparePage">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Compare</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="compareVersionFirst"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>with</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="compareVersionSecond"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>330</width>
+           <height>167</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

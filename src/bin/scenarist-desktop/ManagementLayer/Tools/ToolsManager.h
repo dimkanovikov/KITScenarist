@@ -60,10 +60,24 @@ namespace ManagementLayer
          */
         void loadBackup(const QModelIndex& _backupItemIndex);
 
+        //
+
         /**
-         * @brief Отобразить содержимое бэкапа
+         * @brief Загрузить список версий сценария и отобразить
          */
-        void showBackup(const QString& _backup);
+        void loadScriptVersions();
+
+        /**
+         * @brief Сравнить две версии и отобразить результат сравнения
+         */
+        void compareVersions(int firstVersionIndex, int secondVersionIndex);
+
+        //
+
+        /**
+         * @brief Отобразить сценарий
+         */
+        void showScript(const QString& _script);
 
     private:
         /**

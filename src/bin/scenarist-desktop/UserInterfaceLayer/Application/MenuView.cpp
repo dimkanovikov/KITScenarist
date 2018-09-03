@@ -249,9 +249,9 @@ void MenuView::initView()
     m_menuButtons << m_ui->createProject
                   << m_ui->openProject
                   << m_ui->saveProject
-                  << m_ui->saveVersion
                   << m_ui->saveProjectAs
                   << nullptr // тут у оригинального меню разделитель
+                  << m_ui->startNewVersion
                   << m_ui->importProject
                   << m_ui->exportProject
                   << m_ui->printPreview;
@@ -276,7 +276,7 @@ void MenuView::initMenuButtons()
     updateButton(m_ui->createProject, textColor);
     updateButton(m_ui->openProject, textColor);
     updateButton(m_ui->saveProject, textColor);
-    updateButton(m_ui->saveVersion, textColor);
+    updateButton(m_ui->startNewVersion, textColor);
     updateButton(m_ui->saveProjectAs, textColor);
     updateButton(m_ui->importProject, textColor);
     updateButton(m_ui->exportProject, textColor);
@@ -342,10 +342,10 @@ void MenuView::initStyleSheet()
     m_ui->createProject->setProperty("menuButton", true);
     m_ui->openProject->setProperty("menuButton", true);
     m_ui->saveProject->setProperty("menuButton", true);
-    m_ui->saveVersion->setProperty("menuButton", true);
     m_ui->saveProjectAs->setProperty("menuButton", true);
+    m_ui->startNewVersion->setProperty("menuButton", true);
+    m_ui->startNewVersion->setProperty("menuButtonTopBordered", true);
     m_ui->importProject->setProperty("menuButton", true);
-    m_ui->importProject->setProperty("menuButtonTopBordered", true);
     m_ui->exportProject->setProperty("menuButton", true);
     m_ui->printPreview->setProperty("menuButton", true);
     m_ui->help->setProperty("menuButton", true);

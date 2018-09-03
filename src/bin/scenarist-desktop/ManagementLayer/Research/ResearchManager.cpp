@@ -1,12 +1,14 @@
 #include "ResearchManager.h"
 
-#include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
+#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
+#include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
 
 #include <Domain/Research.h>
 #include <Domain/ScenarioData.h>
+#include <Domain/ScriptVersion.h>
 
 #include <BusinessLayer/Research/ResearchModel.h>
 #include <BusinessLayer/Research/ResearchModelItem.h>
@@ -123,6 +125,7 @@ void ResearchManager::closeCurrentProject()
 {
     m_scenarioData.clear();
     m_model->clear();
+    m_view->clear();
 }
 
 void ResearchManager::saveCurrentProjectSettings(const QString& _projectPath)
@@ -396,6 +399,11 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 
                 case Research::Synopsis: {
                     m_view->editSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
+                    break;
+                }
+
+                case Research::Versions: {
+                    m_view->editVersions(DataStorageLayer::StorageFacade::scriptVersionStorage()->all());
                     break;
                 }
 
@@ -691,7 +699,19 @@ void ResearchManager::initConnections()
     connect(m_view, &ResearchView::synopsisTextChanged, this, [this] (const QString& _synopsis){
         updateScenarioData(ScenarioData::SYNOPSIS_KEY, _synopsis);
     });
-
+    //
+    // ... версии
+    //
+    connect(m_view, &ResearchView::removeScriptVersionRequested, this, [this] (const QModelIndex& index) {
+        auto scriptVersionModel = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
+        Domain::ScriptVersion* scriptVersion = dynamic_cast<Domain::ScriptVersion*>(scriptVersionModel->itemForIndex(index));
+        if (QLightBoxMessage::question(m_view, QString(), tr("Do you really want to delete script version named <b>%1</b>?")
+                                                          .arg(scriptVersion->name()))
+            == QDialogButtonBox::Yes) {
+            DataStorageLayer::StorageFacade::scriptVersionStorage()->removeScriptVersion(scriptVersion);
+            emit versionsChanged();
+        }
+    });
     //
     // ... персонаж
     //

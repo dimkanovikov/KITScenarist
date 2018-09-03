@@ -100,6 +100,11 @@ void ToolsView::setBackupsModel(QAbstractItemModel* _model)
     }
 }
 
+void ToolsView::setScriptVersionsModel(QAbstractItemModel* _model)
+{
+    m_toolsSettings->setScriptVersionsModel(_model);
+}
+
 void ToolsView::activateTool(QTreeWidgetItem* _toolItem)
 {
     m_toolsSettings->setTitle(_toolItem->text(0));
@@ -122,9 +127,9 @@ void ToolsView::initView()
     QTreeWidgetItem* backups = new QTreeWidgetItem(m_toolsTypes, { tr("Restore script from backup") });
     backups->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/wrench.svg"));
     m_toolsTypes->addTopLevelItem(backups);
-    //    QTreeWidgetItem* versions = new QTreeWidgetItem(m_toolsTypes, { tr("Compare script versions") });
-    //    versions->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/wrench.svg"));
-    //    m_toolsTypes->addTopLevelItem(versions);
+    QTreeWidgetItem* versions = new QTreeWidgetItem(m_toolsTypes, { tr("Compare script versions") });
+    versions->setData(0, Qt::DecorationRole, QPixmap(":/Graphics/Iconset/wrench.svg"));
+    m_toolsTypes->addTopLevelItem(versions);
 
     m_toolsTypes->setObjectName("ToolsTypesTree");
     m_toolsTypes->expandAll();
@@ -133,6 +138,7 @@ void ToolsView::initView()
     m_toolsTypes->setStyle(new TreeViewProxyStyle(m_toolsTypes->style()));
 
     m_editor->setReadOnly(true);
+    m_editor->setUseSpellChecker(false);
 
     //
     // Настраиваем общую панель с группами отчётов
@@ -217,6 +223,7 @@ void ToolsView::initConnections()
     });
     connect(m_toolsSettings, &ToolsSettings::backPressed, [this] { WAF::StackedWidgetAnimation::slide(m_navigation, m_navigation->widget(0), WAF::FromLeftToRight); });
     connect(m_toolsSettings, &ToolsSettings::backupSelected, this, &ToolsView::backupSelected);
+    connect(m_toolsSettings, &ToolsSettings::versionsForCompareSelected, this, &ToolsView::versionsForCompareSelected);
     connect(m_restore, &FlatButton::clicked, this, &ToolsView::applyScriptRequested);
 }
 

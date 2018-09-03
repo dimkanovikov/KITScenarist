@@ -140,7 +140,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="scriptEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -306,8 +306,8 @@
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Cantarell'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -418,6 +418,35 @@ p, li { white-space: pre-wrap; }
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="versionsEdit">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="UserInterface::ScriptVersionsList" name="versions">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1353,6 +1382,22 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
+   <class>AcceptebleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SimpleTextEditorWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColoredToolButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
+  </customwidget>
+  <customwidget>
    <class>QWebEngineView</class>
    <extends>QWidget</extends>
    <header location="global">QtWebEngineWidgets/QWebEngineView</header>
@@ -1362,17 +1407,6 @@ p, li { white-space: pre-wrap; }
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>SimpleTextEditorWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AcceptebleLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>ImagesPane</class>
@@ -1393,14 +1427,15 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ColoredToolButton</class>
-   <extends>QToolButton</extends>
-   <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
-  </customwidget>
-  <customwidget>
    <class>ImageLabel</class>
    <extends>QWidget</extends>
    <header location="global">3rd_party/Widgets/ImagesPane/ImageLabel.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserInterface::ScriptVersionsList</class>
+   <extends>QScrollArea</extends>
+   <header location="global">UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -4,6 +4,10 @@
 #include <QPageSize>
 #include <QWidget>
 
+namespace Domain {
+    class ScriptVersionsTable;
+}
+
 namespace Ui {
     class ResearchView;
 }
@@ -72,6 +76,11 @@ namespace UserInterface
          * @brief Включить режим редактирования синопсиса
          */
         void editSynopsis(const QString& _synopsis);
+
+        /**
+         * @brief Включить режим редактирования версий сценария
+         */
+        void editVersions(QAbstractItemModel* _versions);
 
         /**
          * @brief Включить режим редактирования корня списка персонажей
@@ -206,6 +215,11 @@ namespace UserInterface
         void mindMapNameChanged(const QString& _name);
         void mindMapChanged(const QString& _xml);
         /** @{ */
+
+        /**
+         * @brief Запрос на удаление версии сценария
+         */
+        void removeScriptVersionRequested(const QModelIndex& _projectIndex);
 
     protected:
         /**
