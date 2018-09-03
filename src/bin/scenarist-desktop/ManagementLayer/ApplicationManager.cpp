@@ -2115,6 +2115,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::aboutCreateNew);
     connect(m_startUpManager, &StartUpManager::openProjectRequested, [=] { aboutLoad(); });
     connect(m_startUpManager, &StartUpManager::helpRequested, this, &ApplicationManager::aboutShowHelp);
+    connect(m_startUpManager, &StartUpManager::communityRequested, this, [] { QDesktopServices::openUrl(QUrl("https://digipitch.com/")); });
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_projectsManager, &ProjectsManager::refreshProjects);
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManager, &SynchronizationManager::loadProjects);
     connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);

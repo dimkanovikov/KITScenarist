@@ -456,6 +456,7 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::createProjectClicked, this, &StartUpManager::createProjectRequested);
     connect(m_view, &StartUpView::openProjectClicked, this, &StartUpManager::openProjectRequested);
     connect(m_view, &StartUpView::helpClicked, this, &StartUpManager::helpRequested);
+    connect(m_view, &StartUpView::communityClicked, this, &StartUpManager::communityRequested);
     connect(m_view, &StartUpView::updateRequested, this, &StartUpManager::showUpdateDialogImpl);
 
     connect(m_view, &StartUpView::openRecentProjectClicked, this, &StartUpManager::openRecentProjectRequested);

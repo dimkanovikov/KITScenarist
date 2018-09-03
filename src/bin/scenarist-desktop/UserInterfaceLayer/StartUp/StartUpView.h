@@ -70,6 +70,11 @@ namespace UserInterface
         void helpClicked();
 
         /**
+         * @brief Нажата кнопка сообщества
+         */
+        void communityClicked();
+
+        /**
          * @brief Выбран один из недавно используемых проектов для открытия
          */
         void openRecentProjectClicked(const QModelIndex& _projectIndex);

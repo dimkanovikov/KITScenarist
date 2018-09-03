@@ -12,6 +12,7 @@
 #include <UserInterfaceLayer/Account/ChangePasswordDialog.h>
 #include <UserInterfaceLayer/Account/RenewSubscriptionDialog.h>
 
+using UserInterface::DigipitchScriptsList;
 using UserInterface::StartUpView;
 using UserInterface::ProjectsList;
 
@@ -103,7 +104,7 @@ void StartUpView::initView()
 {
     m_ui->remoteProjects->hide();
 
-    m_ui->filesSources->setCurrentWidget(m_ui->recentFilesPage);
+    m_ui->filesSources->setCurrentWidget(m_ui->digipitchLatestProjects);
 
     initIconsColor();
 }
@@ -113,6 +114,7 @@ void StartUpView::initConnections()
     connect(m_ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
     connect(m_ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
     connect(m_ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
+    connect(m_ui->digipitchRegister, SIGNAL(clicked(bool)), this, SIGNAL(communityClicked()));
 
     connect(m_ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
     connect(m_ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
@@ -124,6 +126,7 @@ void StartUpView::initConnections()
     connect(m_ui->remoteFiles, &ProjectsList::shareRequested, this, &StartUpView::shareRemoteProjectRequested);
     connect(m_ui->remoteFiles, &ProjectsList::unshareRequested, this, &StartUpView::unshareRemoteProjectRequested);
     connect(m_ui->refreshProjects, SIGNAL(clicked()), this, SIGNAL(refreshProjects()));
+    connect(m_ui->refreshProjects, &QToolButton::clicked, m_ui->digipitchScriptsList, &DigipitchScriptsList::loadScripts);
 }
 
 void StartUpView::initStyleSheet()
@@ -140,11 +143,14 @@ void StartUpView::initStyleSheet()
     m_ui->createProject->setProperty("leftAlignedText", true);
     m_ui->openProject->setProperty("leftAlignedText", true);
     m_ui->help->setProperty("leftAlignedText", true);
+    m_ui->digipitchRegister->setProperty("leftAlignedText", true);
 
+    m_ui->digipitchCommunity->setProperty("inStartUpView", true);
     m_ui->localProjects->setProperty("inStartUpView", true);
     m_ui->remoteProjects->setProperty("inStartUpView", true);
     m_ui->refreshProjects->setProperty("isUpdateButton", true);
 
+    m_ui->digipitchScriptsList->setProperty("nobordersContainer", true);
     m_ui->recentFiles->setProperty("nobordersContainer", true);
     m_ui->recentFiles->viewport()->setStyleSheet("#ProjectListsContent { background-color: palette(window); }");
     m_ui->remoteFiles->setProperty("nobordersContainer", true);
@@ -166,6 +172,10 @@ void StartUpView::initIconsColor()
     QIcon help = m_ui->help->icon();
     ImageHelper::setIconColor(help, iconSize, palette().text().color());
     m_ui->help->setIcon(help);
+
+    QIcon digipitchRegister = m_ui->help->icon();
+    ImageHelper::setIconColor(digipitchRegister, iconSize, palette().text().color());
+    m_ui->digipitchRegister->setIcon(digipitchRegister);
 
     QIcon refresh = m_ui->refreshProjects->icon();
     ImageHelper::setIconColor(refresh, iconSize, palette().text().color());
