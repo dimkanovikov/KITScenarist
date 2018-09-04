@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KIT Scenarist for Digipitch. Setup of basic features.</string>
+   <string>Digipitch Screenwriter. Setup of basic features.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
@@ -675,8 +675,8 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>577</width>
-            <height>394</height>
+            <width>257</width>
+            <height>393</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">

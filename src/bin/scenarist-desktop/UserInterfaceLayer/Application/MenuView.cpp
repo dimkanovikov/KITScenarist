@@ -318,14 +318,10 @@ void MenuView::initConnections()
     connect(m_ui->logout, &QPushButton::clicked, this, &MenuView::logoutClicked);
 
     connect(m_ui->help, &QPushButton::clicked, this, [] {
-        const QString url = QString("https://kitscenarist.ru/%1help/").arg(urlLanguage());
+        const QString url = QString("https://help.digipitch.com/");
         QDesktopServices::openUrl(QUrl(url));
     });
 
-    connect(m_ui->appUrl, &ClickableLabel::clicked, this, [] {
-        const QString url = QString("https://kitscenarist.ru/%1").arg(urlLanguage());
-        QDesktopServices::openUrl(QUrl(url));
-    });
     connect(m_ui->digipitchUrl, &ClickableLabel::clicked, this, [] {
         const QString url = "https://digipitch.com";
         QDesktopServices::openUrl(QUrl(url));

@@ -42,7 +42,7 @@
    <item>
     <widget class="QLabel" name="notSupportedLabel">
      <property name="text">
-      <string>KIT Scenarist doesn't support auto update on your OS now. &lt;br&gt;
+      <string>Digipitch Screenwriter doesn't support auto update on your OS now. &lt;br&gt;
 Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en/download.html&quot; style=&quot;color:#2b78da;&quot; &gt;link&lt;/a&gt;</string>
      </property>
      <property name="wordWrap">

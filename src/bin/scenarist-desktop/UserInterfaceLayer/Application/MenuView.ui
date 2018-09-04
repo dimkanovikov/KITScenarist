@@ -410,41 +410,6 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="ClickableLabel" name="appUrl">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>KIT Scenarist</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>for</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="ClickableLabel" name="digipitchUrl">
                 <property name="enabled">
                  <bool>true</bool>
@@ -462,7 +427,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Digipitch</string>
+                 <string>Digipitch Screenwriter</string>
                 </property>
                </widget>
               </item>
