@@ -343,7 +343,7 @@ the writers community.</string>
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="text">
-              <string>Community</string>
+              <string>Latest community scripts</string>
              </property>
              <property name="checked">
               <bool>true</bool>
