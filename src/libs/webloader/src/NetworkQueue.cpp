@@ -26,13 +26,13 @@ NetworkQueue* NetworkQueue::instance() {
 
 WebRequest& NetworkQueue::registerRequest()
 {
-    m_requests.append(WebRequest());
+    m_requests.append(WebRequest{});
     return m_requests.last();
 }
 
 WebRequestParameters& NetworkQueue::registerRequestParameters()
 {
-    m_requestParameters.append(WebRequestParameters());
+    m_requestParameters.append(WebRequestParameters{});
     return m_requestParameters.last();
 }
 
