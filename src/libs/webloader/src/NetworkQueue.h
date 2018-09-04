@@ -92,12 +92,12 @@ private:
     /**
      * @brief Список зарегистрированных (потенциальных) запросов
      */
-    QVector<WebRequest> m_requests;
+    QList<WebRequest> m_requests;
 
     /**
      * @brief Список зарегистрированных параметров запросов
      */
-    QVector<WebRequestParameters> m_requestParameters;
+    QList<WebRequestParameters> m_requestParameters;
 
     /**
      * @brief Свободные загрузчики
