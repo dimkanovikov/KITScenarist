@@ -855,7 +855,7 @@ void ApplicationManager::loadCurrentProjectSettings(const QString& _projectPath)
 
 void ApplicationManager::aboutShowHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://kitscenarist.ru/help/"));
+    QDesktopServices::openUrl(QUrl("https://help.digipitch.com/"));
 }
 
 void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)

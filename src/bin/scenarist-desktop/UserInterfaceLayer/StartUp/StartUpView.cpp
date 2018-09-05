@@ -93,7 +93,9 @@ bool StartUpView::event(QEvent* _event)
 
 void StartUpView::aboutFilesSourceChanged()
 {
-    if (m_ui->localProjects->isChecked()) {
+    if (m_ui->digipitchLatestProjects->isChecked()) {
+        m_ui->filesSources->setCurrentWidget(m_ui->digipitchLatestProjectsPage);
+    } else if (m_ui->localProjects->isChecked()) {
         m_ui->filesSources->setCurrentWidget(m_ui->recentFilesPage);
     } else {
         m_ui->filesSources->setCurrentWidget(m_ui->remoteFilesPage);
@@ -116,6 +118,7 @@ void StartUpView::initConnections()
     connect(m_ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
     connect(m_ui->digipitchRegister, SIGNAL(clicked(bool)), this, SIGNAL(communityClicked()));
 
+    connect(m_ui->digipitchLatestProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
     connect(m_ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
     connect(m_ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
     connect(m_ui->recentFiles, &ProjectsList::hideRequested, this, &StartUpView::hideRecentProjectRequested);
@@ -145,7 +148,7 @@ void StartUpView::initStyleSheet()
     m_ui->help->setProperty("leftAlignedText", true);
     m_ui->digipitchRegister->setProperty("leftAlignedText", true);
 
-    m_ui->digipitchCommunity->setProperty("inStartUpView", true);
+    m_ui->digipitchLatestProjects->setProperty("inStartUpView", true);
     m_ui->localProjects->setProperty("inStartUpView", true);
     m_ui->remoteProjects->setProperty("inStartUpView", true);
     m_ui->refreshProjects->setProperty("isUpdateButton", true);
