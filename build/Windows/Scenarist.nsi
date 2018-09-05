@@ -20,14 +20,14 @@
   !define pkgdir "files"
 
   ;Name and file
-  Name "KIT Scenarist"
+  Name "Digipitch Screenwriter"
   Caption "Installing application for creating stories"
-  OutFile "scenarist-setup.exe"
+  OutFile "Digipitch Screenwriter-setup.exe"
   BrandingText "DimkaNovikov labs."
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\KIT\Scenarist"
-  InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UninstallString"
+  InstallDir "$PROGRAMFILES\Digipitch Screenwriter"
+  InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter" "UninstallString"
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -36,7 +36,7 @@
 ;Interface Settings
 
   !define MUI_ABORTWARNING
-  !define MUI_FINISHPAGE_RUN "$INSTDIR\Scenarist.exe"
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\Digipitch Screenwriter.exe"
 
 ;--------------------------------
 ;Pages
@@ -73,11 +73,11 @@
 Section "App files section" SecFiles
 
   ; Добавление программы в список установленных программ системы
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayName" "KIT Scenarist"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "Publisher" "DimkaNovikov labs."
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayIcon" "$INSTDIR\Scenarist.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UninstallString" "$INSTDIR\Uninstall.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UrlInfoAbout" "https://kitscenarist.ru"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter" "DisplayName" "Digipitch Screenwriter"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter" "Publisher" "DimkaNovikov labs."
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter" "DisplayIcon" "$INSTDIR\Digipitch Screenwriter.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter" "UninstallString" "$INSTDIR\Uninstall.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter" "UrlInfoAbout" "https://digipitch.com"
   
   SetOutPath "$INSTDIR"
   File /r "${pkgdir}\"
@@ -86,7 +86,7 @@ Section "App files section" SecFiles
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   ; Регистрируем ассоциации 
-  ${registerExtension} "$INSTDIR\Scenarist.exe" ".kitsp" "KIT Scenarist project"
+  ${registerExtension} "$INSTDIR\Digipitch Screenwriter.exe" ".kitsp" "Digipitch Screenwriter project"
   
   ; Обновляем эксплорер
   System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
@@ -96,15 +96,15 @@ SectionEnd
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
 
-  CreateDirectory "$SMPROGRAMS\KIT\Scenarist"
-  CreateShortCut "$SMPROGRAMS\KIT\Scenarist\Scenarist.lnk" "$INSTDIR\Scenarist.exe"
-  CreateShortCut "$SMPROGRAMS\KIT\Scenarist\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
+  CreateDirectory "$SMPROGRAMS\Digipitch Screenwriter"
+  CreateShortCut "$SMPROGRAMS\Digipitch Screenwriter\Digipitch Screenwriter.lnk" "$INSTDIR\Digipitch Screenwriter.exe"
+  CreateShortCut "$SMPROGRAMS\Digipitch Screenwriter\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
   
 SectionEnd
 
 Section "Desctop Shortcut"
 
-  CreateShortcut "$DESKTOP\Scenarist.lnk" "$INSTDIR\Scenarist.exe" "" "$INSTDIR\Scenarist.exe" 0
+  CreateShortcut "$DESKTOP\Digipitch Screenwriter.lnk" "$INSTDIR\Digipitch Screenwriter.exe" "" "$INSTDIR\Digipitch Screenwriter.exe" 0
   
 SectionEnd
 
@@ -114,7 +114,7 @@ SectionEnd
 Section "Uninstall"
 
   ; Удалим программу из списка установленных
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Digipitch Screenwriter"
   
   ; Удаляем все файлы кроме базы данных
   Delete "$INSTDIR\bearer\*.*"
@@ -133,8 +133,8 @@ Section "Uninstall"
   Delete "$INSTDIR\*.pak"
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\KIT\Scenarist\*.*"
-  Delete "$DESKTOP\Scenarist.lnk"
+  Delete "$SMPROGRAMS\Digipitch Screenwriter\*.*"
+  Delete "$DESKTOP\Digipitch Screenwriter.lnk"
 
   ; Remove directories used
   RMDir "$INSTDIR\bearer"
@@ -147,10 +147,10 @@ Section "Uninstall"
   RMDir "$INSTDIR\sqldrivers"
   RMDir /r "$INSTDIR\translations"
   RMDir "$INSTDIR"
-  RMDir "$SMPROGRAMS\KIT\Scenarist"
+  RMDir "$SMPROGRAMS\Digipitch Screenwriter"
   
   ; Отменяем зарегистрированные ассоциации файлов
-  ${unregisterExtension} ".kitsp" "KIT Scenarist project"
+  ${unregisterExtension} ".kitsp" "Digipitch Screenwriter project"
 
 SectionEnd
 

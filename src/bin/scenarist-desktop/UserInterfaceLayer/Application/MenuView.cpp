@@ -224,7 +224,10 @@ void MenuView::showUpdateButton(const QString& _newVersion)
 {
     Q_UNUSED(_newVersion);
 
-    m_ui->update->show();
+    //
+    // FIXME:
+    //
+//    m_ui->update->show();
 }
 
 bool MenuView::event(QEvent* _event)
@@ -238,6 +241,12 @@ bool MenuView::event(QEvent* _event)
 
 void MenuView::initView()
 {
+    //
+    // FIXME:
+    //
+    m_ui->accountPanel->hide();
+    m_ui->label_2->hide();
+
     m_ui->avatar->setAttribute(Qt::WA_TransparentForMouseEvents);
     m_ui->login->setAttribute(Qt::WA_TransparentForMouseEvents);
     m_ui->loginInfo->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -256,6 +265,7 @@ void MenuView::initView()
                   << m_ui->exportProject
                   << m_ui->printPreview;
 
+    m_ui->aboutApp->hide();
     m_ui->version->setText(QApplication::applicationVersion());
     m_ui->update->hide();
 }
