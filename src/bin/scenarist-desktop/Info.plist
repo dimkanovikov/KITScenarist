@@ -5,7 +5,7 @@
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>CFBundleDisplyName</key>
-    <string>Digipitch screenwriter</string>
+    <string>Digipitch Screenwriter</string>
     <key>CFBundleIconFile</key>
     <string>logo.icns</string>
     <key>CFBundlePackageType</key>
@@ -17,7 +17,7 @@
     <key>CFBundleShortVersionString</key>
     <string>0.7.2 beta 8</string>
     <key>CFBundleExecutable</key>
-    <string>Digipitch screenwriter</string>
+    <string>Scenarist</string>
     <key>CFBundleIdentifier</key>
     <string>com.dimkanovikov.digipitch.screenwriter.macosx</string>
     <key>NSSupportsAutomaticGraphicsSwitching</key>
