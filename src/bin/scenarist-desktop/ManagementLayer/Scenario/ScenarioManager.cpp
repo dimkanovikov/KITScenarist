@@ -224,7 +224,7 @@ namespace {
                         cursor.setPosition(cursor.position() + range.length, QTextCursor::KeepAnchor);
                         cursor.mergeCharFormat(blockStyle.charFormat());
                         cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                        cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
+                        cursor.mergeBlockFormat(blockStyle.blockFormat());
                     }
                 }
                 cursor.movePosition(QTextCursor::EndOfBlock);
@@ -236,40 +236,9 @@ namespace {
                 cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
                 cursor.mergeCharFormat(blockStyle.charFormat());
                 cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
+                cursor.mergeBlockFormat(blockStyle.blockFormat());
             }
             cursor.movePosition(QTextCursor::NextBlock);
-        } while (!cursor.atEnd());
-        cursor.endEditBlock();
-    }
-
-    /**
-     * @brief Обновить таблицы в документе
-     */
-    static void updateDocumentTables(QTextDocument* _document) {
-        //
-        // Сформируем новый стиль для таблицы, т.к. могла смениться ширина
-        //
-        const qreal tableWidth = 100;
-        const qreal leftColumnWidth = BusinessLogic::ScenarioTemplateFacade::getTemplate().splitterLeftSidePercents();
-        const qreal rightColumnWidth = tableWidth - leftColumnWidth;
-        QTextTableFormat tableFormat;
-        tableFormat.setWidth(QTextLength{QTextLength::PercentageLength, tableWidth});
-        tableFormat.setColumnWidthConstraints({ QTextLength{QTextLength::PercentageLength, leftColumnWidth},
-                                                QTextLength{QTextLength::PercentageLength, rightColumnWidth} });
-        tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-        //
-        // Применим формат для всех табличек
-        //
-        ScriptTextCursor cursor(_document);
-        cursor.beginEditBlock();
-        do {
-            if (cursor.isBlockInTable()) {
-                auto table = cursor.currentTable();
-                table->setFormat(tableFormat);
-            }
-            cursor.movePosition(QTextCursor::NextBlock);
-            cursor.movePosition(QTextCursor::EndOfBlock);
         } while (!cursor.atEnd());
         cursor.endEditBlock();
     }
@@ -535,8 +504,6 @@ void ScenarioManager::aboutTextEditSettingsUpdated()
 
     updateDocumentBlocksColors(m_scenario->document());
     updateDocumentBlocksColors(m_scenarioDraft->document());
-    updateDocumentTables(m_scenario->document());
-    updateDocumentTables(m_scenarioDraft->document());
 
     //
     // Корректируем текст, т.к. могли измениться настройки отображения, или используемого шаблона
