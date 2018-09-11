@@ -122,5 +122,5 @@ void ScenarioSchemeItemDialog::initStyleSheet()
 void ScenarioSchemeItemDialog::checkSavingAvailable()
 {
     m_saveButton->setEnabled(!m_ui->cardTitle->text().isEmpty()
-                             || !m_ui->cardDescription->toPlainText().isEmpty());
+                             and !m_ui->cardDescription->toPlainText().isEmpty());
 }
