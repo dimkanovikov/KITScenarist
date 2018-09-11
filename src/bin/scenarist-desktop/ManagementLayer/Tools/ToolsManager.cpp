@@ -18,6 +18,8 @@
 
 #include <UserInterfaceLayer/Tools/ToolsView.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
 #include <QStandardItemModel>
 #include <QtConcurrent>
 
@@ -216,7 +218,10 @@ void ToolsManager::initConnections()
     });
     connect(m_view, &ToolsView::backupSelected, this, &ToolsManager::loadBackup);
     connect(m_view, &ToolsView::versionsForCompareSelected, this, &ToolsManager::compareVersions);
-    connect(m_view, &ToolsView::applyScriptRequested, this, [this] { emit applyScriptRequested(m_script->save()); });
+    connect(m_view, &ToolsView::applyScriptRequested, this, [this] {
+        emit applyScriptRequested(m_script->save());
+        QLightBoxMessage::information(m_view, QString{}, tr("Script was restored."));
+    });
 
     connect(m_restoreFromBackupTool, &RestoreFromBackupTool::backupInfoLoaded, this, &ToolsManager::showBackupInfo);
     connect(m_restoreFromBackupTool, &RestoreFromBackupTool::backupInfoNotLoaded, m_view, [this] { m_view->setBackupsModel(nullptr); });
