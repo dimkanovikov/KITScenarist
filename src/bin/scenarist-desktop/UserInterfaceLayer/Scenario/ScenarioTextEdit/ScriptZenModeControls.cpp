@@ -13,6 +13,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QPushButton>
+#include <QScreen>
 #include <QShortcut>
 #include <QTextBlock>
 #include <QVBoxLayout>
@@ -57,7 +58,6 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
 
     m_quit->setIconSize(QSize(36, 36));
     m_quit->setIcons(QIcon(":/Graphics/Iconset/close.svg"));
-    m_quit->setShortcut(QKeySequence("F5"));
     m_quit->installEventFilter(this);
     connect(m_quit, &FlatButton::clicked, this, &ScriptZenModeControls::quitPressed);
 
@@ -208,6 +208,9 @@ void ScriptZenModeControls::setCountersInfo(const QStringList &_counters)
 bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)
 {
     if (m_active) {
+        //
+        // При изменении размера родителя корректируем размер и расположение панели
+        //
         if (_watched == parent()
             && _event->type() == QEvent::Resize) {
             resize(sizeHint().width(), parentWidget()->height());
@@ -216,44 +219,29 @@ bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)
                                     ? parentWidget()->width() - width() - margin
                                     : margin;
             move(xCoordinate, 0);
-        } else if (_watched->parent() == this) {
+        }
+        //
+        // Если курсор мыши вошёл в панель, то останавливаем таймер скрытия, а если вышел - запускаем
+        //
+        else if (_watched->parent() == this) {
             if (_event->type() == QEvent::Enter) {
                 m_hideTimer.stop();
                 showAnimated();
             } else if (_event->type() == QEvent::Leave) {
                 m_hideTimer.start();
             }
-        } else if (_event->type() == QEvent::MouseMove
-                   || _event->type() == QEvent::Wheel
-                   || _event->type() == QEvent::MouseButtonPress
-                   || _event->type() == QEvent::MouseButtonRelease) {
-            //
-            // Показываем панель не после первого движения, а лишь после определённых усилий пользователя
-            // Делается это для того, чтобы случайные прикосновения к мыши и тачпаду не приводили
-            // к отображению вспомогательной панели, т.к. это отвлекает
-            //
-            static int s_eventsCounter = 0;
-            const int maxEvents = 300;
-            static qint64 s_lastActivateTime = QDateTime::currentMSecsSinceEpoch();
-            const qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
-            const qint64 showTimeout = 2000;
-            //
-            // Если со времени последней активности прошло больше showTimeout, то сбрасываем счётчик
-            // событий и назначаем временем последней активности - текущее
-            //
-            if (currentTime - s_lastActivateTime > showTimeout) {
-                s_lastActivateTime = currentTime;
-                s_eventsCounter = 0;
-            }
-            //
-            // Если пользователь совершил достаточно действий, отобразим себя
-            //
-            if (s_eventsCounter == maxEvents) {
-                s_eventsCounter = 0;
+        }
+        //
+        // Показываем панель, только в случае, если курсор был пододвинут к краю экрана
+        //
+        else if (_event->type() == QEvent::MouseMove) {
+            auto mouseEvent = static_cast<QMouseEvent*>(_event);
+            if ((QLocale().textDirection() == Qt::LeftToRight
+                 and mouseEvent->globalX() >= QApplication::primaryScreen()->availableGeometry().right())
+                or (QLocale().textDirection() == Qt::RightToLeft
+                    and mouseEvent->globalX() <= QApplication::primaryScreen()->availableGeometry().left())) {
                 showAnimated();
                 m_hideTimer.start();
-            } else {
-                ++s_eventsCounter;
             }
         }
     }

@@ -39,13 +39,14 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QShortcut>
+#include <QSet>
+#include <QSplitter>
+#include <QStackedWidget>
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTextTable>
 #include <QTimer>
-#include <QSet>
-#include <QSplitter>
-#include <QStackedWidget>
 #include <QWidget>
 
 using ManagementLayer::ScenarioManager;
@@ -1066,7 +1067,6 @@ void ScenarioManager::initView()
     m_showFullscreen->setIcons(QIcon(":/Graphics/Iconset/fullscreen.svg"),
         QIcon(":/Graphics/Iconset/fullscreen-exit.svg"));
     m_showFullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
-    m_showFullscreen->setShortcut(Qt::Key_F5);
     m_showFullscreen->setCheckable(true);
 
     QWidget* rightWidget = new QWidget(m_view);
@@ -1111,6 +1111,10 @@ void ScenarioManager::initView()
 
 void ScenarioManager::initConnections()
 {
+    auto fullscreenShortcut = new QShortcut(QKeySequence("F5"), m_view);
+    connect(fullscreenShortcut, &QShortcut::activated, this, &ScenarioManager::showFullscreen);
+
+
     connect(m_showFullscreen, &FlatButton::clicked, this, &ScenarioManager::showFullscreen);
 
     connect(m_cardsManager, &ScenarioCardsManager::goToCardRequest, this, &ScenarioManager::aboutGoToItemFromCards);
