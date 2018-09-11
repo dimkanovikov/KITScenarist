@@ -243,14 +243,14 @@ void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QS
     m_view->addItem(_position, _type, _header, QString::null, _color, _description);
 }
 
-void ScenarioTextEditManager::editScenarioItem(int _startPosition, int _endPosition, int _type,
-    const QString& _title, const QString& _colors, const QString& _description)
+void ScenarioTextEditManager::editScenarioItem(int _startPosition, int _type, const QString& _title,
+    const QString& _colors)
 {
     //
     // Переводим тип элемента
     //
     const int mappedType = ::mapItemTypeFromModelToBlock(_type);
-    m_view->editItem(_startPosition, _endPosition, mappedType, _title, _colors, _description);
+    m_view->editItem(_startPosition, mappedType, _title, _colors);
 }
 
 void ScenarioTextEditManager::removeScenarioText(int _from, int _to)

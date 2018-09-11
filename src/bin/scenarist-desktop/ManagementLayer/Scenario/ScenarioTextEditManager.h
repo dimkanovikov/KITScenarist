@@ -111,8 +111,8 @@ namespace ManagementLayer
         /**
          * @brief Изменить элемент сценария
          */
-        void editScenarioItem(int _startPosition, int _endPosition, int _type,
-            const QString& _title, const QString& _colors, const QString& _description);
+        void editScenarioItem(int _startPosition, int _type, const QString& _title,
+            const QString& _colors);
 
         /**
          * @brief Удалить заданный текст сценария

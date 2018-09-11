@@ -397,8 +397,8 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     m_editor->ensureCursorVisible(cursor);
 }
 
-void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
-    const QString& _title, const QString& _colors, const QString& _description)
+void ScenarioTextEditWidget::editItem(int _startPosition, int _type, const QString& _title,
+    const QString& _colors)
 {
     QTextCursor cursor = m_editor->textCursor();
     cursor.beginEditBlock();
@@ -430,62 +430,7 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     if (SceneHeadingBlockInfo* blockInfo = dynamic_cast<SceneHeadingBlockInfo*>(cursor.block().userData())) {
         blockInfo->setTitle(_title);
         blockInfo->setColors(_colors);
-        blockInfo->setDescription(_description);
         cursor.block().setUserData(blockInfo);
-    }
-
-    //
-    // Обновляем описание в самом тексте
-    //
-    cursor.setPosition(_startPosition);
-    //
-    // ... сперва выделив старое описание, если после текущего блока есть другие блоки
-    //
-    if (cursor.movePosition(QTextCursor::NextBlock)) {
-        if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
-            cursor.movePosition(QTextCursor::NextBlock);
-        }
-        while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
-               && cursor.position() <= _endPosition
-               && !cursor.atEnd()) {
-            cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-            cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
-        }
-    } else {
-        cursor.movePosition(QTextCursor::EndOfBlock);
-    }
-    //
-    // ... шаг назад, если до этого мы перескочили в следующий блок
-    //
-    if (cursor.atBlockStart()
-        && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneDescription) {
-        cursor.movePosition(QTextCursor::PreviousCharacter, cursor.hasSelection() ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
-    }
-    //
-    // ... а потом вставив новое
-    //
-    if (cursor.hasSelection()) {
-        cursor.removeSelectedText();
-        m_editor->setTextCursor(cursor);
-    } else {
-        m_editor->setTextCursor(cursor);
-        m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
-    }
-    m_editor->insertPlainText(_description);
-
-    //
-    // А теперь скроем блоки с описанием сцены, если мы не в режиме битов
-    //
-    const bool isSceneDescriptionVisible = m_editor->visibleBlocksTypes().contains(ScenarioBlockStyle::SceneDescription);
-    if (!isSceneDescriptionVisible) {
-        cursor.setPosition(_startPosition);
-        cursor.movePosition(QTextCursor::NextBlock);
-        while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
-               && !cursor.atEnd()) {
-            cursor.block().setVisible(isSceneDescriptionVisible);
-            cursor.movePosition(QTextCursor::EndOfBlock);
-            cursor.movePosition(QTextCursor::NextBlock);
-        }
     }
 
     cursor.endEditBlock();
