@@ -13,106 +13,111 @@ namespace BusinessLogic {
 }
 
 namespace UserInterface {
-	class ExportDialog;
+    class ExportDialog;
 }
 
 
 namespace ManagementLayer
 {
-	/**
-	 * @brief Управляющий экспортом
-	 */
-	class ExportManager : public QObject
-	{
-		Q_OBJECT
+    /**
+     * @brief Тип экспорта
+     */
+    enum class ExportType {
+        Auto,
+        Research,
+        Script
+    };
 
-	public:
-		explicit ExportManager(QObject* _parent, QWidget* _parentWidget);
+    /**
+     * @brief Управляющий экспортом
+     */
+    class ExportManager : public QObject
+    {
+        Q_OBJECT
+
+    public:
+        explicit ExportManager(QObject* _parent, QWidget* _parentWidget);
 
         /**
          * @brief Установить модель разработки
          */
         void setResearchModel(QAbstractItemModel* _model);
 
-		/**
-		 * @brief Экспортировать документ
-		 */
-		void exportScenario(BusinessLogic::ScenarioDocument* _scenario, const QMap<QString, QString>& _scenarioData);
+        /**
+         * @brief Экспортировать документ
+         */
+        void exportScenario(BusinessLogic::ScenarioDocument* _scenario, const QMap<QString, QString>& _scenarioData);
 
-		/**
-		 * @brief Предварительный просмотр документа
-		 */
-		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario, const QMap<QString, QString>& _scenarioData);
+        /**
+         * @brief Предварительный просмотр документа
+         */
+        void printPreview(BusinessLogic::ScenarioDocument* _scenario,
+            const QMap<QString, QString>& _scenarioData, ExportType _type = ExportType::Auto);
 
-		/**
-		 * @brief Загрузим настройки экспорта для текущего проекта
-		 */
-		void loadCurrentProjectSettings(const QString& _projectPath);
+        /**
+         * @brief Загрузим настройки экспорта для текущего проекта
+         */
+        void loadCurrentProjectSettings(const QString& _projectPath);
 
-		/**
-		 * @brief Сохраним настройки экспорта для текущего проекта
-		 */
-		void saveCurrentProjectSettings(const QString& _projectPath);
+        /**
+         * @brief Сохраним настройки экспорта для текущего проекта
+         */
+        void saveCurrentProjectSettings(const QString& _projectPath);
 
-	signals:
-		/**
-		 * @brief Было изменено название сценария
-		 */
-		void scenarioNameChanged(const QString& _name);
+    signals:
+        /**
+         * @brief Было изменено название сценария
+         */
+        void scenarioNameChanged(const QString& _name);
 
-		/**
-		 * @brief Изменены какие-либо данные титульного листа сценария
-		 */
-		void scenarioTitleListDataChanged();
+        /**
+         * @brief Изменены какие-либо данные титульного листа сценария
+         */
+        void scenarioTitleListDataChanged();
 
-	private slots:
-		/**
-		 * @brief Изменился стиль экспорта
-		 */
-		void aboutExportStyleChanged(const QString& _styleName);
+    private slots:
+        /**
+         * @brief Изменился стиль экспорта
+         */
+        void aboutExportStyleChanged(const QString& _styleName);
 
-		/**
-		 * @brief Запрос предварительного просмотра из самого диалога
-		 */
-		void aboutPrintPreview();
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+        /**
+         * @brief Загрузить в диалог настройки экспорта
+         */
+        void initExportDialog();
 
-		/**
-		 * @brief Загрузить в диалог настройки экспорта
-		 */
-		void initExportDialog();
-
-	private:
-		/**
-		 * @brief Текущий экспортируемый сценарий
-		 */
+    private:
+        /**
+         * @brief Текущий экспортируемый сценарий
+         */
         BusinessLogic::ScenarioDocument* m_currentScenario = nullptr;
 
-		/**
-		 * @brief Диалог экспорта
-		 */
+        /**
+         * @brief Диалог экспорта
+         */
         UserInterface::ExportDialog* m_exportDialog = nullptr;
 
-		/**
-		 * @brief Данные о сценарии, используются для печати титульной страницы
-		 */
+        /**
+         * @brief Данные о сценарии, используются для печати титульной страницы
+         */
         QMap<QString, QString> m_scenarioData;
 
         /**
          * @brief Прокси модель для возможности выбора элементов разработки
          */
         BusinessLogic::ResearchModelCheckableProxy* m_researchModelProxy = nullptr;
-	};
+    };
 }
 
 #endif // EXPORTMANAGER_H

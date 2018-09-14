@@ -32,6 +32,7 @@
 #include <QTimer>
 
 using ManagementLayer::ExportManager;
+using ManagementLayer::ExportType;
 using ManagementLayer::ProjectsManager;
 using DataStorageLayer::StorageFacade;
 using UserInterface::ExportDialog;
@@ -163,8 +164,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
     m_scenarioData.clear();
 }
 
-void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario,
-    const QMap<QString, QString>& _scenarioData)
+void ExportManager::printPreview(BusinessLogic::ScenarioDocument* _scenario,
+    const QMap<QString, QString>& _scenarioData, ManagementLayer::ExportType _type)
 {
     initExportDialog();
 
@@ -192,9 +193,18 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
     // Формируем предварительный просмот
     //
     BusinessLogic::PdfExporter exporter;
-    if (exportParameters.isResearch) {
+    const bool isNeedExportResearch
+            = _type == ExportType::Research
+              or (_type == ExportType::Auto and exportParameters.isResearch);
+    if (isNeedExportResearch) {
         exporter.printPreview(m_researchModelProxy, exportParameters);
     } else {
+        //
+        // Принудительно задаём флаг печати сценария, т.к. он может быть не установлен
+        // если диалог экспорта не был показан, или там стоит другой тип экспортируемого
+        // документа, но мы попали сюда из меню
+        //
+        exportParameters.isScript = true;
         exporter.printPreview(_scenario, exportParameters);
     }
 
@@ -349,16 +359,6 @@ void ExportManager::aboutExportStyleChanged(const QString& _styleName)
                                                DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
-void ExportManager::aboutPrintPreview()
-{
-    //
-    // Скрываем окно настроек, показываем предпросмотр, а потом вновь показываем его
-    //
-    m_exportDialog->hide();
-    printPreviewScenario(m_currentScenario, m_scenarioData);
-    m_exportDialog->show();
-}
-
 void ExportManager::initView()
 {
     //
@@ -384,7 +384,16 @@ void ExportManager::initConnections()
 {
     connect(m_exportDialog, SIGNAL(currentStyleChanged(QString)),
             this, SLOT(aboutExportStyleChanged(QString)));
-    connect(m_exportDialog, SIGNAL(printPreview()), this, SLOT(aboutPrintPreview()));
+    connect(m_exportDialog, &ExportDialog::printPreviewPressed, this, [this] {
+        //
+        // 1. скрываем диалог настроек
+        // 2. показываем предпросмотр
+        // 3. а потом вновь показываем диалог
+        //
+        m_exportDialog->hide();
+        printPreview(m_currentScenario, m_scenarioData);
+        m_exportDialog->show();
+    });
 }
 
 void ExportManager::initExportDialog()

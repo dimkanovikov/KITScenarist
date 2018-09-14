@@ -366,7 +366,7 @@ border: 1px solid palette(dark);
             <string>DOCX</string>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -374,6 +374,9 @@ border: 1px solid palette(dark);
           <widget class="QRadioButton" name="pdf">
            <property name="text">
             <string>PDF</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -514,7 +517,7 @@ border: 1px solid palette(dark);
              <string>Save Review Marks</string>
             </property>
             <property name="checked">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -522,6 +525,9 @@ border: 1px solid palette(dark);
            <widget class="QCheckBox" name="checkPageBreaks">
             <property name="text">
              <string>Check Page Breaks</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

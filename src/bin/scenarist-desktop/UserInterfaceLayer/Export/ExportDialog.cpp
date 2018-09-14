@@ -455,7 +455,7 @@ void ExportDialog::initConnections()
     connect(m_ui->printWatermark, &QCheckBox::toggled, m_ui->watermark, &QLineEdit::setEnabled);
 
     connect(m_ui->cancel, &FlatButton::clicked, this, &ExportDialog::reject);
-    connect(m_ui->printPreview, &FlatButton::clicked, this, &ExportDialog::printPreview);
+    connect(m_ui->printPreview, &FlatButton::clicked, this, &ExportDialog::printPreviewPressed);
     connect(m_ui->exportTo, &FlatButton::clicked, this, &ExportDialog::accept);
 }
 

@@ -77,9 +77,11 @@ namespace {
      * @brief Номера пунктов меню
      */
     /** @{ */
+    const int kStartNewVersionMenuIndex = 4;
     const int kImportMenuIndex = 5;
+    const int kExportMenuIndex = 6;
     const int kPrintPreviewMenuIndex = 7;
-    const int TWO_PANEL_MODE_MENU_INDEX = 9;
+    const int kTwoPanelModeMenuIndex = 9;
     /** @} */
 
     /**
@@ -1398,9 +1400,10 @@ void ApplicationManager::aboutExport()
     m_exportManager->exportScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
-void ApplicationManager::aboutPrintPreview()
+void ApplicationManager::printPreviewScript()
 {
-    m_exportManager->printPreviewScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
+    m_exportManager->printPreview(m_scenarioManager->scenario(), m_researchManager->scenarioData(),
+                                  ManagementLayer::ExportType::Script);
 }
 
 void ApplicationManager::aboutExit()
@@ -1730,7 +1733,9 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     // Настроим режим работы со сценарием
     //
     const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+    m_menuManager->setMenuItemEnabled(kStartNewVersionMenuIndex, !isCommentOnly);
     m_menuManager->setMenuItemEnabled(kImportMenuIndex, !isCommentOnly);
+    m_menuManager->setMenuItemEnabled(kExportMenuIndex, !isCommentOnly);
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
 
@@ -2009,7 +2014,7 @@ void ApplicationManager::initView()
     //
     QScreen* screen = QApplication::primaryScreen();
     if (screen->availableSize().width() < 1360) {
-        m_menuManager->setMenuItemEnabled(TWO_PANEL_MODE_MENU_INDEX, false);
+        m_menuManager->setMenuItemEnabled(kTwoPanelModeMenuIndex, false);
         m_settingsManager->disableTwoPanelsMode();
         if (screen->availableSize().width() < 1024) {
             m_settingsManager->disableCompactMode();
@@ -2041,11 +2046,11 @@ QMenu* ApplicationManager::createMenu()
     // ... начать новую версию
     QAction* newVersion = menu->addAction(tr("New script version..."));
     // ... импорт
-    QAction* import = menu->addAction(tr("Import..."));
+    QAction* importTo = menu->addAction(tr("Import..."));
     // ... экспорт
     QAction* exportTo = menu->addAction(tr("Export to..."));
     // ... предварительный просмотр
-    QAction* printPreview = menu->addAction(tr("Print preview"));
+    QAction* printPreview = menu->addAction(tr("Print preview script"));
     printPreview->setShortcut(QKeySequence(Qt::Key_F12));
     m_view->addAction(printPreview);
 
@@ -2063,9 +2068,9 @@ QMenu* ApplicationManager::createMenu()
     connect(saveProject, &QAction::triggered, this, &ApplicationManager::aboutSave);
     connect(newVersion, &QAction::triggered, this, &ApplicationManager::aboutStartNewVersion);
     connect(saveProjectAs, &QAction::triggered, this, &ApplicationManager::aboutSaveAs);
-    connect(import, &QAction::triggered, this, &ApplicationManager::aboutImport);
+    connect(importTo, &QAction::triggered, this, &ApplicationManager::aboutImport);
     connect(exportTo, &QAction::triggered, this, &ApplicationManager::aboutExport);
-    connect(printPreview, &QAction::triggered, this, &ApplicationManager::aboutPrintPreview);
+    connect(printPreview, &QAction::triggered, this, &ApplicationManager::printPreviewScript);
     connect(twoPanelMode, &QAction::triggered, m_settingsManager, &SettingsManager::setUseTwoPanelMode);
 
 #ifdef Q_OS_MAC
@@ -2374,7 +2379,7 @@ void ApplicationManager::reloadApplicationSettings()
                 "application/two-panel-mode",
                 DataStorageLayer::SettingsStorage::ApplicationSettings)
             .toInt();
-    m_menuManager->menu()->actions().value(TWO_PANEL_MODE_MENU_INDEX)->setChecked(twoPanelsMode);
+    m_menuManager->menu()->actions().value(kTwoPanelModeMenuIndex)->setChecked(twoPanelsMode);
     //
     // Если не применять этот хак, то в редакторе сценария пропадает курсор
     // Возникает, только когда редактор сценария был на экране, при отключении второй панели
@@ -2437,8 +2442,8 @@ void ApplicationManager::reloadApplicationSettings()
     //
     QScreen* screen = QApplication::primaryScreen();
     if (screen->availableSize().width() < 1360) {
-        m_menuManager->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setEnabled(false);
-        m_menuManager->menu()->actions()[TWO_PANEL_MODE_MENU_INDEX]->setVisible(false);
+        m_menuManager->menu()->actions()[kTwoPanelModeMenuIndex]->setEnabled(false);
+        m_menuManager->menu()->actions()[kTwoPanelModeMenuIndex]->setVisible(false);
         m_settingsManager->disableTwoPanelsMode();
         if (screen->availableSize().width() < 1024) {
             m_settingsManager->disableCompactMode();
