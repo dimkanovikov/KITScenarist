@@ -298,8 +298,8 @@ void ScenarioTextEditWidget::setCurrentBlockType(int _type)
     m_editor->changeScenarioBlockType((BusinessLogic::ScenarioBlockStyle::Type)_type);
 }
 
-void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header, const QString& _title,
-    const QColor& _color, const QString& _description)
+void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _name,
+    const QString& _header, const QString& _description, const QColor& _color)
 {
     QTextCursor cursor = m_editor->textCursor();
     cursor.beginEditBlock();
@@ -326,7 +326,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     //
     // Устанавливаем текст в блок
     //
-    m_editor->insertPlainText(!_header.isEmpty() ? _header : _title);
+    m_editor->insertPlainText(!_header.isEmpty() ? _header : _name);
 
     //
     // Устанавливаем цвет и описание в параметры сцены
@@ -342,7 +342,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     } else {
         info = new SceneHeadingBlockInfo;
     }
-    info->setTitle(!_title.isEmpty() ? _title : _header);
+    info->setName(_name);
     if (_color.isValid()) {
         info->setColors(_color.name());
     }
@@ -370,11 +370,11 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
             cursor.movePosition(QTextCursor::NextBlock);
             cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
         }
-        cursor.insertText(Helpers::footerText(!_header.isEmpty() ? _header : _title));
+        cursor.insertText(Helpers::footerText(!_header.isEmpty() ? _header : _name));
     }
 
     //
-    // А теперь скроем блоки с описанием сцены, если мы не в режиме битов
+    // А теперь скроем блоки с описанием сцены, если мы не в режиме аутлайна
     //
     const bool isSceneDescriptionVisible = m_editor->visibleBlocksTypes().contains(ScenarioBlockStyle::SceneDescription);
     if (!isSceneDescriptionVisible) {
@@ -397,8 +397,8 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
     m_editor->ensureCursorVisible(cursor);
 }
 
-void ScenarioTextEditWidget::editItem(int _startPosition, int _type, const QString& _title,
-    const QString& _colors)
+void ScenarioTextEditWidget::editItem(int _startPosition, int _type, const QString& _name,
+    const QString& _header, const QString& _colors)
 {
     QTextCursor cursor = m_editor->textCursor();
     cursor.beginEditBlock();
@@ -418,17 +418,16 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _type, const QStri
     }
 
     //
-    // Если не задан заголовок, установим его таким же, как и название
+    // Установим заголовок
     //
-    if (cursor.block().text().isEmpty()) {
-        cursor.insertText(_title);
-    }
+    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    cursor.insertText(_header);
 
     //
     // Устанавливаем название блока и описание
     //
     if (SceneHeadingBlockInfo* blockInfo = dynamic_cast<SceneHeadingBlockInfo*>(cursor.block().userData())) {
-        blockInfo->setTitle(_title);
+        blockInfo->setName(_name);
         blockInfo->setColors(_colors);
         cursor.block().setUserData(blockInfo);
     }

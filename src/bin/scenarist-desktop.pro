@@ -184,7 +184,6 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
@@ -303,7 +302,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Account/ChangePasswordDialog.cpp \
     scenarist-desktop/UserInterfaceLayer/Account/RenewSubscriptionDialog.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp \
     scenarist-core/BusinessLayer/Export/FdxExporter.cpp \
     scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
@@ -378,7 +376,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ColoredToolButton/ColorsPane.cpp \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.cpp \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.cpp \
-    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.cpp
+    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -440,7 +439,6 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
@@ -576,7 +574,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Account/ChangePasswordDialog.h \
     scenarist-desktop/UserInterfaceLayer/Account/RenewSubscriptionDialog.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h \
     scenarist-core/BusinessLayer/Export/FdxExporter.h \
     scenarist-core/BusinessLayer/Import/FdxImporter.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
@@ -660,7 +657,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScriptTextCursor.h \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.h \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h \
-    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.h
+    scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -674,7 +672,6 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Account/ChangePasswordDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Account/RenewSubscriptionDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
@@ -691,7 +688,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScriptBookmarks/BookmarkDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectVersionDialog.ui \
-    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.ui
+    scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionWidget.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.ui
 
 
 RESOURCES += \

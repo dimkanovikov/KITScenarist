@@ -143,13 +143,14 @@ namespace UserInterface
         /**
          * @brief Добавить элемент в указанной позиции с заданным текстом и типом
          */
-        void addItem(int _position, int _type, const QString& _header, const QString& _title,
-            const QColor& _color, const QString& _description);
+        void addItem(int _position, int _type, const QString& _name, const QString& _header,
+            const QString& _description, const QColor& _color);
 
         /**
          * @brief Изменить элемент в указанной позиции с заданным текстом и типом
          */
-        void editItem(int _startPosition, int _type, const QString& _title, const QString& _colors);
+        void editItem(int _startPosition, int _type, const QString& _name, const QString& _header,
+            const QString& _colors);
 
         /**
          * @brief Удалить текст в заданном интервале

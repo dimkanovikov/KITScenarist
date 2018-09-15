@@ -130,23 +130,19 @@ void ScenarioNavigatorManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
-    m_addItemDialog->clear();
+    m_addItemDialog->prepareForAdding();
 
     //
     // Если пользователь действительно хочет добавить элемент
     //
     if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
         const int itemType = m_addItemDialog->itemType();
-        const QString header = m_addItemDialog->header();
-        const QColor color = m_addItemDialog->color();
-        const QString description = m_addItemDialog->description();
+        const QString name = m_addItemDialog->itemName();
+        const QString header = m_addItemDialog->itemHeader();
+        const QString description = m_addItemDialog->itemDescription();
+        const QColor color = m_addItemDialog->itemColor();
 
-        //
-        // Если задан заголовок
-        //
-        if (!header.isEmpty()) {
-            emit addItem(m_scenarioModelProxy->mapToSource(_index), itemType, header, color, description);
-        }
+        emit addItem(m_scenarioModelProxy->mapToSource(_index), itemType, name, header, description, color);
     }
 }
 

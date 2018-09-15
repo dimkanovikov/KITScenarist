@@ -17,7 +17,7 @@ namespace BusinessLogic {
 namespace UserInterface {
     class PrintCardsDialog;
     class ScenarioCardsView;
-    class ScenarioSchemeItemDialog;
+    class ScenarioItemDialog;
 }
 
 
@@ -102,14 +102,14 @@ namespace ManagementLayer
         /**
          * @brief Запрос на добавление элемента
          */
-        void addCardRequest(const QModelIndex& _afterItemIndex, int _type, const QString& _title,
-            const QColor& _color, const QString& _description);
+        void addCardRequest(const QModelIndex& _afterItemIndex, int _type, const QString& _name,
+            const QString& _header, const QString& _description, const QColor& _color);
 
         /**
          * @brief Запрос на изменение элемента
          */
         void updateCardRequest(const QModelIndex& _index, int _type, const QString& _title,
-            const QString& _colors, const QString& _description);
+            const QString& _header, const QString& _description, const QString& _colors);
 
         /**
          * @brief Запрос на удаление элемента
@@ -201,7 +201,7 @@ namespace ManagementLayer
         /**
          * @brief Диалог добавления элемента
          */
-        UserInterface::ScenarioSchemeItemDialog* m_addItemDialog = nullptr;
+        UserInterface::ScenarioItemDialog* m_addItemDialog = nullptr;
 
         /**
          * @brief Диалог печати

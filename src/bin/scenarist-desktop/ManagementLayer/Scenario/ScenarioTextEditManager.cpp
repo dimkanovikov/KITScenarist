@@ -227,30 +227,24 @@ void ScenarioTextEditManager::buildEditMenu(QMenu* _menu)
 }
 #endif
 
-void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,
-    const QString& _title, const QColor& _color, const QString& _description)
+void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QString& _name,
+    const QString& _header, const QString& _description, const QColor& _color)
 {
     //
     // Переводим тип элемента
     //
     const int mappedType = ::mapItemTypeFromModelToBlock(_type);
-    m_view->addItem(_position, mappedType, QString::null, _title, _color, _description);
+    m_view->addItem(_position, mappedType, _name, _header, _description, _color);
 }
 
-void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QString& _header,
-    const QColor& _color, const QString& _description)
-{
-    m_view->addItem(_position, _type, _header, QString::null, _color, _description);
-}
-
-void ScenarioTextEditManager::editScenarioItem(int _startPosition, int _type, const QString& _title,
-    const QString& _colors)
+void ScenarioTextEditManager::editScenarioItem(int _startPosition, int _type, const QString& _name,
+    const QString& _header, const QString& _colors)
 {
     //
     // Переводим тип элемента
     //
     const int mappedType = ::mapItemTypeFromModelToBlock(_type);
-    m_view->editItem(_startPosition, mappedType, _title, _colors);
+    m_view->editItem(_startPosition, mappedType, _name, _header, _colors);
 }
 
 void ScenarioTextEditManager::removeScenarioText(int _from, int _to)

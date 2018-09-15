@@ -84,8 +84,8 @@ namespace ManagementLayer
         /**
          * @brief Запрос на добавление элемента
          */
-        void addItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
-            const QColor& _color, const QString& _description);
+        void addItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _name,
+            const QString& _header, const QString& _description, const QColor& _color);
 
         /**
          * @brief Запрос на удаление элемента

@@ -881,7 +881,7 @@ void ScenarioManager::aboutGoToItemFromCards(const QModelIndex& _index)
 }
 
 void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType,
-    const QString& _title, const QColor& _color, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _description, const QColor& _color)
 {
     //
     // Карточки добавляются только в режиме чистовика
@@ -894,20 +894,20 @@ void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, 
     } else {
         position = workingScenario()->itemMiddlePosition(_afterItemIndex);
     }
-    m_textEditManager->addScenarioItemFromCards(position, _itemType, _title, _color, _description);
+    m_textEditManager->addScenarioItem(position, _itemType, _name, _header, _description, _color);
 }
 
 void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType,
-    const QString& _header, const QColor& _color, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _description, const QColor& _color)
 {
     setWorkingMode(sender());
 
     const int position = workingScenario()->itemEndPosition(_afterItemIndex);
-    m_textEditManager->addScenarioItem(position, _itemType, _header, _color, _description);
+    m_textEditManager->addScenarioItem(position, _itemType, _name, _header, _description, _color);
 }
 
 void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType,
-    const QString& _header, const QString& _colors, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _colors, const QString& _description)
 {
     //
     // Изменение элемента из карточек только в режиме чистовика
@@ -916,7 +916,7 @@ void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, in
 
     const int startPosition = workingScenario()->itemStartPosition(_itemIndex);
     workingScenario()->setItemDescriptionAtPosition(startPosition, _description);
-    m_textEditManager->editScenarioItem(startPosition, _itemType, _header, _colors);
+    m_textEditManager->editScenarioItem(startPosition, _itemType, _name, _header, _colors);
 }
 
 void ScenarioManager::aboutRemoveItemFromCards(const QModelIndex& _index)
