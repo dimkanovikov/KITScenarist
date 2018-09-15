@@ -381,6 +381,12 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
         }
 
         //
+        // ... папки, в которую пользователь хочет писать может и не быть,
+        //     создадим на всякий случай, чтобы его не мучать
+        //
+        QDir::root().mkpath(QFileInfo(newProjectFilePath).absolutePath());
+
+        //
         // ... проверяем, можем ли мы писать в выбранный файл
         //
         QFile file(newProjectFilePath);
@@ -415,6 +421,7 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
         //
         else {
             const QFileInfo fileInfo(newProjectFilePath);
+
             //
             // ... предупреждаем
             //
