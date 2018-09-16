@@ -273,13 +273,22 @@ void ScenarioCardsManager::addCard()
 
 void ScenarioCardsManager::editCard(const QString& _uuid)
 {
+    //
+    // Тут проверка идентичности названия и заголовка играет важную роль в кейсе,
+    // когда пользователь работает только с карточками и решил изменить название карточки
+    // следовательно нужно обновить её и в тексте тоже
+    //
+
     m_addItemDialog->prepareForEditing();
 
     const QModelIndex indexForUpdate = m_model->indexForUuid(_uuid);
     const auto* itemForUpdate = m_model->itemForIndex(indexForUpdate);
     m_addItemDialog->setItemType(itemForUpdate->type());
     m_addItemDialog->setItemName(itemForUpdate->name());
-    m_addItemDialog->setItemHeader(itemForUpdate->header());
+    const bool itemForUpdateHasEqualNameAndHeader = itemForUpdate->header() == itemForUpdate->name();
+    if (not itemForUpdateHasEqualNameAndHeader) {
+        m_addItemDialog->setItemHeader(itemForUpdate->header());
+    }
     m_addItemDialog->setItemDescription(itemForUpdate->description());
     const QString firstColor = itemForUpdate->colors().split(";").first();
     m_addItemDialog->setItemColor(firstColor);
@@ -290,7 +299,11 @@ void ScenarioCardsManager::editCard(const QString& _uuid)
     if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
         const int type = m_addItemDialog->itemType();
         const QString name = m_addItemDialog->itemName();
-        const QString header = m_addItemDialog->itemHeader();
+        QString header = m_addItemDialog->itemHeader();
+        if (header.isEmpty()
+            and itemForUpdateHasEqualNameAndHeader) {
+            header = name;
+        }
         const QString description = m_addItemDialog->itemDescription();
         QString colors = itemForUpdate->colors();
         if (firstColor != m_addItemDialog->itemColor()) {

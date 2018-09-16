@@ -165,7 +165,9 @@ New to KIT Scenarist?</string>
           <item row="5" column="0" colspan="2">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Learn how to write your own stories and explore KIT Scenarist through our help articles and tutorials.
+             <string>Learn how to write your own stories
+and explore KIT Scenarist through 
+our help articles and tutorials.
 </string>
             </property>
             <property name="wordWrap">

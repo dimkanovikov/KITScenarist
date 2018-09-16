@@ -61,12 +61,6 @@ using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScriptTextCursor;
 
 namespace {
-
-    /**
-     * @brief Ключ для хранения атрибута последнего размера сплитера
-     */
-    const char* SPLITTER_LAST_SIZES = "last_sizes";
-
     /**
      * @brief Ключ для доступа к черновику сценария
      */

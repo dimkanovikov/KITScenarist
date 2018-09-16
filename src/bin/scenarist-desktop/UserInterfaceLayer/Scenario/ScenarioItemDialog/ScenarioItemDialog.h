@@ -8,7 +8,7 @@
 class QPushButton;
 
 namespace Ui {
-    class ScenarioSchemeItemDialog;
+    class ScenarioItemDialog;
 }
 
 
@@ -132,7 +132,7 @@ namespace UserInterface
         /**
          * @brief Интерфейс
          */
-        Ui::ScenarioSchemeItemDialog* m_ui = nullptr;
+        Ui::ScenarioItemDialog* m_ui = nullptr;
 
         /**
          * @brief Кнопка сохранения

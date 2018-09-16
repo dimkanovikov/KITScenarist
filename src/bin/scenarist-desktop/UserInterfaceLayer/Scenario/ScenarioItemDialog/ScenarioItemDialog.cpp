@@ -1,5 +1,5 @@
 #include "ScenarioItemDialog.h"
-#include "ui_ScenarioSchemeItemDialog.h"
+#include "ui_ScenarioItemDialog.h"
 
 #include <QPushButton>
 
@@ -13,7 +13,7 @@ using UserInterface::ScenarioItemDialog;
 
 ScenarioItemDialog::ScenarioItemDialog(QWidget* _parent) :
     QLightBoxDialog(_parent),
-    m_ui(new Ui::ScenarioSchemeItemDialog)
+    m_ui(new Ui::ScenarioItemDialog)
 {
     m_ui->setupUi(this);
     m_saveButton = m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
