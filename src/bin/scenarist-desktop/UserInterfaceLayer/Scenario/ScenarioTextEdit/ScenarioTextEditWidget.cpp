@@ -307,21 +307,11 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _n
     cursor.setPosition(_position);
     m_editor->setTextCursor(cursor);
     ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)_type;
-    bool blockWasAdded = false;
+
     //
-    // Если в позиции пустой блок, изменим его
+    // Добавим новый блок
     //
-    if (cursor.block().text().isEmpty()) {
-        m_editor->changeScenarioBlockType(type);
-        blockWasAdded = false;
-    }
-    //
-    // В противном случае добавим новый
-    //
-    else {
-        m_editor->addScenarioBlock(type);
-        blockWasAdded = true;
-    }
+    m_editor->addScenarioBlock(type);
 
     //
     // Устанавливаем текст в блок
@@ -379,7 +369,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _n
     const bool isSceneDescriptionVisible = m_editor->visibleBlocksTypes().contains(ScenarioBlockStyle::SceneDescription);
     if (!isSceneDescriptionVisible) {
         cursor.setPosition(_position);
-        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, blockWasAdded ? 2 : 1);
+        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, 2);
         while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
                && !cursor.atEnd()) {
             cursor.block().setVisible(isSceneDescriptionVisible);
