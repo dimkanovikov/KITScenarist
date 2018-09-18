@@ -46,6 +46,7 @@ UI_DIR = $$DESTDIR/.ui
 # Подключаем библиотеку HUNSPELL
 #
 LIBS += -L$$DESTDIR/../../libs/hunspell/ -lhunspell
+PRE_TARGETDEPS += $$DESTDIR/../../libs/hunspell/libhunspell.a
 
 INCLUDEPATH += $$PWD/../libs/hunspell/src
 DEPENDPATH += $$PWD/../libs/hunspell
@@ -64,6 +65,7 @@ DEPENDPATH += $$PWD/../libs/hunspell
 # Подключаем библиотеку fileformats
 #
 LIBS += -L$$DESTDIR/../../libs/fileformats/ -lfileformats
+PRE_TARGETDEPS += $$DESTDIR/../../libs/fileformats/libfileformats.a
 
 INCLUDEPATH += $$PWD/../libs/fileformats
 DEPENDPATH += $$PWD/../libs/fileformats
@@ -73,6 +75,7 @@ DEPENDPATH += $$PWD/../libs/fileformats
 # Подключаем библилотеку WebLoader
 #
 LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
+PRE_TARGETDEPS += $$DESTDIR/../../libs/webloader/libwebloader.a
 
 INCLUDEPATH += $$PWD/../libs/webloader/src
 DEPENDPATH += $$PWD/../libs/webloader/src
@@ -87,14 +90,7 @@ INCLUDEPATH += $$PWD/../libs/qgumboparser
 DEPENDPATH += $$PWD/../libs/qgumboparser
 #
 
-#
-# В маке собираем библиотеки статически, чтобы было удобней подписывать приложение
-#
-mac {
-PRE_TARGETDEPS += $$DESTDIR/../../libs/hunspell/libhunspell.a
-PRE_TARGETDEPS += $$DESTDIR/../../libs/fileformats/libfileformats.a
-PRE_TARGETDEPS += $$DESTDIR/../../libs/webloader/libwebloader.a
-
+unix {
 LIBS += -lz
 }
 #
