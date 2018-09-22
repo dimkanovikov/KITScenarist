@@ -100,7 +100,7 @@ namespace {
     /**
      * @brief Расширения файлов проекта
      */
-    const QString kProjectFleExtension = ".kitsp"; // kit scenarist project
+    const QString kProjectFleExtension = ".dps"; // kit scenarist project
 
     /**
      * @brief Старый вордовский формат не поддерживается

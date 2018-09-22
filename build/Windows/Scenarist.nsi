@@ -86,7 +86,7 @@ Section "App files section" SecFiles
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   ; Регистрируем ассоциации 
-  ${registerExtension} "$INSTDIR\Digipitch Screenwriter.exe" ".kitsp" "Digipitch Screenwriter project"
+  ${registerExtension} "$INSTDIR\Digipitch Screenwriter.exe" ".dps" "Digipitch Screenwriter project"
   
   ; Обновляем эксплорер
   System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
@@ -150,7 +150,7 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\Digipitch Screenwriter"
   
   ; Отменяем зарегистрированные ассоциации файлов
-  ${unregisterExtension} ".kitsp" "Digipitch Screenwriter project"
+  ${unregisterExtension} ".dps" "Digipitch Screenwriter project"
 
 SectionEnd
 

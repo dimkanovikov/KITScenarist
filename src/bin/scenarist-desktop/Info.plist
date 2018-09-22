@@ -27,7 +27,7 @@
             <dict>
                 <key>CFBundleTypeExtensions</key>
             <array>
-                    <string>kitsp</string>
+                    <string>dps</string>
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>logo.icns</string>

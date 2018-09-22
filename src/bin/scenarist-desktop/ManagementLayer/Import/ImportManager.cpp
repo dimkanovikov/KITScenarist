@@ -41,7 +41,7 @@ namespace {
      * @brief Форматы файлов импорт которых поддерживается
      */
     /** @{ */
-    const QString kKitScenaristExtension = ".kitsp";
+    const QString kKitScenaristExtension = ".dps";
     const QString kFinalDraftExtension = ".fdx";
     const QString kFinalDraftTemplateExtension = ".fdxt";
     const QString kTrelbyExtension = ".trelby";
