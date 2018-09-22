@@ -306,17 +306,17 @@ namespace ManagementLayer
          * @brief Добавить элемент, после заданного
          */
         /** @{ */
-        void aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType, const QString& _title,
-            const QColor& _color, const QString& _description);
-        void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
-            const QColor& _color, const QString& _description);
+        void aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType, const QString& _name,
+            const QString& _header, const QString& _description, const QColor& _color);
+        void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _name,
+            const QString& _header, const QString& _description, const QColor& _color);
         /** @}*/
 
         /**
          * @brief Изменить заданный элемент
          */
-        void aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
-            const QString& _colors, const QString& _description);
+        void aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _name,
+            const QString& _header, const QString& _description, const QString& _colors);
 
         /**
          * @brief Удалить заданный элемент

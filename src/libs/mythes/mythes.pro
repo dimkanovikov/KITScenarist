@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-mac:CONFIG += staticlib
+CONFIG += qt thread warn_on staticlib
 
 QMAKE_MAC_SDK = macosx10.12
 

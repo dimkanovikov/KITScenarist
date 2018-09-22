@@ -39,13 +39,14 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QShortcut>
+#include <QSet>
+#include <QSplitter>
+#include <QStackedWidget>
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTextTable>
 #include <QTimer>
-#include <QSet>
-#include <QSplitter>
-#include <QStackedWidget>
 #include <QWidget>
 
 using ManagementLayer::ScenarioManager;
@@ -60,12 +61,6 @@ using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScriptTextCursor;
 
 namespace {
-
-    /**
-     * @brief Ключ для хранения атрибута последнего размера сплитера
-     */
-    const char* SPLITTER_LAST_SIZES = "last_sizes";
-
     /**
      * @brief Ключ для доступа к черновику сценария
      */
@@ -224,7 +219,7 @@ namespace {
                         cursor.setPosition(cursor.position() + range.length, QTextCursor::KeepAnchor);
                         cursor.mergeCharFormat(blockStyle.charFormat());
                         cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                        cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
+                        cursor.mergeBlockFormat(blockStyle.blockFormat());
                     }
                 }
                 cursor.movePosition(QTextCursor::EndOfBlock);
@@ -236,40 +231,9 @@ namespace {
                 cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
                 cursor.mergeCharFormat(blockStyle.charFormat());
                 cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                cursor.mergeBlockFormat(blockStyle.blockFormat(cursor.isBlockInTable()));
+                cursor.mergeBlockFormat(blockStyle.blockFormat());
             }
             cursor.movePosition(QTextCursor::NextBlock);
-        } while (!cursor.atEnd());
-        cursor.endEditBlock();
-    }
-
-    /**
-     * @brief Обновить таблицы в документе
-     */
-    static void updateDocumentTables(QTextDocument* _document) {
-        //
-        // Сформируем новый стиль для таблицы, т.к. могла смениться ширина
-        //
-        const qreal tableWidth = 100;
-        const qreal leftColumnWidth = BusinessLogic::ScenarioTemplateFacade::getTemplate().splitterLeftSidePercents();
-        const qreal rightColumnWidth = tableWidth - leftColumnWidth;
-        QTextTableFormat tableFormat;
-        tableFormat.setWidth(QTextLength{QTextLength::PercentageLength, tableWidth});
-        tableFormat.setColumnWidthConstraints({ QTextLength{QTextLength::PercentageLength, leftColumnWidth},
-                                                QTextLength{QTextLength::PercentageLength, rightColumnWidth} });
-        tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-        //
-        // Применим формат для всех табличек
-        //
-        ScriptTextCursor cursor(_document);
-        cursor.beginEditBlock();
-        do {
-            if (cursor.isBlockInTable()) {
-                auto table = cursor.currentTable();
-                table->setFormat(tableFormat);
-            }
-            cursor.movePosition(QTextCursor::NextBlock);
-            cursor.movePosition(QTextCursor::EndOfBlock);
         } while (!cursor.atEnd());
         cursor.endEditBlock();
     }
@@ -535,8 +499,6 @@ void ScenarioManager::aboutTextEditSettingsUpdated()
 
     updateDocumentBlocksColors(m_scenario->document());
     updateDocumentBlocksColors(m_scenarioDraft->document());
-    updateDocumentTables(m_scenario->document());
-    updateDocumentTables(m_scenarioDraft->document());
 
     //
     // Корректируем текст, т.к. могли измениться настройки отображения, или используемого шаблона
@@ -913,7 +875,7 @@ void ScenarioManager::aboutGoToItemFromCards(const QModelIndex& _index)
 }
 
 void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType,
-    const QString& _title, const QColor& _color, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _description, const QColor& _color)
 {
     //
     // Карточки добавляются только в режиме чистовика
@@ -926,20 +888,20 @@ void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, 
     } else {
         position = workingScenario()->itemMiddlePosition(_afterItemIndex);
     }
-    m_textEditManager->addScenarioItemFromCards(position, _itemType, _title, _color, _description);
+    m_textEditManager->addScenarioItem(position, _itemType, _name, _header, _description, _color);
 }
 
 void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType,
-    const QString& _header, const QColor& _color, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _description, const QColor& _color)
 {
     setWorkingMode(sender());
 
     const int position = workingScenario()->itemEndPosition(_afterItemIndex);
-    m_textEditManager->addScenarioItem(position, _itemType, _header, _color, _description);
+    m_textEditManager->addScenarioItem(position, _itemType, _name, _header, _description, _color);
 }
 
 void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType,
-    const QString& _header, const QString& _colors, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _colors, const QString& _description)
 {
     //
     // Изменение элемента из карточек только в режиме чистовика
@@ -947,8 +909,8 @@ void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, in
     setWorkingMode(m_navigatorManager);
 
     const int startPosition = workingScenario()->itemStartPosition(_itemIndex);
-    const int endPosition = workingScenario()->itemEndPosition(_itemIndex);
-    m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _colors, _description);
+    workingScenario()->setItemDescriptionAtPosition(startPosition, _description);
+    m_textEditManager->editScenarioItem(startPosition, _itemType, _name, _header, _colors);
 }
 
 void ScenarioManager::aboutRemoveItemFromCards(const QModelIndex& _index)
@@ -1099,7 +1061,6 @@ void ScenarioManager::initView()
     m_showFullscreen->setIcons(QIcon(":/Graphics/Iconset/fullscreen.svg"),
         QIcon(":/Graphics/Iconset/fullscreen-exit.svg"));
     m_showFullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
-    m_showFullscreen->setShortcut(Qt::Key_F5);
     m_showFullscreen->setCheckable(true);
 
     QWidget* rightWidget = new QWidget(m_view);
@@ -1144,6 +1105,10 @@ void ScenarioManager::initView()
 
 void ScenarioManager::initConnections()
 {
+    auto fullscreenShortcut = new QShortcut(QKeySequence("F5"), m_view);
+    connect(fullscreenShortcut, &QShortcut::activated, this, &ScenarioManager::showFullscreen);
+
+
     connect(m_showFullscreen, &FlatButton::clicked, this, &ScenarioManager::showFullscreen);
 
     connect(m_cardsManager, &ScenarioCardsManager::goToCardRequest, this, &ScenarioManager::aboutGoToItemFromCards);

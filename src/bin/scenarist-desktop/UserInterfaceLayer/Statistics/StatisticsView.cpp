@@ -389,9 +389,9 @@ void StatisticsView::initView()
     QHBoxLayout* toolbarLayout = new QHBoxLayout;
     toolbarLayout->setContentsMargins(QMargins());
     toolbarLayout->setSpacing(0);
-    toolbarLayout->addWidget(m_print);
-    toolbarLayout->addWidget(m_save);
     toolbarLayout->addWidget(m_update);
+    toolbarLayout->addWidget(m_save);
+    toolbarLayout->addWidget(m_print);
     toolbarLayout->addWidget(m_rightTopEmptyLabel);
 
     QVBoxLayout* statisticDataLayout = new QVBoxLayout;

@@ -146,7 +146,7 @@ namespace UserInterface
         /**
          * @brief Показать предварительный просмотр
          */
-        void printPreview();
+        void printPreviewPressed();
 
     private:
         /**

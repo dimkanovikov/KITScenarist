@@ -3,8 +3,7 @@ TARGET = webloader
 DEPENDPATH += src
 INCLUDEPATH += src
 
-CONFIG += c++11
-mac:CONFIG += staticlib
+CONFIG += c++11 staticlib
 
 QT += network xml
 QT -= gui

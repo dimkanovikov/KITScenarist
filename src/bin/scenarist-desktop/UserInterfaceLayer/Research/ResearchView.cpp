@@ -419,7 +419,8 @@ void ResearchView::editMindMap(const QString &_name, const QString &_xml)
         m_ui->mindMapName->setText(_name);
     }
 
-    if (_xml != m_ui->mindMap->save()) {
+    const auto currentXml = TextEditHelper::fromHtmlEscaped(m_ui->mindMap->save());
+    if (_xml != currentXml) {
         m_ui->mindMap->closeScene();
         if (_xml.isEmpty()) {
             m_ui->mindMap->newScene();

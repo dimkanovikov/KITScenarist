@@ -328,7 +328,7 @@
           <item>
            <widget class="MenuButton" name="printPreview">
             <property name="text">
-             <string>Print preview</string>
+             <string>Print preview script</string>
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">

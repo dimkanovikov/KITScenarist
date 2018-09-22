@@ -3,108 +3,142 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 
-class ColoredToolButton;
-class QDialogButtonBox;
-class QLineEdit;
 class QPushButton;
-class QRadioButton;
-class SimpleTextEditorWidget;
+
+namespace Ui {
+    class ScenarioItemDialog;
+}
+
 
 namespace UserInterface
 {
-	/**
-	 * @brief Диалог добавления элемента сценария
-	 */
-	class ScenarioItemDialog : public QLightBoxDialog
-	{
-		Q_OBJECT
+    /**
+     * @brief Диалог редактирования элементов сценария
+     */
+    class ScenarioItemDialog : public QLightBoxDialog
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioItemDialog(QWidget* _parent = 0);
+    public:
+        explicit ScenarioItemDialog(QWidget* _parent = nullptr);
+        ~ScenarioItemDialog();
 
-		/**
-		 * @brief Восстановить значения по умолчанию
-		 */
-		void clear();
+        /**
+         * @brief Подготовить к добавлению
+         */
+        void prepareForAdding(bool useFolders = true);
 
-		/**
-		 * @brief Получить тип элемента
-		 */
-		BusinessLogic::ScenarioBlockStyle::Type itemType() const;
+        /**
+         * @brief Подготовить к изменению
+         */
+        void prepareForEditing();
 
-		/**
-		 * @brief Получить текст
-		 */
-		QString header() const;
+        /**
+         * @brief Восстановить значения по умолчанию
+         */
+        void clear();
 
-		/**
-		 * @brief Получить цвет
-		 */
-		QColor color() const;
+        /**
+         * @brief Получить тип элемента
+         */
+        BusinessLogic::ScenarioModelItem::Type itemType() const;
 
-		/**
-		 * @brief Получить описание
-		 */
-        QString description() const;
+        /**
+         * @brief Установить тип элемента
+         * @note При этом блокируется возможность выбора типа
+         */
+        void setItemType(BusinessLogic::ScenarioModelItem::Type _type);
+
+        /**
+         * @brief Получить название элемента
+         */
+        QString itemName() const;
+
+        /**
+         * @brief Установить название элемента
+         */
+        void setItemName(const QString& _name);
+
+        /**
+         * @brief Получить заголовок элемента
+         */
+        QString itemHeader() const;
+
+        /**
+         * @brief Установить заголовок элемента
+         */
+        void setItemHeader(const QString& _header);
+
+        /**
+         * @brief Получить описание элемента
+         */
+        QString itemDescription() const;
+
+        /**
+         * @brief Установить описание элемента
+         */
+        void setItemDescription(const QString& _description);
+
+        /**
+         * @brief Получить цвет элемента
+         */
+        QString itemColor() const;
+
+        /**
+         * @brief Установить цвет элемента
+         */
+        void setItemColor(const QString& _color);
 
     protected:
         /**
-         * @brief Переопределяем для фокусировки на виджете вводе заголовка при отображении
+         * @brief Виджет на который нужно установить фокус при отображении
          */
         QWidget* focusedOnExec() const override;
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
+        /**
+         * @brief Табы в заголовке окна
+         */
+        QWidget* titleWidget() const override;
+
+    private:
+        /**
+         * @brief Настроить вкладки
+         */
+        void initTabs();
+
+        /**
+         * @brief Настроить представление
+         */
         void initView() override;
 
-		/**
-		 * @brief Настроить соединения
-		 */
+        /**
+         * @brief Настроить соединения
+         */
         void initConnections() override;
 
-		/**
-		 * @brief Настроить внешний вид диалога
-		 */
-		void initStyleSheet();
+        /**
+         * @brief Настроить внешний вид диалога
+         */
+        void initStyleSheet();
 
-	private:
-		/**
-		 * @brief Переключатели для выбора типа элемента
-		 */
-		/** @{ */
-        QRadioButton* m_folder;
-		QRadioButton* m_scene;
-		/** @} */
+        /**
+         * @brief Проверить возможно ли сохранение
+         */
+        void checkSavingAvailable();
 
-		/**
-		 * @brief Редактор заголовка элемента
-		 */
-        QLineEdit* m_header;
-
-		/**
-		 * @brief Цвет сцены
-		 */
-		ColoredToolButton* m_color;
-
-		/**
-		 * @brief Описание сцены
-		 */
-		SimpleTextEditorWidget* m_description;
-
-		/**
-		 * @brief Кнопки диалога
-		 */
-		QDialogButtonBox* m_buttons;
+    private:
+        /**
+         * @brief Интерфейс
+         */
+        Ui::ScenarioItemDialog* m_ui = nullptr;
 
         /**
          * @brief Кнопка сохранения
          */
         QPushButton* m_saveButton = nullptr;
-	};
+    };
 }
 
 #endif // SCENARIOITEMDIALOG_H

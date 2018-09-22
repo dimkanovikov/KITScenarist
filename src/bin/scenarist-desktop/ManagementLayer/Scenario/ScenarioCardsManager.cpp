@@ -11,7 +11,7 @@
 
 #include <UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.h>
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
-#include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h>
+#include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Helpers/TextUtils.h>
@@ -25,7 +25,7 @@
 using ManagementLayer::ScenarioCardsManager;
 using UserInterface::PrintCardsDialog;
 using UserInterface::ScenarioCardsView;
-using UserInterface::ScenarioSchemeItemDialog;
+using UserInterface::ScenarioItemDialog;
 
 namespace {
     const bool IS_DRAFT = true;
@@ -36,7 +36,7 @@ namespace {
 ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWidget) :
     QObject(_parent),
     m_view(new ScenarioCardsView(IS_SCRIPT, _parentWidget)),
-    m_addItemDialog(new ScenarioSchemeItemDialog(_parentWidget)),
+    m_addItemDialog(new ScenarioItemDialog(_parentWidget)),
     m_printDialog(new PrintCardsDialog(_parentWidget))
 {
     initConnections();
@@ -133,7 +133,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                     item->uuid(),
                     item->type() == BusinessLogic::ScenarioModelItem::Folder,
                     item->sceneNumber(),
-                    item->title().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->title()),
+                    item->name().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->name()),
                     item->description().isEmpty() ? item->fullText() : item->description(),
                     item->stamp(),
                     item->colors(),
@@ -178,7 +178,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                         item->uuid(),
                         item->type() == BusinessLogic::ScenarioModelItem::Folder,
                         item->sceneNumber(),
-                        item->title().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->title()),
+                        item->name().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->name()),
                         item->description().isEmpty() ? item->fullText() : item->description(),
                         item->stamp(),
                         item->colors(),
@@ -237,73 +237,83 @@ void ScenarioCardsManager::goToCard(const QString& _uuid)
 
 void ScenarioCardsManager::addCard()
 {
-    m_addItemDialog->setWindowTitle(tr("Add card"));
-    m_addItemDialog->clear();
+    const bool useFolders = true;
+    m_addItemDialog->prepareForAdding(not useFolders);
 
     //
     // Если пользователь действительно хочет добавить элемент
     //
     if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
-        const int type = m_addItemDialog->cardType();
-        const QString title = m_addItemDialog->cardTitle();
-        const QString color = m_addItemDialog->cardColor();
-        const QString description = m_addItemDialog->cardDescription();
+        const int type = m_addItemDialog->itemType();
+        const QString name = m_addItemDialog->itemName();
+        const QString header = m_addItemDialog->itemHeader();
+        const QString description = m_addItemDialog->itemDescription();
+        const QString color = m_addItemDialog->itemColor();
 
         //
-        // Если задан заголовок
+        // Определим карточку, после которой нужно добавить элемент
         //
-        if (!title.isEmpty()) {
-            //
-            // Определим карточку, после которой нужно добавить элемент
-            //
-            QModelIndex index;
-            const QString lastItemUuid = m_view->beforeNewItemUuid();
-            if (!lastItemUuid.isEmpty()) {
-                index = m_model->indexForUuid(lastItemUuid);
-            }
-
-            //
-            // Если добавляется акт, то нужно взять корневой индекс
-            //
-            if (type == BusinessLogic::ScenarioModelItem::Folder
-                && index.parent().isValid()) {
-                index = index.parent();
-            }
-
-            emit addCardRequest(index, type, title, QColor(color), description);
+        QModelIndex index;
+        const QString lastItemUuid = m_view->beforeNewItemUuid();
+        if (!lastItemUuid.isEmpty()) {
+            index = m_model->indexForUuid(lastItemUuid);
         }
+
+        //
+        // Если добавляется акт, то нужно взять корневой индекс
+        //
+        if (type == BusinessLogic::ScenarioModelItem::Folder
+            && index.parent().isValid()) {
+            index = index.parent();
+        }
+
+        emit addCardRequest(index, type, name, header, description, QColor(color));
     }
 }
 
 void ScenarioCardsManager::editCard(const QString& _uuid)
 {
-    m_addItemDialog->setWindowTitle(tr("Edit card"));
-    m_addItemDialog->clear();
+    //
+    // Тут проверка идентичности названия и заголовка играет важную роль в кейсе,
+    // когда пользователь работает только с карточками и решил изменить название карточки
+    // следовательно нужно обновить её и в тексте тоже
+    //
+
+    m_addItemDialog->prepareForEditing();
 
     const QModelIndex indexForUpdate = m_model->indexForUuid(_uuid);
     const auto* itemForUpdate = m_model->itemForIndex(indexForUpdate);
-    m_addItemDialog->setCardType(itemForUpdate->type());
-    m_addItemDialog->setCardTitle(itemForUpdate->title());
+    m_addItemDialog->setItemType(itemForUpdate->type());
+    m_addItemDialog->setItemName(itemForUpdate->name());
+    const bool itemForUpdateHasEqualNameAndHeader = itemForUpdate->header() == itemForUpdate->name();
+    if (not itemForUpdateHasEqualNameAndHeader) {
+        m_addItemDialog->setItemHeader(itemForUpdate->header());
+    }
+    m_addItemDialog->setItemDescription(itemForUpdate->description());
     const QString firstColor = itemForUpdate->colors().split(";").first();
-    m_addItemDialog->setCardColor(firstColor);
-    m_addItemDialog->setCardDescription(itemForUpdate->description());
+    m_addItemDialog->setItemColor(firstColor);
 
     //
     // Если пользователь действительно хочет изменить элемент
     //
     if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
-        const int type = m_addItemDialog->cardType();
-        const QString title = m_addItemDialog->cardTitle();
-        QString colors = itemForUpdate->colors();
-        if (firstColor != m_addItemDialog->cardColor()) {
-            colors.replace(firstColor, m_addItemDialog->cardColor());
+        const int type = m_addItemDialog->itemType();
+        const QString name = m_addItemDialog->itemName();
+        QString header = m_addItemDialog->itemHeader();
+        if (header.isEmpty()
+            and itemForUpdateHasEqualNameAndHeader) {
+            header = name;
         }
-        const QString description = m_addItemDialog->cardDescription();
+        const QString description = m_addItemDialog->itemDescription();
+        QString colors = itemForUpdate->colors();
+        if (firstColor != m_addItemDialog->itemColor()) {
+            colors.replace(firstColor, m_addItemDialog->itemColor());
+        }
 
         //
         // Испускаем запрос на изменение
         //
-        emit updateCardRequest(indexForUpdate, type, title, colors, description);
+        emit updateCardRequest(indexForUpdate, type, name, header, description, colors);
     }
 }
 
@@ -630,7 +640,7 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
             painter.setFont(font);
             const int titleHeight = painter.fontMetrics().height();
             const QRectF titleRect(cardRect.left(), cardRect.top(), cardRect.width(), titleHeight);
-            QString titleText = item->title().isEmpty() ? item->header() : item->title();
+            QString titleText = item->name().isEmpty() ? item->header() : item->name();
             if (item->type() == BusinessLogic::ScenarioModelItem::Scene) {
                 titleText.prepend(QString("%1. ").arg(item->sceneNumber()));
             }

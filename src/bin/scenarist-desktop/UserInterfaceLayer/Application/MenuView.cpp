@@ -20,6 +20,7 @@ namespace {
     const int kSaveMenuIndex = 2;
     const int kSaveVersionMenuIndex = 3;
     const int kSaveAsMenuIndex = 4;
+    const int kStartNewversionMenuIndex = 5;
     const int kImportMenuIndex = 6;
     const int kExportMenuIndex = 7;
     const int kPrintPreviewMenuIndex = 8;
@@ -112,6 +113,7 @@ void MenuView::disableProjectActions()
     setMenuItemEnabled(kSaveMenuIndex, disabled);
     setMenuItemEnabled(kSaveVersionMenuIndex, disabled);
     setMenuItemEnabled(kSaveAsMenuIndex, disabled);
+    setMenuItemEnabled(kStartNewversionMenuIndex, disabled);
     setMenuItemEnabled(kImportMenuIndex, disabled);
     setMenuItemEnabled(kExportMenuIndex, disabled);
     setMenuItemEnabled(kPrintPreviewMenuIndex, disabled);
@@ -123,6 +125,7 @@ void MenuView::enableProjectActions()
     setMenuItemEnabled(kSaveMenuIndex, enabled);
     setMenuItemEnabled(kSaveVersionMenuIndex, enabled);
     setMenuItemEnabled(kSaveAsMenuIndex, enabled);
+    setMenuItemEnabled(kStartNewversionMenuIndex, enabled);
     setMenuItemEnabled(kImportMenuIndex, enabled);
     setMenuItemEnabled(kExportMenuIndex, enabled);
     setMenuItemEnabled(kPrintPreviewMenuIndex, enabled);

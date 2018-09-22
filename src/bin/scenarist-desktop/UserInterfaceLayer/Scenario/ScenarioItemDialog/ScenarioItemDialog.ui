@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ScenarioSchemeItemDialog</class>
+ <class>ScenarioItemDialog</class>
  <widget class="QWidget" name="ScenarioSchemeItemDialog">
   <property name="geometry">
    <rect>
@@ -26,56 +26,18 @@
    <string>Add scheme item</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QRadioButton" name="cardIsScene">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
-     </property>
-     <property name="text">
-      <string>Scene</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QRadioButton" name="cardIsFolder">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
-     </property>
-     <property name="text">
-      <string>Act</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+   <item row="0" column="0" colspan="3">
+    <widget class="TabBarExpanded" name="tabs" native="true">
+     <property name="minimumSize">
       <size>
-       <width>333</width>
-       <height>20</height>
+       <width>0</width>
+       <height>10</height>
       </size>
      </property>
-    </spacer>
+    </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="ColoredToolButton" name="cardColor">
+   <item row="1" column="2">
+    <widget class="ColoredToolButton" name="color">
      <property name="text">
       <string/>
      </property>
@@ -85,18 +47,18 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="4">
-    <widget class="QLineEdit" name="cardTitle"/>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLineEdit" name="name"/>
    </item>
-   <item row="2" column="0" colspan="4">
+   <item row="5" column="0" colspan="3">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Description</string>
+      <string>Description:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="4">
-    <widget class="SimpleTextEditorWidget" name="cardDescription" native="true">
+   <item row="6" column="0" colspan="3">
+    <widget class="SimpleTextEditorWidget" name="description" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -105,12 +67,29 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="4">
+   <item row="7" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttons">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel</set>
      </property>
     </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Header:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Name:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QLineEdit" name="header"/>
    </item>
   </layout>
  </widget>
@@ -126,7 +105,18 @@
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
   </customwidget>
+  <customwidget>
+   <class>TabBarExpanded</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>color</tabstop>
+  <tabstop>name</tabstop>
+  <tabstop>header</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>

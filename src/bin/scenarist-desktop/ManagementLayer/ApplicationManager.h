@@ -188,9 +188,9 @@ namespace ManagementLayer
         void aboutExport();
 
         /**
-         * @brief Предварительный просмотр и печать
+         * @brief Предварительный просмотр и печать сценария
          */
-        void aboutPrintPreview();
+        void printPreviewScript();
 
         /**
          * @brief Закрыть приложение
