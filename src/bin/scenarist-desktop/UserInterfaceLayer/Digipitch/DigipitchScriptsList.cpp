@@ -20,21 +20,24 @@ UserInterface::DigipitchScriptCard::DigipitchScriptCard(const QString& _name, co
                                                         const QString& _author, const QString& _mediaJsonUrl,
                                                         const QString& _scriptUrl, QWidget* _parent)
     : QLabel(_parent),
+      m_descriptionFrame(new QFrame(this)),
       m_url(_scriptUrl),
       m_animation(new QPropertyAnimation(this))
 {
     setCursor(Qt::PointingHandCursor);
     setStyleSheet("QLabel { background-color: transparent; border-radius: 4px; } ");
     setAttribute(Qt::WA_Hover);
-    setPixmap(QPixmap(":/Graphics/Images/default-screenplay-poster.jpg"));
+    setPixmap(QPixmap(":/Graphics/Images/screenplay-poster.png"));
     setScaledContents(true);
-    setFixedSize(300, 450);
+    setFixedSize(225, 336);
     //
     QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect(this);
     effect->setColor(Qt::transparent);
     effect->setBlurRadius(18);
     effect->setOffset(3, 5);
     setGraphicsEffect(effect);
+
+    m_descriptionFrame->hide();
 
     m_animation->setTargetObject(effect);
     m_animation->setPropertyName("color");
@@ -48,16 +51,16 @@ UserInterface::DigipitchScriptCard::DigipitchScriptCard(const QString& _name, co
     layout->setContentsMargins(QMargins());
     layout->addStretch();
     {
-        QFrame* descriptionFrame = new QFrame(this);
-        descriptionFrame->setObjectName("descriptionFrame");
-        descriptionFrame->setStyleSheet("#descriptionFrame { background-color: rgba(0, 0, 0, 240);} ");
-        layout->addWidget(descriptionFrame);
+        m_descriptionFrame->setObjectName("descriptionFrame");
+        m_descriptionFrame->setStyleSheet("#descriptionFrame { background-color: rgba(0, 0, 0, 240); }"
+                                          "QLabel { color: white; }");
+        layout->addWidget(m_descriptionFrame);
 
         QVBoxLayout* descriptionLayout = new QVBoxLayout;
         descriptionLayout->addWidget(new QLabel(QString("<b>%1</b>").arg(_name), this));
         descriptionLayout->addWidget(new QLabel(_genre, this));
         descriptionLayout->addWidget(new QLabel(tr("Written by %1").arg(_author)));
-        descriptionFrame->setLayout(descriptionLayout);
+        m_descriptionFrame->setLayout(descriptionLayout);
     }
     setLayout(layout);
 
@@ -85,6 +88,7 @@ void UserInterface::DigipitchScriptCard::enterEvent(QEvent* event)
     QLabel::enterEvent(event);
 
     if (m_animation->direction() != QPropertyAnimation::Forward) {
+        m_descriptionFrame->show();
         m_animation->setDirection(QPropertyAnimation::Forward);
         m_animation->start();
     }
@@ -98,6 +102,7 @@ void UserInterface::DigipitchScriptCard::leaveEvent(QEvent* event)
     // все события с идентификацией перемещением курсора и следующий виджет под курсором
     // обновил свой статус
     QTimer::singleShot(0, this, [this] {
+        m_descriptionFrame->hide();
         m_animation->setDirection(QPropertyAnimation::Backward);
         m_animation->start();
     });

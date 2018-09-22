@@ -56,7 +56,7 @@ using UserInterface::CrashReportDialog;
 using UserInterface::UpdateDialog;
 
 namespace {
-    QUrl UPDATE_URL = QString("https://digipitch.com/api/app/updates/");
+    QUrl UPDATE_URL = QString("https://kitscenarist.ru/api/app/updates/");
 }
 
 
@@ -151,6 +151,11 @@ void StartUpManager::checkCrashReports()
 
 void StartUpManager::checkNewVersion()
 {
+    //
+    // TODO: поднять корректный фид с обновлениями
+    //
+    return;
+
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequestMethod::Post);
 

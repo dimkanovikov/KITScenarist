@@ -49,6 +49,11 @@ namespace UserInterface
 
     private:
         /**
+         * @brief Виджет с описанием карточки
+         */
+        QFrame* m_descriptionFrame = nullptr;
+
+        /**
          * @brief Ссылка на сценарий
          */
         const QString m_url;
