@@ -56,7 +56,7 @@ using UserInterface::CrashReportDialog;
 using UserInterface::UpdateDialog;
 
 namespace {
-    QUrl UPDATE_URL = QString("https://kitscenarist.ru/api/app/updates/");
+    QUrl UPDATE_URL = QString("https://digipitch.com/api/app/updates/");
 }
 
 
