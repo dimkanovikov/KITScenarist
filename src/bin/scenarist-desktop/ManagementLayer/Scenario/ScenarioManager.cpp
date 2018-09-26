@@ -901,7 +901,7 @@ void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _item
 }
 
 void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType,
-    const QString& _name, const QString& _header, const QString& _colors, const QString& _description)
+    const QString& _name, const QString& _header, const QString& _description, const QString& _colors)
 {
     //
     // Изменение элемента из карточек только в режиме чистовика
