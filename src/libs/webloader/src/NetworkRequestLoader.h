@@ -23,7 +23,7 @@
 #include <QUrl>
 
 
-class WEBLOADER_EXPORT NetworkRequestLoader {
+class NetworkRequestLoader {
 public:
 	/**
 	 * @brief Загрузить ссылку асинхронно, соединив возврат результата с заданной лямбдой

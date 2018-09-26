@@ -170,7 +170,7 @@ void ScenarioItemDialog::initStyleSheet()
 
 void ScenarioItemDialog::checkSavingAvailable()
 {
-    m_saveButton->setEnabled(not m_ui->name->text().isEmpty()
-                             or not m_ui->header->text().isEmpty()
-                             or not m_ui->description->toPlainText().isEmpty());
+    m_saveButton->setEnabled(!m_ui->name->text().isEmpty()
+                             || ! m_ui->header->text().isEmpty()
+                             || !m_ui->description->toPlainText().isEmpty());
 }

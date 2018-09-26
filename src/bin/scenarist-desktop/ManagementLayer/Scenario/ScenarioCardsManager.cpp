@@ -238,7 +238,7 @@ void ScenarioCardsManager::goToCard(const QString& _uuid)
 void ScenarioCardsManager::addCard()
 {
     const bool useFolders = true;
-    m_addItemDialog->prepareForAdding(not useFolders);
+    m_addItemDialog->prepareForAdding(!useFolders);
 
     //
     // Если пользователь действительно хочет добавить элемент
@@ -286,7 +286,7 @@ void ScenarioCardsManager::editCard(const QString& _uuid)
     m_addItemDialog->setItemType(itemForUpdate->type());
     m_addItemDialog->setItemName(itemForUpdate->name());
     const bool itemForUpdateHasEqualNameAndHeader = itemForUpdate->header() == itemForUpdate->name();
-    if (not itemForUpdateHasEqualNameAndHeader) {
+    if (!itemForUpdateHasEqualNameAndHeader) {
         m_addItemDialog->setItemHeader(itemForUpdate->header());
     }
     m_addItemDialog->setItemDescription(itemForUpdate->description());
@@ -301,7 +301,7 @@ void ScenarioCardsManager::editCard(const QString& _uuid)
         const QString name = m_addItemDialog->itemName();
         QString header = m_addItemDialog->itemHeader();
         if (header.isEmpty()
-            and itemForUpdateHasEqualNameAndHeader) {
+            && itemForUpdateHasEqualNameAndHeader) {
             header = name;
         }
         const QString description = m_addItemDialog->itemDescription();

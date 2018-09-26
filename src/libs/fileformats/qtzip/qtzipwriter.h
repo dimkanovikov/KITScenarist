@@ -41,14 +41,12 @@
 #ifndef QTZIPWRITER_H
 #define QTZIPWRITER_H
 
-#include "fileformatsglobal.h"
-
 #include <QFile>
 #include <QString>
 
 class QtZipWriterPrivate;
 
-class FILEFORMATS_EXPORT QtZipWriter
+class QtZipWriter
 {
 public:
 	explicit QtZipWriter(const QString &fileName, QIODevice::OpenMode mode = (QIODevice::WriteOnly | QIODevice::Truncate) );
