@@ -8,7 +8,7 @@ QT       -= gui
 
 CONFIG += qt thread warn_on staticlib
 
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 TARGET = mythes
 TEMPLATE = lib

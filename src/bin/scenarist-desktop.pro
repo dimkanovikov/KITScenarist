@@ -18,7 +18,7 @@ CONFIG += c++11
 #
 unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 #
 # Конфигурируем расположение файлов сборки
