@@ -8,7 +8,7 @@ DEFINES += FILEFORMATS_LIBRARY
 #
 CONFIG += qt thread warn_on staticlib
 
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 #
 # Конфигурируем расположение файлов сборки
@@ -42,8 +42,7 @@ HEADERS += \
     qtzip/QtZipReader \
     qtzip/qtzipwriter.h \
     qtzip/QtZipWriter \
-    format_helpers.h \
-    fileformatsglobal.h
+    format_helpers.h
 
 SOURCES += \
     docx_reader.cpp \

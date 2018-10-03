@@ -18,7 +18,7 @@ CONFIG += c++11
 #
 unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 #
 # Конфигурируем расположение файлов сборки
@@ -87,14 +87,7 @@ INCLUDEPATH += $$PWD/../libs/qgumboparser
 DEPENDPATH += $$PWD/../libs/qgumboparser
 #
 
-#
-# В маке собираем библиотеки статически, чтобы было удобней подписывать приложение
-#
-mac {
-PRE_TARGETDEPS += $$DESTDIR/../../libs/hunspell/libhunspell.a
-PRE_TARGETDEPS += $$DESTDIR/../../libs/fileformats/libfileformats.a
-PRE_TARGETDEPS += $$DESTDIR/../../libs/webloader/libwebloader.a
-
+unix {
 LIBS += -lz
 }
 #

@@ -19,7 +19,6 @@
 #define NETWORKREQUEST_H
 
 #include "NetworkTypes.h"
-#include "WebLoaderGlobal.h"
 
 #include <QObject>
 #include <QUrl>
@@ -33,7 +32,7 @@ class WebRequestParameters;
  * @brief Пользовательский класс для создания GET и POST запросов
  */
 
-class WEBLOADER_EXPORT NetworkRequest : public QObject
+class NetworkRequest : public QObject
 {
     Q_OBJECT
     friend class NetworkQueue;

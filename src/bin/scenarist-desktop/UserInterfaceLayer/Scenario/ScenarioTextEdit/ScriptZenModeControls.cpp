@@ -237,9 +237,9 @@ bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)
         else if (_event->type() == QEvent::MouseMove) {
             auto mouseEvent = static_cast<QMouseEvent*>(_event);
             if ((QLocale().textDirection() == Qt::LeftToRight
-                 and mouseEvent->globalX() >= QApplication::primaryScreen()->availableGeometry().right())
-                or (QLocale().textDirection() == Qt::RightToLeft
-                    and mouseEvent->globalX() <= QApplication::primaryScreen()->availableGeometry().left())) {
+                 && mouseEvent->globalX() >= QApplication::primaryScreen()->availableGeometry().right())
+                || (QLocale().textDirection() == Qt::RightToLeft
+                    && mouseEvent->globalX() <= QApplication::primaryScreen()->availableGeometry().left())) {
                 showAnimated();
                 m_hideTimer.start();
             }

@@ -195,7 +195,7 @@ void ExportManager::printPreview(BusinessLogic::ScenarioDocument* _scenario,
     BusinessLogic::PdfExporter exporter;
     const bool isNeedExportResearch
             = _type == ExportType::Research
-              or (_type == ExportType::Auto and exportParameters.isResearch);
+              || (_type == ExportType::Auto && exportParameters.isResearch);
     if (isNeedExportResearch) {
         exporter.printPreview(m_researchModelProxy, exportParameters);
     } else {

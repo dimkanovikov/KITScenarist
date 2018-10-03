@@ -10,7 +10,7 @@ TARGET = qgumboparser
 TEMPLATE = lib
 CONFIG += staticlib c++11
 QMAKE_CFLAGS += -std=c99
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 #
 # Конфигурируем расположение файлов сборки

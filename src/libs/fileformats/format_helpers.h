@@ -1,8 +1,6 @@
 #ifndef FORMAT_HELPERS
 #define FORMAT_HELPERS
 
-#include "fileformatsglobal.h"
-
 #include <QTextFormat>
 
 
@@ -15,7 +13,7 @@ inline uint qHash(const QColor& _key) { return qHash(_key.name()); }
 /**
  * @brief Специфичные параметры и методы для формата DOCX
  */
-class FILEFORMATS_EXPORT Docx
+class Docx
 {
 public:
 	/**

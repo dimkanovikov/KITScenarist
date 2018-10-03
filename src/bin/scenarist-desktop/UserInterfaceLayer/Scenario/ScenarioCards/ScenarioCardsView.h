@@ -135,11 +135,9 @@ namespace UserInterface {
         void addCopyCardRequest(bool _isFolder, const QString& _title, const QString& _description, const QString& _stamp, const QString& _colors);
 
         /**
-         * @brief Запросы на изменение выделенной фигуры
+         * @brief Запрос на изменение выделенной карточки
          */
-        /** @{ */
         void editCardRequest(const QString& _uuid);
-        /** @} */
 
         /**
          * @brief Нажата кнопка удаления карточки

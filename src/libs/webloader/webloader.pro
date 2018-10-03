@@ -8,8 +8,7 @@ CONFIG += c++11 staticlib
 QT += network xml
 QT -= gui
 
-QMAKE_MAC_SDK = macosx10.12
-DEFINES += WEBLOADER_LIBRARY
+QMAKE_MAC_SDK = macosx10.13
 
 #
 # Конфигурируем расположение файлов сборки
@@ -37,7 +36,6 @@ QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
 HEADERS += \
     src/NetworkRequest.h \
     src/NetworkRequestLoader.h \
-    src/WebLoaderGlobal.h \
     src/WebRequest.h \
     src/WebLoader.h \
     src/HttpMultiPart.h \

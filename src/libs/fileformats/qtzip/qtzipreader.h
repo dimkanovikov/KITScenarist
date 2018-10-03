@@ -42,15 +42,13 @@
 #ifndef QTZIPREADER_H
 #define QTZIPREADER_H
 
-#include "fileformatsglobal.h"
-
 #include <QDateTime>
 #include <QFile>
 #include <QString>
 
 class QtZipReaderPrivate;
 
-class FILEFORMATS_EXPORT QtZipReader
+class QtZipReader
 {
 public:
 	explicit QtZipReader(const QString &fileName, QIODevice::OpenMode mode = QIODevice::ReadOnly );
