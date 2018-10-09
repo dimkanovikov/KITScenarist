@@ -304,6 +304,7 @@ void StatisticsView::initView()
     m_save->setToolTip(tr("Save report to file"));
     m_update->setIcons(QIcon(":/Graphics/Iconset/refresh.svg"));
     m_update->setToolTip(tr("Update current report"));
+    m_navigation->setObjectName("statisticsNavigation");
 
 
     //

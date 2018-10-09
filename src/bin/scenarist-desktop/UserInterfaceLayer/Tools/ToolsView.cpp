@@ -120,6 +120,7 @@ void ToolsView::initView()
     m_settings->setToolTip(tr("Tool settings"));
     m_restore->setIcons(QIcon(":/Graphics/Iconset/check.svg"));
     m_restore->setToolTip(tr("Restore script"));
+    m_navigation->setObjectName("toolsNavigation");
 
     //
     // Настраиваем панель со списком инструментов
