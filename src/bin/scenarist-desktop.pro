@@ -49,6 +49,7 @@ LIBS += -L$$DESTDIR/../../libs/hunspell/ -lhunspell
 
 INCLUDEPATH += $$PWD/../libs/hunspell/src
 DEPENDPATH += $$PWD/../libs/hunspell
+PRE_TARGETDEPS += $$PWD/../libs/hunspell
 #
 
 ##
@@ -67,6 +68,7 @@ LIBS += -L$$DESTDIR/../../libs/fileformats/ -lfileformats
 
 INCLUDEPATH += $$PWD/../libs/fileformats
 DEPENDPATH += $$PWD/../libs/fileformats
+PRE_TARGETDEPS += $$PWD/../libs/fileformats
 #
 
 #
@@ -76,6 +78,7 @@ LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
 
 INCLUDEPATH += $$PWD/../libs/webloader/src
 DEPENDPATH += $$PWD/../libs/webloader/src
+PRE_TARGETDEPS += $$PWD/../libs/webloader/src
 #
 
 #
@@ -85,6 +88,7 @@ LIBS += -L$$DESTDIR/../../libs/qgumboparser/ -lqgumboparser
 
 INCLUDEPATH += $$PWD/../libs/qgumboparser
 DEPENDPATH += $$PWD/../libs/qgumboparser
+PRE_TARGETDEPS += $$PWD/../libs/qgumboparser
 #
 
 unix {

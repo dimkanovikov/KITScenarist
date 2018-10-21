@@ -441,7 +441,8 @@ void DocxReader::readParagraphProperties(Style& style, bool allowstyles)
 {
     int left_indent = 0, right_indent = 0, indent = 0, top_indent = 0, bottom_indent = 0;
     while (m_xml.readNextStartElement()) {
-        QStringRef value = m_xml.attributes().value("w:val");
+        const QXmlStreamAttributes& attributes = m_xml.attributes();
+        const QStringRef value = attributes.value("w:val");
         if (m_xml.qualifiedName() == "w:jc") {
             // ECMA-376 1st edition, ECMA-376 2nd edition transitional, ISO/IEC 29500 transitional
             if (value == "left") {
@@ -461,22 +462,32 @@ void DocxReader::readParagraphProperties(Style& style, bool allowstyles)
             }
         } else if (m_xml.qualifiedName() == "w:ind") {
             // ECMA-376 1st edition, ECMA-376 2nd edition transitional, ISO/IEC 29500 transitional
-            left_indent = ::pixelsFromTwips(m_xml.attributes().value("w:left").toString().toInt());
-            style.block_format.setLeftMargin(left_indent);
-            right_indent = ::pixelsFromTwips(m_xml.attributes().value("w:right").toString().toInt());
-            style.block_format.setRightMargin(right_indent);
+            if (attributes.hasAttribute("w:left")) {
+                left_indent = pixelsFromTwips(attributes.value("w:left").toString().toInt());
+                style.block_format.setLeftMargin(left_indent);
+            }
+            if (attributes.hasAttribute("w:right")) {
+                right_indent = pixelsFromTwips(attributes.value("w:right").toString().toInt());
+                style.block_format.setRightMargin(right_indent);
+            }
             // ECMA-376 2nd edition, ISO/IEC 29500 strict
-            indent = ::pixelsFromTwips(m_xml.attributes().value("w:start").toString().toInt());
-            if (indent) {
-                style.block_format.setIndent(indent);
-                left_indent = right_indent = 0;
+            if (attributes.hasAttribute("w:start")) {
+                indent = pixelsFromTwips(attributes.value("w:start").toString().toInt());
+                if (indent) {
+                    style.block_format.setIndent(indent);
+                    left_indent = right_indent = 0;
+                }
             }
         } else if (m_xml.qualifiedName() == "w:spacing") {
             // ECMA-376 1st edition, ECMA-376 2nd edition transitional, ISO/IEC 29500 transitional
-            top_indent = ::pixelsFromTwips(m_xml.attributes().value("w:before").toString().toInt());
-            style.block_format.setTopMargin(top_indent);
-            bottom_indent = ::pixelsFromTwips(m_xml.attributes().value("w:after").toString().toInt());
-            style.block_format.setBottomMargin(bottom_indent);
+            if (attributes.hasAttribute("w:before")) {
+                top_indent = pixelsFromTwips(attributes.value("w:before").toString().toInt());
+                style.block_format.setTopMargin(top_indent);
+            }
+            if (attributes.hasAttribute("w:after")) {
+                bottom_indent = pixelsFromTwips(attributes.value("w:after").toString().toInt());
+                style.block_format.setBottomMargin(bottom_indent);
+            }
         } else if (m_xml.qualifiedName() == "w:textDirection") {
             if (value == "rl") {
                 style.block_format.setLayoutDirection(Qt::RightToLeft);
@@ -484,7 +495,7 @@ void DocxReader::readParagraphProperties(Style& style, bool allowstyles)
                 style.block_format.setLayoutDirection(Qt::LeftToRight);
             }
         } else if (m_xml.qualifiedName() == "w:outlineLvl") {
-            int heading = qBound(1, m_xml.attributes().value("w:val").toString().toInt() + 1, 6);
+            int heading = qBound(1, attributes.value("w:val").toString().toInt() + 1, 6);
             style.block_format.setProperty(QTextFormat::UserProperty, heading);
         } else if ((m_xml.qualifiedName() == "w:pStyle") && allowstyles) {
             Style pstyle = m_styles.value(value.toString());
