@@ -575,7 +575,7 @@ void ApplicationManager::aboutSaveAs()
                 // ... сохраняем изменения
                 //
                 aboutSave();
-                m_view->setWindowModified(true);
+                updateWindowModified(m_view, true);
 
                 //
                 // ... обновим заголовок
@@ -1034,6 +1034,12 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     if (project.isUserOwner()) {
         if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
+            //
+            // Если в данный момент открыт проект, который пользователь хочет удалить, закрываем его
+            //
+            if (project == m_projectsManager->currentProject()) {
+                closeCurrentProject();
+            }
             m_synchronizationManager->removeProject(project.id());
         }
     }
@@ -1043,6 +1049,12 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     else {
         if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
+            //
+            // Если в данный момент открыт проект, от которого пользователь хочет отписаться, закрываем его
+            //
+            if (project == m_projectsManager->currentProject()) {
+                closeCurrentProject();
+            }
             m_synchronizationManager->unshareProject(project.id());
         }
     }
@@ -1795,7 +1807,7 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     // После того, как все данные загружены и синхронизированы, сохраняем проект
     //
     if (m_projectsManager->currentProject().isRemote()) {
-        m_view->setWindowModified(true);
+        updateWindowModified(m_view, true);
         aboutSave();
     }
 
@@ -1896,8 +1908,12 @@ void ApplicationManager::closeCurrentProject()
         //
         // Перейти на стартовую вкладку
         //
-        m_tabs->setCurrentTab(0);
+        m_tabs->setCurrentTab(STARTUP_TAB_INDEX);
+        m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
     }
+
+    updateWindowModified(m_view, false);
+    updateWindowTitle();
 }
 
 bool ApplicationManager::isProjectLoaded() const
@@ -2460,6 +2476,11 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
+    if (!m_projectsManager->isCurrentProjectValid()) {
+        m_view->setWindowTitle(tr("KIT Scenarist"));
+        return;
+    }
+
     //
     // Обновим название текущего проекта, если он локальный
     //
