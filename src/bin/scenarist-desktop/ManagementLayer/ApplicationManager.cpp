@@ -1804,14 +1804,6 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     m_statisticsManager->loadCurrentProject();
 
     //
-    // После того, как все данные загружены и синхронизированы, сохраняем проект
-    //
-    if (m_projectsManager->currentProject().isRemote()) {
-        updateWindowModified(m_view, true);
-        aboutSave();
-    }
-
-    //
     // Затем импортируем данные из указанного файла, если необходимо
     //
     if (!_importFilePath.isEmpty()) {
@@ -1859,6 +1851,14 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     progress.finish();
 
     m_state = ApplicationState::Working;
+
+    //
+    // После того, как все данные загружены и синхронизированы, сохраняем проект
+    //
+    if (m_projectsManager->currentProject().isRemote()) {
+        updateWindowModified(m_view, true);
+        aboutSave();
+    }
 }
 
 void ApplicationManager::closeCurrentProject()
