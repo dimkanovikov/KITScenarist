@@ -10,13 +10,8 @@ QT += core core-private gui gui-private sql xml widgets widgets-private printsup
 TARGET = Scenarist
 TEMPLATE = app
 
-CONFIG += c++11
-
-#
-# Отключаем предупреждения о статических функциях и переменных
-# не используемых в собственных заголовочных файлах
-#
-unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
+CONFIG += c++11 warn_on
+QMAKE_CXXFLAGS_WARN_ON += -Werror
 
 QMAKE_MAC_SDK = macosx10.13
 

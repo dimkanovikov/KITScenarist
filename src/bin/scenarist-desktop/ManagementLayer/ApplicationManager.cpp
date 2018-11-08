@@ -110,8 +110,10 @@ namespace {
     /**
      * @brief Суффикс "изменено" для заголовка окна добавляемый в маке
      */
+#ifdef Q_OS_MAC
     const char* MAC_CHANGED_SUFFIX =
             QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+#endif
 
     /**
      * @brief Флаги доступности синхронизации
