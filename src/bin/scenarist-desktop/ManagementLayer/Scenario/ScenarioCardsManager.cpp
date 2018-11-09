@@ -28,7 +28,7 @@ using UserInterface::ScenarioCardsView;
 using UserInterface::ScenarioItemDialog;
 
 namespace {
-    const bool IS_DRAFT = true;
+    //const bool IS_DRAFT = true;
     const bool IS_SCRIPT = false;
 }
 

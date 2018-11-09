@@ -80,7 +80,6 @@ namespace {
     const int kStartNewVersionMenuIndex = 4;
     const int kImportMenuIndex = 5;
     const int kExportMenuIndex = 6;
-    const int kPrintPreviewMenuIndex = 7;
     const int kTwoPanelModeMenuIndex = 9;
     /** @} */
 

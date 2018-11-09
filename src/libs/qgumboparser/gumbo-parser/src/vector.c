@@ -80,6 +80,7 @@ void gumbo_vector_add(
 
 void* gumbo_vector_pop(
     struct GumboInternalParser* parser, GumboVector* vector) {
+  (void)parser;
   if (vector->length == 0) {
     return NULL;
   }
@@ -117,6 +118,7 @@ void gumbo_vector_remove(
 
 void* gumbo_vector_remove_at(struct GumboInternalParser* parser,
     unsigned int index, GumboVector* vector) {
+  (void)parser;
   assert(index >= 0);
   assert(index < vector->length);
   void* result = vector->data[index];
