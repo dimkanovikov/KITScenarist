@@ -362,7 +362,8 @@ void StartUpManager::showUpdateDialogImpl()
 #else
             if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
 #endif
-                exit(0);
+                QApplication::quit();
+                return;
             } else {
                 updateDialogText = tr("<p>Can't install update. There are some problems with downloaded file.</p>"
                                       "<p>You can try to reload update or load it manually "

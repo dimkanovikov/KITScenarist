@@ -292,7 +292,7 @@ void Application::startApp()
     //
     // Запускаем остальную работу приложения
     //
-    m_applicationManager->makeStartUpChecks();
+    QTimer::singleShot(0, m_applicationManager, &ManagementLayer::ApplicationManager::makeStartUpChecks);
 }
 
 bool Application::notify(QObject* _object, QEvent* _event)
