@@ -29,6 +29,7 @@
 
 #include "gumbo.h"
 #include "parser.h"
+#include "helper.h"
 
 // TODO(jdtang): This should be elsewhere, but there's no .c file for
 // SourcePositions and yet the constant needs some linkage, so this is as good
@@ -59,6 +60,6 @@ void gumbo_debug(const char* format, ...) {
   va_end(args);
   fflush(stdout);
 #else
-    (void)format;
+    UNUSED(format);
 #endif
 }
