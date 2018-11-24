@@ -1319,7 +1319,7 @@ int AffixMgr::cpdrep_check(const char * word, int wl)
 }
 
 // forbid compoundings when there are special patterns at word bound
-int AffixMgr::cpdpat_check(const char * word, int pos, hentry * r1, hentry * r2, const char affixed)
+int AffixMgr::cpdpat_check(const char * word, int pos, hentry * r1, hentry * r2, const char)
 {
   int len;
   for (int i = 0; i < numcheckcpd; i++) {
@@ -3651,7 +3651,7 @@ int  AffixMgr::parse_convtable(char * line, FileMgr * af, RepList ** rl, const c
            if (*piece != '\0') {
                switch(i) {
                   case 0: {
-                             if (strncmp(piece, keyword, sizeof(keyword)) != 0) {
+                             if (strncmp(piece, keyword, strlen(keyword)) != 0) {
                                  HUNSPELL_WARNING(stderr, "error: line %d: table is corrupt\n", af->getlinenum());
                                  delete *rl;
                                  *rl = NULL;

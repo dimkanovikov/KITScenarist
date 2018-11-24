@@ -80,7 +80,6 @@ namespace {
     const int kStartNewVersionMenuIndex = 4;
     const int kImportMenuIndex = 5;
     const int kExportMenuIndex = 6;
-    const int kPrintPreviewMenuIndex = 7;
     const int kTwoPanelModeMenuIndex = 9;
     /** @} */
 
@@ -110,8 +109,10 @@ namespace {
     /**
      * @brief Суффикс "изменено" для заголовка окна добавляемый в маке
      */
+#ifdef Q_OS_MAC
     const char* MAC_CHANGED_SUFFIX =
             QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+#endif
 
     /**
      * @brief Флаги доступности синхронизации

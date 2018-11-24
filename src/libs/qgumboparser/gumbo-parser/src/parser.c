@@ -29,6 +29,7 @@
 #include "error.h"
 #include "gumbo.h"
 #include "insertion_mode.h"
+#include "helper.h"
 #include "parser.h"
 #include "tokenizer.h"
 #include "tokenizer_states.h"
@@ -59,9 +60,9 @@ static GumboInsertionMode get_current_template_insertion_mode(
 static bool handle_in_template(GumboParser*, GumboToken*);
 static void destroy_node(GumboParser*, GumboNode*);
 
-static void* malloc_wrapper(void* unused, size_t size) { return malloc(size); }
+static void* malloc_wrapper(void* unused, size_t size) { UNUSED(unused); return malloc(size); }
 
-static void free_wrapper(void* unused, void* ptr) { free(ptr); }
+static void free_wrapper(void* unused, void* ptr) { UNUSED(unused); free(ptr); }
 
 const GumboOptions kGumboDefaultOptions = {&malloc_wrapper, &free_wrapper, NULL,
     8, false, -1, GUMBO_TAG_LAST, GUMBO_NAMESPACE_HTML};
@@ -829,7 +830,7 @@ InsertionLocation get_appropriate_insertion_location(
 static void append_node(
     GumboParser* parser, GumboNode* parent, GumboNode* node) {
   assert(node->parent == NULL);
-  assert(node->index_within_parent == -1);
+  assert((int)node->index_within_parent == -1);
   GumboVector* children;
   if (parent->type == GUMBO_NODE_ELEMENT ||
       parent->type == GUMBO_NODE_TEMPLATE) {
@@ -850,7 +851,7 @@ static void append_node(
 static void insert_node(
     GumboParser* parser, GumboNode* node, InsertionLocation location) {
   assert(node->parent == NULL);
-  assert(node->index_within_parent == -1);
+  assert((int)node->index_within_parent == -1);
   GumboNode* parent = location.target;
   int index = location.index;
   if (index != -1) {
