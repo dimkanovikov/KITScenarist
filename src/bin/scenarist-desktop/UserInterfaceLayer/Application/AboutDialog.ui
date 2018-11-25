@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>582</height>
+    <height>664</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -161,6 +161,7 @@ Türkçe: Recep Burak Yak
 فارْسِى: Arash Aneessee
 汉语: Stepan Chernetskiy, Barron Kang
 עִבְרִית: Maxim Ronkin
+తెలుగు: Eshwar Mittapalli
 </string>
      </property>
      <property name="wordWrap">

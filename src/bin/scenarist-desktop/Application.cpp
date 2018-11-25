@@ -237,6 +237,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 16: {
+            translationSuffix = "te";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Azerbaijani;
+            break;
+        }
+
         default: break;
     }
 
