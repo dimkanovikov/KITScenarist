@@ -26,6 +26,7 @@
 #endif
 
 #include "string_piece.h"
+#include "helper.h"
 #include "util.h"
 
 struct GumboInternalParser;
@@ -105,6 +106,7 @@ char* gumbo_string_buffer_to_string(
 
 void gumbo_string_buffer_clear(
     struct GumboInternalParser* parser, GumboStringBuffer* input) {
+  UNUSED(parser);
   input->length = 0;
 }
 

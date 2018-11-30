@@ -19,6 +19,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include "helper.h"
 #ifdef WIN32
 #include "../visualc/include/strings.h"
 #else
@@ -80,6 +81,7 @@ void gumbo_vector_add(
 
 void* gumbo_vector_pop(
     struct GumboInternalParser* parser, GumboVector* vector) {
+  UNUSED(parser);
   if (vector->length == 0) {
     return NULL;
   }
@@ -117,6 +119,7 @@ void gumbo_vector_remove(
 
 void* gumbo_vector_remove_at(struct GumboInternalParser* parser,
     unsigned int index, GumboVector* vector) {
+  UNUSED(parser);
   assert(index >= 0);
   assert(index < vector->length);
   void* result = vector->data[index];

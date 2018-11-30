@@ -237,6 +237,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 16: {
+            translationSuffix = "te";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Azerbaijani;
+            break;
+        }
+
         default: break;
     }
 
@@ -292,7 +300,7 @@ void Application::startApp()
     //
     // Запускаем остальную работу приложения
     //
-    m_applicationManager->makeStartUpChecks();
+    QTimer::singleShot(0, m_applicationManager, &ManagementLayer::ApplicationManager::makeStartUpChecks);
 }
 
 bool Application::notify(QObject* _object, QEvent* _event)
