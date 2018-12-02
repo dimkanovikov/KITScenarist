@@ -358,11 +358,14 @@ void ExportDialog::checkExportAvailability(int _index)
         fileExists = m_ui->existsLabel;
     }
 
-    int lastCursorPosition = filePath->cursorPosition();
+    const int lastCursorPosition = filePath->cursorPosition();
     filePath->setText(FileHelper::systemSavebleFileName(filePath->text()));
     filePath->setCursorPosition(lastCursorPosition);
-    fileExists->setVisible(QFile::exists(filePath->text()));
 
+    const bool isFileExists = QFile::exists(filePath->text());
+    fileExists->setVisible(isFileExists);
+
+    m_ui->exportTo->setText(isFileExists ? tr("Rewrite") : tr("Export"));
     m_ui->exportTo->setEnabled(!filePath->text().isEmpty());
 }
 
