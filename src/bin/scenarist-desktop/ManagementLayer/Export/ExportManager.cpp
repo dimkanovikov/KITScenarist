@@ -204,7 +204,10 @@ void ExportManager::printPreview(BusinessLogic::ScenarioDocument* _scenario,
         // если диалог экспорта не был показан, или там стоит другой тип экспортируемого
         // документа, но мы попали сюда из меню
         //
-        exportParameters.isScript = true;
+        if (exportParameters.isOutline == false
+            && exportParameters.isScript == false) {
+            exportParameters.isScript = true;
+        }
         exporter.printPreview(_scenario, exportParameters);
     }
 
