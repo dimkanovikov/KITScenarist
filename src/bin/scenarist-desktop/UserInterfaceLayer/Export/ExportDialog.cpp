@@ -84,16 +84,20 @@ void ExportDialog::setResearchModel(QAbstractItemModel* _model)
 
 void ExportDialog::setScriptExportFilePath(const QString& _filePath)
 {
-    m_ui->file->setText(_filePath);
-    QFileInfo fileInfo(_filePath);
-    if (fileInfo.suffix() == "docx") {
-        m_ui->docx->setChecked(true);
-    } else if (fileInfo.suffix() == "pdf") {
-        m_ui->pdf->setChecked(true);
-    } else if (fileInfo.suffix() == "fdx") {
-        m_ui->fdx->setChecked(true);
+    if (!_filePath.isEmpty()) {
+        m_ui->file->setText(_filePath);
+        QFileInfo fileInfo(_filePath);
+        if (fileInfo.suffix() == "docx") {
+            m_ui->docx->setChecked(true);
+        } else if (fileInfo.suffix() == "pdf") {
+            m_ui->pdf->setChecked(true);
+        } else if (fileInfo.suffix() == "fdx") {
+            m_ui->fdx->setChecked(true);
+        } else {
+            m_ui->fountain->setChecked(true);
+        }
     } else {
-        m_ui->fountain->setChecked(true);
+        m_ui->pdf->setChecked(true);
     }
 
     checkScriptExportAvailability();

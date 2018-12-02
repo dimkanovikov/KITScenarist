@@ -244,7 +244,7 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
     m_exportDialog->setCheckPageBreaks(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/check-page-breaks").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+                    DataStorageLayer::SettingsStorage::ApplicationSettings, "1").toInt()
                 );
     m_exportDialog->setCurrentStyle(
                 StorageFacade::settingsStorage()->value(
