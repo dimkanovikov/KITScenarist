@@ -53,6 +53,11 @@ Application::Application(int& _argc, char** _argv) :
     // Загрузим шрифты в базу шрифтов программы, если их там ещё нет
     //
     QFontDatabase fontDatabase;
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Thin");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Regular");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Medium");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Bold");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Black");
     fontDatabase.addApplicationFont(":/Fonts/Courier New");
     fontDatabase.addApplicationFont(":/Fonts/Courier New Bold");
     fontDatabase.addApplicationFont(":/Fonts/Courier New Italic");
@@ -61,6 +66,9 @@ Application::Application(int& _argc, char** _argv) :
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Italic");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold Italic");
+    QFont font("Roboto");
+    font.setPixelSize(12);
+    setFont(font);
 
     //
     // Настроим перевод приложения

@@ -11,7 +11,7 @@ TARGET = Scenarist
 TEMPLATE = app
 
 CONFIG += c++11 warn_on
-QMAKE_CXXFLAGS_WARN_ON += -Werror
+#QMAKE_CXXFLAGS_WARN_ON += -Werror
 
 QMAKE_MAC_SDK = macosx10.13
 
