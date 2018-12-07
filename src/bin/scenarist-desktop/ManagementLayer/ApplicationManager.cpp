@@ -2269,6 +2269,13 @@ void ApplicationManager::initStyleSheet()
 void ApplicationManager::reloadApplicationSettings()
 {
     //
+    // Установить используемый приложением шрифт
+    //
+    QFont font("Roboto");
+    font.setPixelSize(13);
+    QApplication::setFont(font);
+
+    //
     // Внешний вид приложения
     //
     const bool useDarkTheme =

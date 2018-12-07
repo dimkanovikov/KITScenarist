@@ -66,9 +66,6 @@ Application::Application(int& _argc, char** _argv) :
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Italic");
     fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold Italic");
-    QFont font("Roboto");
-    font.setPixelSize(12);
-    setFont(font);
 
     //
     // Настроим перевод приложения
