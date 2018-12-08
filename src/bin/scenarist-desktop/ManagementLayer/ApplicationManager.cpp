@@ -2271,8 +2271,8 @@ void ApplicationManager::reloadApplicationSettings()
     //
     // Установить используемый приложением шрифт
     //
-    QFont font("Roboto");
-    font.setPixelSize(13);
+    QFont font("Roboto Regular");
+    font.setPixelSize(12);
     QApplication::setFont(font);
 
     //

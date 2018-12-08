@@ -109,7 +109,7 @@ void Application::updateTranslation()
     //
     // ... если не удалось определить локаль, используем англоязычный перевод
     //
-    QLocale::Language currentLanguage = QLocale::AnyLanguage;
+    QLocale::Language currentLanguage = QLocale::system().language();
     if (translationSuffix.isEmpty()) {
         translationSuffix = "en";
         currentLanguage = QLocale::English;
@@ -246,7 +246,7 @@ void Application::updateTranslation()
             translationSuffix = "te";
             qtTranslationSuffix = "en";
             qtBaseTranslationSuffix = "en";
-            currentLanguage = QLocale::Azerbaijani;
+            currentLanguage = QLocale::Telugu;
             break;
         }
 
