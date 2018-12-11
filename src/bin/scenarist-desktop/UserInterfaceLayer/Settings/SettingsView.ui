@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>718</width>
-    <height>600</height>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -215,92 +215,72 @@
               <item row="0" column="0" colspan="2">
                <widget class="QStackedWidget" name="applicationPageStack">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="applicationPageCommon">
                  <layout class="QGridLayout" name="gridLayout_18">
                   <item row="8" column="0">
-                   <widget class="QWidget" name="widget" native="true"/>
-                  </item>
-                  <item row="7" column="0">
-                   <widget class="QCheckBox" name="applicationTwoPanelMode">
-                    <property name="text">
-                     <string>Two Panel Mode (F2)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_11">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_4">
                     <item>
-                     <widget class="QCheckBox" name="saveBackups">
+                     <widget class="QCheckBox" name="spellChecking">
                       <property name="text">
-                       <string>Save Backups</string>
-                      </property>
-                      <property name="checked">
-                       <bool>false</bool>
+                       <string>Spell Checking</string>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="horizontalSpacer_16">
+                     <widget class="QComboBox" name="spellCheckingLanguage"/>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_22">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
-                      </property>
                       <property name="sizeHint" stdset="0">
                        <size>
-                        <width>6</width>
-                        <height>10</height>
+                        <width>40</width>
+                        <height>20</height>
                        </size>
                       </property>
                      </spacer>
                     </item>
+                   </layout>
+                  </item>
+                  <item row="0" column="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_13">
                     <item>
-                     <widget class="QLineEdit" name="saveBackupsFolder">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="clearButtonEnabled">
-                       <bool>false</bool>
+                     <widget class="QLabel" name="label_31">
+                      <property name="text">
+                       <string>Language:</string>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="FlatButton" name="browseBackupFolder">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="toolTip">
-                       <string>Browse...</string>
-                      </property>
+                     <widget class="QLabel" name="applicationLanguage">
                       <property name="text">
-                       <string>...</string>
-                      </property>
-                      <property name="icon">
-                       <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                        <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="autoRaise">
-                       <bool>true</bool>
+                       <string>Russian</string>
                       </property>
                      </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="changeLanguage">
+                      <property name="text">
+                       <string>Change</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_5">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
                     </item>
                    </layout>
                   </item>
@@ -389,6 +369,88 @@
                     </property>
                    </spacer>
                   </item>
+                  <item row="5" column="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_11">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QCheckBox" name="saveBackups">
+                      <property name="text">
+                       <string>Save Backups</string>
+                      </property>
+                      <property name="checked">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_16">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>6</width>
+                        <height>10</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="saveBackupsFolder">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="FlatButton" name="browseBackupFolder">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="toolTip">
+                       <string>Browse...</string>
+                      </property>
+                      <property name="text">
+                       <string>...</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                        <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>22</width>
+                        <height>22</height>
+                       </size>
+                      </property>
+                      <property name="autoRaise">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QCheckBox" name="applicationTwoPanelMode">
+                    <property name="text">
+                     <string>Two Panel Mode (F2)</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="1" column="0">
                    <widget class="QCheckBox" name="useDarkTheme">
                     <property name="text">
@@ -405,44 +467,6 @@
                      <string>Compact Mode</string>
                     </property>
                    </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_13">
-                    <item>
-                     <widget class="QLabel" name="label_31">
-                      <property name="text">
-                       <string>Language:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="applicationLanguage">
-                      <property name="text">
-                       <string>Russian</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="changeLanguage">
-                      <property name="text">
-                       <string>Change</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_5">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
                   </item>
                  </layout>
                 </widget>
@@ -872,7 +896,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="scenarioEditPageStack">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1533,6 +1557,95 @@
              </widget>
              <widget class="QWidget" name="page">
               <layout class="QGridLayout" name="gridLayout_4">
+               <item row="2" column="0" colspan="3">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QCheckBox" name="autoJumpToNextBlock">
+                   <property name="text">
+                    <string>Automatically jump to next paragraph</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="ToolTipLabel" name="label_39">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>For scene heading and character paragraphs.</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_23">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0" colspan="3">
+                <widget class="QCheckBox" name="reviewUseWordHighlight">
+                 <property name="text">
+                  <string>Use MS Word like review highlighting colors</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0" colspan="3">
+                <widget class="QCheckBox" name="showSuggestionsInEmptyBlocks">
+                 <property name="text">
+                  <string>Autocomplete next character for dialogue</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0" colspan="3">
+                <spacer name="verticalSpacer_7">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="4" column="0" colspan="3">
+                <widget class="QCheckBox" name="useOpenBracketInDialogueForParenthetical">
+                 <property name="text">
+                  <string>Use open bracket in dialogue for jump to parenthetical</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_20">
                  <property name="text">
@@ -1556,17 +1669,7 @@
                  </property>
                 </spacer>
                </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="spellChecking">
-                 <property name="text">
-                  <string>Spell Checking</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QComboBox" name="spellCheckingLanguage"/>
-               </item>
-               <item row="2" column="0" colspan="3">
+               <item row="1" column="0" colspan="3">
                 <widget class="QGroupBox" name="groupBox_2">
                  <property name="title">
                   <string>Text corrections</string>
@@ -1617,7 +1720,7 @@
                  </layout>
                 </widget>
                </item>
-               <item row="2" column="3">
+               <item row="1" column="3">
                 <spacer name="horizontalSpacer_11">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -1629,95 +1732,6 @@
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="3" column="0" colspan="3">
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
-                 <item>
-                  <widget class="QCheckBox" name="autoJumpToNextBlock">
-                   <property name="text">
-                    <string>Automatically jump to next paragraph</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="ToolTipLabel" name="label_39">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>For scene heading and character paragraphs.</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="pixmap">
-                    <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
-                   </property>
-                   <property name="scaledContents">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_23">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item row="6" column="0" colspan="3">
-                <widget class="QCheckBox" name="reviewUseWordHighlight">
-                 <property name="text">
-                  <string>Use MS Word like review highlighting colors</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0" colspan="3">
-                <widget class="QCheckBox" name="showSuggestionsInEmptyBlocks">
-                 <property name="text">
-                  <string>Autocomplete next character for dialogue</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0" colspan="3">
-                <spacer name="verticalSpacer_7">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="5" column="0" colspan="3">
-                <widget class="QCheckBox" name="useOpenBracketInDialogueForParenthetical">
-                 <property name="text">
-                  <string>Use open bracket in dialogue for jump to parenthetical</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
                </item>
               </layout>
              </widget>
@@ -2733,52 +2747,33 @@ Paragraph</string>
  </customwidgets>
  <tabstops>
   <tabstop>categories</tabstop>
+  <tabstop>changeLanguage</tabstop>
+  <tabstop>useDarkTheme</tabstop>
   <tabstop>autosave</tabstop>
   <tabstop>autosaveInterval</tabstop>
   <tabstop>saveBackups</tabstop>
   <tabstop>saveBackupsFolder</tabstop>
   <tabstop>browseBackupFolder</tabstop>
-  <tabstop>chronometryGroup</tabstop>
-  <tabstop>charactersChronometryCharacters</tabstop>
-  <tabstop>charactersChronometrySeconds</tabstop>
-  <tabstop>newTemplate</tabstop>
-  <tabstop>configurableChronometrySecondsForParagraphSceneHeading</tabstop>
-  <tabstop>charactersChronometryConsiderSpaces</tabstop>
-  <tabstop>configurableChronometry</tabstop>
-  <tabstop>currentScenarioTemplate</tabstop>
+  <tabstop>applicationCompactMode</tabstop>
+  <tabstop>applicationTwoPanelMode</tabstop>
   <tabstop>spellChecking</tabstop>
   <tabstop>spellCheckingLanguage</tabstop>
-  <tabstop>autoContinueDialogue</tabstop>
-  <tabstop>autoCorrectionsOnPageBreaks</tabstop>
-  <tabstop>capitalizeFirstWord</tabstop>
-  <tabstop>correctDoubleCapitals</tabstop>
-  <tabstop>replaceThreeDots</tabstop>
-  <tabstop>smartQuotes</tabstop>
-  <tabstop>autoJumpToNextBlock</tabstop>
-  <tabstop>showSuggestionsInEmptyBlocks</tabstop>
-  <tabstop>reviewUseWordHighlight</tabstop>
-  <tabstop>loadTemplate</tabstop>
-  <tabstop>removeTemplate</tabstop>
-  <tabstop>saveTemplate</tabstop>
-  <tabstop>templates</tabstop>
-  <tabstop>showSceneDescription</tabstop>
-  <tabstop>showScenesNumbersInNavigator</tabstop>
-  <tabstop>sceneDescriptionIsSceneText</tabstop>
-  <tabstop>editTemplate</tabstop>
-  <tabstop>scenarioEditBlockSettingsTable</tabstop>
-  <tabstop>resetSettings</tabstop>
-  <tabstop>charactersChronometry</tabstop>
-  <tabstop>applyTemplate</tabstop>
-  <tabstop>sceneDescriptionHeight</tabstop>
-  <tabstop>useDarkTheme</tabstop>
-  <tabstop>applicationTwoPanelMode</tabstop>
-  <tabstop>changeLanguage</tabstop>
   <tabstop>applicationModuleResearch</tabstop>
+  <tabstop>applicationModuleCards</tabstop>
   <tabstop>applicationModuleScenario</tabstop>
   <tabstop>applicationModuleStatistics</tabstop>
+  <tabstop>applicationModuleTools</tabstop>
+  <tabstop>researchDefaultFont</tabstop>
+  <tabstop>researchDefaultFontSize</tabstop>
+  <tabstop>cardsUseCorkboardBackground</tabstop>
+  <tabstop>cardsUseColorsBackground</tabstop>
+  <tabstop>cardsBackgroundColor</tabstop>
+  <tabstop>cardsBackgroundColorDark</tabstop>
   <tabstop>pageView</tabstop>
   <tabstop>showScenesNumbersInEditor</tabstop>
+  <tabstop>showDialoguesNumbersInEditor</tabstop>
   <tabstop>scriptHidePanelsInFullscreen</tabstop>
+  <tabstop>highlightBlocks</tabstop>
   <tabstop>highlightCurrentLine</tabstop>
   <tabstop>textColor</tabstop>
   <tabstop>backgroundColor</tabstop>
@@ -2790,26 +2785,49 @@ Paragraph</string>
   <tabstop>folderTextColorDark</tabstop>
   <tabstop>folderBackgroundColorDark</tabstop>
   <tabstop>nonprintableTextColorDark</tabstop>
+  <tabstop>currentScenarioTemplate</tabstop>
+  <tabstop>autoContinueDialogue</tabstop>
+  <tabstop>autoCorrectionsOnPageBreaks</tabstop>
+  <tabstop>capitalizeFirstWord</tabstop>
+  <tabstop>correctDoubleCapitals</tabstop>
+  <tabstop>replaceThreeDots</tabstop>
+  <tabstop>smartQuotes</tabstop>
+  <tabstop>autoJumpToNextBlock</tabstop>
+  <tabstop>showSuggestionsInEmptyBlocks</tabstop>
+  <tabstop>useOpenBracketInDialogueForParenthetical</tabstop>
+  <tabstop>reviewUseWordHighlight</tabstop>
+  <tabstop>scenarioEditBlockSettingsTable</tabstop>
+  <tabstop>showScenesNumbersInNavigator</tabstop>
+  <tabstop>showSceneTitle</tabstop>
+  <tabstop>showSceneDescription</tabstop>
+  <tabstop>sceneDescriptionIsSceneText</tabstop>
+  <tabstop>sceneDescriptionIsSceneSynopsis</tabstop>
+  <tabstop>sceneDescriptionHeight</tabstop>
+  <tabstop>pagesCounter</tabstop>
+  <tabstop>wordsCounter</tabstop>
+  <tabstop>simbolsCounter</tabstop>
+  <tabstop>chronometryGroup</tabstop>
+  <tabstop>pagesChronometry</tabstop>
+  <tabstop>pagesChronometrySeconds</tabstop>
+  <tabstop>charactersChronometry</tabstop>
+  <tabstop>charactersChronometryCharacters</tabstop>
+  <tabstop>charactersChronometrySeconds</tabstop>
+  <tabstop>charactersChronometryConsiderSpaces</tabstop>
+  <tabstop>configurableChronometry</tabstop>
+  <tabstop>configurableChronometrySecondsForParagraphSceneHeading</tabstop>
+  <tabstop>configurableChronometrySecondsPer50CharactersSceneHeading</tabstop>
   <tabstop>configurableChronometrySecondsForParagraphAction</tabstop>
   <tabstop>configurableChronometrySecondsPer50CharactersAction</tabstop>
   <tabstop>configurableChronometrySecondsForParagraphDialog</tabstop>
   <tabstop>configurableChronometrySecondsPer50CharactersDialog</tabstop>
-  <tabstop>pagesCounter</tabstop>
-  <tabstop>simbolsCounter</tabstop>
-  <tabstop>sceneDescriptionIsSceneSynopsis</tabstop>
-  <tabstop>wordsCounter</tabstop>
-  <tabstop>applicationCompactMode</tabstop>
-  <tabstop>applicationModuleCards</tabstop>
-  <tabstop>researchDefaultFont</tabstop>
-  <tabstop>researchDefaultFontSize</tabstop>
-  <tabstop>cardsUseCorkboardBackground</tabstop>
-  <tabstop>cardsUseColorsBackground</tabstop>
-  <tabstop>cardsBackgroundColor</tabstop>
-  <tabstop>cardsBackgroundColorDark</tabstop>
-  <tabstop>showSceneTitle</tabstop>
-  <tabstop>pagesChronometry</tabstop>
-  <tabstop>pagesChronometrySeconds</tabstop>
-  <tabstop>configurableChronometrySecondsPer50CharactersSceneHeading</tabstop>
+  <tabstop>templates</tabstop>
+  <tabstop>newTemplate</tabstop>
+  <tabstop>editTemplate</tabstop>
+  <tabstop>removeTemplate</tabstop>
+  <tabstop>loadTemplate</tabstop>
+  <tabstop>saveTemplate</tabstop>
+  <tabstop>applyTemplate</tabstop>
+  <tabstop>resetSettings</tabstop>
  </tabstops>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
