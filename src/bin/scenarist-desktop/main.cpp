@@ -9,9 +9,21 @@
 #include <ManagementLayer/ApplicationManager.h>
 #include <ManagementLayer/Onboarding/OnboardingManager.h>
 
+#include <QScreen>
+
 
 int main(int argc, char *argv[])
 {
+    //
+    // Настроем масштабирование, для 4К
+    //
+    if (QApplication(argc, argv).primaryScreen()->size().width() > 3800) {
+        qputenv("QT_SCALE_FACTOR", "2");
+    }
+
+    //
+    // После того, как было настроено разрешение, можно стартовать основное приложение
+    //
     Application application(argc, argv);
 
 #ifdef Q_OS_WIN
