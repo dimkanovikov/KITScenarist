@@ -661,10 +661,35 @@ void ScenarioManager::aboutRefreshLocations()
 
 void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
 {
-    if (_isDraft) {
-        m_scenarioDraft->document()->applyPatch(_patch);
-    } else {
-        m_scenario->document()->applyPatch(_patch);
+    auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
+
+    //
+    // Пробуем применить патч
+    //
+    int pos = scriptTextDocument->applyPatch(_patch);
+
+    //
+    // Если применение патча обломалось, откатываемся до состояния адекватного облаку
+    //
+    // В текущем конфликте уступаем первенство тому автору, который первым вылил изменения
+    //
+    const int invalidPos = -1;
+    while (pos == invalidPos) {
+        //
+        // Отменяем последнее изменение без сохранения операции и без возможности повтора
+        //
+        const bool forced = true;
+        scriptTextDocument->undoReimpl(forced);
+
+        //
+        // Удаляем из истории изменений последнее действие
+        //
+        DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
+
+        //
+        // Пробуем повторно применить патч
+        //
+        pos = scriptTextDocument->applyPatch(_patch);
     }
 }
 
