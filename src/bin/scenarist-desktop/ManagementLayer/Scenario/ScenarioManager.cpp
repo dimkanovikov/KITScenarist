@@ -659,38 +659,73 @@ void ScenarioManager::aboutRefreshLocations()
     }
 }
 
-void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
+void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int _newChangesSize)
 {
     auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
 
     //
-    // Пробуем применить патч
+    // Извлекаем и откатываем список собственный изменений, которые ещё не были синхронизированы
     //
-    int pos = scriptTextDocument->applyPatch(_patch);
-
-    //
-    // Если применение патча обломалось, откатываемся до состояния адекватного облаку
-    //
-    // В текущем конфликте уступаем первенство тому автору, который первым вылил изменения
-    //
-    const int invalidPos = -1;
-    while (pos == invalidPos) {
-        //
-        // Отменяем последнее изменение без сохранения операции и без возможности повтора
-        //
+    for (int i = 0; i < _newChangesSize; ++i) {
         const bool forced = true;
         scriptTextDocument->undoReimpl(forced);
-
-        //
-        // Удаляем из истории изменений последнее действие
-        //
-        DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
-
-        //
-        // Пробуем повторно применить патч
-        //
-        pos = scriptTextDocument->applyPatch(_patch);
     }
+
+    //
+    // Применяем патч
+    //
+    scriptTextDocument->applyPatch(_patch);
+
+    //
+    // Пробуем накатить собственные изменения, если накатить не удалось, то удаляем их
+    //
+    QList<ScenarioChange> changes;
+    for (int i = 0; i < _newChangesSize; ++i) {
+        changes.prepend(*DataStorageLayer::StorageFacade::scenarioChangeStorage()->last());
+        DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
+    }
+    for (int i = 0; i < _newChangesSize; ++i) {
+        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch());
+        if (pos != -1) {
+            DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
+                        QUuid::createUuid().toString(), changes[i].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz"),
+                        changes[i].user(), changes[i].undoPatch(), changes[i].redoPatch(), changes[i].isDraft());
+        } else {
+            break;
+        }
+    }
+
+
+
+
+//    //
+//    // Пробуем применить патч
+//    //
+//    int pos = scriptTextDocument->applyPatch(_patch);
+
+//    //
+//    // Если применение патча обломалось, откатываемся до состояния адекватного облаку
+//    //
+//    // В текущем конфликте уступаем первенство тому автору, который первым вылил изменения
+//    //
+//    const int invalidPos = -1;
+//    while (pos == invalidPos) {
+//        //
+//        // Отменяем последнее изменение без сохранения операции и без возможности повтора
+//        //
+//        const bool forced = true;
+//        scriptTextDocument->undoReimpl(forced);
+
+//        //
+//        // Удаляем из истории изменений последнее действие
+//        //
+//        DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
+
+//        //
+//        // Пробуем повторно применить патч
+//        //
+//        pos = scriptTextDocument->applyPatch(_patch);
+//    }
 }
 
 void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft)
