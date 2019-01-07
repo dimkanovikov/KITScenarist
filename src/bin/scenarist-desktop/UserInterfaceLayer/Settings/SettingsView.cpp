@@ -772,6 +772,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
     m_ui->spellCheckingLanguage->addItem(tr("Farsi"), SpellChecker::Farsi);
     m_ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
+    m_ui->spellCheckingLanguage->addItem(tr("German"), SpellChecker::German);
     m_ui->spellCheckingLanguage->addItem(tr("Hebrew"), SpellChecker::Hebrew);
     m_ui->spellCheckingLanguage->addItem(tr("Hungarian"), SpellChecker::Hungarian);
     m_ui->spellCheckingLanguage->addItem(tr("Italian"), SpellChecker::Italian);
