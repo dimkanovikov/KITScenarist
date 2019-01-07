@@ -216,6 +216,11 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Telugu"));
             break;
         }
+
+        case 17: {
+            m_ui->applicationLanguage->setText(tr("Brazilian Portuguese"));
+            break;
+        }
     }
 }
 

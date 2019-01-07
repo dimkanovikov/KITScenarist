@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>497</width>
-    <height>453</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -195,6 +195,16 @@
     <widget class="QRadioButton" name="telugu">
      <property name="text">
       <string>తెలుగు</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QRadioButton" name="portuguesBrasil">
+     <property name="text">
+      <string>Português brasileiro</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

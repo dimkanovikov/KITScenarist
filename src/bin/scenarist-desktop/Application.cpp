@@ -250,6 +250,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 17: {
+            translationSuffix = "pt_br";
+            qtTranslationSuffix = "pt";
+            qtBaseTranslationSuffix = "pt";
+            currentLanguage = QLocale::Portuguese;
+            break;
+        }
+
         default: break;
     }
 
