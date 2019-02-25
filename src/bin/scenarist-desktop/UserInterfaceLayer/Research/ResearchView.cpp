@@ -208,6 +208,7 @@ void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editTitlePage(const QString& _name, const QString& _additionalInfo,
@@ -226,6 +227,7 @@ void ResearchView::editTitlePage(const QString& _name, const QString& _additiona
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editLogline(const QString& _logline)
@@ -238,6 +240,7 @@ void ResearchView::editLogline(const QString& _logline)
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editSynopsis(const QString& _synopsis)
@@ -250,6 +253,7 @@ void ResearchView::editSynopsis(const QString& _synopsis)
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editVersions(QAbstractItemModel* _versions)
@@ -262,6 +266,8 @@ void ResearchView::editVersions(QAbstractItemModel* _versions)
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(true);
+    connect(m_ui->addResearchContent, &FlatButton::clicked, this, &ResearchView::addScriptVersionRequested);
 }
 
 void ResearchView::editCharactersRoot()
@@ -274,6 +280,7 @@ void ResearchView::editCharactersRoot()
     setResearchManageButtonsVisible(true, false, true);
     m_ui->refreshResearchSubtree->setToolTip(tr("Find All Characters from Script"));
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editCharacter(const QString& _name, const QString& _realName, const QString& _description)
@@ -288,6 +295,7 @@ void ResearchView::editCharacter(const QString& _name, const QString& _realName,
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editLocationsRoot()
@@ -300,6 +308,7 @@ void ResearchView::editLocationsRoot()
     setResearchManageButtonsVisible(true, false, true);
     m_ui->refreshResearchSubtree->setToolTip(tr("Find All Locations from Script"));
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editLocation(const QString& _name, const QString& _description)
@@ -313,6 +322,7 @@ void ResearchView::editLocation(const QString& _name, const QString& _descriptio
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editResearchRoot()
@@ -324,6 +334,7 @@ void ResearchView::editResearchRoot()
     //
     setResearchManageButtonsVisible(true, false);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editText(const QString& _name, const QString& _description)
@@ -343,6 +354,7 @@ void ResearchView::editText(const QString& _name, const QString& _description)
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(true);
+    setAddVisible(false);
 }
 
 void ResearchView::editUrl(const QString& _name, const QString& _url, const QString& _cachedContent)
@@ -364,6 +376,7 @@ void ResearchView::editUrl(const QString& _name, const QString& _url, const QStr
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>& _images)
@@ -392,6 +405,7 @@ void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>&
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editImage(const QString& _name, const QPixmap& _image)
@@ -409,6 +423,7 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::editMindMap(const QString &_name, const QString &_xml)
@@ -434,6 +449,7 @@ void ResearchView::editMindMap(const QString &_name, const QString &_xml)
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
 }
 
 void ResearchView::updateTextEditorText(const QString& _text, SimpleTextEditor* _editor)
@@ -604,6 +620,15 @@ void ResearchView::setSearchVisible(bool _isVisible)
     m_ui->searchWidget->setVisible(m_ui->search->isVisible() && m_ui->search->isChecked());
 }
 
+void ResearchView::setAddVisible(bool _isVisible)
+{
+    m_ui->addResearchContent->setVisible(_isVisible);
+
+    if (!_isVisible) {
+        m_ui->addResearchContent->disconnect();
+    }
+}
+
 void ResearchView::currentResearchChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     Q_UNUSED(selected)
@@ -682,6 +707,7 @@ void ResearchView::initView()
     m_ui->researchSplitter->setStretchFactor(1, 1);
 
     m_ui->search->setIcons(m_ui->search->icon());
+    m_ui->addResearchContent->setIcons(m_ui->addResearchContent->icon());
 
     m_ui->loglineText->setToolbarVisible(false);
 
@@ -1020,6 +1046,7 @@ void ResearchView::initStyleSheet()
     m_ui->refreshResearchSubtree->setProperty("inTopPanel", true);
 
     m_ui->search->setProperty("inTopPanel", true);
+    m_ui->addResearchContent->setProperty("inTopPanel", true);
 
     m_ui->addFolder->setProperty("leftAlignedText", true);
     m_ui->addText->setProperty("leftAlignedText", true);

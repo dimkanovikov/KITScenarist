@@ -2164,6 +2164,7 @@ void ApplicationManager::initConnections()
     connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
     connect(m_researchManager, &ResearchManager::locationNameChanged, m_scenarioManager, &ScenarioManager::aboutLocationNameChanged);
     connect(m_researchManager, &ResearchManager::refreshLocations, m_scenarioManager, &ScenarioManager::aboutRefreshLocations);
+    connect(m_researchManager, &ResearchManager::addScriptVersionRequested, this, &ApplicationManager::aboutStartNewVersion);
 
     connect(m_scenarioManager, &ScenarioManager::showFullscreen, this, &ApplicationManager::aboutShowFullscreen);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, this, &ApplicationManager::aboutUpdateLastChangeInfo);

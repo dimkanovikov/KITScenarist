@@ -154,6 +154,11 @@ namespace ManagementLayer
          */
         void refreshLocations();
 
+        /**
+         * @brief Запрос на добавление версии сценария
+         */
+        void addScriptVersionRequested();
+
     private:
         /**
          * @brief Добавить разработку

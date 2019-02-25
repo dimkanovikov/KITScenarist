@@ -702,6 +702,7 @@ void ResearchManager::initConnections()
     //
     // ... версии
     //
+    connect(m_view, &ResearchView::addScriptVersionRequested, this, &ResearchManager::addScriptVersionRequested);
     connect(m_view, &ResearchView::removeScriptVersionRequested, this, [this] (const QModelIndex& index) {
         auto scriptVersionModel = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
         Domain::ScriptVersion* scriptVersion = dynamic_cast<Domain::ScriptVersion*>(scriptVersionModel->itemForIndex(index));

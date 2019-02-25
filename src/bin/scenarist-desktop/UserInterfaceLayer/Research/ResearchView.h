@@ -217,6 +217,11 @@ namespace UserInterface
         /** @{ */
 
         /**
+         * @brief Запрос на добавление версии сценария
+         */
+        void addScriptVersionRequested();
+
+        /**
          * @brief Запрос на удаление версии сценария
          */
         void removeScriptVersionRequested(const QModelIndex& _projectIndex);
@@ -242,6 +247,11 @@ namespace UserInterface
          * @brief Скрыть/показать кнопку поиска и панель поиска
          */
         void setSearchVisible(bool _isVisible);
+
+        /**
+         * @brief Скрыть/показать кнопку добавления содержимого контента
+         */
+        void setAddVisible(bool _isVisible);
 
         /**
          * @brief Изменён текущий объект разработки
