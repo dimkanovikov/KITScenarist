@@ -14,11 +14,14 @@ namespace Ui {
 
 class QAbstractItemModel;
 class QItemSelection;
+class ScalableWrapper;
 class SimpleTextEditor;
 
 
 namespace UserInterface
 {
+    class ScenarioTextEdit;
+
     /**
      * @brief Представление разработки
      */
@@ -254,6 +257,11 @@ namespace UserInterface
         void setAddVisible(bool _isVisible);
 
         /**
+         * @brief Скрыть/показать кнопку возвращения к контенту
+         */
+        void setBackVisible(bool _isVisible);
+
+        /**
          * @brief Изменён текущий объект разработки
          */
         void currentResearchChanged(const QItemSelection &selected, const QItemSelection &deselected);
@@ -294,6 +302,16 @@ namespace UserInterface
          * @brief Интерфейс представления
          */
         Ui::ResearchView* m_ui = nullptr;
+
+        /**
+         * @brief Редактор текста сценария для отображения результатов работы инструментов
+         */
+        ScenarioTextEdit* m_editor = nullptr;
+
+        /**
+         * @brief Обёртка редактора, позволяющая его масштабировать
+         */
+        ScalableWrapper* m_editorWrapper = nullptr;
 
         /**
          * @brief Находится ли текстовый редактор в режиме обновления панели инструментов с форматом

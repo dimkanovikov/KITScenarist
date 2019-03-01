@@ -13,7 +13,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_8">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -26,10 +29,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
+   <item>
     <widget class="QSplitter" name="researchSplitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -101,10 +101,10 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <item row="2" column="0" colspan="3">
+       <item row="2" column="0" colspan="6">
         <widget class="SearchWidget" name="searchWidget"/>
        </item>
-       <item row="0" column="2">
+       <item row="0" column="5">
         <widget class="QLabel" name="topDataLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -117,30 +117,13 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="FlatButton" name="search">
-         <property name="toolTip">
-          <string>Search</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-           <normaloff>:/Graphics/Iconset/magnify.svg</normaloff>:/Graphics/Iconset/magnify.svg</iconset>
-         </property>
-         <property name="shortcut">
-          <string>Ctrl+Tab</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
+       <item row="1" column="0" colspan="6">
         <widget class="QStackedWidget" name="researchDataEditsContainer">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="scriptEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -424,7 +407,7 @@ p, li { white-space: pre-wrap; }
           </layout>
          </widget>
          <widget class="QWidget" name="versionsEdit">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -441,13 +424,36 @@ p, li { white-space: pre-wrap; }
             <number>0</number>
            </property>
            <item>
-            <widget class="UserInterface::ScriptVersionsList" name="versions">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
+            <widget class="QStackedWidget" name="versionsContent">
+             <widget class="QWidget" name="versionsPage">
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="UserInterface::ScriptVersionsList" name="versions">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -1374,7 +1380,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="4">
         <widget class="FlatButton" name="addResearchContent">
          <property name="toolTip">
           <string>Search</string>
@@ -1385,6 +1391,37 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="shortcut">
           <string>Ctrl+Tab</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="FlatButton" name="backToResearchContent">
+         <property name="toolTip">
+          <string>Search</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+           <normaloff>:/Graphics/Iconset/arrow-left.svg</normaloff>:/Graphics/Iconset/arrow-left.svg</iconset>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+Tab</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="FlatButton" name="search">
+         <property name="toolTip">
+          <string>Search</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+           <normaloff>:/Graphics/Iconset/magnify.svg</normaloff>:/Graphics/Iconset/magnify.svg</iconset>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+Tab</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -1458,7 +1495,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>scriptSceneNumbersPrefix</tabstop>
   <tabstop>researchNavigator</tabstop>
   <tabstop>refreshResearchSubtree</tabstop>
-  <tabstop>search</tabstop>
   <tabstop>removeResearchItem</tabstop>
   <tabstop>titlePageName</tabstop>
   <tabstop>titlePageGenre</tabstop>
