@@ -662,7 +662,7 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
             //
             // Игнорируем все оттенки близкие к чёрному
             //
-            if (color.value() > 10) {
+            if (color.black() < 220) {
                 style.char_format.setProperty(Docx::IsForeground, true);
                 style.char_format.setForeground(color);
             }
