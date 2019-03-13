@@ -1,18 +1,22 @@
 #include "ResearchManager.h"
 
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
+#include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
 #include <Domain/Research.h>
+#include <Domain/Scenario.h>
 #include <Domain/ScenarioData.h>
 #include <Domain/ScriptVersion.h>
 
 #include <BusinessLayer/Research/ResearchModel.h>
 #include <BusinessLayer/Research/ResearchModelItem.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
 #include <UserInterfaceLayer/Research/ResearchView.h>
 #include <UserInterfaceLayer/Research/ResearchItemDialog.h>
@@ -49,7 +53,8 @@ ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
     m_dialog(new ResearchItemDialog(m_view)),
     m_model(new ResearchModel(this)),
     m_currentResearchItem(0),
-    m_currentResearch(0)
+    m_currentResearch(0),
+    m_script(new BusinessLogic::ScenarioDocument(this))
 {
     initView();
     initConnections();
@@ -166,6 +171,49 @@ void ResearchManager::updateSettings()
                                 DataStorageLayer::SettingsStorage::ApplicationSettings)
                             .toInt());
     m_view->setTextSettings(scenarioTemplate.pageSizeId(), scenarioTemplate.pageMargins(), scenarioTemplate.numberingAlignment(), defaultFont);
+
+    //
+    // Настроить параметры редактора сценария
+    //
+    m_view->setScriptShowScenesNumbers(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/show-scenes-numbers",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt());
+    m_view->setScriptShowDialoguesNumbers(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/show-dialogues-numbers",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt());
+
+    //
+    // Цветовая схема
+    //
+    const bool useDarkTheme =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/use-dark-theme",
+                DataStorageLayer::SettingsStorage::ApplicationSettings)
+            .toInt();
+    const QString colorSuffix = useDarkTheme ? "-dark" : "";
+    m_view->setScriptTextEditColors(
+                QColor(
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "scenario-editor/text-color" + colorSuffix,
+                        DataStorageLayer::SettingsStorage::ApplicationSettings)
+                    ),
+                QColor(
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "scenario-editor/background-color" + colorSuffix,
+                        DataStorageLayer::SettingsStorage::ApplicationSettings)
+                    )
+                );
+
+    //
+    // Умолчальный шрифт документа
+    //
+    m_script->document()->setDefaultFont(
+        BusinessLogic::ScenarioTemplateFacade::getTemplate().blockStyle(
+                    BusinessLogic::ScenarioBlockStyle::Action).font());
 }
 
 void ResearchManager::saveResearch()
@@ -650,6 +698,7 @@ void ResearchManager::updateScenarioData(const QString& _key, const QString& _va
 void ResearchManager::initView()
 {
     m_view->setResearchModel(m_model);
+    m_view->setScriptDocument(m_script->document());
 }
 
 void ResearchManager::initConnections()
@@ -703,9 +752,31 @@ void ResearchManager::initConnections()
     // ... версии
     //
     connect(m_view, &ResearchView::addScriptVersionRequested, this, &ResearchManager::addScriptVersionRequested);
-    connect(m_view, &ResearchView::removeScriptVersionRequested, this, [this] (const QModelIndex& index) {
+    connect(m_view, &ResearchView::showScriptVersionRequested, this, [this] (const QModelIndex& _index) {
+        QString scriptText;
+        const int mappedVersionIndex = _index.row() + 1;
         auto scriptVersionModel = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
-        Domain::ScriptVersion* scriptVersion = dynamic_cast<Domain::ScriptVersion*>(scriptVersionModel->itemForIndex(index));
+        if (mappedVersionIndex < scriptVersionModel->rowCount()) {
+            Domain::ScriptVersion* scriptVersion
+                    = dynamic_cast<Domain::ScriptVersion*>(scriptVersionModel->itemForIndex(
+                                                               _index.sibling(mappedVersionIndex, _index.column())));
+            scriptText = scriptVersion->scriptText();
+        } else {
+            scriptText = DataStorageLayer::StorageFacade::scenarioStorage()->current()->text();
+        }
+
+        Domain::Scenario* scenario = m_script->scenario();
+        if (scenario == nullptr) {
+            scenario = new Domain::Scenario(Domain::Identifier(), QString(), QString(), false);
+        }
+        scenario->setText(scriptText);
+        m_script->load(scenario);
+        updateSettings();
+
+    });
+    connect(m_view, &ResearchView::removeScriptVersionRequested, this, [this] (const QModelIndex& _index) {
+        auto scriptVersionModel = DataStorageLayer::StorageFacade::scriptVersionStorage()->all();
+        Domain::ScriptVersion* scriptVersion = dynamic_cast<Domain::ScriptVersion*>(scriptVersionModel->itemForIndex(_index));
         if (QLightBoxMessage::question(m_view, QString(), tr("Do you really want to delete script version named <b>%1</b>?")
                                                           .arg(scriptVersion->name()))
             == QDialogButtonBox::Yes) {

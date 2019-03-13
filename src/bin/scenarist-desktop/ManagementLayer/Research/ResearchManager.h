@@ -18,6 +18,7 @@ namespace Domain {
 namespace BusinessLogic {
     class ResearchModel;
     class ResearchModelItem;
+    class ScenarioDocument;
 }
 
 
@@ -230,6 +231,11 @@ namespace ManagementLayer
          */
         BusinessLogic::ResearchModelItem* m_currentResearchItem;
         Domain::Research* m_currentResearch;
+
+        /**
+         * @brief Документ сценария для отображения версий
+         */
+        BusinessLogic::ScenarioDocument* m_script = nullptr;
     };
 }
 

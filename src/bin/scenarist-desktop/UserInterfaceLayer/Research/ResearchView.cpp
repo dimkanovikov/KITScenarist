@@ -108,6 +108,27 @@ void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMargi
     }
 }
 
+void ResearchView::setScriptShowScenesNumbers(bool _show)
+{
+    m_editor->setShowSceneNumbers(_show);
+}
+
+void ResearchView::setScriptShowDialoguesNumbers(bool _show)
+{
+    m_editor->setShowDialoguesNumbers(_show);
+}
+
+void ResearchView::setScriptTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
+{
+    m_editor->viewport()->setStyleSheet(QString("color: %1; background-color: %2;").arg(_textColor.name(), _backgroundColor.name()));
+    m_editor->setStyleSheet(QString("#scenarioEditor { color: %1; }").arg(_textColor.name()));
+}
+
+void ResearchView::setScriptDocument(BusinessLogic::ScenarioTextDocument* _document)
+{
+    m_editor->setScenarioDocument(_document);
+}
+
 void ResearchView::setResearchModel(QAbstractItemModel* _model)
 {
     //
@@ -747,6 +768,10 @@ void ResearchView::initView()
     m_ui->synopsisText->setUsePageMode(true);
 
     m_ui->versionsContent->addWidget(m_editorWrapper);
+    m_editor->setReadOnly(true);
+    m_editor->setUseSpellChecker(false);
+    m_editor->setPageMargins(QMarginsF{15, 5, 12, 5});
+    m_editor->setUseSpellChecker(false);
 
     QFont nameFont = m_ui->characterName->font();
     nameFont.setCapitalization(QFont::AllUppercase);
@@ -964,7 +989,9 @@ void ResearchView::initConnections()
     //
     connect(m_ui->versions, &ScriptVersionsList::removeRequested, this, &ResearchView::removeScriptVersionRequested);
     connect(m_ui->versions, &ScriptVersionsList::versionClicked, this, [this] (const QModelIndex& _versionIndex) {
-        Q_UNUSED(_versionIndex);
+        emit showScriptVersionRequested(_versionIndex);
+        m_editor->relayoutDocument();
+
         connect(m_ui->backToResearchContent, &FlatButton::clicked, this, [this] {
             WAF::StackedWidgetAnimation::slide(m_ui->versionsContent, m_ui->versionsPage, WAF::FromLeftToRight);
             setAddVisible(true);
@@ -973,6 +1000,7 @@ void ResearchView::initConnections()
         m_ui->addResearchContent->hide();
         setBackVisible(true);
         WAF::StackedWidgetAnimation::slide(m_ui->versionsContent, m_editorWrapper, WAF::FromRightToLeft);
+
     });
     //
     // ... персонаж
@@ -1116,6 +1144,7 @@ void ResearchView::initStyleSheet()
     m_ui->researchNavigator->setProperty("mainContainer", true);
     m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
     m_ui->versions->setProperty("mainContainer", true);
+    m_editorWrapper->setProperty("mainContainer", true);
 
     m_ui->textName->setProperty("editableLabel", true);
     m_ui->urlName->setProperty("editableLabel", true);

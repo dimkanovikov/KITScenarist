@@ -67,11 +67,6 @@ void ToolsView::setTextEditColors(const QColor& _textColor, const QColor& _backg
     m_editor->setStyleSheet(QString("#scenarioEditor { color: %1; }").arg(_textColor.name()));
 }
 
-void ToolsView::setTextEditZoomRange(qreal _zoomRange)
-{
-    m_editorWrapper->setZoomRange(_zoomRange);
-}
-
 void ToolsView::showPlaceholderText(const QString& _text)
 {
     m_restore->hide();
@@ -140,6 +135,8 @@ void ToolsView::initView()
 
     m_editor->setReadOnly(true);
     m_editor->setUseSpellChecker(false);
+    m_editor->setPageMargins(QMarginsF{15, 5, 12, 5});
+    m_editor->setUseSpellChecker(false);
 
     //
     // Настраиваем общую панель с группами отчётов
@@ -169,9 +166,6 @@ void ToolsView::initView()
     // Настраиваем панель с результатами работы инструментов
     //
     m_placeholder->setAlignment(Qt::AlignCenter);
-
-    m_editor->setPageMargins(QMarginsF{15, 5, 12, 5});
-    m_editor->setUseSpellChecker(false);
 
     QHBoxLayout* toolDataToolbarLayout = new QHBoxLayout;
     toolDataToolbarLayout->setContentsMargins(QMargins());

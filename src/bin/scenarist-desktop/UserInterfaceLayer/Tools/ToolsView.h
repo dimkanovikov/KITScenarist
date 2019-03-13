@@ -52,11 +52,6 @@ namespace UserInterface
         void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
 
         /**
-         * @brief Настроить масштабирование редактора сценария
-         */
-        void setTextEditZoomRange(qreal _zoomRange);
-
-        /**
          * @brief Задать поясняющий текст панели с данными
          */
         void showPlaceholderText(const QString& _text);

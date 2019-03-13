@@ -8,6 +8,10 @@ namespace Domain {
     class ScriptVersionsTable;
 }
 
+namespace BusinessLogic {
+    class ScenarioTextDocument;
+}
+
 namespace Ui {
     class ResearchView;
 }
@@ -42,6 +46,26 @@ namespace UserInterface
          * @brief Установить параметры текста
          */
         void setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font);
+
+        /**
+         * @brief Включить/выключить отображение номеров сцен
+         */
+        void setScriptShowScenesNumbers(bool _show);
+
+        /**
+         * @brief Включить/выключить отображение номеров реплик
+         */
+        void setScriptShowDialoguesNumbers(bool _show);
+
+        /**
+         * @brief Настроить цвета текстового редактора
+         */
+        void setScriptTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
+
+        /**
+         * @brief Задать документ сценария
+         */
+        void setScriptDocument(BusinessLogic::ScenarioTextDocument* _document);
 
         /**
          * @brief Загрузить модель разработки
@@ -223,6 +247,11 @@ namespace UserInterface
          * @brief Запрос на добавление версии сценария
          */
         void addScriptVersionRequested();
+
+        /**
+         * @brief Запрос на отображение версии сценария
+         */
+        void showScriptVersionRequested(const QModelIndex& _projectIndex);
 
         /**
          * @brief Запрос на удаление версии сценария
