@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>815</width>
-    <height>592</height>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -204,8 +204,7 @@ our help articles and tutorials.
           <item row="17" column="0" colspan="2">
            <widget class="QLabel" name="crowdfundingSubtitle">
             <property name="text">
-             <string>We have already collected %1K rubles 
-of 1M aim! Join us and then you can use all power of the new version!</string>
+             <string>We have already collected %1K rubles of 1M aim! Join us and then you can use all power of the new version!</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
