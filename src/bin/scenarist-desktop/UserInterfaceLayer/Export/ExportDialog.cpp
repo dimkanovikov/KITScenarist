@@ -139,6 +139,7 @@ void ExportDialog::setCurrentStyle(const QString& _styleName)
     //
     if (!_styleName.isEmpty()) {
         m_ui->templates->setCurrentText(_styleName);
+        emit currentStyleChanged(_styleName);
     }
     //
     // В противном случае выбираем первый из списка
