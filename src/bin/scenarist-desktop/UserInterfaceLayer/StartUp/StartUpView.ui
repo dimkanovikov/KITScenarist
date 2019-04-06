@@ -73,40 +73,33 @@
           <property name="verticalSpacing">
            <number>10</number>
           </property>
-          <item row="7" column="0" colspan="2">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+          <item row="16" column="0" colspan="2">
+           <widget class="CircularProgressBar" name="crowdfundingProgress" native="true">
+            <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QPushButton" name="openProject">
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="text">
-             <string>Open Project</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
+              <width>0</width>
+              <height>120</height>
              </size>
             </property>
            </widget>
           </item>
-          <item row="6" column="0" colspan="2">
+          <item row="14" column="0" colspan="2">
+           <widget class="QLabel" name="crowdfundingTitle">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>
+
+We launch crowdfunding</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0" rowspan="4" colspan="2">
            <widget class="QPushButton" name="help">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
@@ -126,7 +119,40 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="2">
+          <item row="19" column="0" colspan="2">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QPushButton" name="openProject">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Open Project</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+              <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
            <widget class="QLabel" name="label">
             <property name="font">
              <font>
@@ -142,7 +168,7 @@ New to KIT Scenarist?</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0" rowspan="3" colspan="2">
+          <item row="4" column="0" rowspan="3" colspan="2">
            <widget class="QPushButton" name="createProject">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
@@ -162,7 +188,7 @@ New to KIT Scenarist?</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
+          <item row="9" column="0" colspan="2">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Learn how to write your own stories
@@ -172,6 +198,48 @@ our help articles and tutorials.
             </property>
             <property name="wordWrap">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0" colspan="2">
+           <widget class="QLabel" name="crowdfundingSubtitle">
+            <property name="text">
+             <string>We have already collected %1K rubles 
+of 1M aim! Join us and then you can use all power of the new version!</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0" colspan="2">
+           <widget class="QLabel" name="crowdfundingDescription">
+            <property name="text">
+             <string>Together we will make KIT Scenarist
+the best program for creating stories!</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0" colspan="2">
+           <widget class="QPushButton" name="crowdfundingJoin">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Join campaign</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+              <normaloff>:/Graphics/Iconset/thumb-up.svg</normaloff>:/Graphics/Iconset/thumb-up.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -335,6 +403,12 @@ our help articles and tutorials.
    <class>UserInterface::ProjectsList</class>
    <extends>QScrollArea</extends>
    <header location="global">UserInterfaceLayer/ProjectsList/ProjectsList.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CircularProgressBar</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/CircularProgressBar/CircularProgressBar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

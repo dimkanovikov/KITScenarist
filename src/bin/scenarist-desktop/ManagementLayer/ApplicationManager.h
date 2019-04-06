@@ -123,6 +123,11 @@ namespace ManagementLayer
         void aboutShowHelp();
 
         /**
+         * @brief Открыть страницу краудфандинга
+         */
+        void aboutShowCrowdfinding();
+
+        /**
          * @brief Загрузить выбранный из списка локальный проект
          */
         void aboutLoadFromRecent(const QModelIndex& _projectIndex);

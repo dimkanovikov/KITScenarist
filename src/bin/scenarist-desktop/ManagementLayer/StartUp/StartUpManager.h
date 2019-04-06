@@ -113,6 +113,11 @@ namespace ManagementLayer
         void helpRequested();
 
         /**
+         * @brief Участвовать в крауде
+         */
+        void crowdfindingJoinRequested();
+
+        /**
          * @brief Обновить список проектов из облака
          */
         void refreshProjectsRequested();

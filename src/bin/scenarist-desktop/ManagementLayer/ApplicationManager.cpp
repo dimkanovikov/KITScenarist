@@ -868,6 +868,11 @@ void ApplicationManager::aboutShowHelp()
     QDesktopServices::openUrl(QUrl("https://kitscenarist.ru/help/"));
 }
 
+void ApplicationManager::aboutShowCrowdfinding()
+{
+    QDesktopServices::openUrl(QUrl("https://boomstarter.ru/projects/dimkanovikov/kit_stsenarist_-_programma_dlya_sozdaniya_istoriy"));
+}
+
 void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
 {
     //
@@ -2144,6 +2149,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::aboutCreateNew);
     connect(m_startUpManager, &StartUpManager::openProjectRequested, [=] { aboutLoad(); });
     connect(m_startUpManager, &StartUpManager::helpRequested, this, &ApplicationManager::aboutShowHelp);
+    connect(m_startUpManager, &StartUpManager::crowdfindingJoinRequested, this, &ApplicationManager::aboutShowCrowdfinding);
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_projectsManager, &ProjectsManager::refreshProjects);
     connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManager, &SynchronizationManager::loadProjects);
     connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);

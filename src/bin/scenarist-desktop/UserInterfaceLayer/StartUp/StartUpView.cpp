@@ -80,6 +80,21 @@ void StartUpView::setRemoteProjectName(int _index, const QString& _name)
     m_ui->remoteFiles->setProjectName(_index, _name);
 }
 
+void StartUpView::setCrowdfundingVisible(bool _visible, int _funded)
+{
+    if (_visible) {
+        const qreal progress = static_cast<qreal>(_funded) / 1000000;
+        m_ui->crowdfundingProgress->setValue(progress);
+        m_ui->crowdfundingSubtitle->setText(m_ui->crowdfundingSubtitle->text().arg(_funded/1000));
+    }
+
+    m_ui->crowdfundingTitle->setVisible(_visible);
+    m_ui->crowdfundingDescription->setVisible(_visible);
+    m_ui->crowdfundingProgress->setVisible(_visible && _funded > 0);
+    m_ui->crowdfundingSubtitle->setVisible(_visible && _funded > 0);
+    m_ui->crowdfundingJoin->setVisible(_visible);
+}
+
 bool StartUpView::event(QEvent* _event)
 {
     if (_event->type() == QEvent::PaletteChange) {
@@ -101,6 +116,12 @@ void StartUpView::aboutFilesSourceChanged()
 
 void StartUpView::initView()
 {
+    m_ui->crowdfundingTitle->hide();
+    m_ui->crowdfundingDescription->hide();
+    m_ui->crowdfundingProgress->hide();
+    m_ui->crowdfundingSubtitle->hide();
+    m_ui->crowdfundingJoin->hide();
+
     m_ui->remoteProjects->hide();
 
     m_ui->filesSources->setCurrentWidget(m_ui->recentFilesPage);
@@ -113,6 +134,7 @@ void StartUpView::initConnections()
     connect(m_ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
     connect(m_ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
     connect(m_ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
+    connect(m_ui->crowdfundingJoin, &QPushButton::clicked, this, &StartUpView::crowdfundingJoinClicked);
 
     connect(m_ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
     connect(m_ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
@@ -140,6 +162,7 @@ void StartUpView::initStyleSheet()
     m_ui->createProject->setProperty("leftAlignedText", true);
     m_ui->openProject->setProperty("leftAlignedText", true);
     m_ui->help->setProperty("leftAlignedText", true);
+    m_ui->crowdfundingJoin->setProperty("leftAlignedText", true);
 
     m_ui->localProjects->setProperty("inStartUpView", true);
     m_ui->remoteProjects->setProperty("inStartUpView", true);
@@ -166,6 +189,10 @@ void StartUpView::initIconsColor()
     QIcon help = m_ui->help->icon();
     ImageHelper::setIconColor(help, iconSize, palette().text().color());
     m_ui->help->setIcon(help);
+
+    QIcon crowdfunding = m_ui->crowdfundingJoin->icon();
+    ImageHelper::setIconColor(crowdfunding, iconSize, palette().text().color());
+    m_ui->crowdfundingJoin->setIcon(crowdfunding);
 
     QIcon refresh = m_ui->refreshProjects->icon();
     ImageHelper::setIconColor(refresh, iconSize, palette().text().color());

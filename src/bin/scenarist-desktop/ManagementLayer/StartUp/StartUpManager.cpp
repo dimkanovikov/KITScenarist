@@ -205,14 +205,18 @@ void StartUpManager::checkNewVersion()
         //
         // Распарсим ответ. Нам нужна версия, ее описание, шаблон на скачивание и является ли бетой
         //
+        int funded = 0;
         while (!responseReader.atEnd()) {
             responseReader.readNext();
             if (responseReader.name().toString() == "update"
                     && responseReader.tokenType() == QXmlStreamReader::StartElement) {
-                QXmlStreamAttributes attrs = responseReader.attributes();
-                m_updateVersion = attrs.value("version").toString();
-                m_updateFileTemplate = attrs.value("file_template").toString();
-                m_updateIsBeta = attrs.value("is_beta").toString() == "true"; // :)
+                QXmlStreamAttributes attributes = responseReader.attributes();
+                m_updateVersion = attributes.value("version").toString();
+                m_updateFileTemplate = attributes.value("file_template").toString();
+                m_updateIsBeta = attributes.value("is_beta").toString() == "true"; // :)
+                if (attributes.hasAttribute("funded")) {
+                    funded = attributes.value("funded").toInt();
+                }
                 responseReader.readNext();
             } else if (responseReader.name().toString() == "description"
                     && responseReader.tokenType() == QXmlStreamReader::StartElement) {
@@ -228,6 +232,8 @@ void StartUpManager::checkNewVersion()
                 responseReader.readNext();
             }
         }
+
+        m_view->setCrowdfundingVisible(funded > 0, funded);
 
         //
         // Загрузим версию, либо которая установлена, либо которую пропустили
@@ -254,6 +260,8 @@ void StartUpManager::checkNewVersion()
             //
             emit updatePublished(m_updateVersion);
         }
+    } else {
+        m_view->setCrowdfundingVisible(true, 0);
     }
 }
 
@@ -457,6 +465,7 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::createProjectClicked, this, &StartUpManager::createProjectRequested);
     connect(m_view, &StartUpView::openProjectClicked, this, &StartUpManager::openProjectRequested);
     connect(m_view, &StartUpView::helpClicked, this, &StartUpManager::helpRequested);
+    connect(m_view, &StartUpView::crowdfundingJoinClicked, this, &StartUpManager::crowdfindingJoinRequested);
     connect(m_view, &StartUpView::updateRequested, this, &StartUpManager::showUpdateDialogImpl);
 
     connect(m_view, &StartUpView::openRecentProjectClicked, this, &StartUpManager::openRecentProjectRequested);

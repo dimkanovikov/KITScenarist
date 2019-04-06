@@ -53,6 +53,11 @@ namespace UserInterface
          */
         void setRemoteProjectName(int _index, const QString& _name);
 
+        /**
+         * @brief Установить видимость информации о краудфандинге
+         */
+        void setCrowdfundingVisible(bool _visible, int _funded);
+
     signals:
         /**
          * @brief Нажата кнопка создать проект
@@ -68,6 +73,11 @@ namespace UserInterface
          * @brief Нажата кнопка помощь
          */
         void helpClicked();
+
+        /**
+         * @brief Пользователь нажал кнопку присоединиться к краудфандингу
+         */
+        void crowdfundingJoinClicked();
 
         /**
          * @brief Выбран один из недавно используемых проектов для открытия
