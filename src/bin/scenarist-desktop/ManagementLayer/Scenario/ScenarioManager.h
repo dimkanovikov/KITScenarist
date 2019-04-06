@@ -113,6 +113,16 @@ namespace ManagementLayer
         /**
          * @brief Установить префикс номеров сцен
          */
+        void setScriptHeader(const QString& _header);
+
+        /**
+         * @brief Установить префикс номеров сцен
+         */
+        void setScriptFooter(const QString& _footer);
+
+        /**
+         * @brief Установить префикс номеров сцен
+         */
         void setSceneNumbersPrefix(const QString& _prefix);
 
         /**

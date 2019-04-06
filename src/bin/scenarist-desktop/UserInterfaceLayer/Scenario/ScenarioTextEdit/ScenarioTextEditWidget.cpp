@@ -140,6 +140,16 @@ void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
     m_editor->setShowSceneNumbers(_show);
 }
 
+void ScenarioTextEditWidget::setScriptHeader(const QString& _header)
+{
+    m_editor->setHeader(_header);
+}
+
+void ScenarioTextEditWidget::setScriptFooter(const QString& _footer)
+{
+    m_editor->setFooter(_footer);
+}
+
 void ScenarioTextEditWidget::setSceneNumbersPrefix(const QString& _prefix)
 {
     m_editor->setSceneNumbersPrefix(_prefix);

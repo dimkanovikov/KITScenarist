@@ -80,6 +80,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
         //
         BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
         exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+        exportParameters.scriptHeader = _scenarioData.value(ScenarioData::HEADER_KEY);
+        exportParameters.scriptFooter = _scenarioData.value(ScenarioData::FOOTER_KEY);
         exportParameters.scenesPrefix = _scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
         exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
         exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
@@ -180,6 +182,8 @@ void ExportManager::printPreview(BusinessLogic::ScenarioDocument* _scenario,
     //
     BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
     exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+    exportParameters.scriptHeader = _scenarioData.value(ScenarioData::HEADER_KEY);
+    exportParameters.scriptFooter = _scenarioData.value(ScenarioData::FOOTER_KEY);
     exportParameters.scenesPrefix = _scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
     exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
     exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);

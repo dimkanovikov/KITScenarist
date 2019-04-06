@@ -90,6 +90,16 @@ namespace ManagementLayer
         QString scenarioName() const;
 
         /**
+         * @brief Получить верхний колонтитул
+         */
+        QString scriptHeader() const;
+
+        /**
+         * @brief Получить нижний колонтитул
+         */
+        QString scriptFooter() const;
+
+        /**
          * @brief Получить префикс номеров сцен
          */
         QString sceneNumbersPrefix() const;
@@ -114,6 +124,16 @@ namespace ManagementLayer
          * @brief Было изменено название проекта
          */
         void scriptNameChanged(const QString& _name);
+
+        /**
+         * @brief Был изменён верхний колонтитул
+         */
+        void scriptHeaderChanged(const QString& _header);
+
+        /**
+         * @brief Был изменён нижний колонтитул
+         */
+        void scriptFooterChanged(const QString& _footer);
 
         /**
          * @brief Был изменён префикс номеров сцен

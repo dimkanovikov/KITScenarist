@@ -467,6 +467,16 @@ bool ScenarioManager::workModeIsDraft() const
     return m_workModeIsDraft;
 }
 
+void ScenarioManager::setScriptHeader(const QString& _header)
+{
+    m_textEditManager->setScriptHeader(_header);
+}
+
+void ScenarioManager::setScriptFooter(const QString& _footer)
+{
+    m_textEditManager->setScriptFooter(_footer);
+}
+
 void ScenarioManager::setSceneNumbersPrefix(const QString& _prefix)
 {
     m_navigatorManager->setSceneNumbersPrefix(_prefix);

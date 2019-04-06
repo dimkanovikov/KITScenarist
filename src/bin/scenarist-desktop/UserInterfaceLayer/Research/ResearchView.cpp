@@ -220,10 +220,13 @@ void ResearchView::selectItem(const QModelIndex& _index)
     m_ui->researchNavigator->setCurrentIndex(_index);
 }
 
-void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix, const QString& _startSceneNumber)
+void ResearchView::editScript(const QString& _name, const QString& _header, const QString& _footer,
+    const QString& _scenesPrefix, const QString& _startSceneNumber)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->scriptEdit);
     updateText(m_ui->scriptName, _name);
+    updateText(m_ui->scriptHeader, _header);
+    updateText(m_ui->scriptFooter, _footer);
     updateText(m_ui->scriptSceneNumbersPrefix, _scenesPrefix);
 
     //
@@ -529,6 +532,8 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
     m_ui->addResearchItem->setEnabled(!_isCommentOnly);
     m_ui->removeResearchItem->setEnabled(!_isCommentOnly);
     m_ui->scriptName->setReadOnly(_isCommentOnly);
+    m_ui->scriptHeader->setReadOnly(_isCommentOnly);
+    m_ui->scriptFooter->setReadOnly(_isCommentOnly);
     m_ui->scriptSceneNumbersPrefix->setReadOnly(_isCommentOnly);
     m_ui->titlePageName->setReadOnly(_isCommentOnly);
     m_ui->titlePageAdditionalInfo->lineEdit()->setReadOnly(_isCommentOnly);
@@ -893,10 +898,10 @@ void ResearchView::initConnections()
     // Внутренние соединения формы
     //
     connect(m_ui->scriptName, &QLineEdit::textChanged, this, [this] {
-        ::updateText(m_ui->titlePageName, m_ui->scriptName->text());
+        updateText(m_ui->titlePageName, m_ui->scriptName->text());
     });
     connect(m_ui->titlePageName, &QLineEdit::textChanged, this, [this] {
-        ::updateText(m_ui->scriptName, m_ui->titlePageName->text());
+        updateText(m_ui->scriptName, m_ui->titlePageName->text());
     });
     connect(m_ui->loglineText, &SimpleTextEditorWidget::textChanged, [=] {
         const QString textToSplit = m_ui->loglineText->toPlainText().simplified();
@@ -953,6 +958,8 @@ void ResearchView::initConnections()
     // ... сценарий
     //
     connect(m_ui->scriptName, &QLineEdit::textChanged, this, &ResearchView::scriptNameChanged);
+    connect(m_ui->scriptHeader, &QLineEdit::textChanged, this, &ResearchView::scriptHeaderChanged);
+    connect(m_ui->scriptFooter, &QLineEdit::textChanged, this, &ResearchView::scriptFooterChanged);
     connect(m_ui->scriptSceneNumbersPrefix, &QLineEdit::textChanged, this, &ResearchView::scriptSceneNumbersPrefixChanged);
 
     //

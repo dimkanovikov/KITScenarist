@@ -1841,6 +1841,8 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     //
     // Установим параметры между менеджерами
     //
+    m_scenarioManager->setScriptHeader(m_researchManager->scriptHeader());
+    m_scenarioManager->setScriptFooter(m_researchManager->scriptFooter());
     m_scenarioManager->setSceneNumbersPrefix(m_researchManager->sceneNumbersPrefix());
     m_scenarioManager->setSceneStartNumber(m_researchManager->sceneStartNumber());
 
@@ -2163,6 +2165,8 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::updatePublished, m_menuManager, &MenuManager::showUpdateButton);
 
     connect(m_researchManager, &ResearchManager::scriptNameChanged, this, &ApplicationManager::updateWindowTitle);
+    connect(m_researchManager, &ResearchManager::scriptHeaderChanged, m_scenarioManager, &ScenarioManager::setScriptHeader);
+    connect(m_researchManager, &ResearchManager::scriptFooterChanged, m_scenarioManager, &ScenarioManager::setScriptFooter);
     connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);
     connect(m_researchManager, &ResearchManager::sceneStartNumberChanged, m_scenarioManager, &ScenarioManager::setSceneStartNumber);
     connect(m_researchManager, &ResearchManager::versionsChanged, this, &ApplicationManager::updateWindowTitle);
