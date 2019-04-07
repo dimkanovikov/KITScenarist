@@ -790,6 +790,10 @@ void ResearchView::initView()
 
     m_ui->imagePreview->setReadOnly(true);
 
+    m_ui->mindMapUndo->setIcons(m_ui->mindMapUndo->icon());
+    m_ui->mindMapUndo->setShortcut(QKeySequence::Undo);
+    m_ui->mindMapRedo->setIcons(m_ui->mindMapRedo->icon());
+    m_ui->mindMapRedo->setShortcut(QKeySequence::Redo);
     m_ui->addRootNode->setColorsPane(ColoredToolButton::Google);
     m_ui->addRootNode->setColor(Node::defaultBackgroundColor);
     m_ui->addRootNode->setToolTip(ShortcutHelper::makeToolTip(m_ui->addRootNode->toolTip(),
@@ -1088,6 +1092,8 @@ void ResearchView::initConnections()
             m_ui->nodeBackgroundColor->updateColor(QColor());
         }
     });
+    connect(m_ui->mindMapUndo, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::undo);
+    connect(m_ui->mindMapRedo, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::redo);
     connect(m_ui->addRootNode, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
     QShortcut* addNodeShortcut = new QShortcut(QKeySequence::New, m_ui->mindMapEdit);
     addNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
@@ -1136,6 +1142,8 @@ void ResearchView::initStyleSheet()
     m_ui->addImagesGallery->setProperty("leftAlignedText", true);
     m_ui->addUrl->setProperty("leftAlignedText", true);
 
+    m_ui->mindMapUndo->setProperty("inTopPanel", true);
+    m_ui->mindMapRedo->setProperty("inTopPanel", true);
     m_ui->addRootNode->setProperty("inTopPanel", true);
     m_ui->addNode->setProperty("inTopPanel", true);
     m_ui->addSiblingNode->setProperty("inTopPanel", true);

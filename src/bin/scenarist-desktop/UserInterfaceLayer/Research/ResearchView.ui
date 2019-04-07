@@ -123,7 +123,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>14</number>
          </property>
          <widget class="QWidget" name="scriptEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -1192,6 +1192,34 @@ p, li { white-space: pre-wrap; }
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="mindMapUndo">
+                  <property name="toolTip">
+                   <string>Undo last action</string>
+                  </property>
+                  <property name="text">
+                   <string>Add child node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Iconset/undo.svg</normaloff>:/Graphics/Iconset/undo.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="mindMapRedo">
+                  <property name="toolTip">
+                   <string>Redo previously undone action</string>
+                  </property>
+                  <property name="text">
+                   <string>Add child node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Iconset/redo.svg</normaloff>:/Graphics/Iconset/redo.svg</iconset>
                   </property>
                  </widget>
                 </item>
