@@ -792,8 +792,12 @@ void ResearchView::initView()
 
     m_ui->mindMapUndo->setIcons(m_ui->mindMapUndo->icon());
     m_ui->mindMapUndo->setShortcut(QKeySequence::Undo);
+    m_ui->mindMapUndo->setToolTip(ShortcutHelper::makeToolTip(m_ui->mindMapUndo->toolTip(),
+                                                              m_ui->mindMapUndo->shortcut()));
     m_ui->mindMapRedo->setIcons(m_ui->mindMapRedo->icon());
     m_ui->mindMapRedo->setShortcut(QKeySequence::Redo);
+    m_ui->mindMapRedo->setToolTip(ShortcutHelper::makeToolTip(m_ui->mindMapRedo->toolTip(),
+                                                              m_ui->mindMapRedo->shortcut()));
     m_ui->addRootNode->setColorsPane(ColoredToolButton::Google);
     m_ui->addRootNode->setColor(Node::defaultBackgroundColor);
     m_ui->addRootNode->setToolTip(ShortcutHelper::makeToolTip(m_ui->addRootNode->toolTip(),
