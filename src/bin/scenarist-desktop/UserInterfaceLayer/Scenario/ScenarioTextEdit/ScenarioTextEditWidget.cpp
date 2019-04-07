@@ -499,8 +499,10 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
     m_undo->setVisible(!_isCommentOnly);
     m_redo->setVisible(!_isCommentOnly);
     m_fastFormat->setVisible(!_isCommentOnly);
+    m_lockUnlock->setVisible(!_isCommentOnly);
     m_editor->setReadOnly(_isCommentOnly);
     m_searchLine->setSearchOnly(_isCommentOnly);
+    m_zenControls->setReadOnly(_isCommentOnly);
 
     if (_isCommentOnly) {
         //

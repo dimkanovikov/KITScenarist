@@ -62,6 +62,11 @@ namespace UserInterface
          */
         void setCountersInfo(const QStringList& _counters);
 
+        /**
+         * @brief Установить режим работы со сценарием
+         */
+        void setReadOnly(bool _readOnly);
+
     signals:
         /**
          * @brief Нажата кнопка выхода из дзен режима
@@ -95,6 +100,11 @@ namespace UserInterface
          * @brief Активен ли элемент управления в данный момент
          */
         bool m_active = false;
+
+        /**
+         * @brief Доступно ли редактирование
+         */
+        bool m_readOnly = false;
 
         /**
          * @brief Редактор сценария для форматирования блоков

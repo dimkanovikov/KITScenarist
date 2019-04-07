@@ -77,9 +77,9 @@ namespace {
      * @brief Номера пунктов меню
      */
     /** @{ */
-    const int kStartNewVersionMenuIndex = 4;
-    const int kImportMenuIndex = 5;
-    const int kExportMenuIndex = 6;
+    const int kStartNewVersionMenuIndex = 5;
+    const int kImportMenuIndex = 6;
+    const int kExportMenuIndex = 7;
     const int kTwoPanelModeMenuIndex = 9;
     /** @} */
 
@@ -172,6 +172,10 @@ namespace {
     }
 
     static void updateWindowModified(QWidget* _widget, bool _modified) {
+        if (!ProjectsManager::currentProject().isWritable()) {
+            return;
+        }
+
 #ifdef Q_OS_MAC
         static const QString suffix =
                 QApplication::translate("ManagementLayer::ApplicationManager", MAC_CHANGED_SUFFIX);
@@ -605,6 +609,10 @@ void ApplicationManager::aboutSave()
         return;
     }
 
+    if (!ProjectsManager::currentProject().isWritable()) {
+        return;
+    }
+
     //
     // Если какие-то данные изменены
     //
@@ -642,7 +650,7 @@ void ApplicationManager::aboutSave()
             //
             // Изменим статус окна на сохранение изменений
             //
-            ::updateWindowModified(m_view, false);
+            updateWindowModified(m_view, false);
 
             //
             // Если необходимо создадим резервную копию закрываемого файла
@@ -828,7 +836,7 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
         //
         // Изменим статус окна на сохранение изменений
         //
-        ::updateWindowModified(m_view, false);
+        updateWindowModified(m_view, false);
     }
 }
 
@@ -912,6 +920,14 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
         }
 
         if (canOpenProject) {
+            //
+            // ... если файл доступен только для чтения, уведомим об этом пользователя
+            //
+            if (!ProjectsManager::currentProject().isWritable()) {
+                QLightBoxMessage::information(m_view, tr("A file will be opened in read-only mode"),
+                    tr("If you want to edit a file, please check it's permissions for your account."));
+            }
+
             //
             // ... перейдём к редактированию
             //
@@ -1692,42 +1708,49 @@ void ApplicationManager::currentTabIndexChanged()
 
 bool ApplicationManager::saveIfNeeded()
 {
-    bool success = true;
+    if (!m_view->isWindowModified()) {
+        return true;
+    }
+
+    if (!ProjectsManager::currentProject().isWritable()) {
+        return true;
+    }
 
     //
     // Если какие-то данные изменены
     //
-    if (m_view->isWindowModified()) {
-        int questionResult = QDialogButtonBox::Cancel;
 
-        //
-        // ... если работаем с проектом из облака, сохраняем без вопросов
-        //
-        if (m_projectsManager->currentProject().isRemote()) {
-            questionResult = QDialogButtonBox::Yes;
-        }
-        //
-        // ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
-        //
-        else {
-            questionResult =
-                    QLightBoxMessage::question(m_view, tr("Save project changes?"),
-                        tr("Project was modified. Save changes?"),
-                        QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
-        }
+    bool success = true;
 
-        if (questionResult != QDialogButtonBox::Cancel) {
-            //
-            // ... и сохраняем, если хочет
-            //
-            if (questionResult == QDialogButtonBox::Yes) {
-                aboutSave();
-            } else {
-                ::updateWindowModified(m_view, false);
-            }
+    int questionResult = QDialogButtonBox::Cancel;
+
+    //
+    // ... если работаем с проектом из облака, сохраняем без вопросов
+    //
+    if (m_projectsManager->currentProject().isRemote()) {
+        questionResult = QDialogButtonBox::Yes;
+    }
+    //
+    // ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
+    //
+    else {
+        questionResult =
+                QLightBoxMessage::question(m_view, tr("Save project changes?"),
+                    tr("Project was modified. Save changes?"),
+                    QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
+    }
+
+    if (questionResult != QDialogButtonBox::Cancel) {
+        //
+        // ... и сохраняем, если хочет
+        //
+        if (questionResult == QDialogButtonBox::Yes) {
+            aboutSave();
         } else {
-            success = false;
+            updateWindowModified(m_view, false);
         }
+    } else {
+        success = false;
     }
 
     return success;
@@ -1763,6 +1786,16 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     m_menuManager->setMenuItemEnabled(kExportMenuIndex, !isCommentOnly);
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
+
+    //
+    // Если открываемый файл доступен только для чтения, то блокируем изменения, но оставляем возможность экспорта
+    //
+    if (!ProjectsManager::currentProject().isWritable()) {
+        m_menuManager->setMenuItemEnabled(kStartNewVersionMenuIndex, false);
+        m_menuManager->setMenuItemEnabled(kImportMenuIndex, false);
+        m_researchManager->setCommentOnly(true);
+        m_scenarioManager->setCommentOnly(true);
+    }
 
     //
     // Настроим индикатор
