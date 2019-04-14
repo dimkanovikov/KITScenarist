@@ -1,12 +1,12 @@
 Package: scenarist
-Version: 0.7.2.rc5
+Version: 0.7.2.rc6
 Provides: scenarist
 Maintainer: Dimka Novikov <to@dimkanovikov.pro>
 Architecture: amd64
 Installed-Size: 181240
 Priority: optional
 Section: text
-Homepage: https://kitscenarist.ru
+Homepage: https://kitscenarist.ru/en/
 Description: KIT Scenarist
  KIT Scenarist est un programme de scénario qui se développe en Russie.
  .
