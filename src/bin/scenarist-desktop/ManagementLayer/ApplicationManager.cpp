@@ -191,6 +191,23 @@ namespace {
 #endif
         _widget->setWindowModified(_modified);
     }
+
+    /**
+     * @brief Получить язык для подстановки в ссылки на сайте
+     */
+    static QString urlLanguage() {
+        switch (QLocale().language()) {
+            case QLocale::Russian:
+            case QLocale::Ukrainian:
+            case QLocale::Kazakh: {
+                return QString();
+            }
+
+            default: {
+                return "en/";
+            }
+        }
+    }
 }
 
 
@@ -873,7 +890,8 @@ void ApplicationManager::loadCurrentProjectSettings(const QString& _projectPath)
 
 void ApplicationManager::aboutShowHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://kitscenarist.ru/help/"));
+    const QString url = QString("https://kitscenarist.ru/%1help/").arg(urlLanguage());
+    QDesktopServices::openUrl(QUrl(url));
 }
 
 void ApplicationManager::aboutShowCrowdfinding()
