@@ -35,6 +35,7 @@
 #include <UserInterfaceLayer/Project/ShareDialog.h>
 #include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
+#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/TextUtils.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/SideBar/SideBar.h>
@@ -620,13 +621,17 @@ void ApplicationManager::aboutSaveAs()
 void ApplicationManager::aboutSave()
 {
     //
-    // Сохраняем только, если приложение находится в рабочем состоянии
+    // Избегаем рекурсии
     //
-    if (m_state != ApplicationState::Working) {
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
         return;
     }
 
-    if (!ProjectsManager::currentProject().isWritable()) {
+    //
+    // Сохраняем только, если приложение находится в рабочем состоянии
+    //
+    if (m_state != ApplicationState::Working) {
         return;
     }
 
@@ -705,7 +710,7 @@ void ApplicationManager::aboutSave()
                 //
                 if (messageResult == QDialogButtonBox::Yes) {
                     DatabaseLayer::Database::setCurrentFile(DatabaseLayer::Database::currentFile());
-                    aboutSave();
+                    QTimer::singleShot(0, this, &ApplicationManager::aboutSave);
                 }
             }
             //
@@ -1727,10 +1732,6 @@ void ApplicationManager::currentTabIndexChanged()
 bool ApplicationManager::saveIfNeeded()
 {
     if (!m_view->isWindowModified()) {
-        return true;
-    }
-
-    if (!ProjectsManager::currentProject().isWritable()) {
         return true;
     }
 
