@@ -1509,7 +1509,7 @@ void ApplicationManager::aboutApplicationSettingsUpdated()
 void ApplicationManager::aboutProjectChanged()
 {
     if (isProjectLoaded()) {
-        ::updateWindowModified(m_view, true);
+        updateWindowModified(m_view, true);
         m_statisticsManager->scenarioTextChanged();
     }
 }

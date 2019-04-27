@@ -31,6 +31,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
+#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -708,8 +709,13 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int 
     }
 }
 
-void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft, QList<QString>& _newChangesUuids)
+void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft, QList<QPair<QString, QString>>& _newChangesUuids)
 {
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
 
     //
@@ -757,7 +763,7 @@ void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _is
             scriptTextDocument->addUndoChange(change);
         } else {
             for (int j = i; j < changes.size(); ++j) {
-                _newChangesUuids.removeAll(changes[j].uuid().toString());
+                _newChangesUuids.removeAll({ changes[j].uuid().toString(), changes[j].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz") });
             }
             break;
         }
