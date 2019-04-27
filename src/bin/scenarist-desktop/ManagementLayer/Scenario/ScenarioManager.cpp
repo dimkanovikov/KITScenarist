@@ -31,7 +31,6 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
-#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -711,11 +710,6 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int 
 
 void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft, QList<QPair<QString, QString>>& _newChangesUuids)
 {
-    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
-    if (!canRun) {
-        return;
-    }
-
     auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
 
     //
