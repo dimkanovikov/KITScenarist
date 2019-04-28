@@ -31,6 +31,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
+#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -857,6 +858,11 @@ void ScenarioManager::setScriptXml(const QString& _xml)
 
 void ScenarioManager::aboutUndo()
 {
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     aboutSaveScenarioChanges();
     int toScroll = workingScenario()->document()->undoReimpl();
     if (toScroll != -1) {
@@ -867,6 +873,11 @@ void ScenarioManager::aboutUndo()
 
 void ScenarioManager::aboutRedo()
 {
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     int toScroll = workingScenario()->document()->redoReimpl();
     if (toScroll != -1) {
         m_textEditManager->scrollToPosition(toScroll);
