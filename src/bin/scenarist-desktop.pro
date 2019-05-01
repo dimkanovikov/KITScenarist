@@ -13,8 +13,6 @@ TEMPLATE = app
 CONFIG += c++11 warn_on
 unix: QMAKE_CXXFLAGS_WARN_ON += -Werror
 
-QMAKE_MAC_SDK = macosx10.13
-
 #
 # Конфигурируем расположение файлов сборки
 #
