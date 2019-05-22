@@ -105,6 +105,10 @@ namespace {
         // Загрузим данные
         //
         const QString name = _characterData["name"].toString();
+        if (name.isEmpty()) {
+            return;
+        }
+
         auto* character = DataStorageLayer::StorageFacade::researchStorage()->character(name);
         if (character == nullptr) {
             character = DataStorageLayer::StorageFacade::researchStorage()->storeCharacter(name);
@@ -128,6 +132,10 @@ namespace {
         // Загрузим данные
         //
         const QString name = _locationData["name"].toString();
+        if (name.isEmpty()) {
+            return;
+        }
+
         auto* location = DataStorageLayer::StorageFacade::researchStorage()->location(name);
         if (location == nullptr) {
             location = DataStorageLayer::StorageFacade::researchStorage()->storeLocation(name);
