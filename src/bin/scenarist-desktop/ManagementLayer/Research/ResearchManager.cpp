@@ -21,6 +21,7 @@
 #include <UserInterfaceLayer/Research/ResearchView.h>
 #include <UserInterfaceLayer/Research/ResearchItemDialog.h>
 
+#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -541,6 +542,11 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 
 void ResearchManager::removeResearch(const QModelIndex& _index)
 {
+    auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     //
     // Если пользователь серьёзно намерен удалить разработку
     //
