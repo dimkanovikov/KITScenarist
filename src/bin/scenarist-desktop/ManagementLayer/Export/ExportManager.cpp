@@ -253,11 +253,15 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
                     QString("%1/check-page-breaks").arg(projectKey),
                     DataStorageLayer::SettingsStorage::ApplicationSettings, "1").toInt()
                 );
-    m_exportDialog->setCurrentStyle(
-                StorageFacade::settingsStorage()->value(
-                    QString("%1/style").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                );
+    QString exportStyle = StorageFacade::settingsStorage()->value(
+                              QString("%1/style").arg(projectKey),
+                              DataStorageLayer::SettingsStorage::ApplicationSettings);
+    if (exportStyle.isEmpty()) {
+        exportStyle = DataStorageLayer::StorageFacade::settingsStorage()->value(
+                          "scenario-editor/current-style",
+                          DataStorageLayer::SettingsStorage::ApplicationSettings);
+    }
+    m_exportDialog->setCurrentStyle(exportStyle);
     m_exportDialog->setPageNumbering(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/page-numbering").arg(projectKey),
