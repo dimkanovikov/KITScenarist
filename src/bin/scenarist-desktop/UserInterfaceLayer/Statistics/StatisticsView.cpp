@@ -268,7 +268,10 @@ void StatisticsView::saveReport()
             printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
             printer.setOutputFormat(QPrinter::PdfFormat);
             printer.setOutputFileName(fileName);
-            m_reportData->print(&printer);
+            QTextDocument reportDocument;
+            reportDocument.setHtml(m_reportData->toHtml()
+                                   .remove(QRegularExpression("(<a.*?>|</a>|<span.*?>|</span>)")));
+            reportDocument.print(&printer);
 
             ::saveReportsFolderPath(fileName);
         }
