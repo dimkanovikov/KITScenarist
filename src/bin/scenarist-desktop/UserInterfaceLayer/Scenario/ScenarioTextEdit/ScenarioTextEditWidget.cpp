@@ -767,6 +767,7 @@ void ScenarioTextEditWidget::initView()
 
     m_editor->setObjectName("scenarioEditor");
     m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());
+    m_editor->setShortcutsContextWidget(m_editorWrapper);
 
     m_searchLine->setEditor(m_editor);
     m_searchLine->hide();
