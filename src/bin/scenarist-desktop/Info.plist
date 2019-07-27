@@ -4,6 +4,8 @@
 <dict>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
+    <key>NSHighResolutionCapable</key>
+    <string>True</string>
     <key>CFBundleDisplyName</key>
     <string>KIT Scenarist</string>
     <key>CFBundleIconFile</key>
