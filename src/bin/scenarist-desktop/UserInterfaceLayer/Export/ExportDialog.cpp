@@ -100,6 +100,7 @@ void ExportDialog::setScriptExportFilePath(const QString& _filePath)
         m_ui->pdf->setChecked(true);
     }
 
+    m_ui->file->setText(_filePath);
     checkScriptExportAvailability();
 }
 
