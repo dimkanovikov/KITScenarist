@@ -211,6 +211,16 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Azerbaijani"));
             break;
         }
+
+        case 16: {
+            m_ui->applicationLanguage->setText(tr("Telugu"));
+            break;
+        }
+
+        case 17: {
+            m_ui->applicationLanguage->setText(tr("Brazilian Portuguese"));
+            break;
+        }
     }
 }
 
@@ -758,10 +768,12 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Armenian (Western)"), SpellChecker::ArmenianWestern);
     m_ui->spellCheckingLanguage->addItem(tr("Azerbaijani"), SpellChecker::Azerbaijani);
     m_ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
+    m_ui->spellCheckingLanguage->addItem(tr("Catalan"), SpellChecker::Catalan);
     m_ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
     m_ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
     m_ui->spellCheckingLanguage->addItem(tr("Farsi"), SpellChecker::Farsi);
     m_ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
+    m_ui->spellCheckingLanguage->addItem(tr("German"), SpellChecker::German);
     m_ui->spellCheckingLanguage->addItem(tr("Hebrew"), SpellChecker::Hebrew);
     m_ui->spellCheckingLanguage->addItem(tr("Hungarian"), SpellChecker::Hungarian);
     m_ui->spellCheckingLanguage->addItem(tr("Italian"), SpellChecker::Italian);
@@ -773,6 +785,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
     m_ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
     m_ui->spellCheckingLanguage->addItem(tr("Swedish"), SpellChecker::Swedish);
+    m_ui->spellCheckingLanguage->addItem(tr("Telugu"), SpellChecker::Telugu);
     m_ui->spellCheckingLanguage->addItem(tr("Turkish"), SpellChecker::Turkish);
     m_ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 }

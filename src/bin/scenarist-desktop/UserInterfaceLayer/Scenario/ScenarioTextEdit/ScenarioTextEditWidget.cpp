@@ -140,6 +140,16 @@ void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
     m_editor->setShowSceneNumbers(_show);
 }
 
+void ScenarioTextEditWidget::setScriptHeader(const QString& _header)
+{
+    m_editor->setHeader(_header);
+}
+
+void ScenarioTextEditWidget::setScriptFooter(const QString& _footer)
+{
+    m_editor->setFooter(_footer);
+}
+
 void ScenarioTextEditWidget::setSceneNumbersPrefix(const QString& _prefix)
 {
     m_editor->setSceneNumbersPrefix(_prefix);
@@ -489,8 +499,10 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
     m_undo->setVisible(!_isCommentOnly);
     m_redo->setVisible(!_isCommentOnly);
     m_fastFormat->setVisible(!_isCommentOnly);
+    m_lockUnlock->setVisible(!_isCommentOnly);
     m_editor->setReadOnly(_isCommentOnly);
     m_searchLine->setSearchOnly(_isCommentOnly);
+    m_zenControls->setReadOnly(_isCommentOnly);
 
     if (_isCommentOnly) {
         //
@@ -755,6 +767,7 @@ void ScenarioTextEditWidget::initView()
 
     m_editor->setObjectName("scenarioEditor");
     m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());
+    m_editor->setShortcutsContextWidget(m_editorWrapper);
 
     m_searchLine->setEditor(m_editor);
     m_searchLine->hide();

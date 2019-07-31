@@ -26,10 +26,12 @@
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
+#include <DataLayer/DataStorageLayer/ScriptVersionStorage.h>
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
+#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -467,6 +469,16 @@ bool ScenarioManager::workModeIsDraft() const
     return m_workModeIsDraft;
 }
 
+void ScenarioManager::setScriptHeader(const QString& _header)
+{
+    m_textEditManager->setScriptHeader(_header);
+}
+
+void ScenarioManager::setScriptFooter(const QString& _footer)
+{
+    m_textEditManager->setScriptFooter(_footer);
+}
+
 void ScenarioManager::setSceneNumbersPrefix(const QString& _prefix)
 {
     m_navigatorManager->setSceneNumbersPrefix(_prefix);
@@ -659,21 +671,110 @@ void ScenarioManager::aboutRefreshLocations()
     }
 }
 
-void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
+void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int _newChangesSize)
 {
-    if (_isDraft) {
-        m_scenarioDraft->document()->applyPatch(_patch);
-    } else {
-        m_scenario->document()->applyPatch(_patch);
+    auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
+
+    //
+    // Извлекаем и откатываем список собственный изменений, которые ещё не были синхронизированы
+    //
+    for (int i = 0; i < _newChangesSize; ++i) {
+        const bool forced = true;
+        scriptTextDocument->undoReimpl(forced);
+    }
+
+    //
+    // Применяем патч
+    //
+    scriptTextDocument->applyPatch(_patch);
+
+    //
+    // Пробуем накатить собственные изменения, если накатить не удалось, то удаляем их
+    //
+    QList<ScenarioChange> changes;
+    for (int i = 0; i < _newChangesSize; ++i) {
+        changes.prepend(*DataStorageLayer::StorageFacade::scenarioChangeStorage()->last());
+        DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
+    }
+    for (int i = 0; i < changes.size(); ++i) {
+        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch());
+        if (pos != -1) {
+            auto change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
+                        changes[i].uuid().toString(), changes[i].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz"),
+                        changes[i].user(), changes[i].undoPatch(), changes[i].redoPatch(), changes[i].isDraft());
+            scriptTextDocument->addUndoChange(change);
+        } else {
+            break;
+        }
     }
 }
 
-void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft)
+void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft, QList<QPair<QString, QString>>& _newChangesUuids)
 {
-    if (_isDraft) {
-        m_scenarioDraft->document()->applyPatches(_patches);
-    } else {
-        m_scenario->document()->applyPatches(_patches);
+    auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
+
+    //
+    // Временно сохраним текущую версию текста сценария
+    //
+    const QString currentScriptXml = scriptTextDocument->scenarioXml();
+
+    //
+    // Подгрузим свои изменения из базки и положим их в документ
+    //
+    const int newChangesSize = _newChangesUuids.size();
+    // ... загружаем на одно изменение больше, чтобы всегда оставалось, как минимум одно изменение
+    DataStorageLayer::StorageFacade::scenarioChangeStorage()->loadLast(newChangesSize + 1);
+    scriptTextDocument->updateUndoStack();
+
+    //
+    // Извлекаем и откатываем список собственный изменений, которые ещё не были синхронизированы
+    //
+    for (int i = 0; i < newChangesSize; ++i) {
+        const bool forced = true;
+        scriptTextDocument->undoReimpl(forced);
+    }
+
+    //
+    // Применяем патчи
+    //
+    scriptTextDocument->applyPatches(_patches);
+
+    //
+    // Пробуем накатить собственные изменения, если накатить не удалось, то удаляем их из списка для отправки
+    //
+    QList<ScenarioChange> changes;
+    DatabaseLayer::Database::transaction();
+    for (int i = 0; i < newChangesSize; ++i) {
+        changes.prepend(*DataStorageLayer::StorageFacade::scenarioChangeStorage()->last());
+        DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
+    }
+    DatabaseLayer::Database::commit();
+    for (int i = 0; i < changes.size(); ++i) {
+        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch());
+        if (pos != -1) {
+            auto change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
+                        changes[i].uuid().toString(), changes[i].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz"),
+                        changes[i].user(), changes[i].undoPatch(), changes[i].redoPatch(), changes[i].isDraft());
+            scriptTextDocument->addUndoChange(change);
+        } else {
+            for (int j = i; j < changes.size(); ++j) {
+                _newChangesUuids.removeAll({ changes[j].uuid().toString(), changes[j].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz") });
+            }
+            break;
+        }
+    }
+
+    //
+    // Если все патчи накатить не удалось, то сохраняем конфликтную версию в списке версий сценария
+    //
+    if (newChangesSize != _newChangesUuids.size()) {
+        DataStorageLayer::StorageFacade::scriptVersionStorage()->storeScriptVersion(
+            DataStorageLayer::StorageFacade::userName(), QDateTime::currentDateTime(), Qt::red,
+            tr("Conflicted version"), {}, currentScriptXml);
+
+        QLightBoxMessage::information(m_view, tr("Script changes conflict detected"),
+            tr("There are a conflict detected between script state on the cloud service and your offline changes. "
+               "Conflicted version was saved as a separate one and text of the script restored from the cloud."));
     }
 }
 
@@ -757,6 +858,11 @@ void ScenarioManager::setScriptXml(const QString& _xml)
 
 void ScenarioManager::aboutUndo()
 {
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     aboutSaveScenarioChanges();
     int toScroll = workingScenario()->document()->undoReimpl();
     if (toScroll != -1) {
@@ -767,6 +873,11 @@ void ScenarioManager::aboutUndo()
 
 void ScenarioManager::aboutRedo()
 {
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     int toScroll = workingScenario()->document()->redoReimpl();
     if (toScroll != -1) {
         m_textEditManager->scrollToPosition(toScroll);

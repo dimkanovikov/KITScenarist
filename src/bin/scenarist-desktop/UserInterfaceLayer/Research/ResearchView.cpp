@@ -8,13 +8,17 @@
 
 #include <BusinessLayer/Research/ResearchModel.h>
 
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
+
 #include <3rd_party/Delegates/TreeViewItemDelegate/TreeViewItemDelegate.h>
 #include <3rd_party/Helpers/ImageHelper.h>
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Styles/TreeViewProxyStyle/TreeViewProxyStyle.h>
+#include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
+#include <3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h>
 
 #include <QDomDocument>
 #include <QFileDialog>
@@ -26,6 +30,7 @@
 #include <QXmlStreamReader>
 
 using UserInterface::ResearchView;
+using UserInterface::ScenarioTextEdit;
 
 namespace {
     /**
@@ -64,6 +69,8 @@ namespace {
 ResearchView::ResearchView(QWidget *_parent) :
     QWidget(_parent),
     m_ui(new Ui::ResearchView),
+    m_editor(new ScenarioTextEdit(this)),
+    m_editorWrapper(new ScalableWrapper(m_editor, this)),
     m_isInTextFormatUpdate(false)
 {
     m_ui->setupUi(this);
@@ -99,6 +106,27 @@ void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMargi
     for (auto* editor : editors) {
         editor->setDefaultFont(_font);
     }
+}
+
+void ResearchView::setScriptShowScenesNumbers(bool _show)
+{
+    m_editor->setShowSceneNumbers(_show);
+}
+
+void ResearchView::setScriptShowDialoguesNumbers(bool _show)
+{
+    m_editor->setShowDialoguesNumbers(_show);
+}
+
+void ResearchView::setScriptTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
+{
+    m_editor->viewport()->setStyleSheet(QString("color: %1; background-color: %2;").arg(_textColor.name(), _backgroundColor.name()));
+    m_editor->setStyleSheet(QString("#scenarioEditor { color: %1; }").arg(_textColor.name()));
+}
+
+void ResearchView::setScriptDocument(BusinessLogic::ScenarioTextDocument* _document)
+{
+    m_editor->setScenarioDocument(_document);
 }
 
 void ResearchView::setResearchModel(QAbstractItemModel* _model)
@@ -192,10 +220,13 @@ void ResearchView::selectItem(const QModelIndex& _index)
     m_ui->researchNavigator->setCurrentIndex(_index);
 }
 
-void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix, const QString& _startSceneNumber)
+void ResearchView::editScript(const QString& _name, const QString& _header, const QString& _footer,
+    const QString& _scenesPrefix, const QString& _startSceneNumber)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->scriptEdit);
     updateText(m_ui->scriptName, _name);
+    updateText(m_ui->scriptHeader, _header);
+    updateText(m_ui->scriptFooter, _footer);
     updateText(m_ui->scriptSceneNumbersPrefix, _scenesPrefix);
 
     //
@@ -208,6 +239,8 @@ void ResearchView::editScript(const QString& _name, const QString& _scenesPrefix
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editTitlePage(const QString& _name, const QString& _additionalInfo,
@@ -226,6 +259,8 @@ void ResearchView::editTitlePage(const QString& _name, const QString& _additiona
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editLogline(const QString& _logline)
@@ -238,6 +273,8 @@ void ResearchView::editLogline(const QString& _logline)
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editSynopsis(const QString& _synopsis)
@@ -250,11 +287,14 @@ void ResearchView::editSynopsis(const QString& _synopsis)
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editVersions(QAbstractItemModel* _versions)
 {
     m_ui->versions->setModel(_versions);
+    m_ui->versionsContent->setCurrentWidget(m_ui->versionsPage);
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->versionsEdit);
 
     //
@@ -262,6 +302,9 @@ void ResearchView::editVersions(QAbstractItemModel* _versions)
     //
     setResearchManageButtonsVisible(false);
     setSearchVisible(false);
+    setAddVisible(true);
+    connect(m_ui->addResearchContent, &FlatButton::clicked, this, &ResearchView::addScriptVersionRequested);
+    setBackVisible(false);
 }
 
 void ResearchView::editCharactersRoot()
@@ -274,6 +317,8 @@ void ResearchView::editCharactersRoot()
     setResearchManageButtonsVisible(true, false, true);
     m_ui->refreshResearchSubtree->setToolTip(tr("Find All Characters from Script"));
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editCharacter(const QString& _name, const QString& _realName, const QString& _description)
@@ -288,6 +333,8 @@ void ResearchView::editCharacter(const QString& _name, const QString& _realName,
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editLocationsRoot()
@@ -300,6 +347,8 @@ void ResearchView::editLocationsRoot()
     setResearchManageButtonsVisible(true, false, true);
     m_ui->refreshResearchSubtree->setToolTip(tr("Find All Locations from Script"));
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editLocation(const QString& _name, const QString& _description)
@@ -313,6 +362,8 @@ void ResearchView::editLocation(const QString& _name, const QString& _descriptio
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editResearchRoot()
@@ -324,6 +375,8 @@ void ResearchView::editResearchRoot()
     //
     setResearchManageButtonsVisible(true, false);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editText(const QString& _name, const QString& _description)
@@ -343,6 +396,8 @@ void ResearchView::editText(const QString& _name, const QString& _description)
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(true);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editUrl(const QString& _name, const QString& _url, const QString& _cachedContent)
@@ -364,6 +419,8 @@ void ResearchView::editUrl(const QString& _name, const QString& _url, const QStr
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>& _images)
@@ -392,6 +449,8 @@ void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>&
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editImage(const QString& _name, const QPixmap& _image)
@@ -409,6 +468,8 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::editMindMap(const QString &_name, const QString &_xml)
@@ -434,6 +495,8 @@ void ResearchView::editMindMap(const QString &_name, const QString &_xml)
     //
     setResearchManageButtonsVisible(true);
     setSearchVisible(false);
+    setAddVisible(false);
+    setBackVisible(false);
 }
 
 void ResearchView::updateTextEditorText(const QString& _text, SimpleTextEditor* _editor)
@@ -469,6 +532,8 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
     m_ui->addResearchItem->setEnabled(!_isCommentOnly);
     m_ui->removeResearchItem->setEnabled(!_isCommentOnly);
     m_ui->scriptName->setReadOnly(_isCommentOnly);
+    m_ui->scriptHeader->setReadOnly(_isCommentOnly);
+    m_ui->scriptFooter->setReadOnly(_isCommentOnly);
     m_ui->scriptSceneNumbersPrefix->setReadOnly(_isCommentOnly);
     m_ui->titlePageName->setReadOnly(_isCommentOnly);
     m_ui->titlePageAdditionalInfo->lineEdit()->setReadOnly(_isCommentOnly);
@@ -604,6 +669,24 @@ void ResearchView::setSearchVisible(bool _isVisible)
     m_ui->searchWidget->setVisible(m_ui->search->isVisible() && m_ui->search->isChecked());
 }
 
+void ResearchView::setAddVisible(bool _isVisible)
+{
+    m_ui->addResearchContent->setVisible(_isVisible);
+
+    if (!_isVisible) {
+        m_ui->addResearchContent->disconnect();
+    }
+}
+
+void ResearchView::setBackVisible(bool _isVisible)
+{
+    m_ui->backToResearchContent->setVisible(_isVisible);
+
+    if (!_isVisible) {
+        m_ui->backToResearchContent->disconnect();
+    }
+}
+
 void ResearchView::currentResearchChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     Q_UNUSED(selected)
@@ -682,10 +765,18 @@ void ResearchView::initView()
     m_ui->researchSplitter->setStretchFactor(1, 1);
 
     m_ui->search->setIcons(m_ui->search->icon());
+    m_ui->addResearchContent->setIcons(m_ui->addResearchContent->icon());
+    m_ui->backToResearchContent->setIcons(m_ui->backToResearchContent->icon());
 
     m_ui->loglineText->setToolbarVisible(false);
 
     m_ui->synopsisText->setUsePageMode(true);
+
+    m_ui->versionsContent->addWidget(m_editorWrapper);
+    m_editor->setReadOnly(true);
+    m_editor->setUseSpellChecker(false);
+    m_editor->setPageMargins(QMarginsF{15, 5, 12, 5});
+    m_editor->setUseSpellChecker(false);
 
     QFont nameFont = m_ui->characterName->font();
     nameFont.setCapitalization(QFont::AllUppercase);
@@ -699,6 +790,14 @@ void ResearchView::initView()
 
     m_ui->imagePreview->setReadOnly(true);
 
+    m_ui->mindMapUndo->setIcons(m_ui->mindMapUndo->icon());
+    m_ui->mindMapUndo->setShortcut(QKeySequence::Undo);
+    m_ui->mindMapUndo->setToolTip(ShortcutHelper::makeToolTip(m_ui->mindMapUndo->toolTip(),
+                                                              m_ui->mindMapUndo->shortcut()));
+    m_ui->mindMapRedo->setIcons(m_ui->mindMapRedo->icon());
+    m_ui->mindMapRedo->setShortcut(QKeySequence::Redo);
+    m_ui->mindMapRedo->setToolTip(ShortcutHelper::makeToolTip(m_ui->mindMapRedo->toolTip(),
+                                                              m_ui->mindMapRedo->shortcut()));
     m_ui->addRootNode->setColorsPane(ColoredToolButton::Google);
     m_ui->addRootNode->setColor(Node::defaultBackgroundColor);
     m_ui->addRootNode->setToolTip(ShortcutHelper::makeToolTip(m_ui->addRootNode->toolTip(),
@@ -807,10 +906,10 @@ void ResearchView::initConnections()
     // Внутренние соединения формы
     //
     connect(m_ui->scriptName, &QLineEdit::textChanged, this, [this] {
-        ::updateText(m_ui->titlePageName, m_ui->scriptName->text());
+        updateText(m_ui->titlePageName, m_ui->scriptName->text());
     });
     connect(m_ui->titlePageName, &QLineEdit::textChanged, this, [this] {
-        ::updateText(m_ui->scriptName, m_ui->titlePageName->text());
+        updateText(m_ui->scriptName, m_ui->titlePageName->text());
     });
     connect(m_ui->loglineText, &SimpleTextEditorWidget::textChanged, [=] {
         const QString textToSplit = m_ui->loglineText->toPlainText().simplified();
@@ -867,6 +966,8 @@ void ResearchView::initConnections()
     // ... сценарий
     //
     connect(m_ui->scriptName, &QLineEdit::textChanged, this, &ResearchView::scriptNameChanged);
+    connect(m_ui->scriptHeader, &QLineEdit::textChanged, this, &ResearchView::scriptHeaderChanged);
+    connect(m_ui->scriptFooter, &QLineEdit::textChanged, this, &ResearchView::scriptFooterChanged);
     connect(m_ui->scriptSceneNumbersPrefix, &QLineEdit::textChanged, this, &ResearchView::scriptSceneNumbersPrefixChanged);
 
     //
@@ -902,6 +1003,20 @@ void ResearchView::initConnections()
     // ... версии
     //
     connect(m_ui->versions, &ScriptVersionsList::removeRequested, this, &ResearchView::removeScriptVersionRequested);
+    connect(m_ui->versions, &ScriptVersionsList::versionClicked, this, [this] (const QModelIndex& _versionIndex) {
+        emit showScriptVersionRequested(_versionIndex);
+        m_editor->relayoutDocument();
+
+        connect(m_ui->backToResearchContent, &FlatButton::clicked, this, [this] {
+            WAF::StackedWidgetAnimation::slide(m_ui->versionsContent, m_ui->versionsPage, WAF::FromLeftToRight);
+            setAddVisible(true);
+            setBackVisible(false);
+        });
+        m_ui->addResearchContent->hide();
+        setBackVisible(true);
+        WAF::StackedWidgetAnimation::slide(m_ui->versionsContent, m_editorWrapper, WAF::FromRightToLeft);
+
+    });
     //
     // ... персонаж
     //
@@ -981,6 +1096,8 @@ void ResearchView::initConnections()
             m_ui->nodeBackgroundColor->updateColor(QColor());
         }
     });
+    connect(m_ui->mindMapUndo, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::undo);
+    connect(m_ui->mindMapRedo, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::redo);
     connect(m_ui->addRootNode, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
     QShortcut* addNodeShortcut = new QShortcut(QKeySequence::New, m_ui->mindMapEdit);
     addNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
@@ -1020,6 +1137,8 @@ void ResearchView::initStyleSheet()
     m_ui->refreshResearchSubtree->setProperty("inTopPanel", true);
 
     m_ui->search->setProperty("inTopPanel", true);
+    m_ui->addResearchContent->setProperty("inTopPanel", true);
+    m_ui->backToResearchContent->setProperty("inTopPanel", true);
 
     m_ui->addFolder->setProperty("leftAlignedText", true);
     m_ui->addText->setProperty("leftAlignedText", true);
@@ -1027,6 +1146,8 @@ void ResearchView::initStyleSheet()
     m_ui->addImagesGallery->setProperty("leftAlignedText", true);
     m_ui->addUrl->setProperty("leftAlignedText", true);
 
+    m_ui->mindMapUndo->setProperty("inTopPanel", true);
+    m_ui->mindMapRedo->setProperty("inTopPanel", true);
     m_ui->addRootNode->setProperty("inTopPanel", true);
     m_ui->addNode->setProperty("inTopPanel", true);
     m_ui->addSiblingNode->setProperty("inTopPanel", true);
@@ -1042,6 +1163,7 @@ void ResearchView::initStyleSheet()
     m_ui->researchNavigator->setProperty("mainContainer", true);
     m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
     m_ui->versions->setProperty("mainContainer", true);
+    m_editorWrapper->setProperty("mainContainer", true);
 
     m_ui->textName->setProperty("editableLabel", true);
     m_ui->urlName->setProperty("editableLabel", true);

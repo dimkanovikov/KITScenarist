@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>814</width>
+    <width>824</width>
     <height>666</height>
    </rect>
   </property>
@@ -156,7 +156,7 @@
            <double>10.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>100.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -176,7 +176,7 @@
            <double>10.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>100.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -196,7 +196,7 @@
            <double>10.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>100.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -216,7 +216,7 @@
            <double>10.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>100.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -327,8 +327,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>529</width>
-           <height>420</height>
+           <width>524</width>
+           <height>391</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
@@ -377,7 +377,7 @@
                   <number>1</number>
                  </property>
                  <property name="maximum">
-                  <double>100.000000000000000</double>
+                  <double>200.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -408,7 +408,7 @@
                   <number>1</number>
                  </property>
                  <property name="maximum">
-                  <double>100.000000000000000</double>
+                  <double>200.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -447,7 +447,7 @@
                 <number>1</number>
                </property>
                <property name="maximum">
-                <double>100.000000000000000</double>
+                <double>200.000000000000000</double>
                </property>
               </widget>
              </item>
@@ -464,7 +464,7 @@
                 <number>1</number>
                </property>
                <property name="maximum">
-                <double>100.000000000000000</double>
+                <double>200.000000000000000</double>
                </property>
               </widget>
              </item>
@@ -537,7 +537,7 @@
                <number>1</number>
               </property>
               <property name="maximum">
-               <double>100.000000000000000</double>
+               <double>200.000000000000000</double>
               </property>
              </widget>
             </item>

@@ -10,15 +10,8 @@ QT += core core-private gui gui-private sql xml widgets widgets-private printsup
 TARGET = Scenarist
 TEMPLATE = app
 
-CONFIG += c++11
-
-#
-# Отключаем предупреждения о статических функциях и переменных
-# не используемых в собственных заголовочных файлах
-#
-unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
-
-QMAKE_MAC_SDK = macosx10.13
+CONFIG += c++11 warn_on
+unix: QMAKE_CXXFLAGS_WARN_ON += -Werror
 
 #
 # Конфигурируем расположение файлов сборки
@@ -49,6 +42,7 @@ LIBS += -L$$DESTDIR/../../libs/hunspell/ -lhunspell
 
 INCLUDEPATH += $$PWD/../libs/hunspell/src
 DEPENDPATH += $$PWD/../libs/hunspell
+PRE_TARGETDEPS += $$PWD/../libs/hunspell
 #
 
 ##
@@ -67,6 +61,7 @@ LIBS += -L$$DESTDIR/../../libs/fileformats/ -lfileformats
 
 INCLUDEPATH += $$PWD/../libs/fileformats
 DEPENDPATH += $$PWD/../libs/fileformats
+PRE_TARGETDEPS += $$PWD/../libs/fileformats
 #
 
 #
@@ -76,6 +71,7 @@ LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
 
 INCLUDEPATH += $$PWD/../libs/webloader/src
 DEPENDPATH += $$PWD/../libs/webloader/src
+PRE_TARGETDEPS += $$PWD/../libs/webloader/src
 #
 
 #
@@ -85,6 +81,7 @@ LIBS += -L$$DESTDIR/../../libs/qgumboparser/ -lqgumboparser
 
 INCLUDEPATH += $$PWD/../libs/qgumboparser
 DEPENDPATH += $$PWD/../libs/qgumboparser
+PRE_TARGETDEPS += $$PWD/../libs/qgumboparser
 #
 
 unix {
@@ -371,7 +368,8 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.cpp \
     scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.cpp \
     scenarist-desktop/UserInterfaceLayer/Digipitch/DigipitchScriptsList.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
+    scenarist-core/3rd_party/Widgets/CircularProgressBar/CircularProgressBar.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -653,7 +651,8 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h \
     scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.h \
     scenarist-desktop/UserInterfaceLayer/Digipitch/DigipitchScriptsList.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
+    scenarist-core/3rd_party/Widgets/CircularProgressBar/CircularProgressBar.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

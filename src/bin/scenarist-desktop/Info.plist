@@ -4,6 +4,8 @@
 <dict>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
+    <key>NSHighResolutionCapable</key>
+    <string>True</string>
     <key>CFBundleDisplyName</key>
     <string>Digipitch Screenwriter</string>
     <key>CFBundleIconFile</key>
@@ -15,7 +17,7 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.7.2 beta 9a</string>
+    <string>0.7.2 rc 9</string>
     <key>CFBundleExecutable</key>
     <string>Scenarist</string>
     <key>CFBundleIdentifier</key>

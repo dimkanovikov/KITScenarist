@@ -64,17 +64,17 @@ ScriptZenModeControls::ScriptZenModeControls(QWidget* _parent) :
     m_duration = new QLabel(this);
     m_countersInfo = new QLabel(this);
 
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
-    m_buttons << ::createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
+    m_buttons << createStyleButton(this);
     reinitBlockStyles();
     foreach (QPushButton* button, m_buttons) {
         button->installEventFilter(this);
@@ -156,6 +156,8 @@ void ScriptZenModeControls::reinitBlockStyles()
     for (; itemIndex < m_buttons.count(); ++itemIndex) {
         m_buttons.at(itemIndex)->setVisible(false);
     }
+
+    setReadOnly(m_readOnly);
 }
 
 void ScriptZenModeControls::changeStyle()
@@ -203,6 +205,16 @@ void ScriptZenModeControls::setDuration(const QString &_duration)
 void ScriptZenModeControls::setCountersInfo(const QStringList &_counters)
 {
     m_countersInfo->setText(_counters.join("<br>"));
+}
+
+void ScriptZenModeControls::setReadOnly(bool _readOnly)
+{
+    m_readOnly = _readOnly;
+
+    m_keyboardSound->setVisible(!m_readOnly);
+    for (auto button : m_buttons) {
+        button->setVisible(!m_readOnly);
+    }
 }
 
 bool ScriptZenModeControls::eventFilter(QObject* _watched, QEvent* _event)

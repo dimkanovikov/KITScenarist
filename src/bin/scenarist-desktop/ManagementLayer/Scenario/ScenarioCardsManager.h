@@ -6,10 +6,6 @@
 
 class QPrinter;
 
-namespace Domain {
-    class Scenario;
-}
-
 namespace BusinessLogic {
     class ScenarioModel;
 }
@@ -207,11 +203,6 @@ namespace ManagementLayer
          * @brief Диалог печати
          */
         UserInterface::PrintCardsDialog* m_printDialog = nullptr;
-
-        /**
-         * @brief Сценарий
-         */
-        Domain::Scenario* m_scenario = nullptr;
 
         /**
          * @brief Модель сценария

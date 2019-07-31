@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>582</height>
+    <height>664</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -153,14 +153,15 @@ Français: Felipe Vece, Antonio, Armand Robin
 Italiano: Luca Giliberto
 Қазақ: Алпамыс Баткалов
 Magyar: Gabor
-Polski: Rafał Puka
-Português: Ricardo Graça, Ronaldo German 
+Polski: Rafał Puka, Bartłomiej Jaskulski
+Português: Ricardo Graça, Ronaldo German, Lucas Sanchez dos Anjos 
 Русский: Димка Новиков
 Türkçe: Recep Burak Yak
 Українська: Myroslav S 
 فارْسِى: Arash Aneessee
 汉语: Stepan Chernetskiy, Barron Kang
 עִבְרִית: Maxim Ronkin
+తెలుగు: Eshwar Mittapalli
 </string>
      </property>
      <property name="wordWrap">

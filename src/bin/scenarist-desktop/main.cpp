@@ -9,18 +9,24 @@
 #include <ManagementLayer/ApplicationManager.h>
 #include <ManagementLayer/Onboarding/OnboardingManager.h>
 
+#include <QProcess>
+#include <QScreen>
+#include <QStringList>
+
 
 int main(int argc, char *argv[])
 {
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
     Application application(argc, argv);
 
 #ifdef Q_OS_WIN
-	//
-	// Настроим отлавливание ошибок
-	//
-	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	QString crashReportsFolderPath = appDataFolderPath + QDir::separator() + "CrashReports";
-	QBreakpadInstance.setDumpPath(crashReportsFolderPath);
+    //
+    // Настроим отлавливание ошибок
+    //
+    QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString crashReportsFolderPath = appDataFolderPath + QDir::separator() + "CrashReports";
+    QBreakpadInstance.setDumpPath(crashReportsFolderPath);
 #endif
 
     //
@@ -36,5 +42,5 @@ int main(int argc, char *argv[])
         application.startApp();
     }
 
-	return application.exec();
+    return application.exec();
 }

@@ -80,6 +80,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
         //
         BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
         exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+        exportParameters.scriptHeader = _scenarioData.value(ScenarioData::HEADER_KEY);
+        exportParameters.scriptFooter = _scenarioData.value(ScenarioData::FOOTER_KEY);
         exportParameters.scenesPrefix = _scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
         exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
         exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
@@ -180,6 +182,8 @@ void ExportManager::printPreview(BusinessLogic::ScenarioDocument* _scenario,
     //
     BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
     exportParameters.scriptName = _scenarioData.value(ScenarioData::NAME_KEY);
+    exportParameters.scriptHeader = _scenarioData.value(ScenarioData::HEADER_KEY);
+    exportParameters.scriptFooter = _scenarioData.value(ScenarioData::FOOTER_KEY);
     exportParameters.scenesPrefix = _scenarioData.value(ScenarioData::SCENE_NUMBERS_PREFIX_KEY);
     exportParameters.scriptAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
     exportParameters.scriptGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
@@ -204,7 +208,10 @@ void ExportManager::printPreview(BusinessLogic::ScenarioDocument* _scenario,
         // если диалог экспорта не был показан, или там стоит другой тип экспортируемого
         // документа, но мы попали сюда из меню
         //
-        exportParameters.isScript = true;
+        if (exportParameters.isOutline == false
+            && exportParameters.isScript == false) {
+            exportParameters.isScript = true;
+        }
         exporter.printPreview(_scenario, exportParameters);
     }
 
@@ -244,13 +251,17 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
     m_exportDialog->setCheckPageBreaks(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/check-page-breaks").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+                    DataStorageLayer::SettingsStorage::ApplicationSettings, "1").toInt()
                 );
-    m_exportDialog->setCurrentStyle(
-                StorageFacade::settingsStorage()->value(
-                    QString("%1/style").arg(projectKey),
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                );
+    QString exportStyle = StorageFacade::settingsStorage()->value(
+                              QString("%1/style").arg(projectKey),
+                              DataStorageLayer::SettingsStorage::ApplicationSettings);
+    if (exportStyle.isEmpty()) {
+        exportStyle = DataStorageLayer::StorageFacade::settingsStorage()->value(
+                          "scenario-editor/current-style",
+                          DataStorageLayer::SettingsStorage::ApplicationSettings);
+    }
+    m_exportDialog->setCurrentStyle(exportStyle);
     m_exportDialog->setPageNumbering(
                 StorageFacade::settingsStorage()->value(
                     QString("%1/page-numbering").arg(projectKey),

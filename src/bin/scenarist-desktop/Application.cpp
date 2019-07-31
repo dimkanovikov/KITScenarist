@@ -42,7 +42,7 @@ Application::Application(int& _argc, char** _argv) :
     setOrganizationName("DimkaNovikov labs.");
     setOrganizationDomain("dimkanovikov.pro");
     setApplicationName("Scenarist");
-    setApplicationVersion("0.7.2 beta 9a");
+    setApplicationVersion("0.7.2 rc 9");
 
     //
     // Настроим стиль отображения внешнего вида приложения
@@ -53,6 +53,11 @@ Application::Application(int& _argc, char** _argv) :
     // Загрузим шрифты в базу шрифтов программы, если их там ещё нет
     //
     QFontDatabase fontDatabase;
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Thin");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Regular");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Medium");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Bold");
+    fontDatabase.addApplicationFont(":/Fonts/Roboto Black");
     fontDatabase.addApplicationFont(":/Fonts/Courier New");
     fontDatabase.addApplicationFont(":/Fonts/Courier New Bold");
     fontDatabase.addApplicationFont(":/Fonts/Courier New Italic");
@@ -104,7 +109,7 @@ void Application::updateTranslation()
     //
     // ... если не удалось определить локаль, используем англоязычный перевод
     //
-    QLocale::Language currentLanguage = QLocale::AnyLanguage;
+    QLocale::Language currentLanguage = QLocale::system().language();
     if (translationSuffix.isEmpty()) {
         translationSuffix = "en";
         currentLanguage = QLocale::English;
@@ -237,6 +242,22 @@ void Application::updateTranslation()
             break;
         }
 
+        case 16: {
+            translationSuffix = "te";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Telugu;
+            break;
+        }
+
+        case 17: {
+            translationSuffix = "pt_br";
+            qtTranslationSuffix = "pt";
+            qtBaseTranslationSuffix = "pt";
+            currentLanguage = QLocale::Portuguese;
+            break;
+        }
+
         default: break;
     }
 
@@ -292,7 +313,7 @@ void Application::startApp()
     //
     // Запускаем остальную работу приложения
     //
-    m_applicationManager->makeStartUpChecks();
+    QTimer::singleShot(0, m_applicationManager, &ManagementLayer::ApplicationManager::makeStartUpChecks);
 }
 
 bool Application::notify(QObject* _object, QEvent* _event)

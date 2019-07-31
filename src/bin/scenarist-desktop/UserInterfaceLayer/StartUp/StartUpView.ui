@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>815</width>
-    <height>592</height>
+    <height>681</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,20 +73,6 @@
           <property name="verticalSpacing">
            <number>10</number>
           </property>
-          <item row="4" column="0" colspan="2">
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Get Connected</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0" rowspan="3" colspan="2">
            <widget class="QPushButton" name="createProject">
             <property name="cursor">
@@ -114,23 +100,23 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>0</width>
+              <height>120</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QPushButton" name="openProject">
+          <item row="10" column="0" rowspan="4" colspan="2">
+           <widget class="QPushButton" name="help">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
-             <string>Open Project</string>
+             <string>Help</string>
             </property>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-              <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
+              <normaloff>:/Graphics/Iconset/help-circle.svg</normaloff>:/Graphics/Iconset/help-circle.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -163,10 +149,10 @@
           <item row="5" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Join the Digipitch Nexus to connect with 
-fellow writers, agents and producers. 
+             <string>Join the Digipitch Nexus to connect with
+fellow writers, agents and producers.
 
-The Digipitch Screenwriting &amp; Pitching Platform 
+The Digipitch Screenwriting &amp; Pitching Platform
 opens up a whole new world of opportunity.</string>
             </property>
             <property name="wordWrap">
@@ -185,6 +171,40 @@ opens up a whole new world of opportunity.</string>
             <property name="icon">
              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
               <normaloff>:/Graphics/Iconset/help-circle.svg</normaloff>:/Graphics/Iconset/help-circle.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Get Connected</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPushButton" name="openProject">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Open Project</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+              <normaloff>:/Graphics/Iconset/folder-outline.svg</normaloff>:/Graphics/Iconset/folder-outline.svg</iconset>
             </property>
             <property name="iconSize">
              <size>

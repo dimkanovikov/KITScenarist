@@ -223,8 +223,8 @@ void ResearchItemDialog::initConnections()
 {
     connect(m_ui->other, &QRadioButton::toggled, m_ui->otherType, &QComboBox::setEnabled);
 
-    connect(m_ui->name, &QLineEdit::textChanged, [=] (const QString& _text) {
-        m_saveButton->setEnabled(!_text.isEmpty());
+    connect(m_ui->name, &QLineEdit::textChanged, this, [this] (const QString& _text) {
+        m_saveButton->setEnabled(!_text.simplified().isEmpty());
     });
     connect(m_ui->buttons, &QDialogButtonBox::accepted, this, &QLightBoxDialog::accept);
     connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &QLightBoxDialog::reject);

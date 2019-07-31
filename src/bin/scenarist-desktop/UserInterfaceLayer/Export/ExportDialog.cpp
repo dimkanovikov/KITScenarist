@@ -84,18 +84,23 @@ void ExportDialog::setResearchModel(QAbstractItemModel* _model)
 
 void ExportDialog::setScriptExportFilePath(const QString& _filePath)
 {
-    m_ui->file->setText(_filePath);
-    QFileInfo fileInfo(_filePath);
-    if (fileInfo.suffix() == "docx") {
-        m_ui->docx->setChecked(true);
-    } else if (fileInfo.suffix() == "pdf") {
-        m_ui->pdf->setChecked(true);
-    } else if (fileInfo.suffix() == "fdx") {
-        m_ui->fdx->setChecked(true);
+    if (!_filePath.isEmpty()) {
+        m_ui->file->setText(_filePath);
+        QFileInfo fileInfo(_filePath);
+        if (fileInfo.suffix() == "docx") {
+            m_ui->docx->setChecked(true);
+        } else if (fileInfo.suffix() == "pdf") {
+            m_ui->pdf->setChecked(true);
+        } else if (fileInfo.suffix() == "fdx") {
+            m_ui->fdx->setChecked(true);
+        } else {
+            m_ui->fountain->setChecked(true);
+        }
     } else {
-        m_ui->fountain->setChecked(true);
+        m_ui->pdf->setChecked(true);
     }
 
+    m_ui->file->setText(_filePath);
     checkScriptExportAvailability();
 }
 
@@ -135,6 +140,7 @@ void ExportDialog::setCurrentStyle(const QString& _styleName)
     //
     if (!_styleName.isEmpty()) {
         m_ui->templates->setCurrentText(_styleName);
+        emit currentStyleChanged(_styleName);
     }
     //
     // В противном случае выбираем первый из списка
@@ -354,11 +360,14 @@ void ExportDialog::checkExportAvailability(int _index)
         fileExists = m_ui->existsLabel;
     }
 
-    int lastCursorPosition = filePath->cursorPosition();
+    const int lastCursorPosition = filePath->cursorPosition();
     filePath->setText(FileHelper::systemSavebleFileName(filePath->text()));
     filePath->setCursorPosition(lastCursorPosition);
-    fileExists->setVisible(QFile::exists(filePath->text()));
 
+    const bool isFileExists = QFile::exists(filePath->text());
+    fileExists->setVisible(isFileExists);
+
+    m_ui->exportTo->setText(isFileExists ? tr("Rewrite") : tr("Export"));
     m_ui->exportTo->setEnabled(!filePath->text().isEmpty());
 }
 

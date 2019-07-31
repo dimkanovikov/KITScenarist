@@ -215,6 +215,16 @@ void ScenarioTextEditManager::setFixed(bool _fixed)
     m_view->setFixed(_fixed);
 }
 
+void ScenarioTextEditManager::setScriptHeader(const QString& _header)
+{
+    m_view->setScriptHeader(_header);
+}
+
+void ScenarioTextEditManager::setScriptFooter(const QString& _footer)
+{
+    m_view->setScriptFooter(_footer);
+}
+
 void ScenarioTextEditManager::setSceneNumbersPrefix(const QString& _prefix)
 {
     m_view->setSceneNumbersPrefix(_prefix);

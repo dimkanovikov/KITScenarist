@@ -313,6 +313,10 @@ void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
 
 void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 {
+    if (_value == -1) {
+        return;
+    }
+
     //
     // Сохраняем значение выбранного языка
     //

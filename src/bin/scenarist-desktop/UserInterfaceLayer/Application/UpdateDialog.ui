@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>589</width>
     <height>279</height>
    </rect>
   </property>
@@ -67,7 +67,7 @@ Please, download new version by this &lt;a href=&quot;https://kitscenarist.ru/en
         </sizepolicy>
        </property>
        <property name="text">
-        <string>I'm sure want to download beta version</string>
+        <string>I'm sure. I want to download beta version</string>
        </property>
       </widget>
      </item>

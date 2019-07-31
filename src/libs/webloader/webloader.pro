@@ -8,8 +8,6 @@ CONFIG += c++11 staticlib
 QT += network xml
 QT -= gui
 
-QMAKE_MAC_SDK = macosx10.13
-
 #
 # Конфигурируем расположение файлов сборки
 #

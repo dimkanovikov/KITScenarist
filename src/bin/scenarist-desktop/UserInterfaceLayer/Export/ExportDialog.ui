@@ -230,7 +230,6 @@ border: 1px solid palette(dark);
       </layout>
       <zorder>researchExportTree</zorder>
       <zorder>label_4</zorder>
-      <zorder>horizontalSpacer_6</zorder>
       <zorder>researchExistsLabel</zorder>
      </widget>
      <widget class="QWidget" name="scriptExportPage">

@@ -65,6 +65,16 @@ namespace UserInterface
         void setShowScenesNumbers(bool _show);
 
         /**
+         * @brief Задать верхний колонтитул
+         */
+        void setScriptHeader(const QString& _header);
+
+        /**
+         * @brief Задать нижний колонтитул
+         */
+        void setScriptFooter(const QString& _footer);
+
+        /**
          * @brief Задать префикс номеров сцен
          */
         void setSceneNumbersPrefix(const QString& _prefix);

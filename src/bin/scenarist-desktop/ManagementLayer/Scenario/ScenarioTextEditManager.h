@@ -86,6 +86,16 @@ namespace ManagementLayer
         void setFixed(bool _fixed);
 
         /**
+         * @brief Установить верхний колонтитул
+         */
+        void setScriptHeader(const QString& _header);
+
+        /**
+         * @brief Установить нижний колонтитул
+         */
+        void setScriptFooter(const QString& _footer);
+
+        /**
          * @brief Установить префикс номеров сцен
          */
         void setSceneNumbersPrefix(const QString& _prefix);

@@ -1,19 +1,18 @@
 Package: scenarist
-Version: 0.7.2.beta9a
+Version: 0.7.2.rc9
 Provides: scenarist
 Maintainer: Dimka Novikov <to@dimkanovikov.pro>
 Architecture: i386
 Installed-Size: 192658
 Priority: optional
 Section: text
-Homepage: https://kitscenarist.ru
+Homepage: https://kitscenarist.ru/en/
 Description: KIT Scenarist
- KIT Scenarist is screenwriting software, which developed in Russia.
+ KIT Scenarist is a professional screenwriting software
  .
- KIT Scenarist combines convenient script editor and organizer of the screenplay project. Script 
+ KIT Scenarist combines convenient script editor and organizer of the screenplay project. Script
  editor implements numerous opportunities to facilitate the work of the screenwriter, including: the
- ability to autosubstitution locations, names of characters; check the spelling on the fly; support 
- the grouping of scenes and groups self; painless exporting to PDF and DOCX in all world 
- languages; customizable timing counting and more. Options for the characters and locations allow 
+ ability to autosubstitution locations, names of characters; check the spelling on the fly; support
+ the grouping of scenes and groups self; painless exporting to PDF and DOCX in all world
+ languages; customizable timing counting and more. Options for the characters and locations allow
  to collect all the material on the project in one file, and provide a simple way to work with it.
-

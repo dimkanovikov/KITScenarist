@@ -35,6 +35,7 @@
 #include <UserInterfaceLayer/Project/ShareDialog.h>
 #include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 
+#include <3rd_party/Helpers/RunOnce.h>
 #include <3rd_party/Helpers/TextUtils.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/SideBar/SideBar.h>
@@ -77,10 +78,9 @@ namespace {
      * @brief Номера пунктов меню
      */
     /** @{ */
-    const int kStartNewVersionMenuIndex = 4;
-    const int kImportMenuIndex = 5;
-    const int kExportMenuIndex = 6;
-    const int kPrintPreviewMenuIndex = 7;
+    const int kStartNewVersionMenuIndex = 5;
+    const int kImportMenuIndex = 6;
+    const int kExportMenuIndex = 7;
     const int kTwoPanelModeMenuIndex = 9;
     /** @} */
 
@@ -110,8 +110,10 @@ namespace {
     /**
      * @brief Суффикс "изменено" для заголовка окна добавляемый в маке
      */
+#ifdef Q_OS_MAC
     const char* MAC_CHANGED_SUFFIX =
             QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+#endif
 
     /**
      * @brief Флаги доступности синхронизации
@@ -171,6 +173,10 @@ namespace {
     }
 
     static void updateWindowModified(QWidget* _widget, bool _modified) {
+        if (!ProjectsManager::currentProject().isWritable()) {
+            return;
+        }
+
 #ifdef Q_OS_MAC
         static const QString suffix =
                 QApplication::translate("ManagementLayer::ApplicationManager", MAC_CHANGED_SUFFIX);
@@ -185,6 +191,23 @@ namespace {
         }
 #endif
         _widget->setWindowModified(_modified);
+    }
+
+    /**
+     * @brief Получить язык для подстановки в ссылки на сайте
+     */
+    static QString urlLanguage() {
+        switch (QLocale().language()) {
+            case QLocale::Russian:
+            case QLocale::Ukrainian:
+            case QLocale::Kazakh: {
+                return QString();
+            }
+
+            default: {
+                return "en/";
+            }
+        }
     }
 }
 
@@ -575,7 +598,7 @@ void ApplicationManager::aboutSaveAs()
                 // ... сохраняем изменения
                 //
                 aboutSave();
-                m_view->setWindowModified(true);
+                updateWindowModified(m_view, true);
 
                 //
                 // ... обновим заголовок
@@ -597,6 +620,14 @@ void ApplicationManager::aboutSaveAs()
 
 void ApplicationManager::aboutSave()
 {
+    //
+    // Избегаем рекурсии
+    //
+    const auto canRun = RunOnce::tryRun(Q_FUNC_INFO);
+    if (!canRun) {
+        return;
+    }
+
     //
     // Сохраняем только, если приложение находится в рабочем состоянии
     //
@@ -641,7 +672,7 @@ void ApplicationManager::aboutSave()
             //
             // Изменим статус окна на сохранение изменений
             //
-            ::updateWindowModified(m_view, false);
+            updateWindowModified(m_view, false);
 
             //
             // Если необходимо создадим резервную копию закрываемого файла
@@ -679,7 +710,7 @@ void ApplicationManager::aboutSave()
                 //
                 if (messageResult == QDialogButtonBox::Yes) {
                     DatabaseLayer::Database::setCurrentFile(DatabaseLayer::Database::currentFile());
-                    aboutSave();
+                    QTimer::singleShot(0, this, &ApplicationManager::aboutSave);
                 }
             }
             //
@@ -827,7 +858,7 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
         //
         // Изменим статус окна на сохранение изменений
         //
-        ::updateWindowModified(m_view, false);
+        updateWindowModified(m_view, false);
     }
 }
 
@@ -906,6 +937,14 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
         }
 
         if (canOpenProject) {
+            //
+            // ... если файл доступен только для чтения, уведомим об этом пользователя
+            //
+            if (!ProjectsManager::currentProject().isWritable()) {
+                QLightBoxMessage::information(m_view, tr("A file will be opened in read-only mode"),
+                    tr("If you want to edit a file, please check it's permissions for your account."));
+            }
+
             //
             // ... перейдём к редактированию
             //
@@ -1034,6 +1073,12 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     if (project.isUserOwner()) {
         if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
+            //
+            // Если в данный момент открыт проект, который пользователь хочет удалить, закрываем его
+            //
+            if (project == m_projectsManager->currentProject()) {
+                closeCurrentProject();
+            }
             m_synchronizationManager->removeProject(project.id());
         }
     }
@@ -1043,6 +1088,12 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     else {
         if (QLightBoxMessage::question(m_view, QString::null, tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
+            //
+            // Если в данный момент открыт проект, от которого пользователь хочет отписаться, закрываем его
+            //
+            if (project == m_projectsManager->currentProject()) {
+                closeCurrentProject();
+            }
             m_synchronizationManager->unshareProject(project.id());
         }
     }
@@ -1452,7 +1503,7 @@ void ApplicationManager::aboutApplicationSettingsUpdated()
 void ApplicationManager::aboutProjectChanged()
 {
     if (isProjectLoaded()) {
-        ::updateWindowModified(m_view, true);
+        updateWindowModified(m_view, true);
         m_statisticsManager->scenarioTextChanged();
     }
 }
@@ -1674,42 +1725,45 @@ void ApplicationManager::currentTabIndexChanged()
 
 bool ApplicationManager::saveIfNeeded()
 {
-    bool success = true;
+    if (!m_view->isWindowModified()) {
+        return true;
+    }
 
     //
     // Если какие-то данные изменены
     //
-    if (m_view->isWindowModified()) {
-        int questionResult = QDialogButtonBox::Cancel;
 
-        //
-        // ... если работаем с проектом из облака, сохраняем без вопросов
-        //
-        if (m_projectsManager->currentProject().isRemote()) {
-            questionResult = QDialogButtonBox::Yes;
-        }
-        //
-        // ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
-        //
-        else {
-            questionResult =
-                    QLightBoxMessage::question(m_view, tr("Save project changes?"),
-                        tr("Project was modified. Save changes?"),
-                        QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
-        }
+    bool success = true;
 
-        if (questionResult != QDialogButtonBox::Cancel) {
-            //
-            // ... и сохраняем, если хочет
-            //
-            if (questionResult == QDialogButtonBox::Yes) {
-                aboutSave();
-            } else {
-                ::updateWindowModified(m_view, false);
-            }
+    int questionResult = QDialogButtonBox::Cancel;
+
+    //
+    // ... если работаем с проектом из облака, сохраняем без вопросов
+    //
+    if (m_projectsManager->currentProject().isRemote()) {
+        questionResult = QDialogButtonBox::Yes;
+    }
+    //
+    // ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
+    //
+    else {
+        questionResult =
+                QLightBoxMessage::question(m_view, tr("Save project changes?"),
+                    tr("Project was modified. Save changes?"),
+                    QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
+    }
+
+    if (questionResult != QDialogButtonBox::Cancel) {
+        //
+        // ... и сохраняем, если хочет
+        //
+        if (questionResult == QDialogButtonBox::Yes) {
+            aboutSave();
         } else {
-            success = false;
+            updateWindowModified(m_view, false);
         }
+    } else {
+        success = false;
     }
 
     return success;
@@ -1745,6 +1799,16 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     m_menuManager->setMenuItemEnabled(kExportMenuIndex, !isCommentOnly);
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
+
+    //
+    // Если открываемый файл доступен только для чтения, то блокируем изменения, но оставляем возможность экспорта
+    //
+    if (!ProjectsManager::currentProject().isWritable()) {
+        m_menuManager->setMenuItemEnabled(kStartNewVersionMenuIndex, false);
+        m_menuManager->setMenuItemEnabled(kImportMenuIndex, false);
+        m_researchManager->setCommentOnly(true);
+        m_scenarioManager->setCommentOnly(true);
+    }
 
     //
     // Настроим индикатор
@@ -1792,14 +1856,6 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     m_statisticsManager->loadCurrentProject();
 
     //
-    // После того, как все данные загружены и синхронизированы, сохраняем проект
-    //
-    if (m_projectsManager->currentProject().isRemote()) {
-        m_view->setWindowModified(true);
-        aboutSave();
-    }
-
-    //
     // Затем импортируем данные из указанного файла, если необходимо
     //
     if (!_importFilePath.isEmpty()) {
@@ -1831,6 +1887,8 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     //
     // Установим параметры между менеджерами
     //
+    m_scenarioManager->setScriptHeader(m_researchManager->scriptHeader());
+    m_scenarioManager->setScriptFooter(m_researchManager->scriptFooter());
     m_scenarioManager->setSceneNumbersPrefix(m_researchManager->sceneNumbersPrefix());
     m_scenarioManager->setSceneStartNumber(m_researchManager->sceneStartNumber());
 
@@ -1847,6 +1905,14 @@ void ApplicationManager::goToEditCurrentProject(const QString& _importFilePath)
     progress.finish();
 
     m_state = ApplicationState::Working;
+
+    //
+    // После того, как все данные загружены и синхронизированы, сохраняем проект
+    //
+    if (m_projectsManager->currentProject().isRemote()) {
+        updateWindowModified(m_view, true);
+        aboutSave();
+    }
 }
 
 void ApplicationManager::closeCurrentProject()
@@ -1896,8 +1962,12 @@ void ApplicationManager::closeCurrentProject()
         //
         // Перейти на стартовую вкладку
         //
-        m_tabs->setCurrentTab(0);
+        m_tabs->setCurrentTab(STARTUP_TAB_INDEX);
+        m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
     }
+
+    updateWindowModified(m_view, false);
+    updateWindowTitle();
 }
 
 bool ApplicationManager::isProjectLoaded() const
@@ -2141,6 +2211,8 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::updatePublished, m_menuManager, &MenuManager::showUpdateButton);
 
     connect(m_researchManager, &ResearchManager::scriptNameChanged, this, &ApplicationManager::updateWindowTitle);
+    connect(m_researchManager, &ResearchManager::scriptHeaderChanged, m_scenarioManager, &ScenarioManager::setScriptHeader);
+    connect(m_researchManager, &ResearchManager::scriptFooterChanged, m_scenarioManager, &ScenarioManager::setScriptFooter);
     connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);
     connect(m_researchManager, &ResearchManager::sceneStartNumberChanged, m_scenarioManager, &ScenarioManager::setSceneStartNumber);
     connect(m_researchManager, &ResearchManager::versionsChanged, this, &ApplicationManager::updateWindowTitle);
@@ -2148,6 +2220,7 @@ void ApplicationManager::initConnections()
     connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
     connect(m_researchManager, &ResearchManager::locationNameChanged, m_scenarioManager, &ScenarioManager::aboutLocationNameChanged);
     connect(m_researchManager, &ResearchManager::refreshLocations, m_scenarioManager, &ScenarioManager::aboutRefreshLocations);
+    connect(m_researchManager, &ResearchManager::addScriptVersionRequested, this, &ApplicationManager::aboutStartNewVersion);
 
     connect(m_scenarioManager, &ScenarioManager::showFullscreen, this, &ApplicationManager::aboutShowFullscreen);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, this, &ApplicationManager::aboutUpdateLastChangeInfo);
@@ -2252,6 +2325,13 @@ void ApplicationManager::initStyleSheet()
 
 void ApplicationManager::reloadApplicationSettings()
 {
+    //
+    // Установить используемый приложением шрифт
+    //
+    QFont font("Roboto Regular");
+    font.setPixelSize(12);
+    QApplication::setFont(font);
+
     //
     // Внешний вид приложения
     //
@@ -2461,6 +2541,11 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
+    if (!m_projectsManager->isCurrentProjectValid()) {
+        m_view->setWindowTitle(tr("KIT Scenarist"));
+        return;
+    }
+
     //
     // Обновим название текущего проекта, если он локальный
     //

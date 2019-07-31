@@ -113,6 +113,16 @@ namespace ManagementLayer
         /**
          * @brief Установить префикс номеров сцен
          */
+        void setScriptHeader(const QString& _header);
+
+        /**
+         * @brief Установить префикс номеров сцен
+         */
+        void setScriptFooter(const QString& _footer);
+
+        /**
+         * @brief Установить префикс номеров сцен
+         */
         void setSceneNumbersPrefix(const QString& _prefix);
 
         /**
@@ -176,8 +186,8 @@ namespace ManagementLayer
          * @brief Применить патч к сценарию
          */
         /** @{ */
-        void aboutApplyPatch(const QString& _patch, bool _isDraft);
-        void aboutApplyPatches(const QList<QString>& _patches, bool _isDraft);
+        void aboutApplyPatch(const QString& _patch, bool _isDraft, int _newChangesSize);
+        void aboutApplyPatches(const QList<QString>& _patches, bool _isDraft, QList<QPair<QString, QString>>& _newChangesUuids);
         /** @} */
 
         /**

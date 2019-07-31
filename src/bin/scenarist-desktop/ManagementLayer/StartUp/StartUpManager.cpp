@@ -210,14 +210,18 @@ void StartUpManager::checkNewVersion()
         //
         // Распарсим ответ. Нам нужна версия, ее описание, шаблон на скачивание и является ли бетой
         //
+        int funded = 0;
         while (!responseReader.atEnd()) {
             responseReader.readNext();
             if (responseReader.name().toString() == "update"
                     && responseReader.tokenType() == QXmlStreamReader::StartElement) {
-                QXmlStreamAttributes attrs = responseReader.attributes();
-                m_updateVersion = attrs.value("version").toString();
-                m_updateFileTemplate = attrs.value("file_template").toString();
-                m_updateIsBeta = attrs.value("is_beta").toString() == "true"; // :)
+                QXmlStreamAttributes attributes = responseReader.attributes();
+                m_updateVersion = attributes.value("version").toString();
+                m_updateFileTemplate = attributes.value("file_template").toString();
+                m_updateIsBeta = attributes.value("is_beta").toString() == "true"; // :)
+                if (attributes.hasAttribute("funded")) {
+                    funded = attributes.value("funded").toInt();
+                }
                 responseReader.readNext();
             } else if (responseReader.name().toString() == "description"
                     && responseReader.tokenType() == QXmlStreamReader::StartElement) {
@@ -367,7 +371,8 @@ void StartUpManager::showUpdateDialogImpl()
 #else
             if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
 #endif
-                exit(0);
+                QApplication::quit();
+                return;
             } else {
                 updateDialogText = tr("<p>Can't install update. There are some problems with downloaded file.</p>"
                                       "<p>You can try to reload update or load it manually "
