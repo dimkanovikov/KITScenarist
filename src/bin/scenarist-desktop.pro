@@ -11,7 +11,6 @@ TARGET = Scenarist
 TEMPLATE = app
 
 CONFIG += c++11 warn_on
-unix: QMAKE_CXXFLAGS_WARN_ON += -Werror
 
 #
 # Конфигурируем расположение файлов сборки
