@@ -21,8 +21,6 @@ TRANSLATIONS += bin/scenarist-core/Resources/Translations/Scenarist_ru.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_it.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_az.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_te.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_nl.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_ta.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_sl.ts
 
 RESOURCES += \
