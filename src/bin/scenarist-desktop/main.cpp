@@ -16,9 +16,26 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_WIN
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 
     Application application(argc, argv);
+
+#ifndef Q_OS_WIN
+    //
+    // Настроем масштабирование, для 4К
+    //
+    if (application.primaryScreen()->size().width() > 3800
+        && qgetenv("QT_SCALE_FACTOR") != "2") {
+        //
+        // После того, как было настроено разрешение, нужно перезапустить приложение
+        //
+        qputenv("QT_SCALE_FACTOR", "2");
+        QProcess::startDetached(application.arguments().first(), application.arguments());
+        return 0;
+    }
+#endif
 
 #ifdef Q_OS_WIN
     //
