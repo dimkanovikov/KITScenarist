@@ -783,7 +783,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Hungarian"), SpellChecker::Hungarian);
     m_ui->spellCheckingLanguage->addItem(tr("Italian"), SpellChecker::Italian);
     m_ui->spellCheckingLanguage->addItem(tr("Kazakh"), SpellChecker::Kazakh);
-    m_ui->spellCheckingLanguage->addItem(tr("Kazakh"), SpellChecker::Macedonian);
+    m_ui->spellCheckingLanguage->addItem(tr("Macedonian"), SpellChecker::Macedonian);
     m_ui->spellCheckingLanguage->addItem(tr("Polish"), SpellChecker::Polish);
     m_ui->spellCheckingLanguage->addItem(tr("Portuguese (Brazil)"), SpellChecker::PortugueseBrazilian);
     m_ui->spellCheckingLanguage->addItem(tr("Portuguese (Portugal)"), SpellChecker::Portuguese);

@@ -639,18 +639,18 @@ void ApplicationManager::aboutSave()
     // Если какие-то данные изменены
     //
     if (m_view->isWindowModified()) {
-        //
-        // Перед сохранением проверяем достаточно ли места на диске, если нет, то уведомляем пользователя
-        //
-        const QStorageInfo storageInfo(DatabaseLayer::Database::currentFile());
-        if (storageInfo.bytesAvailable()/1000/1000 < 50) {
-            QLightBoxMessage::warning(
-                        m_view,
-                        tr("Possible save error"),
-                        tr("You have less than 50 megabytes of free disk space. This can lead to problems "
-                           "with saving the project. We recommend that you free up more space "
-                           "and check whether the project is saved correctly."));
-        }
+//        //
+//        // Перед сохранением проверяем достаточно ли места на диске, если нет, то уведомляем пользователя
+//        //
+//        const QStorageInfo storageInfo(DatabaseLayer::Database::currentFile());
+//        if (storageInfo.istorageInfo.bytesAvailable()/1000/1000 < 50) {
+//            QLightBoxMessage::warning(
+//                        m_view,
+//                        tr("Possible save error"),
+//                        tr("You have less than 50 megabytes of free disk space. This can lead to problems "
+//                           "with saving the project. We recommend that you free up more space "
+//                           "and check whether the project is saved correctly."));
+//        }
 
         //
         // Управляющие должны сохранить несохранённые данные
