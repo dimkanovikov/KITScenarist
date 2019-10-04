@@ -3,7 +3,7 @@
 #
 # сформировать app-файл
 #
-~/Qt/5.9.1/clang_64/bin/macdeployqt ../Release/bin/scenarist-desktop/Scenarist.app
+~/Qt/5.9.8/clang_64/bin/macdeployqt ../Release/bin/scenarist-desktop/Scenarist.app
 
 #
 # Скопируем в него системные файлы
@@ -24,7 +24,7 @@ codesign --deep --force --verify --verbose --sign "Developer ID Application: Dmi
 #
 # Создаём русский dmg-файл
 #
-./make_dmg.sh -i ../../src/bin/scenarist-desktop/logo.icns -b cover.png -c "462:252:176:258" -s "640:400"  Scenarist.app 
+./make_dmg.sh -i ../../src/bin/scenarist-desktop/logo.icns -b cover.png -c "462:252:176:258" -s "640:400"  Scenarist.app
 mv -f Scenarist.dmg scenarist-setup-$1.dmg
 codesign --force --sign "Developer ID Application: Dmitry Novikov (9VJUEP4AA5)" scenarist-setup-$1.dmg
 
