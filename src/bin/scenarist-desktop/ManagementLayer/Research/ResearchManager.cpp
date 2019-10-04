@@ -59,8 +59,6 @@ ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
 {
     initView();
     initConnections();
-
-    updateSettings();
 }
 
 QWidget* ResearchManager::view() const
@@ -127,6 +125,8 @@ void ResearchManager::loadCurrentProjectSettings(const QString& _projectPath)
             QString("projects/%1/research/expanded-items").arg(_projectPath),
             DataStorageLayer::SettingsStorage::ApplicationSettings)
         .toStringList());
+
+    updateSettings();
 }
 
 void ResearchManager::closeCurrentProject()
