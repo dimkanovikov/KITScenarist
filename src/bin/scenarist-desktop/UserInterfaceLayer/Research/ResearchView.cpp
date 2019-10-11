@@ -94,6 +94,8 @@ void ResearchView::clear()
 
 void ResearchView::setTextSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign, const QFont& _font)
 {
+    QSignalBlocker blocker(this);
+
     //
     // Настроим размер страницы для синопсиса, говорят это важно
     //
