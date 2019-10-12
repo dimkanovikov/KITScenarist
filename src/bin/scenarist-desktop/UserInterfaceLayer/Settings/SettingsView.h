@@ -66,6 +66,7 @@ namespace UserInterface
         void setApplicationSaveBackupsFolder(const QString& _folder);
         void setApplicationCompactMode(bool _enable);
         void setApplicationTwoPanelMode(bool _use);
+        void setApplicationHidpiScaling(bool _enable);
         void setApplicationModuleResearch(bool _use);
         void setApplicationModuleCards(bool _use);
         void setApplicationModuleScenario(bool _use);
@@ -150,6 +151,7 @@ namespace UserInterface
         void applicationSaveBackupsFolderChanged(const QString&);
         void applicationCompactModeChanged(bool);
         void applicationTwoPanelModeChanged(bool);
+        void applicationHidpiScalingChanged(bool);
         void applicationModuleResearchChanged(bool);
         void applicationModuleCardsChanged(bool);
         void applicationModuleScenarioChanged(bool);

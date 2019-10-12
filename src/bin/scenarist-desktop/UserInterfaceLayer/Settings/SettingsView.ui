@@ -219,7 +219,7 @@
                 </property>
                 <widget class="QWidget" name="applicationPageCommon">
                  <layout class="QGridLayout" name="gridLayout_18">
-                  <item row="8" column="0">
+                  <item row="9" column="0">
                    <layout class="QHBoxLayout" name="horizontalLayout_4">
                     <item>
                      <widget class="QCheckBox" name="spellChecking">
@@ -356,7 +356,7 @@
                     </item>
                    </layout>
                   </item>
-                  <item row="9" column="0">
+                  <item row="11" column="0">
                    <spacer name="verticalSpacer_4">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -444,7 +444,7 @@
                     </item>
                    </layout>
                   </item>
-                  <item row="7" column="0">
+                  <item row="8" column="0">
                    <widget class="QCheckBox" name="applicationTwoPanelMode">
                     <property name="text">
                      <string>Two Panel Mode (F2)</string>
@@ -458,13 +458,23 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="6" column="0">
+                  <item row="7" column="0">
                    <widget class="QCheckBox" name="applicationCompactMode">
                     <property name="enabled">
                      <bool>true</bool>
                     </property>
                     <property name="text">
                      <string>Compact Mode</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="0">
+                   <widget class="QCheckBox" name="applicationHidpiScaling">
+                    <property name="enabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="text">
+                     <string>Enable HIDPI scaling</string>
                     </property>
                    </widget>
                   </item>

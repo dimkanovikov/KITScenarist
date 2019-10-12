@@ -5,7 +5,7 @@
 #include <QTimer>
 
 namespace ManagementLayer {
-	class ApplicationManager;
+    class ApplicationManager;
 }
 
 
@@ -14,10 +14,10 @@ namespace ManagementLayer {
  */
 class Application : public QApplication
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit Application(int& _argc, char** _argv);
+    explicit Application(int& _argc, char** _argv);
     ~Application();
 
     /**
@@ -30,10 +30,15 @@ public:
      */
     void startApp();
 
-	/**
-	 * @brief Переопределяется для определения события простоя приложения (idle)
-	 */
+    /**
+     * @brief Переопределяется для определения события простоя приложения (idle)
+     */
     bool notify(QObject* _object, QEvent* _event);
+
+    /**
+     * @brief Необходимо ли использовать масштабирование для HIDPI экранов
+     */
+    bool shouldUseHidpiScaling() const;
 
 signals:
     /**
@@ -42,21 +47,21 @@ signals:
     void started();
 
 protected:
-	/**
-	 * @brief Переопределяется для обработки события открытия файла в Mac OS
-	 */
+    /**
+     * @brief Переопределяется для обработки события открытия файла в Mac OS
+     */
     bool event(QEvent* _event);
 
 private:
-	/**
-	 * @brief Управляющий приложением
-	 */
+    /**
+     * @brief Управляющий приложением
+     */
     ManagementLayer::ApplicationManager* m_applicationManager = nullptr;
 
-	/**
-	 * @brief Таймер для определения события простоя
-	 */
-	QTimer m_idleTimer;
+    /**
+     * @brief Таймер для определения события простоя
+     */
+    QTimer m_idleTimer;
 
     /**
      * @brief Файл, который надо открыть с запуском приложения

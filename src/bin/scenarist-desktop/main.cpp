@@ -16,18 +16,41 @@
 
 int main(int argc, char *argv[])
 {
+    //
+    // Если необходимо, включаем масштабирование для экранов с высоким DPI
+    //
+    if (qgetenv("KIT_USE_HIDPI_SCALING") == "1") {
+        QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    }
+
     Application application(argc, argv);
 
+    auto restartApp = [&application] {
+        QStringList arguments = application.arguments();
+        arguments.removeFirst();
+        QProcess::startDetached(application.arguments().first(), arguments);
+    };
+
+    //
+    // Если пользователь хочет работать в режиме масштабирования для экранов с высоким DPI
+    //
+    if (application.shouldUseHidpiScaling()) {
+        if (qgetenv("KIT_USE_HIDPI_SCALING") != "1") {
+            qputenv("KIT_USE_HIDPI_SCALING", "1");
+            restartApp();
+            return 0;
+        }
+    }
     //
     // Настроем масштабирование, для 4К
     //
-    if (application.primaryScreen()->size().width() > 3800
-        && qgetenv("QT_SCALE_FACTOR") != "2") {
+    else if (application.primaryScreen()->size().width() > 3800
+             && qgetenv("QT_SCALE_FACTOR") != "2") {
         //
         // После того, как было настроено разрешение, нужно перезапустить приложение
         //
         qputenv("QT_SCALE_FACTOR", "2");
-        QProcess::startDetached(application.arguments().first(), application.arguments());
+        restartApp();
         return 0;
     }
 

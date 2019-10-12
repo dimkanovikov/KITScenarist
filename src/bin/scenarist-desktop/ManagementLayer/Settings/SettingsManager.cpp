@@ -200,6 +200,16 @@ void SettingsManager::applicationTwoPanelModeChanged(bool _value)
     storeValue("application/two-panel-mode", _value);
 }
 
+void SettingsManager::applicationHidpiScalingChanged(bool _value)
+{
+    storeValue("application/hidpi-scaling", _value);
+
+    //
+    // Уведомляем о том, что разрешение сменится только после перезагрузки
+    //
+    QLightBoxMessage::information(m_view, QString::null, tr("HIDPI scaling option will be applied after application restart."));
+}
+
 void SettingsManager::applicationModuleResearchChanged(bool _value)
 {
     storeValue("application/modules/research", _value);
@@ -808,6 +818,12 @@ void SettingsManager::initView()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toInt()
                 );
+    m_view->setApplicationHidpiScaling(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "application/hidpi-scaling",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
     //
     // ... модули
     //
@@ -1273,6 +1289,7 @@ void SettingsManager::initConnections()
     connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
     connect(m_view, &SettingsView::applicationCompactModeChanged, this, &SettingsManager::applicationCompactModeChanged);
     connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationTwoPanelModeChanged);
+    connect(m_view, &SettingsView::applicationHidpiScalingChanged, this, &SettingsManager::applicationHidpiScalingChanged);
     connect(m_view, &SettingsView::applicationModuleResearchChanged, this, &SettingsManager::applicationModuleResearchChanged);
     connect(m_view, &SettingsView::applicationModuleCardsChanged, this, &SettingsManager::applicationModuleCardsChanged);
     connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationModuleScenarioChanged);

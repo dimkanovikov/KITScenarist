@@ -69,6 +69,7 @@ namespace ManagementLayer
         void applicationSaveBackupsFolderChanged(const QString& _value);
         void applicationCompactModeChanged(bool _enable);
         void applicationTwoPanelModeChanged(bool _value);
+        void applicationHidpiScalingChanged(bool _value);
         void applicationModuleResearchChanged(bool _value);
         void applicationModuleCardsChanged(bool _value);
         void applicationModuleScenarioChanged(bool _value);

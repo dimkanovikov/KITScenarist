@@ -343,6 +343,15 @@ bool Application::notify(QObject* _object, QEvent* _event)
     return QApplication::notify(_object, _event);
 }
 
+bool Application::shouldUseHidpiScaling() const
+{
+    const bool hidpiScalingEnabled =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/hidpi-scaling",
+                DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
+    return hidpiScalingEnabled;
+}
+
 bool Application::event(QEvent* _event)
 {
     bool result = true;

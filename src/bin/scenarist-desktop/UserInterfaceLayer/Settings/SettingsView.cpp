@@ -264,6 +264,11 @@ void SettingsView::setApplicationTwoPanelMode(bool _use)
     m_ui->applicationTwoPanelMode->setChecked(_use);
 }
 
+void SettingsView::setApplicationHidpiScaling(bool _enable)
+{
+    m_ui->applicationHidpiScaling->setChecked(_enable);
+}
+
 void SettingsView::setApplicationModuleResearch(bool _use)
 {
     m_ui->applicationModuleResearch->setChecked(_use);
@@ -901,6 +906,7 @@ void SettingsView::initConnections()
     connect(m_ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
     connect(m_ui->applicationCompactMode, &QCheckBox::toggled, this, &SettingsView::applicationCompactModeChanged);
     connect(m_ui->applicationTwoPanelMode, &QCheckBox::toggled, this, &SettingsView::applicationTwoPanelModeChanged);
+    connect(m_ui->applicationHidpiScaling, &QCheckBox::toggled, this, &SettingsView::applicationHidpiScalingChanged);
     connect(m_ui->applicationModuleResearch, &QCheckBox::toggled, this, &SettingsView::applicationModuleResearchChanged);
     connect(m_ui->applicationModuleCards, &QCheckBox::toggled, this, &SettingsView::applicationModuleCardsChanged);
     connect(m_ui->applicationModuleScenario, &QCheckBox::toggled, this, &SettingsView::applicationModuleScenarioChanged);
