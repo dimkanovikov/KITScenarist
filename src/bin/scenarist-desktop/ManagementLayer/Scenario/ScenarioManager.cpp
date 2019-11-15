@@ -697,7 +697,8 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int 
         DataStorageLayer::StorageFacade::scenarioChangeStorage()->removeLast();
     }
     for (int i = 0; i < changes.size(); ++i) {
-        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch());
+        const bool validateXml = true;
+        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch(), validateXml);
         if (pos != -1) {
             auto change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
                         changes[i].uuid().toString(), changes[i].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz"),
@@ -750,7 +751,8 @@ void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _is
     }
     DatabaseLayer::Database::commit();
     for (int i = 0; i < changes.size(); ++i) {
-        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch());
+        const bool validateXml = true;
+        const int pos = scriptTextDocument->applyPatch(changes[i].redoPatch(), validateXml);
         if (pos != -1) {
             auto change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
                         changes[i].uuid().toString(), changes[i].datetime().toString("yyyy-MM-dd hh:mm:ss:zzz"),
