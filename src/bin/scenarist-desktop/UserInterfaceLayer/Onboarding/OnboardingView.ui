@@ -120,13 +120,6 @@
          </property>
         </spacer>
        </item>
-       <item row="9" column="1">
-        <widget class="QRadioButton" name="ukrainian">
-         <property name="text">
-          <string notr="true">Українська</string>
-         </property>
-        </widget>
-       </item>
        <item row="6" column="2">
         <widget class="QRadioButton" name="telugu">
          <property name="text">
@@ -198,16 +191,6 @@ font-weight: 600;</string>
         <widget class="QRadioButton" name="english">
          <property name="text">
           <string notr="true">English</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QRadioButton" name="turkish">
-         <property name="text">
-          <string notr="true">Türkçe</string>
          </property>
          <property name="checked">
           <bool>false</bool>
@@ -295,6 +278,33 @@ font-weight: 600;</string>
         <widget class="QRadioButton" name="slovenian">
          <property name="text">
           <string notr="true">Slovenski</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QRadioButton" name="ukrainian">
+         <property name="text">
+          <string notr="true">Українська</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QRadioButton" name="turkish">
+         <property name="text">
+          <string notr="true">Türkçe</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QRadioButton" name="swedish">
+         <property name="text">
+          <string notr="true">Svenska</string>
          </property>
          <property name="checked">
           <bool>false</bool>
@@ -705,7 +715,7 @@ font-weight: 600;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>327</width>
+            <width>266</width>
             <height>455</height>
            </rect>
           </property>
@@ -1314,15 +1324,13 @@ font-weight: 600;</string>
   <tabstop>portuguesBrasil</tabstop>
   <tabstop>russian</tabstop>
   <tabstop>slovenian</tabstop>
+  <tabstop>swedish</tabstop>
   <tabstop>turkish</tabstop>
   <tabstop>ukrainian</tabstop>
   <tabstop>farsi</tabstop>
   <tabstop>chinese</tabstop>
   <tabstop>hebrew</tabstop>
   <tabstop>telugu</tabstop>
-  <tabstop>russianScreenplayCourierPrime</tabstop>
-  <tabstop>chineseScreenplay</tabstop>
-  <tabstop>hebrewScreenplay</tabstop>
   <tabstop>useStatistics</tabstop>
   <tabstop>finalDraftScreenplayLetter</tabstop>
   <tabstop>finalDraftScreenplayA4</tabstop>
@@ -1333,6 +1341,9 @@ font-weight: 600;</string>
   <tabstop>templates</tabstop>
   <tabstop>useCards</tabstop>
   <tabstop>useResearch</tabstop>
+  <tabstop>chineseScreenplay</tabstop>
+  <tabstop>russianScreenplayCourierPrime</tabstop>
+  <tabstop>hebrewScreenplay</tabstop>
  </tabstops>
  <resources/>
  <connections/>
