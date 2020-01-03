@@ -274,6 +274,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 20: {
+            translationSuffix = "nl";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Dutch;
+            break;
+        }
+
         default: break;
     }
 

@@ -231,6 +231,11 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Swedish"));
             break;
         }
+
+        case 20: {
+            m_ui->applicationLanguage->setText(tr("Dutch"));
+            break;
+        }
     }
 }
 
@@ -784,6 +789,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Azerbaijani"), SpellChecker::Azerbaijani);
     m_ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
     m_ui->spellCheckingLanguage->addItem(tr("Catalan"), SpellChecker::Catalan);
+    m_ui->spellCheckingLanguage->addItem(tr("Dutch"), SpellChecker::Dutch);
     m_ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
     m_ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
     m_ui->spellCheckingLanguage->addItem(tr("Farsi"), SpellChecker::Farsi);
