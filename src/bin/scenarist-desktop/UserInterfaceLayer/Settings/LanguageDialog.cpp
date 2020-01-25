@@ -101,6 +101,10 @@ int LanguageDialog::language() const
 
 void LanguageDialog::initView()
 {
+    //
+    // WIP
+    //
+    m_ui->nederlands->hide();
 }
 
 void LanguageDialog::initConnections()
