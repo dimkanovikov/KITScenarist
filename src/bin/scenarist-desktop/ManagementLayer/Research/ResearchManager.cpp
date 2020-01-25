@@ -43,6 +43,8 @@ using UserInterface::ResearchItemDialog;
 namespace {
     /**
      * @brief Флаг загрузки проекта
+     * @note Загрузка начинается, когда стартует загрузка проекта loadCurrentProject,
+     *       а заканчивается после загрузки параметров проекта loadCurrentProjectSettings
      */
     static bool g_isProjectLoading = false;
 }
@@ -91,8 +93,6 @@ void ResearchManager::loadCurrentProject()
     m_view->clear();
     m_view->selectItem(m_model->index(0, 0));
     editResearch(m_model->index(0, 0));
-
-    g_isProjectLoading = false;
 }
 
 void ResearchManager::loadScenarioData()
@@ -127,6 +127,8 @@ void ResearchManager::loadCurrentProjectSettings(const QString& _projectPath)
         .toStringList());
 
     updateSettings();
+
+    g_isProjectLoading = false;
 }
 
 void ResearchManager::closeCurrentProject()
