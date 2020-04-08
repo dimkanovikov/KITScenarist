@@ -733,7 +733,11 @@ void ScenarioTextEditWidget::aboutStyleChanged()
 
 void ScenarioTextEditWidget::initView()
 {
-    m_outline->setObjectName("scenarioOutlineMode");
+    //
+    // Отключаем возможность сохранения включённости кнопки аутлайна, т.к. часто пользователи
+    // включают его, непонимают куда делись их сценарии и потом пишут с вопросом как всё вернуть
+    //
+//    m_outline->setObjectName("scenarioOutlineMode");
     m_outline->setIcons(QIcon(":/Graphics/Iconset/view-list.svg"));
     m_outline->setToolTip(tr("Outline mode"));
     m_outline->setCheckable(true);
