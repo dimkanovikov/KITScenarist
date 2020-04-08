@@ -843,11 +843,8 @@ void ResearchView::initConnections()
         emit removeResearchRequested(currentResearchIndex());
     });
     QShortcut* removeShortcut = new QShortcut(QKeySequence::Delete, m_ui->researchNavigator);
-    removeShortcut->setContext(Qt::WidgetShortcut);
+    removeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
     connect(removeShortcut, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
-    QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
-    removeShortcut2->setContext(Qt::WidgetShortcut);
-    connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
     //
     connect(m_ui->refreshResearchSubtree, &FlatButton::clicked, [=] {
         emit refeshResearchSubtreeRequested(currentResearchIndex());
