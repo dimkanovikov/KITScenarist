@@ -776,7 +776,8 @@ void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _is
 
         QLightBoxMessage::information(m_view, tr("Script changes conflict detected"),
             tr("There are a conflict detected between script state on the cloud service and your offline changes. "
-               "Conflicted version was saved as a separate one and text of the script restored from the cloud."));
+               "Conflicted version was saved as a separate one and text of the script restored from the cloud. "
+               "You can find conflicted version in the Research - Script - Versions."));
     }
 }
 
