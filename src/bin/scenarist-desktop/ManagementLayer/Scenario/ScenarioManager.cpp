@@ -215,26 +215,28 @@ namespace {
             //
             QTextBlock currentBlock = cursor.block();
             if (!currentBlock.textFormats().isEmpty()) {
-                foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
+                for (const QTextLayout::FormatRange& range : currentBlock.textFormats()) {
                     if (!range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
+                        auto charFormat = blockStyle.charFormat();
+                        if (range.format.font().bold()) {
+                            charFormat.setFontWeight(QFont::Bold);
+                        }
+                        if (range.format.font().italic()) {
+                            charFormat.setFontItalic(true);
+                        }
+                        if (range.format.font().underline()) {
+                            charFormat.setFontUnderline(true);
+                        }
                         cursor.setPosition(currentBlock.position() + range.start);
                         cursor.setPosition(cursor.position() + range.length, QTextCursor::KeepAnchor);
-                        cursor.mergeCharFormat(blockStyle.charFormat());
-                        cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                        cursor.mergeBlockFormat(blockStyle.blockFormat());
+                        cursor.mergeCharFormat(charFormat);
                     }
                 }
-                cursor.movePosition(QTextCursor::EndOfBlock);
             }
-            //
-            // Если выделений нет, обновляем блок целиком
-            //
-            else {
-                cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-                cursor.mergeCharFormat(blockStyle.charFormat());
-                cursor.mergeBlockCharFormat(blockStyle.charFormat());
-                cursor.mergeBlockFormat(blockStyle.blockFormat());
-            }
+            cursor.movePosition(QTextCursor::EndOfBlock);
+            cursor.mergeBlockCharFormat(blockStyle.charFormat());
+            cursor.mergeBlockFormat(blockStyle.blockFormat());
+
             cursor.movePosition(QTextCursor::NextBlock);
         } while (!cursor.atEnd());
         cursor.endEditBlock();

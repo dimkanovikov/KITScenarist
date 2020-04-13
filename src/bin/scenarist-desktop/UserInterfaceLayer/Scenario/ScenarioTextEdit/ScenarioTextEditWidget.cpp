@@ -208,7 +208,7 @@ void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
 
 void ScenarioTextEditWidget::setShowSuggestionsInEmptyBlocks(bool _show)
 {
-    m_editor->setShowSuggestionsInEmptyBlocks(_show);
+    m_editor->setShowCharactersSuggestions(_show);
 }
 
 void ScenarioTextEditWidget::setSpellCheckLanguage(int _language)
