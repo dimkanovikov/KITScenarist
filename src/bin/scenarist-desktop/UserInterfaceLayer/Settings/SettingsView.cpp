@@ -796,7 +796,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
     m_ui->spellCheckingLanguage->addItem(tr("German"), SpellChecker::German);
     m_ui->spellCheckingLanguage->addItem(tr("Greek"), SpellChecker::Greek);
-    m_ui->spellCheckingLanguage->addItem(tr("Greek (Polithonic)"), SpellChecker::GreekPolytonic);
+    m_ui->spellCheckingLanguage->addItem(tr("Greek (Polythonic)"), SpellChecker::GreekPolytonic);
     m_ui->spellCheckingLanguage->addItem(tr("Hebrew"), SpellChecker::Hebrew);
     m_ui->spellCheckingLanguage->addItem(tr("Hungarian"), SpellChecker::Hungarian);
     m_ui->spellCheckingLanguage->addItem(tr("Italian"), SpellChecker::Italian);
