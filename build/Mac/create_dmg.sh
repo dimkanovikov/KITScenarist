@@ -24,7 +24,7 @@ codesign --force --deep --sign "Developer ID Application: Dmitry Novikov (9VJUEP
 #
 # сформировать архив с приложением
 #
-zip -r Scenarist.zip Scenarist.app
+/usr/bin/ditto -ck --keepParent Scenarist.zip Scenarist.app
 
 #
 # отправить архив на проверку
@@ -36,10 +36,10 @@ xcrun altool --notarize-app -t osx -f Scenarist.zip --primary-bundle-id="com.dim
 #
 sleep 3m
 
-#
-# проверить статус нотаризации (тут нужно указать юид возвращённый предыдущей командой)
-#
-# xcrun altool --notarization-info UUID -u novikovdimka@gmail.com
+##
+## проверить статус нотаризации (тут нужно указать юид возвращённый предыдущей командой)
+##
+## xcrun altool --notarization-info UUID -u novikovdimka@gmail.com
 
 #
 # удалить архив
