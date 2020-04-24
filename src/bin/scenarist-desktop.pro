@@ -367,7 +367,8 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.cpp \
     scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
-    scenarist-core/3rd_party/Widgets/CircularProgressBar/CircularProgressBar.cpp
+    scenarist-core/3rd_party/Widgets/CircularProgressBar/CircularProgressBar.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsSearchWidget.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -649,7 +650,8 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScriptVersions/ScriptVersionsList.h \
     scenarist-core/BusinessLayer/Tools/CompareScriptVersionsTool.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
-    scenarist-core/3rd_party/Widgets/CircularProgressBar/CircularProgressBar.h
+    scenarist-core/3rd_party/Widgets/CircularProgressBar/CircularProgressBar.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsSearchWidget.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

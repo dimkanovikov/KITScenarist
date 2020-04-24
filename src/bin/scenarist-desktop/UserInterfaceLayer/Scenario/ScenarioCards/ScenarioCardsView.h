@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class CardsSearchWidget;
 class CardsView;
 class FlatButton;
 class QLabel;
@@ -190,6 +191,11 @@ namespace UserInterface {
          */
         void resortCards();
 
+        /**
+         * @brief Показать/скрыть панель поиска
+         */
+        void setSearchPanelVisible(bool _visible);
+
     private:
         /**
          * @brief Настроить представление
@@ -243,6 +249,11 @@ namespace UserInterface {
         CardsResizer* m_resizer = nullptr;
 
         /**
+         * @brief Кнопка поиска карточек
+         */
+        FlatButton* m_search = nullptr;
+
+        /**
          * @brief Кнопка сохранения изображения
          */
         FlatButton* m_save = nullptr;
@@ -261,6 +272,11 @@ namespace UserInterface {
          * @brief Метка, для закрашивания пространства в панели инструментов
          */
         QLabel* m_toolbarSpacer = nullptr;
+
+        /**
+         * @brief Панель поиска
+         */
+        CardsSearchWidget* m_searchLine = nullptr;
 
         /**
          * @brief Позиция вставки новой карточки
