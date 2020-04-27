@@ -105,11 +105,6 @@ void OnboardingView::initView()
     m_ui->content->setCurrentWidget(m_ui->languagePage);
     m_ui->stepper->setStepsCount(m_ui->content->count() - 1);
     m_ui->back->setEnabled(false);
-
-    //
-    // WIP
-    //
-    m_ui->nederlands->hide();
 }
 
 void OnboardingView::initConnections()
