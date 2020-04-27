@@ -137,6 +137,7 @@ void OnboardingView::initConnections()
     languagesGroup->addButton(m_ui->slovenian);
     languagesGroup->addButton(m_ui->swedish);
     languagesGroup->addButton(m_ui->nederlands);
+    languagesGroup->addButton(m_ui->serbian);
     connect(languagesGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &OnboardingView::notifyLanguageChange);
     connect(m_ui->darkTheme, &QRadioButton::toggled, this, &OnboardingView::useDarkThemeToggled);
 
@@ -194,6 +195,8 @@ void OnboardingView::notifyLanguageChange()
         language = 19;
     } else if (m_ui->nederlands->isChecked()) {
         language = 20;
+    } else if (m_ui->serbian->isChecked()) {
+        language = 21;
     }
 
     emit languageChanged(language);
