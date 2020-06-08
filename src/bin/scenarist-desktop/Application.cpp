@@ -290,6 +290,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 22: {
+            translationSuffix = "ar";
+            qtTranslationSuffix = "ar";
+            qtBaseTranslationSuffix = "ar";
+            currentLanguage = QLocale::Arabic;
+            break;
+        }
+
         default: break;
     }
 
@@ -323,7 +331,8 @@ void Application::updateTranslation()
     // Для языков, которые пишутся справа-налево настроим соответствующее выравнивание интерфейса
     //
     if (currentLanguage == QLocale::Persian
-        || currentLanguage == QLocale::Hebrew) {
+        || currentLanguage == QLocale::Hebrew
+        || currentLanguage == QLocale::Arabic) {
         setLayoutDirection(Qt::RightToLeft);
     } else {
         setLayoutDirection(Qt::LeftToRight);

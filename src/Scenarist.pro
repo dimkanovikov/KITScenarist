@@ -24,4 +24,5 @@ TRANSLATIONS += bin/scenarist-core/Resources/Translations/Scenarist_ru.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_sl.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_sv.ts \
     bin/scenarist-core/Resources/Translations/Scenarist_nl.ts \
-    bin/scenarist-core/Resources/Translations/Scenarist_sr.ts
+    bin/scenarist-core/Resources/Translations/Scenarist_sr.ts \
+    bin/scenarist-core/Resources/Translations/Scenarist_ar.ts

@@ -241,6 +241,11 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Serbian"));
             break;
         }
+
+        case 22: {
+            m_ui->applicationLanguage->setText(tr("Arabic"));
+            break;
+        }
     }
 }
 
@@ -789,6 +794,7 @@ void SettingsView::initData()
     //
     // Добавим словари проверки орфографии
     //
+    m_ui->spellCheckingLanguage->addItem(tr("Arabic"), SpellChecker::Arabic);
     m_ui->spellCheckingLanguage->addItem(tr("Armenian (Eastern)"), SpellChecker::ArmenianEastern);
     m_ui->spellCheckingLanguage->addItem(tr("Armenian (Western)"), SpellChecker::ArmenianWestern);
     m_ui->spellCheckingLanguage->addItem(tr("Azerbaijani"), SpellChecker::Azerbaijani);
