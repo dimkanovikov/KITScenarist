@@ -6,11 +6,10 @@
 
 #include "../../bin/scenarist-core/3rd_party/Helpers/DiffMatchPatchHelper.h"
 
-
 Widget::Widget(QWidget *parent)
     : QTabWidget(parent)
 {
-    QWidget* uncompressPage = new QWidget;
+    QWidget *uncompressPage = new QWidget;
     {
         QTextEdit *input = new QTextEdit(uncompressPage);
         QTextEdit *output = new QTextEdit(uncompressPage);
@@ -21,6 +20,9 @@ Widget::Widget(QWidget *parent)
 
         connect(input, &QTextEdit::textChanged, this, [=] {
             auto data = qUncompress(QByteArray::fromBase64((input->toPlainText().toUtf8())));
+            if (data.isEmpty()) {
+                data = input->toPlainText().toUtf8();
+            }
             output->setText(QByteArray::fromPercentEncoding(data));
         });
     }
@@ -28,7 +30,7 @@ Widget::Widget(QWidget *parent)
 
     //
 
-    QWidget* applyPatchPage = new QWidget;
+    QWidget *applyPatchPage = new QWidget;
     {
         QTextEdit *textInput = new QTextEdit(applyPatchPage);
         QTextEdit *patchInput = new QTextEdit(applyPatchPage);
@@ -46,6 +48,10 @@ Widget::Widget(QWidget *parent)
                 return;
             }
 
+            auto data = qUncompress(QByteArray::fromBase64((patchInput->toPlainText().toUtf8())));
+            if (data.isEmpty()) {
+                data = patchInput->toPlainText().toUtf8();
+            }
             output->setText(DiffMatchPatchHelper::applyPatchXml(textInput->toPlainText(),
                                                                 patchInput->toPlainText()));
         };
