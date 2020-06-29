@@ -79,6 +79,7 @@ void OnboardingView::changeEvent(QEvent* _event)
         updateAlignment(m_ui->russianScreenplayCourierPrimeInfo);
         updateAlignment(m_ui->chineseScreenplayInfo);
         updateAlignment(m_ui->hebrewScreenplayInfo);
+        updateAlignment(m_ui->arabicScreenplayInfo);
     } else {
         QWidget::changeEvent(_event);
     }
