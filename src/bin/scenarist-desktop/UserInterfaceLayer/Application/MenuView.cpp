@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QMenu>
 #include <QPainter>
+#include <QPainterPath>
 #include <QTimer>
 #include <QUrl>
 
