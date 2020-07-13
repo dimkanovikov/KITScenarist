@@ -1939,16 +1939,6 @@ void ApplicationManager::closeCurrentProject()
         m_scenarioManager->closeCurrentProject();
 
         //
-        // Очистим все загруженные на текущий момент данные
-        //
-        DataStorageLayer::StorageFacade::clearStorages();
-
-        //
-        // Если использовалась база данных, то удалим старое соединение
-        //
-        DatabaseLayer::Database::closeCurrentFile();
-
-        //
         // Удалим всю информацию о курсорах соавтора
         //
         m_tabs->clearIndicatorMenu();
@@ -1971,6 +1961,16 @@ void ApplicationManager::closeCurrentProject()
         m_tabs->setCurrentTab(STARTUP_TAB_INDEX);
         m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
     }
+
+    //
+    // Очистим все загруженные на текущий момент данные
+    //
+    DataStorageLayer::StorageFacade::clearStorages();
+
+    //
+    // Если использовалась база данных, то удалим старое соединение
+    //
+    DatabaseLayer::Database::closeCurrentFile();
 
     updateWindowModified(m_view, false);
     updateWindowTitle();
