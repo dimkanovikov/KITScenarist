@@ -1025,8 +1025,8 @@ void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, in
     setWorkingMode(m_navigatorManager);
 
     const int startPosition = workingScenario()->itemStartPosition(_itemIndex);
-    workingScenario()->setItemDescriptionAtPosition(startPosition, _description);
     m_textEditManager->editScenarioItem(startPosition, _itemType, _name, _header, _colors);
+    workingScenario()->setItemDescriptionAtPosition(startPosition, _description);
 }
 
 void ScenarioManager::aboutRemoveItemFromCards(const QModelIndex& _index)
