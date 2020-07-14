@@ -2,7 +2,7 @@ name: Build
 
 env:
   APP_VERSION: 0.7.2
-  APP_BUILD: rc9i-dev
+  APP_BUILD: rc9i
 
 on: [push]
 
