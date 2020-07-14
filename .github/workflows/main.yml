@@ -1,5 +1,9 @@
 name: Build
 
+env:
+  APP_VERSION: 0.7.2
+  APP_BUILD: rc9i-dev
+
 on: [push]
 
 jobs:
@@ -39,13 +43,25 @@ jobs:
       - name: Make deb-package
         shell: bash
         run: |
+          mkdir build/Ubuntu/scenarist_amd64/usr/share/KIT/
+          mkdir build/Ubuntu/scenarist_amd64/usr/share/KIT/Scenarist/
           cp build/Release/bin/scenarist-desktop/Scenarist build/Ubuntu/scenarist_amd64/usr/share/KIT/Scenarist/
           cd build/Ubuntu
-          ./make-deb_amd64.sh ci-build
+          ./make-deb_amd64.sh ${{env.APP_VERSION}}${{env.APP_BUILD}}
 
+      - name: Make rpm-package
+        shell: bash
+        run: |
+          mkdir build/Rpm/scenarist_x86_64/usr/share/KIT/
+          mkdir build/Rpm/scenarist_x86_64/usr/share/KIT/Scenarist/
+          cp build/Release/bin/scenarist-desktop/Scenarist build/Rpm/scenarist_x86_64/usr/share/KIT/Scenarist/
+          cd build/Rpm
+          ./make_all_rpm.sh ${{env.APP_VERSION}} ${{env.APP_BUILD}}
 
       - name: Collect artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: linux packages
-          path: build/Ubuntu/scenarist-setup-ci-build_en_amd64.deb
+          path: |
+            build/Ubuntu/scenarist-setup-${{env.APP_VERSION}}${{env.APP_BUILD}}_en_amd64.deb
+            build/Rpm/scenarist-setup-${{env.APP_VERSION}}-${{env.APP_BUILD}}.x86_64-en.rpm
