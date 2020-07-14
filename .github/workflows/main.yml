@@ -19,7 +19,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: 5.9.9
+          version: 5.9.1
           target: desktop
           modules: qtwebengine
 
