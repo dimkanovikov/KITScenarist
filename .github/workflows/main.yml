@@ -1,0 +1,56 @@
+name: Build
+
+env:
+  APP_VERSION: 0.7.2
+  APP_BUILD: rc9i
+
+on: [push]
+
+jobs:
+  build_linux:
+    name: Build Linux version
+    runs-on: ubuntu-16.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - name: Init submodules
+        shell: bash
+        run: |
+          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+          git submodule sync --recursive
+          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 5.9.1
+          target: desktop
+          modules: qtwebengine
+
+
+      - name: Run QMake
+        shell: bash
+        run: |
+          cd src
+          qmake Scenarist.pro
+
+      - name: Build
+        shell: bash
+        run: |
+          cd src
+          make -j$(nproc)
+
+      - name: Make deb-package
+        shell: bash
+        run: |
+          mkdir build/Ubuntu/scenarist_amd64/usr/share/KIT/
+          mkdir build/Ubuntu/scenarist_amd64/usr/share/KIT/Scenarist/
+          cp build/Release/bin/scenarist-desktop/Scenarist build/Ubuntu/scenarist_amd64/usr/share/KIT/Scenarist/
+          cd build/Ubuntu
+          ./make-deb_amd64.sh ${{env.APP_VERSION}}${{env.APP_BUILD}}
+
+      - name: Collect artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux packages
+          path: build/Ubuntu/scenarist-setup-${{env.APP_VERSION}}${{env.APP_BUILD}}_en_amd64.deb
