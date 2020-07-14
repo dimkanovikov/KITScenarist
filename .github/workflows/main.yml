@@ -64,4 +64,4 @@ jobs:
           name: linux packages
           path: |
             build/Ubuntu/scenarist-setup-${{env.APP_VERSION}}${{env.APP_BUILD}}_en_amd64.deb
-            build/Rpm/scenarist-setup-${{env.APP_VERSION}}-${{env.APP_BUILD}}.x86_64-en.rpm
+            build/Rpm/scenarist-${{env.APP_VERSION}}-${{env.APP_BUILD}}.x86_64-en.rpm
