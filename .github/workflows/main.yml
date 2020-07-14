@@ -49,19 +49,8 @@ jobs:
           cd build/Ubuntu
           ./make-deb_amd64.sh ${{env.APP_VERSION}}${{env.APP_BUILD}}
 
-      - name: Make rpm-package
-        shell: bash
-        run: |
-          mkdir build/Rpm/scenarist_x86_64/usr/share/KIT/
-          mkdir build/Rpm/scenarist_x86_64/usr/share/KIT/Scenarist/
-          cp build/Release/bin/scenarist-desktop/Scenarist build/Rpm/scenarist_x86_64/usr/share/KIT/Scenarist/
-          cd build/Rpm
-          ./make_all_rpm.sh ${{env.APP_VERSION}} ${{env.APP_BUILD}}
-
       - name: Collect artifacts
         uses: actions/upload-artifact@v2
         with:
           name: linux packages
-          path: |
-            build/Ubuntu/scenarist-setup-${{env.APP_VERSION}}${{env.APP_BUILD}}_en_amd64.deb
-            build/Rpm/scenarist-${{env.APP_VERSION}}-${{env.APP_BUILD}}.x86_64-en.rpm
+          path: build/Ubuntu/scenarist-setup-${{env.APP_VERSION}}${{env.APP_BUILD}}_en_amd64.deb
