@@ -21,6 +21,7 @@ jobs:
         with:
           version: 5.9.9
           target: desktop
+          modules: qtwebengine
           
           
       - name: Run QMake
