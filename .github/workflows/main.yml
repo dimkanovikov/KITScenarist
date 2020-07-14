@@ -15,23 +15,37 @@ jobs:
           auth_header="$(git config --local --get http.https://github.com/.extraheader)"
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-          
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
           version: 5.9.9
           target: desktop
           modules: qtwebengine
-          
-          
+
+
       - name: Run QMake
         shell: bash
         run: |
           cd src
           qmake Scenarist.pro
-        
+
       - name: Build
         shell: bash
         run: |
           cd src
           make -j$(nproc)
+
+      - name: Make deb-package
+        shell: bash
+        run: |
+          cp build/Release/bin/scenarist-desktop/Scenarist build/Ubuntu/scenarist_amd64/usr/share/KIT/Scenarist/
+          cd build/Ubuntu
+          ./make-deb_amd64.sh ci-build
+
+
+      - name: Collect artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux packages
+          path: build/Ubuntu/scenarist-setup-ci-build_en_amd64.deb
