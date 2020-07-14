@@ -34,4 +34,4 @@ jobs:
         shell: bash
         run: |
           cd src
-          make  
+          make -j$(nproc)
