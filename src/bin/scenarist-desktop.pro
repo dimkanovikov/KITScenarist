@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent multimedia svg
+QT += core gui gui-private sql xml widgets widgets-private printsupport network concurrent multimedia svg
 !win32-g++: QT += webengine webenginewidgets
 
 TARGET = Scenarist
