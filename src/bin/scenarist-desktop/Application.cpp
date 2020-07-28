@@ -298,6 +298,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 23: {
+            translationSuffix = "el";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Greek;
+            break;
+        }
+
         default: break;
     }
 
