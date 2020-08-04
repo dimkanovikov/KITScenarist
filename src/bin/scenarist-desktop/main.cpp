@@ -36,9 +36,10 @@ int main(int argc, char *argv[])
     //
     if (application.shouldUseHidpiScaling()) {
         if (qgetenv("KIT_USE_HIDPI_SCALING") != "1") {
-            qputenv("KIT_USE_HIDPI_SCALING", "1");
-            restartApp();
-            return 0;
+            if (qputenv("KIT_USE_HIDPI_SCALING", "1")) {
+                restartApp();
+                return 0;
+            }
         }
     }
     //
@@ -49,9 +50,10 @@ int main(int argc, char *argv[])
         //
         // После того, как было настроено разрешение, нужно перезапустить приложение
         //
-        qputenv("QT_SCALE_FACTOR", "2");
-        restartApp();
-        return 0;
+        if (qputenv("QT_SCALE_FACTOR", "2")) {
+            restartApp();
+            return 0;
+        }
     }
 
 #ifdef Q_OS_WIN
