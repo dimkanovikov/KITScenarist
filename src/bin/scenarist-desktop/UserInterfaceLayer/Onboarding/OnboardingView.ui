@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>597</width>
-    <height>494</height>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -199,13 +199,6 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QRadioButton" name="french">
-         <property name="text">
-          <string notr="true">Français</string>
-         </property>
-        </widget>
-       </item>
        <item row="7" column="2">
         <widget class="QRadioButton" name="arabic">
          <property name="text">
@@ -327,13 +320,6 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
-        <widget class="QRadioButton" name="greek">
-         <property name="text">
-          <string notr="true">Ελληνικά</string>
-         </property>
-        </widget>
-       </item>
        <item row="8" column="1">
         <widget class="QRadioButton" name="slovenian">
          <property name="text">
@@ -368,6 +354,20 @@ font-weight: 600;</string>
         <widget class="QRadioButton" name="ukrainian">
          <property name="text">
           <string notr="true">Українська</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QRadioButton" name="greek">
+         <property name="text">
+          <string notr="true">Ελληνικά</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QRadioButton" name="french">
+         <property name="text">
+          <string notr="true">Français</string>
          </property>
         </widget>
        </item>
@@ -763,7 +763,7 @@ And the text editor of the script. The editor has many auxiliary functions that 
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-130</y>
+            <y>-101</y>
             <width>547</width>
             <height>471</height>
            </rect>
@@ -1407,8 +1407,8 @@ font-weight: 600;</string>
   <tabstop>german</tabstop>
   <tabstop>english</tabstop>
   <tabstop>spanish</tabstop>
-  <tabstop>french</tabstop>
   <tabstop>greek</tabstop>
+  <tabstop>french</tabstop>
   <tabstop>italian</tabstop>
   <tabstop>kazakh</tabstop>
   <tabstop>hungarian</tabstop>

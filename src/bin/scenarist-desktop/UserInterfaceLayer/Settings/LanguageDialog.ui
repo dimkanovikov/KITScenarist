@@ -207,13 +207,6 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QRadioButton" name="french">
-     <property name="text">
-      <string notr="true">Français</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="0">
     <widget class="QRadioButton" name="spanish">
      <property name="text">
@@ -228,13 +221,6 @@
      </property>
      <property name="checked">
       <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QRadioButton" name="greek">
-     <property name="text">
-      <string notr="true">Ελληνικά</string>
      </property>
     </widget>
    </item>
@@ -275,6 +261,20 @@
      </property>
     </widget>
    </item>
+   <item row="6" column="0">
+    <widget class="QRadioButton" name="french">
+     <property name="text">
+      <string notr="true">Français</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QRadioButton" name="greek">
+     <property name="text">
+      <string notr="true">Ελληνικά</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -283,8 +283,8 @@
   <tabstop>german</tabstop>
   <tabstop>english</tabstop>
   <tabstop>spanish</tabstop>
-  <tabstop>french</tabstop>
   <tabstop>greek</tabstop>
+  <tabstop>french</tabstop>
   <tabstop>italian</tabstop>
   <tabstop>kazakh</tabstop>
   <tabstop>hungarian</tabstop>
