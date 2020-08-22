@@ -162,7 +162,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -906,7 +906,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="scenarioEditPageStack">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1567,73 +1567,14 @@
              </widget>
              <widget class="QWidget" name="page">
               <layout class="QGridLayout" name="gridLayout_4">
-               <item row="2" column="0" colspan="3">
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
-                 <item>
-                  <widget class="QCheckBox" name="autoJumpToNextBlock">
-                   <property name="text">
-                    <string>Automatically jump to next paragraph</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="ToolTipLabel" name="label_39">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>For scene heading and character paragraphs.</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="pixmap">
-                    <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
-                   </property>
-                   <property name="scaledContents">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_23">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0" colspan="3">
+               <item row="7" column="0" colspan="3">
                 <widget class="QCheckBox" name="reviewUseWordHighlight">
                  <property name="text">
                   <string>Use MS Word like review highlighting colors</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0" colspan="3">
-                <widget class="QCheckBox" name="showSuggestionsInEmptyBlocks">
-                 <property name="text">
-                  <string>Autocomplete next character for dialogue</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0" colspan="3">
+               <item row="8" column="0" colspan="3">
                 <spacer name="verticalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -1646,7 +1587,7 @@
                  </property>
                 </spacer>
                </item>
-               <item row="4" column="0" colspan="3">
+               <item row="6" column="0" colspan="3">
                 <widget class="QCheckBox" name="useOpenBracketInDialogueForParenthetical">
                  <property name="text">
                   <string>Use open bracket in dialogue for jump to parenthetical</string>
@@ -1655,6 +1596,19 @@
                   <bool>true</bool>
                  </property>
                 </widget>
+               </item>
+               <item row="1" column="3">
+                <spacer name="horizontalSpacer_11">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>190</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_20">
@@ -1730,18 +1684,74 @@
                  </layout>
                 </widget>
                </item>
-               <item row="1" column="3">
-                <spacer name="horizontalSpacer_11">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+               <item row="2" column="0" colspan="3">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QCheckBox" name="autoJumpToNextBlock">
+                   <property name="text">
+                    <string>Automatically jump to next paragraph</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="ToolTipLabel" name="label_39">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>For scene heading and character paragraphs.</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_23">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0" colspan="3">
+                <widget class="QCheckBox" name="autocompleteNextCharacterForDialogue">
+                 <property name="text">
+                  <string>Autocomplete next character for dialogue</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>190</width>
-                   <height>20</height>
-                  </size>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
-                </spacer>
+                </widget>
+               </item>
+               <item row="3" column="0" colspan="3">
+                <widget class="QCheckBox" name="showSuggestionsInEmptyBlocks">
+                 <property name="text">
+                  <string>Show character suggestions in empty paragraph</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1776,11 +1786,11 @@
                  <attribute name="horizontalHeaderVisible">
                   <bool>false</bool>
                  </attribute>
-                 <attribute name="horizontalHeaderHighlightSections">
-                  <bool>false</bool>
-                 </attribute>
                  <attribute name="horizontalHeaderMinimumSectionSize">
                   <number>33</number>
+                 </attribute>
+                 <attribute name="horizontalHeaderHighlightSections">
+                  <bool>false</bool>
                  </attribute>
                  <attribute name="verticalHeaderVisible">
                   <bool>false</bool>
@@ -2803,7 +2813,7 @@ Paragraph</string>
   <tabstop>replaceThreeDots</tabstop>
   <tabstop>smartQuotes</tabstop>
   <tabstop>autoJumpToNextBlock</tabstop>
-  <tabstop>showSuggestionsInEmptyBlocks</tabstop>
+  <tabstop>autocompleteNextCharacterForDialogue</tabstop>
   <tabstop>useOpenBracketInDialogueForParenthetical</tabstop>
   <tabstop>reviewUseWordHighlight</tabstop>
   <tabstop>scenarioEditBlockSettingsTable</tabstop>

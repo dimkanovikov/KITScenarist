@@ -109,6 +109,7 @@ namespace ManagementLayer
         void scenarioEditCurrentTemplateChanged(const QString& _value);
         void scenarioEditAutoJumpToNextBlockChanged(bool _value);
         void scenarioEditShowSuggestionsInEmptyBlocksChanged(bool _value);
+        void scenarioEditAutocompleteNextCharacterForDialogueChanged(bool _value);
         void scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut,
             const QString& _tab, const QString& _enter, const QString& _changeTab,
             const QString& _changeEnter);

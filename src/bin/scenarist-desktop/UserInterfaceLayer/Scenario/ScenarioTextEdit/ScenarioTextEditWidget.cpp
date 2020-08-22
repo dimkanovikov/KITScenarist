@@ -206,7 +206,12 @@ void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
     m_editor->setUseSpellChecker(_use);
 }
 
-void ScenarioTextEditWidget::setShowSuggestionsInEmptyBlocks(bool _show)
+void ScenarioTextEditWidget::setShowAutocompletionInEmptyBlocks(bool _show)
+{
+    m_editor->setShowSuggestionsInEmptyBlocks(_show);
+}
+
+void ScenarioTextEditWidget::setAutocompleteNextCharacterForDialogue(bool _show)
 {
     m_editor->setShowCharactersSuggestions(_show);
 }

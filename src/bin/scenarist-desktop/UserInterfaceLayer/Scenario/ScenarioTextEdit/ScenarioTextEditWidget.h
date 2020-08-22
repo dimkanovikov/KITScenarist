@@ -113,7 +113,12 @@ namespace UserInterface
         /**
          * @brief Показывать ли автодополнения в пустых блоках
          */
-        void setShowSuggestionsInEmptyBlocks(bool _show);
+        void setShowAutocompletionInEmptyBlocks(bool _show);
+
+        /**
+         * @brief Подбирать ли варианты персонажей по контексту
+         */
+        void setAutocompleteNextCharacterForDialogue(bool _show);
 
         /**
          * @brief Установить язык проверки орфографии

@@ -156,7 +156,13 @@ void ScenarioTextEditManager::reloadTextEditSettings()
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
                 .toDouble());
 
-    m_view->setShowSuggestionsInEmptyBlocks(
+    m_view->setShowAutocompletionInEmptyBlocks(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/show-suggestions-in-empty-blocks-2",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt());
+
+    m_view->setAutocompleteNextCharacterForDialogue(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/show-suggestions-in-empty-blocks",
                     DataStorageLayer::SettingsStorage::ApplicationSettings)

@@ -482,6 +482,11 @@ void SettingsManager::scenarioEditAutoJumpToNextBlockChanged(bool _value)
 
 void SettingsManager::scenarioEditShowSuggestionsInEmptyBlocksChanged(bool _value)
 {
+    storeValue("scenario-editor/show-suggestions-in-empty-blocks-2", _value);
+}
+
+void SettingsManager::scenarioEditAutocompleteNextCharacterForDialogueChanged(bool _value)
+{
     storeValue("scenario-editor/show-suggestions-in-empty-blocks", _value);
 }
 
@@ -1066,7 +1071,14 @@ void SettingsManager::initView()
                 .toInt()
                 );
     // ... показывать ли подсказки в пустых блоках
-    m_view->setScenarioEditShowSuggestionsInEmptyBlocks(
+    m_view->setScenarioEditAutocompleteNextCharacterForDialogue(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "scenario-editor/show-suggestions-in-empty-blocks-2",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
+    // ... подбирать ли персонажей по контексту
+    m_view->setScenarioEditAutocompleteNextCharacterForDialogue(
                 DataStorageLayer::StorageFacade::settingsStorage()->value(
                     "scenario-editor/show-suggestions-in-empty-blocks",
                     DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -1330,6 +1342,8 @@ void SettingsManager::initConnections()
     connect(m_view, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)), this, SLOT(scenarioEditAutoJumpToNextBlockChanged(bool)));
     connect(m_view, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged,
             this, &SettingsManager::scenarioEditShowSuggestionsInEmptyBlocksChanged);
+    connect(m_view, &SettingsView::scenarioEditAutocompleteNextCharacterForDialogueChanged,
+            this, &SettingsManager::scenarioEditAutocompleteNextCharacterForDialogueChanged);
     connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)),
             this, SLOT(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)));
     connect(m_view, &SettingsView::scenarioEditUseOpenBracketInDialogueForParenthetical,
@@ -1418,6 +1432,7 @@ void SettingsManager::initConnections()
     connect(m_view, SIGNAL(scenarioEditCurrentTemplateChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
     connect(m_view, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
     connect(m_view, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+    connect(m_view, &SettingsView::scenarioEditAutocompleteNextCharacterForDialogueChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
     connect(m_view, &SettingsView::scenarioEditUseOpenBracketInDialogueForParenthetical, this, &SettingsManager::scenarioEditSettingsUpdated);
     connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
