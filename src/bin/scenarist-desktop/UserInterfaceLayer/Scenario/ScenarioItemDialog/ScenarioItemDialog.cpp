@@ -155,6 +155,7 @@ void ScenarioItemDialog::initView()
 
 void ScenarioItemDialog::initConnections()
 {
+    connect(m_ui->name, &QLineEdit::textChanged, m_ui->header, &QLineEdit::setPlaceholderText);
     connect(m_ui->name, &QLineEdit::textChanged, this, &ScenarioItemDialog::checkSavingAvailable);
     connect(m_ui->header, &QLineEdit::textChanged, this, &ScenarioItemDialog::checkSavingAvailable);
     connect(m_ui->description, &SimpleTextEditorWidget::textChanged, this, &ScenarioItemDialog::checkSavingAvailable);

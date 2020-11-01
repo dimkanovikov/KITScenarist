@@ -299,8 +299,7 @@ void ScenarioCardsManager::editCard(const QString& _uuid)
         const int type = m_addItemDialog->itemType();
         const QString name = m_addItemDialog->itemName();
         QString header = m_addItemDialog->itemHeader();
-        if (header.isEmpty()
-            && itemForUpdateHasEqualNameAndHeader) {
+        if (header.isEmpty()) {
             header = name;
         }
         const QString description = m_addItemDialog->itemDescription();
