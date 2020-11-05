@@ -306,6 +306,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 24: {
+            translationSuffix = "gl";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Galician;
+            break;
+        }
+
         default: break;
     }
 

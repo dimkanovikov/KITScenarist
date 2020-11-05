@@ -30,23 +30,6 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
-    <widget class="QRadioButton" name="hungarian">
-     <property name="text">
-      <string notr="true">Magyar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QRadioButton" name="portuguesBrasil">
-     <property name="text">
-      <string notr="true">Português brasileiro</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QRadioButton" name="german">
      <property name="text">
@@ -67,41 +50,10 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="1">
-    <widget class="QRadioButton" name="portugues">
-     <property name="text">
-      <string notr="true">Português</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QRadioButton" name="kazakh">
-     <property name="text">
-      <string notr="true">Қазақ</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QRadioButton" name="italian">
-     <property name="text">
-      <string notr="true">Italiano</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="2">
     <widget class="QRadioButton" name="farsi">
      <property name="text">
       <string notr="true">فارْسِى</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0">
-    <widget class="QRadioButton" name="nederlands">
-     <property name="text">
-      <string notr="true">Nederlands</string>
      </property>
     </widget>
    </item>
@@ -170,16 +122,6 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QRadioButton" name="serbian">
-     <property name="text">
-      <string notr="true">Српски</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="18" column="0" colspan="4">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -187,16 +129,6 @@
      </property>
      <property name="openExternalLinks">
       <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QRadioButton" name="polish">
-     <property name="text">
-      <string notr="true">Polski</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -214,53 +146,6 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QRadioButton" name="russian">
-     <property name="text">
-      <string notr="true">Русский</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QRadioButton" name="slovenian">
-     <property name="text">
-      <string notr="true">Slovenski</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <widget class="QRadioButton" name="swedish">
-     <property name="text">
-      <string notr="true">Svenska</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QRadioButton" name="turkish">
-     <property name="text">
-      <string notr="true">Türkçe</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <widget class="QRadioButton" name="ukrainian">
-     <property name="text">
-      <string notr="true">Українська</string>
-     </property>
-    </widget>
-   </item>
    <item row="6" column="0">
     <widget class="QRadioButton" name="french">
      <property name="text">
@@ -275,6 +160,128 @@
      </property>
     </widget>
    </item>
+   <item row="10" column="1">
+    <widget class="QRadioButton" name="ukrainian">
+     <property name="text">
+      <string notr="true">Українська</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QRadioButton" name="turkish">
+     <property name="text">
+      <string notr="true">Türkçe</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QRadioButton" name="swedish">
+     <property name="text">
+      <string notr="true">Svenska</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QRadioButton" name="slovenian">
+     <property name="text">
+      <string notr="true">Slovenski</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QRadioButton" name="serbian">
+     <property name="text">
+      <string notr="true">Српски</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QRadioButton" name="russian">
+     <property name="text">
+      <string notr="true">Русский</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QRadioButton" name="portuguesBrasil">
+     <property name="text">
+      <string notr="true">Português brasileiro</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QRadioButton" name="portugues">
+     <property name="text">
+      <string notr="true">Português</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QRadioButton" name="polish">
+     <property name="text">
+      <string notr="true">Polski</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QRadioButton" name="nederlands">
+     <property name="text">
+      <string notr="true">Nederlands</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QRadioButton" name="hungarian">
+     <property name="text">
+      <string notr="true">Magyar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QRadioButton" name="kazakh">
+     <property name="text">
+      <string notr="true">Қазақ</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QRadioButton" name="italian">
+     <property name="text">
+      <string notr="true">Italiano</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QRadioButton" name="galician">
+     <property name="text">
+      <string notr="true">Galego</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -285,6 +292,7 @@
   <tabstop>spanish</tabstop>
   <tabstop>greek</tabstop>
   <tabstop>french</tabstop>
+  <tabstop>galician</tabstop>
   <tabstop>italian</tabstop>
   <tabstop>kazakh</tabstop>
   <tabstop>hungarian</tabstop>

@@ -251,6 +251,11 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Greek"));
             break;
         }
+
+        case 24: {
+            m_ui->applicationLanguage->setText(tr("Galician"));
+            break;
+        }
     }
 }
 
@@ -815,6 +820,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
     m_ui->spellCheckingLanguage->addItem(tr("Farsi"), SpellChecker::Farsi);
     m_ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
+    m_ui->spellCheckingLanguage->addItem(tr("Galician"), SpellChecker::Galician);
     m_ui->spellCheckingLanguage->addItem(tr("German"), SpellChecker::German);
     m_ui->spellCheckingLanguage->addItem(tr("Greek"), SpellChecker::Greek);
     m_ui->spellCheckingLanguage->addItem(tr("Greek (Polythonic)"), SpellChecker::GreekPolytonic);
