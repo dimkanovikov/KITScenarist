@@ -334,14 +334,6 @@ void StartUpManager::showUpdateDialogImpl()
 
 #ifdef Q_OS_LINUX
     isSupported = false;
-    const QString distroName = QSysInfo::prettyProductName().toLower();
-    const QStringList supportedDistros({"ubuntu", "mint"});
-    for (const QString &supportedDistro : supportedDistros) {
-        if (distroName.contains(supportedDistro)) {
-            isSupported = true;
-            break;
-        }
-    }
 #endif
 
     //
@@ -365,8 +357,6 @@ void StartUpManager::showUpdateDialogImpl()
             //
 #ifdef Q_OS_WIN
             if (QProcess::startDetached(m_updateFile)) {
-#elif defined Q_OS_LINUX
-            if (QProcess::startDetached("software-center", { m_updateFile })) {
 #else
             if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
 #endif
