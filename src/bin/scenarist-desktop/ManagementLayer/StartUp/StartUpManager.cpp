@@ -358,7 +358,7 @@ void StartUpManager::showUpdateDialogImpl()
 #ifdef Q_OS_WIN
             if (QProcess::startDetached(m_updateFile)) {
 #else
-            if (QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
+            if (QFile::exists(m_updateFile) && QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile))) {
 #endif
                 QApplication::quit();
                 return;
@@ -440,7 +440,7 @@ void StartUpManager::downloadUpdate(const QString& _fileTemplate)
     //
     // Сохраняем установщик в файл
     //
-    const QString tempDirPath = QDir::toNativeSeparators(QDir::tempPath());
+    const QString tempDirPath = QDir::toNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
     m_updateFile = tempDirPath + QDir::separator() + updateInfoUrl.fileName();
     QFile tempFile(m_updateFile);
     if (tempFile.open(QIODevice::WriteOnly)) {
