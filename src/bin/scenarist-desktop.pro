@@ -371,6 +371,7 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsSearchWidget.cpp
 
 HEADERS += \
+    scenarist-core/3rd_party/Helpers/XmlHelper.h \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioManager.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioTextEditManager.h \
