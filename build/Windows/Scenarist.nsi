@@ -64,7 +64,6 @@
   !insertmacro MUI_LANGUAGE "Russian"
   !insertmacro MUI_LANGUAGE "Turkish"
   !insertmacro MUI_LANGUAGE "Ukrainian"
-  !insertmacro MUI_LANGUAGE "Farsi"
   !insertmacro MUI_LANGUAGE "Hebrew"
 
 ;--------------------------------
