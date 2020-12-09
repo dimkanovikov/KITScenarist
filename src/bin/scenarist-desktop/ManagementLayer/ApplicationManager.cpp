@@ -2567,9 +2567,14 @@ void ApplicationManager::updateWindowTitle()
                                           ? tr("on local computer")
                                           : tr("in cloud")),
                                          '[', ']'));
+    QString title =
 #ifdef Q_OS_MAC
-    m_view->setWindowTitle(projectFileName);
+            projectFileName);
 #else
-    m_view->setWindowTitle(tr("%1[*] - KIT Scenarist").arg(projectFileName));
+            tr("%1[*] - KIT Scenarist").arg(projectFileName);
 #endif
+    if (!m_projectsManager->currentProject().isWritable()) {
+        title += " - " + tr("Read only");
+    }
+    m_view->setWindowTitle(title);
 }
