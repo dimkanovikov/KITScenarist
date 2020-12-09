@@ -281,7 +281,7 @@ namespace UserInterface
         /**
          * @brief Скрыть/показать кнопку поиска и панель поиска
          */
-        void setSearchVisible(bool _isVisible);
+        void setSearchVisible(bool _isVisible, SimpleTextEditor* _editor = nullptr);
 
         /**
          * @brief Скрыть/показать кнопку добавления содержимого контента

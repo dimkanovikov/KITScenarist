@@ -288,7 +288,7 @@ void ResearchView::editSynopsis(const QString& _synopsis)
     // Настраиваем интерфейс
     //
     setResearchManageButtonsVisible(false);
-    setSearchVisible(false);
+    setSearchVisible(true, m_ui->synopsisText->editor());
     setAddVisible(false);
     setBackVisible(false);
 }
@@ -397,7 +397,7 @@ void ResearchView::editText(const QString& _name, const QString& _description)
     // Настраиваем интерфейс
     //
     setResearchManageButtonsVisible(true);
-    setSearchVisible(true);
+    setSearchVisible(true, m_ui->textDescription->editor());
     setAddVisible(false);
     setBackVisible(false);
 }
@@ -665,10 +665,11 @@ void ResearchView::setResearchManageButtonsVisible(bool _isVisible, bool _isDele
     }
 }
 
-void ResearchView::setSearchVisible(bool _isVisible)
+void ResearchView::setSearchVisible(bool _isVisible, SimpleTextEditor* _editor)
 {
     m_ui->search->setVisible(_isVisible);
     m_ui->searchWidget->setVisible(m_ui->search->isVisible() && m_ui->search->isChecked());
+    m_ui->searchWidget->setEditor(_editor);
 }
 
 void ResearchView::setAddVisible(bool _isVisible)
@@ -821,7 +822,6 @@ void ResearchView::initView()
     m_ui->deleteEdge->setIcons(m_ui->deleteEdge->icon());
     m_ui->mindMapSaveToFile->setIcons(m_ui->mindMapSaveToFile->icon());
 
-    m_ui->searchWidget->setEditor(m_ui->textDescription->editor());
     m_ui->searchWidget->hide();
 
     m_ui->scriptStartNumber->setValidator(new QIntValidator(this));
