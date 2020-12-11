@@ -382,18 +382,6 @@ void StartUpManager::showUpdateDialogImpl()
 QString StartUpManager::makeUpdateUrl(const QString& _fileTemplate)
 {
     //
-    // Языковой суффикс
-    //
-    QString localeSuffix;
-    if (QLocale().language() == QLocale::English) {
-        localeSuffix = "_en";
-    } else if (QLocale().language() == QLocale::Spanish) {
-        localeSuffix = "_es";
-    } else if (QLocale().language() == QLocale::French) {
-        localeSuffix = "_fr";
-    }
-
-    //
     // URL до новой версии в соответствии с ОС, архитектурой и языком
     //
 #ifdef Q_OS_WIN
@@ -405,9 +393,9 @@ QString StartUpManager::makeUpdateUrl(const QString& _fileTemplate)
         QString arch = "_amd64";
     #endif
 
-    QString updateUrl = QString("linux/%1%2%3.deb").arg(_fileTemplate, localeSuffix, arch);
+    QString updateUrl = QString("linux/%1%2.deb").arg(_fileTemplate, arch);
 #elif defined Q_OS_MAC
-    QString updateUrl = QString("mac/%1%2.dmg").arg(_fileTemplate, localeSuffix);
+    QString updateUrl = QString("mac/%1.dmg").arg(_fileTemplate);
 #endif
 
     //

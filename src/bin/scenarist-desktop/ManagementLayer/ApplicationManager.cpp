@@ -2569,7 +2569,7 @@ void ApplicationManager::updateWindowTitle()
                                          '[', ']'));
     QString title =
 #ifdef Q_OS_MAC
-            projectFileName);
+            projectFileName;
 #else
             tr("%1[*] - KIT Scenarist").arg(projectFileName);
 #endif
