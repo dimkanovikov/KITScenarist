@@ -74,29 +74,26 @@ QWidget* StartUpManager::view() const
 
 void StartUpManager::checkCrashReports()
 {
-    const QString SENDED = "sended";
-    const QString IGNORED = "ignored";
+    const QString sendedSuffix = "sended";
+    const QString ignoredSuffix = "ignored";
 
     //
     // Настроим отлавливание ошибок
     //
     QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     QString crashReportsFolderPath = appDataFolderPath + QDir::separator() + "CrashReports";
-    bool hasUnhandledReports = false;
-    QString unhandledReportPath;
+    QVector<QString> unhandledReportsPaths;
     for (const QFileInfo& crashReportFileInfo : QDir(crashReportsFolderPath).entryInfoList(QDir::Files)) {
-        if (crashReportFileInfo.suffix() != SENDED
-            && crashReportFileInfo.suffix() != IGNORED) {
-            hasUnhandledReports = true;
-            unhandledReportPath = crashReportFileInfo.filePath();
-            break;
+        if (crashReportFileInfo.suffix() != sendedSuffix
+            && crashReportFileInfo.suffix() != ignoredSuffix) {
+            unhandledReportsPaths.append(crashReportFileInfo.filePath());
         }
     }
 
     //
     // Если есть необработанные отчёты, показать диалог
     //
-    if (hasUnhandledReports) {
+    if (!unhandledReportsPaths.isEmpty()) {
         CrashReportDialog dialog(m_view);
 
         //
@@ -110,24 +107,21 @@ void StartUpManager::checkCrashReports()
             dialog.setEmail(email);
         }
 
-        QString handledReportPath = unhandledReportPath;
+        bool handled = true;
         if (dialog.exec() == CrashReportDialog::Accepted) {
             dialog.showProgress();
-            //
-            // Отправляем
-            //
-            NetworkRequest loader;
-            loader.setRequestMethod(NetworkRequestMethod::Post);
-            loader.addRequestAttribute("version", QApplication::applicationVersion());
-            loader.addRequestAttribute("email", dialog.email());
-            loader.addRequestAttribute("message", dialog.message());
-            loader.addRequestAttributeFile("report", unhandledReportPath);
-            loader.loadSync("https://kitscenarist.ru/api/app/feedback/");
-
-            //
-            // Помечаем отчёт, как отправленный
-            //
-            handledReportPath += "." + SENDED;
+            for (const auto& reportPath : unhandledReportsPaths) {
+                //
+                // Отправляем
+                //
+                NetworkRequest loader;
+                loader.setRequestMethod(NetworkRequestMethod::Post);
+                loader.addRequestAttribute("version", QApplication::applicationVersion());
+                loader.addRequestAttribute("email", dialog.email());
+                loader.addRequestAttribute("message", dialog.message());
+                loader.addRequestAttributeFile("report", reportPath);
+                loader.loadSync("https://kitscenarist.ru/api/app/feedback/");
+            }
 
             //
             // Сохраняем email, если ранее не было никакого
@@ -138,14 +132,16 @@ void StartUpManager::checkCrashReports()
                             dialog.email(),
                             SettingsStorage::ApplicationSettings);
             }
+        } else {
+            handled = false;
         }
+
         //
-        // Помечаем отчёт, как проигнорированный
+        // Помечаем отчёты, чтобы в слдующий раз на них не обращать внимания
         //
-        else {
-            handledReportPath += "." + IGNORED;
+        for (auto& reportPath : unhandledReportsPaths) {
+            QFile::rename(reportPath, reportPath +  "." + (handled ? sendedSuffix : ignoredSuffix));
         }
-        QFile::rename(unhandledReportPath, handledReportPath);
     }
 }
 
