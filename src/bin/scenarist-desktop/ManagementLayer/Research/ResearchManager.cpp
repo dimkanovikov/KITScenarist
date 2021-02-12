@@ -731,6 +731,10 @@ void ResearchManager::initConnections()
         m_view->selectItem(_index);
         emit researchChanged();
     });
+    //
+    // По косвенным признакам определяем, что обновилась питчинговая часть
+    //
+    connect(m_model, &BusinessLogic::ResearchModel::itemsRefreshed, this, [this] { loadScenarioData(); });
 
     connect(m_view, &ResearchView::addResearchRequested, this, &ResearchManager::addResearch);
     connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
