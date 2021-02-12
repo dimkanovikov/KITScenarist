@@ -826,8 +826,10 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Greek (Polythonic)"), SpellChecker::GreekPolytonic);
     m_ui->spellCheckingLanguage->addItem(tr("Hebrew"), SpellChecker::Hebrew);
     m_ui->spellCheckingLanguage->addItem(tr("Hungarian"), SpellChecker::Hungarian);
+    m_ui->spellCheckingLanguage->addItem(tr("Indonesian"), SpellChecker::Indonesian);
     m_ui->spellCheckingLanguage->addItem(tr("Italian"), SpellChecker::Italian);
     m_ui->spellCheckingLanguage->addItem(tr("Kazakh"), SpellChecker::Kazakh);
+    m_ui->spellCheckingLanguage->addItem(tr("Lithuanian"), SpellChecker::Lithuanian);
     m_ui->spellCheckingLanguage->addItem(tr("Macedonian"), SpellChecker::Macedonian);
     m_ui->spellCheckingLanguage->addItem(tr("Polish"), SpellChecker::Polish);
     m_ui->spellCheckingLanguage->addItem(tr("Portuguese (Brazil)"), SpellChecker::PortugueseBrazilian);
