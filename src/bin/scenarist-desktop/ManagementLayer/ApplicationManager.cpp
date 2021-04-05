@@ -947,8 +947,20 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
             // ... если файл доступен только для чтения, уведомим об этом пользователя
             //
             if (!ProjectsManager::currentProject().isWritable()) {
-                QLightBoxMessage::information(m_view, tr("A file will be opened in read-only mode"),
-                    tr("If you want to edit a file, please check it's permissions for your account."));
+                QString messageText = tr("If you want to edit a file, please check it's permissions for your account.");
+
+                const auto backupsDir = DataStorageLayer::StorageFacade::settingsStorage()
+                                        ->value("application/save-backups-folder",
+                                                DataStorageLayer::SettingsStorage::ApplicationSettings);
+                if (m_projectsManager->currentProject().path().startsWith(QDir::toNativeSeparators(backupsDir))) {
+                    messageText = tr("The file you open located in the backups folder.\n\n"
+                                     "You can no longer edit files from the backups folder."
+                                     "Files in this folder used only for content recovery. "
+                                     "Please use another folder to save and store the files you are working on.\n\n"
+                                     "Now, you should copy your file from the backups folder outside via file browser, "
+                                     "or via the \"Menu -> Save current project as...\" option.");
+                }
+                QLightBoxMessage::information(m_view, tr("A file will be opened in read-only mode"), messageText);
             }
 
             //
