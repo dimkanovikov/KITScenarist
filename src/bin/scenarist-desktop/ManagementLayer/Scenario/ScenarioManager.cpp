@@ -688,7 +688,12 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int 
     //
     // Применяем патч
     //
-    scriptTextDocument->applyPatch(_patch);
+    if (scriptTextDocument->applyPatch(_patch) == -1) {
+        //
+        // Если наложить патч по месту не удалось, то применяем грубую силу
+        //
+        scriptTextDocument->applyPatches({ _patch });
+    }
 
     //
     // Пробуем накатить собственные изменения, если накатить не удалось, то удаляем их
