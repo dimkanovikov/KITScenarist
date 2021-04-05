@@ -28,18 +28,17 @@ int main(int argc, char *argv[])
     auto restartApp = [&application] {
         QStringList arguments = application.arguments();
         arguments.removeFirst();
-        QProcess::startDetached(application.arguments().first(), arguments);
+        return QProcess::startDetached(application.arguments().constFirst(), arguments);
     };
 
     //
     // Если пользователь хочет работать в режиме масштабирования для экранов с высоким DPI
     //
     if (application.shouldUseHidpiScaling()) {
-        if (qgetenv("KIT_USE_HIDPI_SCALING") != "1") {
-            if (qputenv("KIT_USE_HIDPI_SCALING", "1")) {
-                restartApp();
-                return 0;
-            }
+        if (qgetenv("KIT_USE_HIDPI_SCALING") != "1"
+            && qputenv("KIT_USE_HIDPI_SCALING", "1")
+            && restartApp()) {
+            return 0;
         }
     }
     //
@@ -50,8 +49,8 @@ int main(int argc, char *argv[])
         //
         // После того, как было настроено разрешение, нужно перезапустить приложение
         //
-        if (qputenv("QT_SCALE_FACTOR", "2")) {
-            restartApp();
+        if (qputenv("QT_SCALE_FACTOR", "2")
+            && restartApp()) {
             return 0;
         }
     }
