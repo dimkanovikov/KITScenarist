@@ -156,34 +156,23 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
             for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
                 const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
                 const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
-                //
-                // Если тип карточки определить не удалось, удаляем её
-                //
-                if (item->type() == BusinessLogic::ScenarioModelItem::Undefined) {
-                    m_view->removeCard(item->uuid());
-                }
-                //
-                // А если тип нормальный, то обновляем данные о карточке
-                //
-                else {
-                    const bool isAct =
-                            item->type() == BusinessLogic::ScenarioModelItem::Folder
-                            && item->hasParent()
-                            && item->parent()->type() == BusinessLogic::ScenarioModelItem::Scenario;
-                    const bool isEmbedded =
-                            item->hasParent()
-                            && item->parent()->type() != BusinessLogic::ScenarioModelItem::Scenario;
-                    m_view->updateCard(
-                        item->uuid(),
-                        item->type() == BusinessLogic::ScenarioModelItem::Folder,
-                        item->sceneNumber(),
-                        item->name().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->name()),
-                        item->description().isEmpty() ? item->fullText() : item->description(),
-                        item->stamp(),
-                        item->colors(),
-                        isEmbedded,
-                        isAct);
-                }
+                const bool isAct =
+                        item->type() == BusinessLogic::ScenarioModelItem::Folder
+                        && item->hasParent()
+                        && item->parent()->type() == BusinessLogic::ScenarioModelItem::Scenario;
+                const bool isEmbedded =
+                        item->hasParent()
+                        && item->parent()->type() != BusinessLogic::ScenarioModelItem::Scenario;
+                m_view->updateCard(
+                    item->uuid(),
+                    item->type() == BusinessLogic::ScenarioModelItem::Folder,
+                    item->sceneNumber(),
+                    item->name().isEmpty() ? TextEditHelper::smartToUpper(item->header()) : TextEditHelper::smartToUpper(item->name()),
+                    item->description().isEmpty() ? item->fullText() : item->description(),
+                    item->stamp(),
+                    item->colors(),
+                    isEmbedded,
+                    isAct);
             }
         });
     }
