@@ -678,6 +678,21 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft, int 
     auto scriptTextDocument = _isDraft ? m_scenarioDraft->document() : m_scenario->document();
 
     //
+    // Если пришедший патч накладывается без проблем, то просто применяем его
+    //
+    if (scriptTextDocument->canApplyPatch(_patch)) {
+        scriptTextDocument->applyPatch(_patch);
+        return;
+    }
+
+    //
+    // В противном случае:
+    // - сперва откатывает собственные изменения
+    // - затем применяем патч
+    // - а потом возвращаем собственные изменения обратно
+    //
+
+    //
     // Извлекаем и откатываем список собственный изменений, которые ещё не были синхронизированы
     //
     for (int i = 0; i < _newChangesSize; ++i) {
