@@ -181,11 +181,16 @@ namespace UserInterface
         void setExpandedIndexes(const QStringList& _indexes);
 
         /**
-         * @brief Включить или отключить поле стартового номера сценария
+         * @brief Изменилась блокировка номеров сцен
          */
-        void changeSceneStartNumberEnabled(bool _disabled);
+        void setScenesNumberingFixed(bool _fixed);
 
     signals:
+        /**
+         * @brief Пользователь хочет изменить блокировку сцен
+         */
+        void scenesNumberingLockChanged(bool _fixed);
+
         /**
          * @brief Нажата кнопка добавления элемента разработки
          */

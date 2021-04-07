@@ -90,7 +90,6 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
     m_search(new FlatButton(this)),
     m_fastFormat(new FlatButton(this)),
     m_review(new ScenarioReviewPanel(m_editor, this)),
-    m_lockUnlock(new FlatButton(this)),
     m_duration(new QLabel(this)),
     m_countersInfo(new QLabel(this)),
     m_searchLine(new SearchWidget(this, true)),
@@ -230,15 +229,6 @@ void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const Q
 void ScenarioTextEditWidget::setTextEditZoomRange(qreal _zoomRange)
 {
     m_editorWrapper->setZoomRange(_zoomRange);
-}
-
-void ScenarioTextEditWidget::setFixed(bool _fixed)
-{
-    if (_fixed) {
-        m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock.svg"));
-    } else {
-        m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock-open.svg"));
-    }
 }
 
 int ScenarioTextEditWidget::cursorPosition() const
@@ -504,7 +494,6 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
     m_undo->setVisible(!_isCommentOnly);
     m_redo->setVisible(!_isCommentOnly);
     m_fastFormat->setVisible(!_isCommentOnly);
-    m_lockUnlock->setVisible(!_isCommentOnly);
     m_editor->setReadOnly(_isCommentOnly);
     m_searchLine->setSearchOnly(_isCommentOnly);
     m_zenControls->setReadOnly(_isCommentOnly);
@@ -789,10 +778,6 @@ void ScenarioTextEditWidget::initView()
     m_reviewView->setMinimumWidth(100);
     m_reviewView->hide();
 
-    m_lockUnlock->setObjectName("scenarioLockUnlock");
-    m_lockUnlock->setIcons(QIcon(":/Graphics/Iconset/lock-open.svg"));
-    m_lockUnlock->setToolTip(tr("Lock/unlock scene numbers"));
-
     m_zenControls->setEditor(m_editor);
 
     QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
@@ -807,7 +792,6 @@ void ScenarioTextEditWidget::initView()
     topLayout->addWidget(m_search);
     topLayout->addWidget(::makeToolbarDivider(this));
     topLayout->addWidget(m_review);
-    topLayout->addWidget(m_lockUnlock);
     topLayout->addWidget(m_duration);
     topLayout->addWidget(m_countersInfo);
 
@@ -896,7 +880,6 @@ void ScenarioTextEditWidget::initConnections()
     connect(m_review, &ScenarioReviewPanel::toggled, m_reviewView, &ScenarioReviewView::setVisible);
     connect(m_reviewView, &ScenarioReviewView::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
     connect(m_reviewView, &ScenarioReviewView::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
-    connect(m_lockUnlock, &FlatButton::clicked, this, &ScenarioTextEditWidget::changeSceneNumbersLockingRequest);
     connect(m_zenControls, &ScriptZenModeControls::quitPressed, this, &ScenarioTextEditWidget::quitFromZenMode);
 
     initEditorConnections();
@@ -953,7 +936,6 @@ void ScenarioTextEditWidget::initStyleSheet()
     m_redo->setProperty("inTopPanel", true);
     m_fastFormat->setProperty("inTopPanel", true);
     m_search->setProperty("inTopPanel", true);
-    m_lockUnlock->setProperty("inTopPanel", true);
 
     m_duration->setProperty("inTopPanel", true);
     m_duration->setProperty("topPanelTopBordered", true);

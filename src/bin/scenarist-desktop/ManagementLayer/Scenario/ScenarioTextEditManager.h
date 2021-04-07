@@ -81,11 +81,6 @@ namespace ManagementLayer
         void scrollToPosition(int _position);
 
         /**
-         * @brief Задать, зафиксированы ли номера сцен
-         */
-        void setFixed(bool _fixed);
-
-        /**
          * @brief Установить верхний колонтитул
          */
         void setScriptHeader(const QString& _header);
@@ -175,11 +170,6 @@ namespace ManagementLayer
          * @brief Пользователь хочет убрать закладку в заданном месте документа
          */
         void removeBookmarkRequested(int _position);
-
-        /**
-         * @brief Зафиксированы/расфиксированы номера сцен
-         */
-        void changeSceneNumbersLockingRequest();
 
         /**
          * @brief Пользователь хочет переименовать номер сцены

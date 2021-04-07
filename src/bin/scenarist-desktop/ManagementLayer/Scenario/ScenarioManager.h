@@ -130,6 +130,8 @@ namespace ManagementLayer
          */
         void setSceneStartNumber(int _startNumber);
 
+        void setScenesNumberingLock(bool _fixed);
+
 #ifdef Q_OS_MAC
         /**
          * @brief Сформировать меню "Правка" для редактора сценария
@@ -411,11 +413,6 @@ namespace ManagementLayer
          * @brief Получить документ сценария в соответсвии с режимом работы
          */
         BusinessLogic::ScenarioDocument* workingScenario() const;
-
-        /**
-         * @brief Зафиксировать номера сцен
-         */
-        void changeSceneNumbersLocking();
 
     private:
         /**

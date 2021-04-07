@@ -136,11 +136,6 @@ namespace UserInterface
         void setTextEditZoomRange(qreal _zoomRange);
 
         /**
-         * @brief Зафиксированы ли сцены
-         */
-        void setFixed(bool _fixed);
-
-        /**
          * @brief Получить текущую позицию курсора
          */
         int cursorPosition() const;
@@ -234,11 +229,6 @@ namespace UserInterface
          * @brief Запрос на повтор последнего действия
          */
         void redoRequest();
-
-        /**
-         * @brief Запрос на блокировку/разблокировку номеров сцен
-         */
-        void changeSceneNumbersLockingRequest();
 
         /**
          * @brief Изменился режим отображения сценария
@@ -385,11 +375,6 @@ namespace UserInterface
          * @brief Кнопка и панель рецензирования
          */
         ScenarioReviewPanel* m_review;
-
-        /**
-         * @brief Кнопка блокировки/разблокировки номеров сцен
-         */
-        FlatButton* m_lockUnlock;
 
         /**
          * @brief Хронометраж сценария

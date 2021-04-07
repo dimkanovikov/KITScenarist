@@ -493,6 +493,11 @@ void ScenarioManager::setSceneStartNumber(int _startNumber)
     m_scenario->setSceneStartNumber(_startNumber);
 }
 
+void ScenarioManager::setScenesNumberingLock(bool _fixed)
+{
+    m_scenario->changeSceneNumbersLocking(_fixed);
+}
+
 #ifdef Q_OS_MAC
 void ScenarioManager::buildScriptEditMenu(QMenu* _menu)
 {
@@ -1305,7 +1310,6 @@ void ScenarioManager::initConnections()
     connect(m_textEditManager, &ScenarioTextEditManager::quitFromZenMode, this, &ScenarioManager::showFullscreen);
     connect(m_textEditManager, &ScenarioTextEditManager::addBookmarkRequested, m_scriptBookmarksManager, &ScriptBookmarksManager::addBookmark);
     connect(m_textEditManager, &ScenarioTextEditManager::removeBookmarkRequested, m_scenario, &ScenarioDocument::removeBookmark);
-    connect(m_textEditManager, &ScenarioTextEditManager::changeSceneNumbersLockingRequest, this, &ScenarioManager::changeSceneNumbersLocking);
     connect(m_textEditManager, &ScenarioTextEditManager::renameSceneNumberRequested, this, [this] (const QString& _newSceneNumber, int _position) {
         if (m_workModeIsDraft) {
             m_scenarioDraft->setNewSceneNumber(_newSceneNumber, _position);
@@ -1322,18 +1326,9 @@ void ScenarioManager::initConnections()
     connect(m_scenario, &ScenarioDocument::textChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_scenario, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {
         m_fixedScenes = _fixed;
-        if (!m_workModeIsDraft) {
-            m_textEditManager->setFixed(m_fixedScenes);
-        }
         emit scriptFixedScenesChanged(_fixed);
     });
     connect(m_scenarioDraft, &ScenarioDocument::textChanged, this, &ScenarioManager::scenarioChanged);
-    connect(m_scenarioDraft, &ScenarioDocument::fixedScenesChanged, this, [this] (bool _fixed) {
-        m_fixedScenesDraft = _fixed;
-        if (m_workModeIsDraft) {
-            m_textEditManager->setFixed(m_fixedScenesDraft);
-        }
-    });
     connect(m_cardsManager, &ScenarioCardsManager::cardsChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);
@@ -1377,14 +1372,6 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
             m_textEditManager->setAdditionalCursors(additionalCursors);
             prevNavigatorManager->clearSelection();
 
-            if (m_scenario->isAnySceneLocked() != m_scenarioDraft->isAnySceneLocked()) {
-                if (m_workModeIsDraft) {
-                    m_textEditManager->setFixed(m_scenarioDraft->isAnySceneLocked());
-                } else {
-                    m_textEditManager->setFixed(m_scenario->isAnySceneLocked());
-                }
-            }
-
             emit scenarioChanged();
         }
     }
@@ -1393,29 +1380,4 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
 BusinessLogic::ScenarioDocument* ScenarioManager::workingScenario() const
 {
     return m_workModeIsDraft ? m_scenarioDraft : m_scenario;
-}
-
-void ScenarioManager::changeSceneNumbersLocking()
-{
-    bool allowedLock = true;
-    QDialogButtonBox::StandardButton result = QDialogButtonBox::No;
-
-    if ((m_workModeIsDraft && m_fixedScenesDraft)
-            || (!m_workModeIsDraft && m_fixedScenes)) {
-        result = QLightBoxMessage::question(m_view, tr("Changing scenes numbers locking"),
-        tr("Do you want to unlock scenes numbers or lock again?"),
-        QDialogButtonBox::Yes | QDialogButtonBox::No | QDialogButtonBox::Cancel,
-        QDialogButtonBox::NoButton,
-        {{QDialogButtonBox::Yes, tr("Unlock")},
-         {QDialogButtonBox::No, tr("Lock")}});
-
-        if (result == QDialogButtonBox::Yes) {
-            allowedLock = false;
-        }
-    }
-
-    if (result != QDialogButtonBox::Cancel) {
-        workingScenario()->changeSceneNumbersLocking(allowedLock);
-        emit scenarioChanged();
-    }
 }

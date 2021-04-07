@@ -110,9 +110,9 @@ namespace ManagementLayer
         int sceneStartNumber() const;
 
         /**
-         * @brief Разрешить или запретить изменение начального номера сцен
+         * @brief Изменилась блокировка сцен сценария
          */
-        void setSceneStartNumberEnabled(bool _disabled);
+        void setScenesNumberingFixed(bool _fixed);
 
         /**
          * @brief Получить данные о сценарии
@@ -144,6 +144,11 @@ namespace ManagementLayer
          * @brief Был изменен стартовый номер сцен
          */
         void sceneStartNumberChanged(int _startNumber);
+
+        /**
+         * @brief Пользователь хочет изменить блокировку сцен
+         */
+        void scenesNumberingLockChanged(bool _fixed);
 
         /**
          * @brief Изменился список версий проекта

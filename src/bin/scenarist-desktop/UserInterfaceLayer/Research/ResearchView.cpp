@@ -620,9 +620,13 @@ void ResearchView::setExpandedIndexes(const QStringList& _indexes)
     }
 }
 
-void ResearchView::changeSceneStartNumberEnabled(bool _disabled)
+void ResearchView::setScenesNumberingFixed(bool _fixed)
 {
-    m_ui->scriptStartNumber->setEnabled(!_disabled);
+    m_ui->scriptStartNumber->setEnabled(!_fixed);
+    m_ui->lockScenesNumbers->setEnabled(!_fixed);
+    m_ui->relockScenesNumbers->setEnabled(_fixed);
+    m_ui->unlockScenesNumbers->setEnabled(_fixed);
+    initIconsColor();
 }
 
 bool ResearchView::event(QEvent* _event)
@@ -832,6 +836,15 @@ void ResearchView::initConnections()
     //
     // Реакции на нажатие кнопок
     //
+    connect(m_ui->lockScenesNumbers, &QPushButton::clicked, [this] {
+        emit scenesNumberingLockChanged(true);
+    });
+    connect(m_ui->relockScenesNumbers, &QPushButton::clicked, [this] {
+        emit scenesNumberingLockChanged(true);
+    });
+    connect(m_ui->unlockScenesNumbers, &QPushButton::clicked, [this] {
+        emit scenesNumberingLockChanged(false);
+    });
     connect(m_ui->addResearchItem, &FlatButton::clicked, [=] {
         emit addResearchRequested(currentResearchIndex());
     });
@@ -1171,27 +1184,22 @@ void ResearchView::initStyleSheet()
     m_ui->mindMapName->setProperty("editableLabel", true);
 }
 
+namespace {
+void updateButtonsIconColor(QPushButton* _button) {
+    QIcon icon = _button->icon();
+    ImageHelper::setIconColor(icon, _button->iconSize(), _button->palette().text().color());
+    _button->setIcon(icon);
+}
+}
+
 void ResearchView::initIconsColor()
 {
-    const QSize iconSize = m_ui->addFolder->iconSize();
-
-    QIcon folder = m_ui->addFolder->icon();
-    ImageHelper::setIconColor(folder, iconSize, palette().text().color());
-    m_ui->addFolder->setIcon(folder);
-
-    QIcon text = m_ui->addText->icon();
-    ImageHelper::setIconColor(text, iconSize, palette().text().color());
-    m_ui->addText->setIcon(text);
-
-    QIcon mindMap = m_ui->addMindMap->icon();
-    ImageHelper::setIconColor(mindMap, iconSize, palette().text().color());
-    m_ui->addMindMap->setIcon(mindMap);
-
-    QIcon imagesGallery = m_ui->addImagesGallery->icon();
-    ImageHelper::setIconColor(imagesGallery, iconSize, palette().text().color());
-    m_ui->addImagesGallery->setIcon(imagesGallery);
-
-    QIcon url = m_ui->addUrl->icon();
-    ImageHelper::setIconColor(url, iconSize, palette().text().color());
-    m_ui->addUrl->setIcon(url);
+    updateButtonsIconColor(m_ui->lockScenesNumbers);
+    updateButtonsIconColor(m_ui->relockScenesNumbers);
+    updateButtonsIconColor(m_ui->unlockScenesNumbers);
+    updateButtonsIconColor(m_ui->addFolder);
+    updateButtonsIconColor(m_ui->addText);
+    updateButtonsIconColor(m_ui->addMindMap);
+    updateButtonsIconColor(m_ui->addImagesGallery);
+    updateButtonsIconColor(m_ui->addUrl);
 }

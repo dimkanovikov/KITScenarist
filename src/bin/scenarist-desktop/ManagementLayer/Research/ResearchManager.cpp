@@ -281,9 +281,9 @@ int ResearchManager::sceneStartNumber() const
     return m_scenarioData.value(ScenarioData::SCENE_START_NUMBER_KEY).toInt();
 }
 
-void ResearchManager::setSceneStartNumberEnabled(bool _disabled)
+void ResearchManager::setScenesNumberingFixed(bool _fixed)
 {
-    m_view->changeSceneStartNumberEnabled(_disabled);
+    m_view->setScenesNumberingFixed(_fixed);
 }
 
 QMap<QString, QString> ResearchManager::scenarioData() const
@@ -736,6 +736,7 @@ void ResearchManager::initConnections()
     //
     connect(m_model, &BusinessLogic::ResearchModel::itemsRefreshed, this, [this] { loadScenarioData(); });
 
+    connect(m_view, &ResearchView::scenesNumberingLockChanged, this, &ResearchManager::scenesNumberingLockChanged);
     connect(m_view, &ResearchView::addResearchRequested, this, &ResearchManager::addResearch);
     connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
     connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);

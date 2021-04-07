@@ -2233,6 +2233,7 @@ void ApplicationManager::initConnections()
     connect(m_researchManager, &ResearchManager::scriptFooterChanged, m_scenarioManager, &ScenarioManager::setScriptFooter);
     connect(m_researchManager, &ResearchManager::sceneNumbersPrefixChanged, m_scenarioManager, &ScenarioManager::setSceneNumbersPrefix);
     connect(m_researchManager, &ResearchManager::sceneStartNumberChanged, m_scenarioManager, &ScenarioManager::setSceneStartNumber);
+    connect(m_researchManager, &ResearchManager::scenesNumberingLockChanged, m_scenarioManager, &ScenarioManager::setScenesNumberingLock);
     connect(m_researchManager, &ResearchManager::versionsChanged, this, &ApplicationManager::updateWindowTitle);
     connect(m_researchManager, &ResearchManager::characterNameChanged, m_scenarioManager, &ScenarioManager::aboutCharacterNameChanged);
     connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
@@ -2246,7 +2247,7 @@ void ApplicationManager::initConnections()
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
     connect(m_scenarioManager, &ScenarioManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
-    connect(m_scenarioManager, &ScenarioManager::scriptFixedScenesChanged, m_researchManager, &ResearchManager::setSceneStartNumberEnabled);
+    connect(m_scenarioManager, &ScenarioManager::scriptFixedScenesChanged, m_researchManager, &ResearchManager::setScenesNumberingFixed);
 
     connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
     connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
