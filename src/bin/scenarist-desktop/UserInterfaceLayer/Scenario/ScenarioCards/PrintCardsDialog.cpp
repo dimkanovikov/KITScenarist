@@ -1,6 +1,8 @@
 #include "PrintCardsDialog.h"
 #include "ui_PrintCardsDialog.h"
 
+#include <QButtonGroup>
+
 #include <3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h>
 
 using UserInterface::PrintCardsDialog;
@@ -40,9 +42,27 @@ bool PrintCardsDialog::isPortrait() const
     return m_ui->portrait->isChecked();
 }
 
+bool PrintCardsDialog::printColorCards() const
+{
+    return m_ui->printColorCards->isChecked();
+}
+
 void PrintCardsDialog::initView()
 {
     m_ui->layoutsStack->setCurrentWidget(m_ui->pageP1);
+
+    QButtonGroup* countGroup = new QButtonGroup(this);
+    countGroup->addButton(m_ui->oneCard);
+    countGroup->addButton(m_ui->twoCards);
+    countGroup->addButton(m_ui->fourCards);
+    countGroup->addButton(m_ui->sixCards);
+    countGroup->addButton(m_ui->eightCards);
+    m_ui->oneCard->setChecked(true);
+
+    QButtonGroup* orientationGroup = new QButtonGroup(this);
+    orientationGroup->addButton(m_ui->portrait);
+    orientationGroup->addButton(m_ui->landscape);
+    m_ui->portrait->setChecked(true);
 }
 
 void PrintCardsDialog::initConnections()

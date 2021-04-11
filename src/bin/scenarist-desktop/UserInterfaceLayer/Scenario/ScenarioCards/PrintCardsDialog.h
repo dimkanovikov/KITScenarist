@@ -30,6 +30,11 @@ namespace UserInterface
          */
         bool isPortrait() const;
 
+        /**
+         * @brief Печатать карточки цветными
+         */
+        bool printColorCards() const;
+
     signals:
         /**
          * @brief Запрос на предварительный просмотр печатаемых карточек

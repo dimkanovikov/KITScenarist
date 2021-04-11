@@ -954,7 +954,7 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
                                                 DataStorageLayer::SettingsStorage::ApplicationSettings);
                 if (m_projectsManager->currentProject().path().startsWith(QDir::toNativeSeparators(backupsDir))) {
                     messageText = tr("The file you open located in the backups folder.\n\n"
-                                     "You can no longer edit files from the backups folder."
+                                     "You can no longer edit files from the backups folder. "
                                      "Files in this folder used only for content recovery. "
                                      "Please use another folder to save and store the files you are working on.\n\n"
                                      "Now, you should copy your file from the backups folder outside via file browser, "

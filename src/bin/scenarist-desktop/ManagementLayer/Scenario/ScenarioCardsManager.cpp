@@ -13,6 +13,7 @@
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
 #include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h>
 
+#include <3rd_party/Helpers/ColorHelper.h>
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Helpers/TextUtils.h>
 
@@ -572,6 +573,20 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
                     //
                     lastY += height;
                 }
+
+                //
+                // Дополнительная магия, чтобы отступы завелись
+                //
+                if (currentCardIndex % 2 == 0) {
+                    cardRect.setLeft(cardRect.left() + 1);
+                } else {
+                    cardRect.setRight(cardRect.right() - 1);
+                }
+                if (currentCardIndex % (cardsCount / 2) <= 1) {
+                    cardRect.setTop(cardRect.top() + 1);
+                } else if (currentCardIndex % (cardsCount / 2) >= (cardsCount / 2 - 1)) {
+                    cardRect.setBottom(cardRect.bottom() - 1);
+                }
                 break;
             }
         }
@@ -616,6 +631,18 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
         // Рисуем карточку
         //
         {
+            if (m_printDialog->printColorCards()) {
+                const auto cardColor = item->colors().split(";").first();
+                if (!cardColor.isEmpty()) {
+                    const qreal delta = contentMargin + sideMargin;
+                    QRectF fullCardRect = cardRect.adjusted(-delta, -delta, delta, delta);
+                    painter.fillRect(fullCardRect, cardColor);
+                    painter.setPen(ColorHelper::textColor(cardColor));
+                } else {
+                    painter.setPen(Qt::black);
+                }
+            }
+
             //
             // Рисуем заголовок
             //
