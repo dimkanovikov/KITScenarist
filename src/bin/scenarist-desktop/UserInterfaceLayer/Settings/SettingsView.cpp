@@ -815,7 +815,7 @@ void SettingsView::initData()
     m_ui->spellCheckingLanguage->addItem(tr("Azerbaijani"), SpellChecker::Azerbaijani);
     m_ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
     m_ui->spellCheckingLanguage->addItem(tr("Catalan"), SpellChecker::Catalan);
-    m_ui->spellCheckingLanguage->addItem(tr("Dannish"), SpellChecker::Dannish);
+    m_ui->spellCheckingLanguage->addItem(tr("Danish"), SpellChecker::Danish);
     m_ui->spellCheckingLanguage->addItem(tr("Dutch"), SpellChecker::Dutch);
     m_ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
     m_ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);

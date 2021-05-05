@@ -314,6 +314,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 25: {
+            translationSuffix = "da";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Danish;
+            break;
+        }
+
         default: break;
     }
 
