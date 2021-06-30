@@ -261,7 +261,7 @@ void Application::updateTranslation()
         case 18: {
             translationSuffix = "sl";
             qtTranslationSuffix = "sl";
-            qtBaseTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "sl";
             currentLanguage = QLocale::Slovenian;
             break;
         }
@@ -319,6 +319,14 @@ void Application::updateTranslation()
             qtTranslationSuffix = "en";
             qtBaseTranslationSuffix = "en";
             currentLanguage = QLocale::Danish;
+            break;
+        }
+
+        case 26: {
+            translationSuffix = "be";
+            qtTranslationSuffix = "ru";
+            qtBaseTranslationSuffix = "ru";
+            currentLanguage = QLocale::Belarusian;
             break;
         }
 
