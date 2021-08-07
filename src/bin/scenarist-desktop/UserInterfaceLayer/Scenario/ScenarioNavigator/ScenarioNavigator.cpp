@@ -263,12 +263,12 @@ void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
     //
     if (isSelectedJustOneItem) {
         colorsNames = m_navigationTree->currentIndex().data(BusinessLogic::ScenarioModel::ColorIndex).toString();
-        int colorIndex = 1;
+        int colorIndex = 0;
         //
         // ... добавляем каждый цвет
         //
         for (const QString& colorName : colorsNames.split(";")) {
-            QAction* color = menu->addAction(colorIndex == 1 ? tr("Main color")
+            QAction* color = menu->addAction(colorIndex == 0 ? tr("Main color")
                                                              : tr("Additional color %1").arg(colorIndex));
             QMenu* colorMenu = new QMenu(this);
             QAction* removeColor = colorMenu->addAction(tr("Clear"));
