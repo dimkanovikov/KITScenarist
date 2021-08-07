@@ -225,7 +225,7 @@ void AddProjectDialog::initConnections()
         QString folderPath =
                 QFileDialog::getExistingDirectory(
                     this,
-                    tr("Choose file for new project"),
+                    tr("Choose folder for new project"),
                     ::projectsFolderPath()
                     );
 
