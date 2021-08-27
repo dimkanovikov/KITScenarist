@@ -1315,7 +1315,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             // Переходим в автономный режим с возможностью переавторизации
             //
             title = tr("Session closed");
-            error = tr("New session for you account started at other device.\n\n"
+            error = tr("The new session for your account started in another copy of the application on the current device.\n\n"
                        "Project didn't synchronized.");
             reactivateIcon = QIcon(":/Graphics/Iconset/refresh.svg");
             break;
