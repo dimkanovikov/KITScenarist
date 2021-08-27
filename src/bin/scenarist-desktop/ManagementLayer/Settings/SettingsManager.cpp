@@ -20,6 +20,7 @@
 
 #include <QApplication>
 #include <QFileDialog>
+#include <QProcess>
 #include <QSplitter>
 #include <QStandardItemModel>
 #include <QStandardPaths>
@@ -137,6 +138,13 @@ void SettingsManager::disableCompactMode()
 
 void SettingsManager::aboutResetSettings()
 {
+    const auto dialogResult
+            = QLightBoxMessage::question(m_view, tr("Settings resetting"),
+                    tr("Do you really want to reset all application settings to default?"));
+    if (dialogResult == QDialogButtonBox::No) {
+        return;
+    }
+
     QLightBoxProgress progress(m_view);
     progress.showProgress(tr("Restoring"),
         tr("Please wait. Restoring settings to default values can take few minutes."));
@@ -146,13 +154,20 @@ void SettingsManager::aboutResetSettings()
     //
     DataStorageLayer::StorageFacade::settingsStorage()->resetValues(
         DataStorageLayer::SettingsStorage::ApplicationSettings);
+    DataStorageLayer::StorageFacade::settingsStorage()->resetApplicationStateAndGeometry();
 
     //
     // Перезагружаем интерфейс
     //
-    initView();
+    progress.showProgress(tr("Restoring"), tr("Restarting the application."));
 
-    progress.close();
+    const auto isProcessStarted = QProcess::startDetached(qApp->arguments().constFirst());
+    if (isProcessStarted) {
+        qApp->quit();
+    } else {
+        initView();
+        progress.close();
+    }
 }
 
 void SettingsManager::applicationLanguageChanged(int _value)
