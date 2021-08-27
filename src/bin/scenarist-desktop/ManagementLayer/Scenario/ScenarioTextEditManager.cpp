@@ -189,6 +189,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 
     m_view->updateStylesElements();
     m_view->updateShortcuts();
+    m_view->updateToolBar();
 }
 
 int ScenarioTextEditManager::cursorPosition() const

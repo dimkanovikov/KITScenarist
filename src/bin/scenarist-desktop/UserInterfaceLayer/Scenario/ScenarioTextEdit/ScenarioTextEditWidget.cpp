@@ -483,6 +483,11 @@ void ScenarioTextEditWidget::updateShortcuts()
     updateStylesCombo();
 }
 
+void ScenarioTextEditWidget::updateToolBar()
+{
+    m_review->aboutUpdateActionsEnable();
+}
+
 void ScenarioTextEditWidget::setAdditionalCursors(const QMap<QString, int>& _cursors)
 {
     m_editor->setAdditionalCursors(_cursors);

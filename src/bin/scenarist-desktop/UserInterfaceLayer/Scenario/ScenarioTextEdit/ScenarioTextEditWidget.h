@@ -178,6 +178,11 @@ namespace UserInterface
         void updateShortcuts();
 
         /**
+         * @brief Обновить панель инструментов
+         */
+        void updateToolBar();
+
+        /**
          * @brief Установить список дополнительных курсоров для отрисовки
          */
         void setAdditionalCursors(const QMap<QString, int>& _cursors);

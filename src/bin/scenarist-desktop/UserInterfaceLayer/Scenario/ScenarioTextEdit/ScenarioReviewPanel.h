@@ -31,6 +31,11 @@ namespace UserInterface
          */
         bool isChecked() const;
 
+        /**
+         * @brief Обновить доступность действий при смене курсора
+         */
+        void aboutUpdateActionsEnable();
+
     signals:
         /**
          * @brief Включение/выключение режима рецензирования
@@ -43,11 +48,6 @@ namespace UserInterface
         void contextMenuActionsUpdated(const QList<QAction*>& _actions);
 
     private slots:
-        /**
-         * @brief Обновить доступность действий при смене курсора
-         */
-        void aboutUpdateActionsEnable();
-
         void aboutChangeTextColor(const QColor& _color);
         void aboutChangeTextBgColor(const QColor& _color);
         void aboutChangeTextHighlight(const QColor& _color);
