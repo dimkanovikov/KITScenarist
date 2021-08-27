@@ -2,6 +2,7 @@
 #define TOOLSMANAGER_H
 
 #include <QObject>
+#include <QFuture>
 
 namespace BusinessLogic {
     struct BackupInfo;
@@ -105,6 +106,11 @@ namespace ManagementLayer
          * @brief Инструмент восстановления из бэкапа
          */
         BusinessLogic::RestoreFromBackupTool* m_restoreFromBackupTool = nullptr;
+
+        /**
+         * @brief Состояние выполнения операции загрузки сценария
+         */
+        QFuture<void> m_backupLoadingProgress;
     };
 }
 

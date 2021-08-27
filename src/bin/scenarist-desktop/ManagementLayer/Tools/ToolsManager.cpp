@@ -143,9 +143,13 @@ void ToolsManager::showBackupInfo(const BusinessLogic::BackupInfo& _backupInfo)
 
 void ToolsManager::loadBackup(const QModelIndex& _backupItemIndex)
 {
+    if (m_backupLoadingProgress.isRunning()) {
+        return;
+    }
+
     const QString backupDateTimeText = _backupItemIndex.data(Qt::WhatsThisRole).toString();
     const QDateTime backupDateTime = QDateTime::fromString(backupDateTimeText, kBackupDateTimeFormat);
-    QtConcurrent::run(m_restoreFromBackupTool, &RestoreFromBackupTool::loadBackup, backupDateTime);
+    m_backupLoadingProgress = QtConcurrent::run(m_restoreFromBackupTool, &RestoreFromBackupTool::loadBackup, backupDateTime);
 }
 
 void ToolsManager::loadScriptVersions()
