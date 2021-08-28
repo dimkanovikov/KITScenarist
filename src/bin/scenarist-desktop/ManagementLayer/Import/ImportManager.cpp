@@ -164,6 +164,8 @@ ImportManager::ImportManager(QObject* _parent, QWidget* _parentWidget) :
 bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition,
     const BusinessLogic::ImportParameters& _importParameters)
 {
+    using namespace DataStorageLayer;
+
     //
     // Получим xml-представление импортируемого сценария
     //
@@ -247,7 +249,7 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
             //
             DatabaseLayer::Database::transaction();
             foreach (const QString& character, charactersToDelete) {
-                DataStorageLayer::StorageFacade::researchStorage()->removeCharacter(character);
+                StorageFacade::researchStorage()->removeCharacter(character);
             }
             DatabaseLayer::Database::commit();
 
@@ -256,8 +258,8 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
             //
             DatabaseLayer::Database::transaction();
             foreach (const QString& character, characters) {
-                if (!DataStorageLayer::StorageFacade::researchStorage()->hasCharacter(character)) {
-                    DataStorageLayer::StorageFacade::researchStorage()->storeCharacter(character);
+                if (!StorageFacade::researchStorage()->hasCharacter(character)) {
+                    StorageFacade::researchStorage()->storeCharacter(character);
                 }
             }
             DatabaseLayer::Database::commit();
@@ -286,7 +288,7 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
             //
             DatabaseLayer::Database::transaction();
             foreach (const QString& location, locationsToDelete) {
-                DataStorageLayer::StorageFacade::researchStorage()->removeLocation(location);
+                StorageFacade::researchStorage()->removeLocation(location);
             }
             DatabaseLayer::Database::commit();
 
@@ -295,8 +297,8 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
             //
             DatabaseLayer::Database::transaction();
             foreach (const QString& location, locations) {
-                if (!DataStorageLayer::StorageFacade::researchStorage()->hasLocation(location)) {
-                    DataStorageLayer::StorageFacade::researchStorage()->storeLocation(location);
+                if (!StorageFacade::researchStorage()->hasLocation(location)) {
+                    StorageFacade::researchStorage()->storeLocation(location);
                 }
             }
             DatabaseLayer::Database::commit();
@@ -314,14 +316,34 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
         //
         {
             const QVariantMap script = research["script"].toMap();
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setName(script["name"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setLogline(script["logline"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setAdditionalInfo(script["additional_info"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setGenre(script["genre"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setAuthor(script["author"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setContacts(script["contacts"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setYear(script["year"].toString());
-            DataStorageLayer::StorageFacade::scenarioDataStorage()->setSynopsis(script["synopsis"].toString());
+            auto updateValue = [](const QString& _oldValue, const QVariant& _newValue,
+                                  std::function<void(QString)> _setter, const QString _separator = " ") {
+                QString updatedValue = _oldValue;
+                if (!updatedValue.isEmpty() && !_newValue.toString().isEmpty()) {
+                    updatedValue += _separator;
+                }
+                updatedValue += _newValue.toString();
+                _setter(updatedValue);
+            };
+            updateValue(StorageFacade::scenarioDataStorage()->name(), script["name"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setName(value); });
+            updateValue(StorageFacade::scenarioDataStorage()->logline(), script["logline"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setLogline(value); },
+                "<br/>");
+            updateValue(StorageFacade::scenarioDataStorage()->additionalInfo(), script["additional_info"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setAdditionalInfo(value); });
+            updateValue(StorageFacade::scenarioDataStorage()->genre(), script["genre"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setGenre(value); });
+            updateValue(StorageFacade::scenarioDataStorage()->author(), script["author"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setAuthor(value); });
+            updateValue(StorageFacade::scenarioDataStorage()->contacts(), script["contacts"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setContacts(value); },
+                "\n");
+            updateValue(StorageFacade::scenarioDataStorage()->year(), script["year"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setYear(value); });
+            updateValue(StorageFacade::scenarioDataStorage()->synopsis(), script["synopsis"],
+                [](const QString& value) { StorageFacade::scenarioDataStorage()->setSynopsis(value); },
+                "<br/>");
         }
 
         //
