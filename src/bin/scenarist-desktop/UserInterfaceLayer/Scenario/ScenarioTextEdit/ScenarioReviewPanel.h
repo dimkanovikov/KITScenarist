@@ -34,7 +34,7 @@ namespace UserInterface
         /**
          * @brief Обновить доступность действий при смене курсора
          */
-        void aboutUpdateActionsEnable();
+        Q_SLOT void aboutUpdateActionsEnable();
 
     signals:
         /**

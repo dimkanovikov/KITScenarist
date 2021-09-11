@@ -1502,7 +1502,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="4">
         <widget class="FlatButton" name="addResearchContent">
          <property name="toolTip">
-          <string>Search</string>
+          <string>Add new</string>
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
@@ -1516,7 +1516,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="2">
         <widget class="FlatButton" name="backToResearchContent">
          <property name="toolTip">
-          <string>Search</string>
+          <string>Go back</string>
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
