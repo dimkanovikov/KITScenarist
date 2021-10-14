@@ -201,7 +201,9 @@ bool ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
     int insertPosition = 0;
     switch (_importParameters.insertionMode) {
         case BusinessLogic::ImportParameters::ReplaceDocument: {
-            _scenario->clear();
+            QTextCursor cursor(_scenario->document());
+            cursor.select(QTextCursor::Document);
+            cursor.deleteChar();
             insertPosition = 0;
             break;
         }
