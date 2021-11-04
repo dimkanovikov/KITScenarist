@@ -330,6 +330,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 27: {
+            translationSuffix = "km";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Cambodian;
+            break;
+        }
+
         default: break;
     }
 
