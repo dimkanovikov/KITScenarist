@@ -73,8 +73,8 @@ namespace {
      * @note Минимальный интервал = 1 секунда
      */
     /** @{ */
-    const int SLOW_SAVE_CHANGES_INTERVAL = 10;
-    const int FAST_SAVE_CHANGES_INTERVAL = 10;
+    const int SLOW_SAVE_CHANGES_INTERVAL = 5000;
+    const int FAST_SAVE_CHANGES_INTERVAL = 1000;
     /** @} */
 
     /**
