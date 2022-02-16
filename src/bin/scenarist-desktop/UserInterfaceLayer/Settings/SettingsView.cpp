@@ -271,6 +271,11 @@ void SettingsView::setApplicationLanguage(int _value)
             m_ui->applicationLanguage->setText(tr("Cambodian"));
             break;
         }
+
+        case 28: {
+            m_ui->applicationLanguage->setText(tr("Croatian"));
+            break;
+        }
     }
 }
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>597</width>
-    <height>567</height>
+    <height>595</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -103,102 +103,6 @@
        <property name="horizontalSpacing">
         <number>26</number>
        </property>
-       <item row="12" column="0">
-        <widget class="QRadioButton" name="italian">
-         <property name="text">
-          <string notr="true">Italiano</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QRadioButton" name="turkish">
-         <property name="text">
-          <string notr="true">Türkçe</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QRadioButton" name="english">
-         <property name="text">
-          <string notr="true">English</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QRadioButton" name="farsi">
-         <property name="text">
-          <string notr="true">فارْسِى</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QRadioButton" name="portuguesBrasil">
-         <property name="text">
-          <string notr="true">Português brasileiro</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QRadioButton" name="hebrew">
-         <property name="text">
-          <string notr="true">עִבְרִית</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QRadioButton" name="danish">
-         <property name="text">
-          <string notr="true">Dansk</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QRadioButton" name="telugu">
-         <property name="text">
-          <string notr="true">తెలుగు</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="4">
-        <widget class="QLabel" name="label">
-         <property name="styleSheet">
-          <string notr="true">font-size: 24px;
-font-weight: 600;</string>
-         </property>
-         <property name="text">
-          <string>Choose language</string>
-         </property>
-        </widget>
-       </item>
-       <item row="23" column="0" colspan="4">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QRadioButton" name="slovenian">
-         <property name="text">
-          <string notr="true">Slovenski</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0" colspan="4">
         <spacer name="verticalSpacer_9">
          <property name="orientation">
@@ -215,23 +119,6 @@ font-weight: 600;</string>
          </property>
         </spacer>
        </item>
-       <item row="2" column="0" colspan="4">
-        <widget class="QRadioButton" name="system">
-         <property name="text">
-          <string>Detect language from system locale</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QRadioButton" name="greek">
-         <property name="text">
-          <string notr="true">Ελληνικά</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="1">
         <widget class="QRadioButton" name="polish">
          <property name="text">
@@ -242,18 +129,52 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="22" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="11" column="1">
+        <widget class="QRadioButton" name="swedish">
+         <property name="text">
+          <string notr="true">Svenska</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>45</height>
-          </size>
+         <property name="checked">
+          <bool>false</bool>
          </property>
-        </spacer>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QRadioButton" name="danish">
+         <property name="text">
+          <string notr="true">Dansk</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QRadioButton" name="slovenian">
+         <property name="text">
+          <string notr="true">Slovenski</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QRadioButton" name="russian">
+         <property name="text">
+          <string notr="true">Русский</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QRadioButton" name="turkish">
+         <property name="text">
+          <string notr="true">Türkçe</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="13" column="1">
         <widget class="QRadioButton" name="ukrainian">
@@ -262,24 +183,27 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
-        <widget class="QRadioButton" name="chinese">
+       <item row="4" column="0">
+        <widget class="QRadioButton" name="belarusian">
          <property name="text">
-          <string notr="true">汉语</string>
+          <string notr="true">Беларуская</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
-        <widget class="QRadioButton" name="spanish">
+       <item row="6" column="1">
+        <widget class="QRadioButton" name="portugues">
          <property name="text">
-          <string notr="true">Español</string>
+          <string notr="true">Português</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QRadioButton" name="nederlands">
+       <item row="3" column="0">
+        <widget class="QRadioButton" name="azerbaijani">
          <property name="text">
-          <string notr="true">Nederlands</string>
+          <string notr="true">Azərbaycan</string>
          </property>
         </widget>
        </item>
@@ -296,6 +220,43 @@ font-weight: 600;</string>
          </property>
         </spacer>
        </item>
+       <item row="3" column="1">
+        <widget class="QRadioButton" name="hungarian">
+         <property name="text">
+          <string notr="true">Magyar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QRadioButton" name="english">
+         <property name="text">
+          <string notr="true">English</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QRadioButton" name="portuguesBrasil">
+         <property name="text">
+          <string notr="true">Português brasileiro</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="24" column="0" colspan="4">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>&lt;a href=&quot;https://github.com/dimkanovikov/KITScenarist/wiki/How-to-add-the-translation-of-KIT-Scenarist-to-your-native-language-or-improve-one-of-existing%3F&quot; style=&quot;color:#2b78da;&quot;&gt;Didn't find preferred language? Read how you can add it yourself.&lt;/a&gt;</string>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
        <item row="10" column="0">
         <widget class="QRadioButton" name="french">
          <property name="text">
@@ -303,40 +264,41 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
-        <widget class="QRadioButton" name="swedish">
-         <property name="text">
-          <string notr="true">Svenska</string>
+       <item row="22" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="checked">
-          <bool>false</bool>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>45</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="8" column="0">
+        <widget class="QRadioButton" name="spanish">
+         <property name="text">
+          <string notr="true">Español</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
-        <widget class="QRadioButton" name="kazakh">
+       <item row="9" column="0">
+        <widget class="QRadioButton" name="greek">
          <property name="text">
-          <string notr="true">Қазақ</string>
+          <string notr="true">Ελληνικά</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
-        <widget class="QRadioButton" name="russian">
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">font-size: 24px;
+font-weight: 600;</string>
+         </property>
          <property name="text">
-          <string notr="true">Русский</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QRadioButton" name="portugues">
-         <property name="text">
-          <string notr="true">Português</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
+          <string>Choose language</string>
          </property>
         </widget>
        </item>
@@ -350,13 +312,6 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QRadioButton" name="german">
-         <property name="text">
-          <string notr="true">Deutsch</string>
-         </property>
-        </widget>
-       </item>
        <item row="11" column="0">
         <widget class="QRadioButton" name="galician">
          <property name="text">
@@ -364,35 +319,87 @@ font-weight: 600;</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="2">
+       <item row="4" column="1">
+        <widget class="QRadioButton" name="nederlands">
+         <property name="text">
+          <string notr="true">Nederlands</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="4">
+        <widget class="QRadioButton" name="system">
+         <property name="text">
+          <string>Detect language from system locale</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QRadioButton" name="german">
+         <property name="text">
+          <string notr="true">Deutsch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="0">
+        <widget class="QRadioButton" name="kazakh">
+         <property name="text">
+          <string notr="true">Қазақ</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="0">
+        <widget class="QRadioButton" name="italian">
+         <property name="text">
+          <string notr="true">Italiano</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QRadioButton" name="croatian">
+         <property name="text">
+          <string notr="true">Hrvatski</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QRadioButton" name="farsi">
+         <property name="text">
+          <string notr="true">فارْسِى</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QRadioButton" name="chinese">
+         <property name="text">
+          <string notr="true">汉语</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QRadioButton" name="hebrew">
+         <property name="text">
+          <string notr="true">עִבְרִית</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QRadioButton" name="telugu">
+         <property name="text">
+          <string notr="true">తెలుగు</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
         <widget class="QRadioButton" name="arabic">
          <property name="text">
           <string notr="true">اَلْعَرَبِيَّةُ‎</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QRadioButton" name="hungarian">
-         <property name="text">
-          <string notr="true">Magyar</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QRadioButton" name="azerbaijani">
-         <property name="text">
-          <string notr="true">Azərbaycan</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QRadioButton" name="belarusian">
-         <property name="text">
-          <string notr="true">Беларуская</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
+       <item row="8" column="2">
         <widget class="QRadioButton" name="cambodian">
          <property name="text">
           <string notr="true">ភាសាខ្មែរ</string>
@@ -1438,8 +1445,6 @@ font-weight: 600;</string>
   <tabstop>greek</tabstop>
   <tabstop>french</tabstop>
   <tabstop>galician</tabstop>
-  <tabstop>italian</tabstop>
-  <tabstop>kazakh</tabstop>
   <tabstop>nederlands</tabstop>
   <tabstop>polish</tabstop>
   <tabstop>portugues</tabstop>
@@ -1450,11 +1455,6 @@ font-weight: 600;</string>
   <tabstop>swedish</tabstop>
   <tabstop>turkish</tabstop>
   <tabstop>ukrainian</tabstop>
-  <tabstop>farsi</tabstop>
-  <tabstop>chinese</tabstop>
-  <tabstop>hebrew</tabstop>
-  <tabstop>telugu</tabstop>
-  <tabstop>arabic</tabstop>
   <tabstop>darkTheme</tabstop>
   <tabstop>lightTheme</tabstop>
   <tabstop>useResearch</tabstop>

@@ -338,6 +338,14 @@ void Application::updateTranslation()
             break;
         }
 
+        case 28: {
+            translationSuffix = "hr";
+            qtTranslationSuffix = "en";
+            qtBaseTranslationSuffix = "en";
+            currentLanguage = QLocale::Croatian;
+            break;
+        }
+
         default: break;
     }
 
